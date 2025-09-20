@@ -5,28 +5,20 @@ import { NextRequest, NextResponse } from 'next/server';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-// Add better error logging for production debugging
-if (!supabaseUrl) {
-  console.error('Missing NEXT_PUBLIC_SUPABASE_URL environment variable');
+// Create supabase client only if environment variables are available
+let supabase: any = null;
+if (supabaseUrl && supabaseServiceKey) {
+  supabase = createClient(supabaseUrl, supabaseServiceKey);
 }
-
-if (!supabaseServiceKey) {
-  console.error('Missing SUPABASE_SERVICE_ROLE_KEY environment variable');
-}
-
-if (!supabaseUrl || !supabaseServiceKey) {
-  console.error('Admin check API cannot function without required environment variables');
-}
-
-const supabase = createClient(supabaseUrl!, supabaseServiceKey!);
 
 export async function GET(request: NextRequest) {
   try {
     // Check environment variables first
-    if (!supabaseUrl || !supabaseServiceKey) {
+    if (!supabaseUrl || !supabaseServiceKey || !supabase) {
       console.error('Admin check failed: Missing environment variables', {
         hasSupabaseUrl: !!supabaseUrl,
-        hasServiceKey: !!supabaseServiceKey
+        hasServiceKey: !!supabaseServiceKey,
+        hasSupabaseClient: !!supabase
       });
       return NextResponse.json({ 
         error: 'Server configuration error',

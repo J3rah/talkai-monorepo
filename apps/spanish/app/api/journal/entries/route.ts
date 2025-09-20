@@ -21,8 +21,16 @@ function getSupabaseAdmin() {
   );
 }
 
+// Check if we're in build time (no environment variables available)
+const isBuildTime = !process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY;
+
 export async function GET(req: Request) {
   try {
+    // Skip during build time
+    if (isBuildTime) {
+      return NextResponse.json({ success: true, entries: [], nextOffset: 0 });
+    }
+
     const url = new URL(req.url);
     const offset = Number(url.searchParams.get('offset') ?? '0');
     const limit = Number(url.searchParams.get('limit') ?? '20');
@@ -48,6 +56,11 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
+    // Skip during build time
+    if (isBuildTime) {
+      return NextResponse.json({ success: false, error: 'Service unavailable during build' }, { status: 503 });
+    }
+
     const body = await req.json();
     const { content } = body as { content?: string };
 
