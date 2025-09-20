@@ -1,8 +1,7 @@
 {
   "version": 2,
-  "buildCommand": "cd ../.. && npm install && npm run build --workspace=apps/spanish",
-  "outputDirectory": "apps/spanish/.next",
-  "installCommand": "cd ../.. && npm install",
   "framework": "nextjs",
-  "rootDirectory": "apps/spanish"
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "installCommand": "npm install"
 }
