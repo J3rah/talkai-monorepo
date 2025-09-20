@@ -6,23 +6,10 @@ import { Star } from 'lucide-react';
 import AutoReload from '@/components/AutoReload';
 import ConfettiHeart, { ConfettiStars } from '@/components/ConfettiHeart';
 
-const Chat = dynamic(() => import("@/components/Chat"), {
-  ssr: false,
-});
-
-const TrialChat = dynamic(() => import("@/components/TrialChat"), {
-  ssr: false,
-});
-
-// Client component for auth-aware buttons
-const AuthAwareButtons = dynamic(() => import("@/components/AuthAwareButtons"), {
-  ssr: false,
-});
-
-// Client component for authenticated landing content
-const AuthenticatedLanding = dynamic(() => import("@/components/AuthenticatedLanding"), {
-  ssr: false,
-});
+const Chat = dynamic(() => import("@/components/Chat"));
+const TrialChat = dynamic(() => import("@/components/TrialChat"));
+const AuthAwareButtons = dynamic(() => import("@/components/AuthAwareButtons"));
+const AuthenticatedLanding = dynamic(() => import("@/components/AuthenticatedLanding"));
 
 export const metadata: Metadata = {
   title: 'TalkAI - Your AI Therapist | 24/7 Mental Health Support',
@@ -67,9 +54,10 @@ export const metadata: Metadata = {
 export default async function LandingPage({
   searchParams,
 }: {
-  searchParams: { trial?: string };
+  searchParams: Promise<{ trial?: string }>;
 }) {
-  const isTrialMode = searchParams.trial === 'true';
+  const { trial } = await searchParams;
+  const isTrialMode = trial === 'true';
   
   // If trial mode, show trial chat with conditional header
   if (isTrialMode) {

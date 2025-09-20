@@ -75,10 +75,10 @@ export default function TestSessionsContent({ isTrialMode, accessToken }: TestSe
         </div>
         <VoiceProvider auth={{ type: 'accessToken', value: accessToken ?? "" }}>
           <TestStartCall 
-            onVoiceSelect={(configId) => {
+            onVoiceSelect={(configId: string) => {
               console.log('TestSessionsContent (Trial): Voice selected:', configId);
             }}
-            onTherapistNameChange={(name) => {
+            onTherapistNameChange={(name: string) => {
               console.log('TestSessionsContent (Trial): Therapist name changed:', name);
             }}
             onSessionStart={() => {
@@ -195,10 +195,10 @@ export default function TestSessionsContent({ isTrialMode, accessToken }: TestSe
       </div>
       <VoiceProvider auth={{ type: 'accessToken', value: accessToken }}>
         <TestStartCall 
-          onVoiceSelect={(configId) => {
+          onVoiceSelect={(configId: string) => {
             console.log('TestSessionsContent: Voice selected:', configId);
           }}
-          onTherapistNameChange={(name) => {
+          onTherapistNameChange={(name: string) => {
             console.log('TestSessionsContent: Therapist name changed:', name);
           }}
           onSessionStart={() => {

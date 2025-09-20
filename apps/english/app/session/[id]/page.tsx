@@ -29,7 +29,7 @@ interface ChatSession {
   created_at: string;
 }
 
-export default function SessionPage({ params }: { params: { id: string } }) {
+export default function SessionPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
   const [session, setSession] = useState<ChatSession | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -37,6 +37,7 @@ export default function SessionPage({ params }: { params: { id: string } }) {
   const [isRestoring, setIsRestoring] = useState(false);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [hasResumeSupport, setHasResumeSupport] = useState<boolean>(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchAccessToken = async () => {
@@ -47,13 +48,23 @@ export default function SessionPage({ params }: { params: { id: string } }) {
   }, []);
 
   useEffect(() => {
+    const getSessionId = async () => {
+      const { id } = await params;
+      setSessionId(id);
+    };
+    getSessionId();
+  }, [params]);
+
+  useEffect(() => {
+    if (!sessionId) return;
+    
     const fetchSession = async () => {
       try {
         // Fetch session details including Hume chat group ID
         const { data: sessionData, error: sessionError } = await supabase
           .from('chat_sessions')
           .select('*, hume_chat_group_id')
-          .eq('id', params.id)
+          .eq('id', sessionId)
           .single();
 
         if (sessionError) throw sessionError;
@@ -66,7 +77,7 @@ export default function SessionPage({ params }: { params: { id: string } }) {
         const { data: messagesData, error: messagesError } = await supabase
           .from('chat_messages')
           .select('*')
-          .eq('chat_session_id', params.id)
+          .eq('chat_session_id', sessionId)
           .order('created_at', { ascending: true });
 
         if (messagesError) throw messagesError;
@@ -79,7 +90,7 @@ export default function SessionPage({ params }: { params: { id: string } }) {
     };
 
     fetchSession();
-  }, [params.id]);
+  }, [sessionId]);
 
   const handleContinueSession = async () => {
     try {

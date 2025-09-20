@@ -12,9 +12,9 @@ function getSupabaseAdmin() {
   return createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, key);
 }
 
-export async function GET(_req: Request, { params }: { params: { id: string } }) {
+export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const { id } = params;
+    const { id } = await params;
     if (!id) {
       return NextResponse.json({ success: false, error: 'id param required' }, { status: 400 });
     }

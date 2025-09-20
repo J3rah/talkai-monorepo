@@ -12,7 +12,7 @@ export class SessionCleanupAgent extends BaseAgent {
       await this.logActivity('Starting session cleanup cycle');
 
       // Get expired sessions
-      const { data: expiredSessions, error: fetchError } = await this.supabase
+      const { data: expiredSessions, error: fetchError } = await (this.supabase as any)
         .from('chat_sessions')
         .select('*')
         .lt('last_activity', new Date(Date.now() - this.SESSION_TIMEOUT).toISOString())
@@ -37,7 +37,7 @@ export class SessionCleanupAgent extends BaseAgent {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              chatGroupId: session.hume_chat_group_id
+              chatGroupId: (session as any).hume_chat_group_id
             })
           });
 
@@ -46,21 +46,21 @@ export class SessionCleanupAgent extends BaseAgent {
           }
 
           // Update session status in database
-          const { error: updateError } = await this.supabase
+          const { error: updateError } = await (this.supabase as any)
             .from('chat_sessions')
             .update({ 
               status: 'completed',
               ended_at: new Date().toISOString()
             })
-            .eq('id', (session as { id: string }).id);
+            .eq('id', (session as any).id);
 
           if (updateError) {
             throw updateError;
           }
 
           await this.logActivity('Closed expired session', { 
-            sessionId: session.id,
-            chatGroupId: session.hume_chat_group_id
+            sessionId: (session as any).id,
+            chatGroupId: (session as any).hume_chat_group_id
           });
         } catch (error) {
           await this.handleError(error);

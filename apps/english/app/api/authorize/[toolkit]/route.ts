@@ -4,12 +4,12 @@ import composio from '@/lib/composio';
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { toolkit: string } }
+  { params }: { params: Promise<{ toolkit: string }> }
 ) {
   try {
     // TODO: Replace with your actual user logic
     const userId = 'user@email.com';
-    const toolkit = params.toolkit;
+    const { toolkit } = await params;
 
     console.log(`Attempting to authorize toolkit: ${toolkit} for user: ${userId}`);
 
@@ -43,7 +43,7 @@ export async function GET(
     
     return NextResponse.json({
       error: 'Failed to authorize toolkit',
-      toolkit: params.toolkit,
+      toolkit: (await params).toolkit,
       details: error instanceof Error ? error.message : 'Unknown error occurred'
     }, { status: 500 });
   }

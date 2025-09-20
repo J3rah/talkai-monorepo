@@ -9,29 +9,18 @@ import { Star } from "lucide-react";
 import ConfettiHeart, { ConfettiStars } from "@/components/ConfettiHeart";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-const Chat = dynamic(() => import("@/components/Chat"), {
-  ssr: false,
-});
-
-const TrialChat = dynamic(() => import("@/components/TrialChat"), {
-  ssr: false,
-});
-
-const LandingPage = dynamic(() => import("@/components/LandingPage"), {
-  ssr: false,
-});
-
-// Client component for auth-aware buttons
-const AuthAwareButtons = dynamic(() => import("@/components/AuthAwareButtons"), {
-  ssr: false,
-});
+const Chat = dynamic(() => import("@/components/Chat"));
+const TrialChat = dynamic(() => import("@/components/TrialChat"));
+const LandingPage = dynamic(() => import("@/components/LandingPage"));
+const AuthAwareButtons = dynamic(() => import("@/components/AuthAwareButtons"));
 
 export default async function TestHomePage({
   searchParams,
 }: {
-  searchParams: { trial?: string };
+  searchParams: Promise<{ trial?: string }>;
 }) {
-  const isTrialMode = searchParams.trial === 'true';
+  const { trial } = await searchParams;
+  const isTrialMode = trial === 'true';
   
   // Check authentication
   const cookieStore = cookies();
@@ -40,7 +29,8 @@ export default async function TestHomePage({
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get(name: string) {
+        async get(name: string) {
+          const cookieStore = await cookies();
           return cookieStore.get(name)?.value;
         },
       },

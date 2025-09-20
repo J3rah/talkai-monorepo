@@ -24,13 +24,13 @@ async function authenticateAdmin(request: NextRequest) {
   return { user } as const;
 }
 
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const authRes = await authenticateAdmin(request);
   if ('error' in authRes) {
     return NextResponse.json({ error: authRes.error }, { status: authRes.status ?? 401 });
   }
 
-  const { id } = params;
+  const { id } = await params;
   if (!id) return NextResponse.json({ error: 'id param required' }, { status: 400 });
 
   const body = await request.json();

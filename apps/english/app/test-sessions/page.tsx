@@ -4,16 +4,15 @@ import React from "react";
 import AutoReload from "@/components/AutoReload";
 
 // Client component for auth-aware test sessions
-const TestSessionsContent = dynamic(() => import("@/components/TestSessionsContent"), {
-  ssr: false,
-});
+const TestSessionsContent = dynamic(() => import("@/components/TestSessionsContent"));
 
 export default async function TestSessionsPage({
   searchParams,
 }: {
-  searchParams: { trial?: string };
+  searchParams: Promise<{ trial?: string }>;
 }) {
-  const isTrialMode = searchParams.trial === 'true';
+  const { trial } = await searchParams;
+  const isTrialMode = trial === 'true';
   
   // Always try to get access token
   let accessToken: string | null = null;

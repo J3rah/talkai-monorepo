@@ -32,7 +32,8 @@ export default async function Page({
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get(name: string) {
+        async get(name: string) {
+          const cookieStore = await cookies();
           return cookieStore.get(name)?.value;
         },
       },

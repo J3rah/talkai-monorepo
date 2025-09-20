@@ -421,12 +421,13 @@ const blogPosts = [
   }
 ];
 
-export default function BlogPage({
+export default async function BlogPage({
   searchParams,
 }: {
-  searchParams: { category?: string };
+  searchParams: Promise<{ category?: string }>;
 }) {
-  const selectedCategory = searchParams.category;
+  const { category } = await searchParams;
+  const selectedCategory = category;
   const featuredPosts = blogPosts.filter(post => post.featured);
   const filteredPosts = selectedCategory 
     ? blogPosts.filter(post => post.category === selectedCategory)

@@ -4,16 +4,15 @@ import React from "react";
 import AutoReload from "@/components/AutoReload";
 
 // Client component for auth-aware sessions
-const SessionsContent = dynamic(() => import("@/components/SessionsContent"), {
-  ssr: false,
-});
+const SessionsContent = dynamic(() => import("@/components/SessionsContent"));
 
 export default async function SessionsPage({
   searchParams,
 }: {
-  searchParams: { trial?: string };
+  searchParams: Promise<{ trial?: string }>;
 }) {
-  const isTrialMode = searchParams.trial === 'true';
+  const { trial } = await searchParams;
+  const isTrialMode = trial === 'true';
   
   // Always try to get access token
   let accessToken: string | null = null;

@@ -55,18 +55,22 @@ export abstract class BaseAgent {
 
   protected async logActivity(message: string, metadata: any = {}): Promise<void> {
     try {
-      const { error } = await this.supabase
-        .from('agent_activities')
-        .insert({
-          agent_name: this.config.name,
-          message,
-          metadata,
-          created_at: new Date().toISOString()
-        });
+      // TODO: Fix agent_activities table type issue
+      // For now, just log to console
+      console.log(`[${this.config.name}] ${message}`, metadata);
+      
+      // const { error } = await this.supabase
+      //   .from('agent_activities')
+      //   .insert({
+      //     agent_name: this.config.name,
+      //     message,
+      //     metadata,
+      //     created_at: new Date().toISOString()
+      //   });
 
-      if (error) {
-        console.error('Failed to log agent activity:', error);
-      }
+      // if (error) {
+      //   console.error('Failed to log agent activity:', error);
+      // }
     } catch (error) {
       console.error('Error logging agent activity:', error);
     }
