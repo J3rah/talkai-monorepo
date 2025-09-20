@@ -1,0 +1,116 @@
+[33mb6bf37a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/talkai-test-homepage[m[33m, [m[1;31morigin/feature/talkai-test-homepage[m[33m)[m chore: add small change to README to force PR creation
+M	README.md
+[33m2588f58[m[33m ([m[1;31morigin/feature/heartbeat-footer-social-nav[m[33m, [m[1;32mfeature/heartbeat-footer-social-nav[m[33m)[m feat: heartbeat footer, social icons in nav, lowercase talkAI, about page, and polish
+A	app/about/page.tsx
+M	app/api/agent/chat/route.ts
+M	app/disclaimer/page.tsx
+M	app/globals.css
+M	app/privacy/page.tsx
+M	app/terms/page.tsx
+M	app/test-chat/page.tsx
+M	components/Footer.tsx
+M	components/Nav.tsx
+[33mdcee4e7[m[33m ([m[1;32mmain[m[33m)[m Show TalkAI logo avatar next to assistant messages in chat widget
+M	app/test-chat/page.tsx
+[33m5edeac2[m Merge feature/composio-chat-widget into main
+[33m0ef4ebf[m[33m ([m[1;31morigin/feature/composio-chat-widget[m[33m, [m[1;32mfeature/composio-chat-widget[m[33m)[m Disable AutoReload on /auth routes and behind env flag to prevent login hang
+M	components/AutoReload.tsx
+M	next.config.js
+[33m4937432[m Disable AutoReload in production to prevent unexpected page reload loops
+M	components/AutoReload.tsx
+[33me134c02[m Description of Changes Integrated Composio SDK (@composio/core@next) with OpenAI for tool-calling in the Next.js project. Built a global floating chat widget with modern UI/UX: Animated TalkAI logo (pulsing, bouncing, spinning). Conversational chat interface with suggested question buttons (auto-send on click). Consistent appearance on all pages. Updated chat widget to use content from /faq, /privacy, /terms, and /disclaimer markdown files for context-aware answers. Implemented a RAG (Retrieval-Augmented Generation) pattern: chatbot answers conversationally using markdown content as context. Improved fallback messaging for unknown questions. Refined chat widget positioning and header per feedback. Updated suggested questions. Fixed TypeScript errors and import issues with Composio client and types. Removed old HelpChat component and ensured new widget is global. Added production build support and improved PR workflow instructions.
+A	app/api/agent/chat/route.ts
+A	app/api/authorize/[toolkit]/route.ts
+M	app/layout.tsx
+A	app/test-chat/page.tsx
+A	app/test-chat/test-chat-animations.css
+A	content/disclaimer.md
+A	content/faq.md
+A	content/privacy.md
+A	content/terms.md
+A	lib/composio.ts
+A	lib/composioCustomTools.ts
+A	lib/openai.ts
+M	package-lock.json
+M	package.json
+A	types/composio.d.ts
+[33m990f6a5[m Merge pull request #41 from J3rah/add-logo-files
+[33mabb7a6f[m[33m ([m[1;31morigin/add-logo-files[m[33m)[m Add missing logo image files to public directory
+A	public/talkAI_dark_letters.png
+A	public/talkAI_white_letters.png
+[33me49a9c5[m Merge pull request #40 from J3rah/feature/logo-alignment-adjustments
+[33m31dfa3c[m[33m ([m[1;31morigin/feature/logo-alignment-adjustments[m[33m)[m Adjust logo size and vertical alignment in navigation
+M	app/api/create-checkout-session/route.ts
+M	app/auth/page.tsx
+M	components/Nav.tsx
+M	components/auth/Login.tsx
+M	components/logos/TalkAI.tsx
+[33mc9e38a0[m Merge pull request #39 from J3rah/feature/local-edits-jun30
+[33m1d7accf[m[33m ([m[1;31morigin/feature/local-edits-jun30[m[33m)[m chore: local edits and new files (admin layout, auth, backup, dashboard, email templates)
+M	app/admin/layout.tsx
+M	app/auth/page.tsx
+A	app/dashboard/layout.tsx
+A	backups/backup_2025-06-26_16-02.sql
+M	components/AutoReload.tsx
+M	components/auth/ForgotPassword.tsx
+A	daily-backup.sh
+M	email-templates/magic-link.html
+M	email-templates/reset-password.html
+[33m11c8f70[m feat: improve logout UX with toast notification and dashboard link on user name in header
+M	lib/bannerConfig.ts
+[33mf640e01[m Merge pull request #38 from J3rah/feature/logout-improvements
+[33m29ca0dc[m feat: improve logout UX with toast notification and dashboard link on user name in header
+M	components/Nav.tsx
+A	components/Toast.tsx
+[33m5c37d94[m[33m ([m[1;31morigin/feature/modal-layout-improvements[m[33m)[m feat(ui): improve modal layout and center alignment
+M	components/StartCall.tsx
+[33m1233e93[m feat(auth): fix reset-password flow and allow paid->free downgrades
+M	app/api/create-checkout-session/route.ts
+M	app/auth/page.tsx
+M	app/auth/reset-password/page.tsx
+[33m9ac22f4[m fix: unify password reset redirect to callback ensuring consistent recovery flow
+M	app/auth/page.tsx
+M	components/auth/ForgotPassword.tsx
+[33m43c3a34[m Merge pull request #37 from J3rah/feature/controls-improvements
+[33ma588c67[m feat: improve Controls component with better session management and analytics
+M	components/Controls.tsx
+[33m0ec330f[m Merge pull request #36 from J3rah/feature/ui-improvements-mobile-dashboard-nav-fonts
+[33m67297d8[m feat: UI improvements - mobile dashboard, navigation, and font styling
+M	app/chat/page.tsx
+M	app/dashboard/page.tsx
+M	components/Chat.tsx
+M	components/Messages.tsx
+M	components/Nav.tsx
+M	components/Rechat.tsx
+M	components/TrialChat.tsx
+[33mbfc8aa6[m feat: Update banner for production launch
+M	lib/bannerConfig.ts
+[33m37153c6[m Merge pull request #35 from J3rah/feature/notification-banner
+[33m0bd4790[m feat: Add notification banner system
+A	NOTIFICATION_BANNER_GUIDE.md
+M	app/layout.tsx
+A	components/BannerSpacer.tsx
+A	components/NotificationBanner.tsx
+A	lib/bannerConfig.ts
+[33m62525e5[m ✨ Enhance confetti celebrations and center-align session modal
+M	components/Footer.tsx
+M	components/SessionAnalyticsModal.tsx
+M	utils/confetti.ts
+[33ma4ca475[m Merge pull request #34 from J3rah/feature/ui-enhancements-and-analytics
+[33m23bf5ea[m feat: Add Google Analytics, enhance UI modals, and implement rainbow confetti
+M	app/layout.tsx
+A	components/ConditionalFooter.tsx
+M	components/Controls.tsx
+M	components/Footer.tsx
+M	components/StartCall.tsx
+M	components/TrialStartCall.tsx
+[33m798aa87[m fix(resume+timer): watchdog flush for pending Hume IDs, robust session timer, and CSP blob worker support
+M	components/Controls.tsx
+M	components/VoiceProvider.tsx
+M	next.config.js
+[33m1d187e0[m feat: Add Google Tag Manager
+M	app/layout.tsx
+[33m559653f[m Revert "feat: Add Google Analytics"
+M	app/layout.tsx
+[33m47f840c[m feat: Add Google Analytics
+M	app/layout.tsx

@@ -1,0 +1,86 @@
+{
+  "navigation": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "pricing": "Precios",
+    "blog": "Blog",
+    "login": "Iniciar Sesión",
+    "signup": "Registrarse",
+    "dashboard": "Panel"
+  },
+  "hero": {
+    "title": "Apoyo Emocional Impulsado por IA",
+    "subtitle": "Obtén sesiones de terapia instantáneas y empáticas con nuestro terapeuta IA avanzado. Disponible 24/7, cuando necesites apoyo.",
+    "cta": "Iniciar Prueba Gratuita",
+    "learn_more": "Saber Más"
+  },
+  "features": {
+    "title": "¿Por Qué Elegir talkAI?",
+    "availability": {
+      "title": "Disponibilidad 24/7",
+      "description": "Obtén apoyo cuando lo necesites, día o noche."
+    },
+    "privacy": {
+      "title": "Privacidad Completa",
+      "description": "Tus conversaciones son privadas y seguras."
+    },
+    "empathy": {
+      "title": "Empatía Verdadera",
+      "description": "IA avanzada que comprende y responde a tus emociones."
+    }
+  },
+  "pricing": {
+    "title": "Precios Simples y Transparentes",
+    "subtitle": "Elige el plan que funcione para ti",
+    "free": {
+      "name": "Gratuito",
+      "price": "€0",
+      "period": "por mes",
+      "description": "Perfecto para probar talkAI",
+      "features": [
+        "30 minutos por mes",
+        "Sesiones básicas de terapia IA",
+        "Soporte por email"
+      ]
+    },
+    "standard": {
+      "name": "Estándar",
+      "price": "€12.99",
+      "period": "por mes",
+      "description": "Opción más popular",
+      "features": [
+        "120 minutos por mes",
+        "Terapia IA avanzada",
+        "Soporte prioritario",
+        "Historial de sesiones"
+      ]
+    },
+    "premium": {
+      "name": "Premium",
+      "price": "€29.99",
+      "period": "por mes",
+      "description": "Para usuarios avanzados",
+      "features": [
+        "300 minutos por mes",
+        "Terapia IA premium",
+        "Soporte 24/7",
+        "Análisis avanzados",
+        "Voces de terapeuta personalizadas"
+      ]
+    }
+  },
+  "session": {
+    "start": "Iniciar Sesión",
+    "pause": "Pausar",
+    "resume": "Reanudar",
+    "end": "Finalizar Llamada",
+    "duration": "Sesión",
+    "agent_name": "Terapeuta IA",
+    "user_name": "Tú"
+  },
+  "messages": {
+    "greeting": "¡Hola! Soy {name}. ¿Cómo estás hoy?",
+    "typing": "IA está escribiendo...",
+    "error": "Lo siento, hubo un error. Por favor, inténtalo de nuevo."
+  }
+}

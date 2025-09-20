@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "project": "talkAI Empathetic AI Therapy Platform",
+    "date": "2025-08-31",
+    "prepared_by": "talkAI Team"
+  },
+  "product_overview": "talkAI is an empathetic AI therapy platform providing real-time emotional support through adaptive voice and text interactions using advanced emotion detection AI, making mental health support accessible, private, and instantaneously available 24/7.",
+  "core_goals": [
+    "Provide real-time, empathetic AI therapy through voice and text.",
+    "Leverage advanced emotion detection technology for personalized therapeutic responses.",
+    "Ensure high privacy and security standards for sensitive user data.",
+    "Offer accessible mental health support with evidence-based therapeutic methods.",
+    "Support scalable and reliable platform performance for a global user base."
+  ],
+  "key_features": [
+    "Mobile Live Voice Chat with real-time voice-to-voice interaction, voice activity detection, waveform visualization, and chat transcript display using Hume AI WebSocket API.",
+    "AI-driven emotion detection and adaptive therapeutic responses based on real-time voice and text sentiment analysis.",
+    "User authentication and profile management integrated with Supabase including subscription tier handling.",
+    "Text-Based Chat Therapy offering AI conversation with emotion detection, message history, and export capabilities.",
+    "User dashboard and analytics with emotional trend tracking and session summaries.",
+    "Journaling system integrated with AI-powered mood and pattern insights.",
+    "Session management features including scheduling, reminders, and session resumption.",
+    "Voice configuration allowing multiple voice options, voice personality customization, and therapeutic style preferences.",
+    "Subscription management with multiple tiers, Stripe payment integration, and usage tracking.",
+    "Admin dashboard for user analytics, platform monitoring, and content management."
+  ],
+  "user_flow_summary": [
+    "User onboarding with simple signup, voice selection, and initial assessment.",
+    "Starting a therapy session via voice or text, with live emotion detection and adaptive AI responses.",
+    "User engagement with session management, progress tracking, and journaling features.",
+    "Subscription upgrade and management as per user needs and usage patterns.",
+    "Accessing admin tools for platform management and user support."
+  ],
+  "validation_criteria": [
+    "Voice chat latency under 500 milliseconds and text response times under 2 seconds.",
+    "Maintaining 99.9% platform uptime and supporting at least 10,000 concurrent sessions.",
+    "Ensuring end-to-end encryption and GDPR/HIPAA compliant data handling.",
+    "Successful integration and accurate real-time processing using Hume AI and OpenAI APIs.",
+    "Subscription features operate correctly with billing through Stripe and user tier enforcement.",
+    "User interface meets accessibility standards (WCAG 2.1 AA) and performs responsively across device types.",
+    "AI therapeutic responses align with evidence-based practices and crisis protocols are correctly triggered.",
+    "User retention metrics meet target thresholds and user satisfaction ratings average above 4.5 stars."
+  ],
+  "code_summary": {
+    "tech_stack": [
+      "TypeScript",
+      "React Native (Expo)",
+      "Next.js (React) Web",
+      "Supabase (PostgreSQL Backend)",
+      "Hume AI WebSocket API",
+      "Zustand State Management",
+      "Node.js Scripts"
+    ],
+    "features": [
+      {
+        "name": "Mobile Live Voice Chat",
+        "description": "Real-time voice-to-voice chat using Hume AI streaming WebSocket, microphone capture, VAD, waveform visualisation, pause/resume and chat transcript display.",
+        "files": [
+          "mobile/src/utils/liveVoiceService.ts",
+          "mobile/src/screens/LiveVoiceChatScreen.tsx",
+          "mobile/src/utils/voiceConfigUtils.ts",
+          "mobile/src/components/LiveVoiceTestComponent.tsx"
+        ]
+      },
+      {
+        "name": "User Authentication & Profile",
+        "description": "Supabase auth integration, profile fetch/update, subscription tier handling.",
+        "files": [
+          "mobile/src/stores/authStore.ts",
+          "mobile/src/config/supabase.ts",
+          "mobile/src/config/environment.ts"
+        ]
+      },
+      {
+        "name": "Navigation & UI",
+        "description": "React Navigation stack/tab navigators, toolbar with pause/end buttons, timer and waveform.",
+        "files": [
+          "mobile/src/navigation/AppNavigator.tsx",
+          "mobile/src/screens/HomeScreen.tsx",
+          "mobile/src/screens/StartCallScreen.tsx"
+        ]
+      },
+      {
+        "name": "Environment Handling",
+        "description": "Centralised ENV loader for Expo with validation & debug component.",
+        "files": [
+          "mobile/src/config/environment.ts",
+          "mobile/src/components/EnvironmentDebug.tsx"
+        ]
+      },
+      {
+        "name": "Web App Voice Chat",
+        "description": "Next.js pages and components for web voice chat using Hume voice-react provider, messages list & controls.",
+        "files": [
+          "components/VoiceProvider.tsx",
+          "components/Messages.tsx",
+          "app/chat/page.tsx"
+        ]
+      },
+      {
+        "name": "Content Generation Scripts",
+        "description": "Node scripts to generate blog posts and social media content using OpenAI.",
+        "files": [
+          "scripts/generate_blog_posts.js",
+          "content/mental-health-blogs-draft.md",
+          "content/social-media-posts-mental-health.md"
+        ]
+      }
+    ]
+  }
+}

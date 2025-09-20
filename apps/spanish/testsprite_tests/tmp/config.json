@@ -1,0 +1,18 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:3000",
+  "loginUser": "jcameron@accucode.com",
+  "loginPassword": "Ic3bre@ker!",
+  "executionArgs": {
+    "projectName": "talkAI",
+    "projectPath": "/Users/dev/Documents/GitHub/talkAI/empathic-voice-1-3",
+    "testIds": [],
+    "additionalInstruction": "",
+    "envs": {
+      "API_KEY": "sk-user-X9o3QWk52ZTzUU3yhOnwDVcyTC9FNMpk-DE9PC35Fpvlu65wWCXhBzdajwwQRoDUtCCdPPDrc-xlzlFWBhcchv0sle29hDO2NejIObNW9rKEQsSCeJdDn8JdjvAsE8T3QNQ"
+    }
+  },
+  "proxy": "http://26c64e22-5a2f-43cd-8bf3-49f937b7c7b1:0suyAUKBYh473l1U9pmRpuqmY7yVBS8J@tun.testsprite.com:8080"
+}

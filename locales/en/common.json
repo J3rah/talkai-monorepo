@@ -1,0 +1,86 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "pricing": "Pricing",
+    "blog": "Blog",
+    "login": "Login",
+    "signup": "Sign Up",
+    "dashboard": "Dashboard"
+  },
+  "hero": {
+    "title": "AI-Powered Emotional Support",
+    "subtitle": "Get instant, empathetic therapy sessions with our advanced AI therapist. Available 24/7, whenever you need support.",
+    "cta": "Start Free Trial",
+    "learn_more": "Learn More"
+  },
+  "features": {
+    "title": "Why Choose talkAI?",
+    "availability": {
+      "title": "24/7 Availability",
+      "description": "Get support whenever you need it, day or night."
+    },
+    "privacy": {
+      "title": "Complete Privacy",
+      "description": "Your conversations are private and secure."
+    },
+    "empathy": {
+      "title": "True Empathy",
+      "description": "Advanced AI that understands and responds to your emotions."
+    }
+  },
+  "pricing": {
+    "title": "Simple, Transparent Pricing",
+    "subtitle": "Choose the plan that works for you",
+    "free": {
+      "name": "Free",
+      "price": "$0",
+      "period": "per month",
+      "description": "Perfect for trying out talkAI",
+      "features": [
+        "30 minutes per month",
+        "Basic AI therapy sessions",
+        "Email support"
+      ]
+    },
+    "standard": {
+      "name": "Standard",
+      "price": "$12.99",
+      "period": "per month",
+      "description": "Most popular choice",
+      "features": [
+        "120 minutes per month",
+        "Advanced AI therapy",
+        "Priority support",
+        "Session history"
+      ]
+    },
+    "premium": {
+      "name": "Premium",
+      "price": "$29.99",
+      "period": "per month",
+      "description": "For power users",
+      "features": [
+        "300 minutes per month",
+        "Premium AI therapy",
+        "24/7 support",
+        "Advanced analytics",
+        "Custom therapist voices"
+      ]
+    }
+  },
+  "session": {
+    "start": "Start Session",
+    "pause": "Pause",
+    "resume": "Resume",
+    "end": "End Call",
+    "duration": "Session",
+    "agent_name": "AI Therapist",
+    "user_name": "You"
+  },
+  "messages": {
+    "greeting": "Hello! I'm {name}. How are you today?",
+    "typing": "AI is typing...",
+    "error": "Sorry, there was an error. Please try again."
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "name": "mobile",
+  "version": "1.0.0",
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "figma:pull": "node --env-file=.env.local --loader=ts-node/esm scripts/fetch-figma-variables.ts"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "~14.0.0",
+    "@react-native-async-storage/async-storage": "^2.2.0",
+    "axios": "^1.11.0",
+    "dotenv": "^17.2.2",
+    "expo": "~53.0.22",
+    "expo-av": "^15.1.7",
+    "expo-constants": "~17.1.7",
+    "expo-linking": "~7.1.7",
+    "expo-router": "~5.1.5",
+    "expo-status-bar": "~2.2.3",
+    "react": "19.0.0",
+    "react-dom": "^19.0.0",
+    "react-native": "0.79.5",
+    "react-native-gesture-handler": "~2.24.0",
+    "react-native-reanimated": "~3.17.4",
+    "react-native-safe-area-context": "5.4.0",
+    "react-native-screens": "~4.11.1",
+    "react-native-web": "^0.21.1",
+    "tailwindcss": "^3.4.17"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@types/node": "^24.3.1",
+    "@types/react": "~19.0.10",
+    "nativewind": "^4.1.23",
+    "ts-node": "^10.9.2",
+    "typescript": "~5.8.3"
+  },
+  "private": true
+}

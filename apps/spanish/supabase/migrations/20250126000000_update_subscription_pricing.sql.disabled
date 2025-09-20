@@ -1,0 +1,22 @@
+-- Update subscription plans with new pricing and duration limits
+-- Standard: 300 minutes -> 120 minutes, $9.99 -> $12.99
+-- Premium: 750 minutes -> 300 minutes, $19.99 -> $29.99
+
+UPDATE subscription_plans 
+SET 
+  price_amount = CASE 
+    WHEN name = 'Standard' THEN 1299 -- $12.99 in cents
+    WHEN name = 'Premium' THEN 2999 -- $29.99 in cents
+    ELSE price_amount -- Keep existing price for Free plan
+  END,
+  duration_limit = CASE 
+    WHEN name = 'Standard' THEN 7200 -- 120 minutes (120 * 60 seconds)
+    WHEN name = 'Premium' THEN 18000 -- 300 minutes (300 * 60 seconds)
+    ELSE duration_limit -- Keep existing duration for Free plan
+  END,
+  features = CASE 
+    WHEN name = 'Standard' THEN ARRAY['120 minutes per month', 'Advanced AI therapy sessions', 'Priority support', 'Session history & analytics', 'Multiple therapist voices']
+    WHEN name = 'Premium' THEN ARRAY['300 minutes per month', 'Premium AI therapy sessions', 'Download therapy sessions', 'Unlimited session history', 'Advanced analytics & insights', 'All therapist voices & personalities']
+    ELSE features -- Keep existing features for Free plan
+  END
+WHERE name IN ('Standard', 'Premium'); 

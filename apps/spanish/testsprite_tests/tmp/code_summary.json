@@ -1,0 +1,67 @@
+{
+  "tech_stack": [
+    "TypeScript",
+    "React Native (Expo)",
+    "Next.js (React) Web",
+    "Supabase (PostgreSQL Backend)",
+    "Hume AI WebSocket API",
+    "Zustand State Management",
+    "Node.js Scripts"
+  ],
+  "features": [
+    {
+      "name": "Mobile Live Voice Chat",
+      "description": "Real-time voice-to-voice chat using Hume AI streaming WebSocket, microphone capture, VAD, waveform visualisation, pause/resume and chat transcript display.",
+      "files": [
+        "mobile/src/utils/liveVoiceService.ts",
+        "mobile/src/screens/LiveVoiceChatScreen.tsx",
+        "mobile/src/utils/voiceConfigUtils.ts",
+        "mobile/src/components/LiveVoiceTestComponent.tsx"
+      ]
+    },
+    {
+      "name": "User Authentication & Profile",
+      "description": "Supabase auth integration, profile fetch/update, subscription tier handling.",
+      "files": [
+        "mobile/src/stores/authStore.ts",
+        "mobile/src/config/supabase.ts",
+        "mobile/src/config/environment.ts"
+      ]
+    },
+    {
+      "name": "Navigation & UI",
+      "description": "React Navigation stack/tab navigators, toolbar with pause/end buttons, timer and waveform.",
+      "files": [
+        "mobile/src/navigation/AppNavigator.tsx",
+        "mobile/src/screens/HomeScreen.tsx",
+        "mobile/src/screens/StartCallScreen.tsx"
+      ]
+    },
+    {
+      "name": "Environment Handling",
+      "description": "Centralised ENV loader for Expo with validation & debug component.",
+      "files": [
+        "mobile/src/config/environment.ts",
+        "mobile/src/components/EnvironmentDebug.tsx"
+      ]
+    },
+    {
+      "name": "Web App Voice Chat",
+      "description": "Next.js pages and components for web voice chat using Hume voice-react provider, messages list & controls.",
+      "files": [
+        "components/VoiceProvider.tsx",
+        "components/Messages.tsx",
+        "app/chat/page.tsx"
+      ]
+    },
+    {
+      "name": "Content Generation Scripts",
+      "description": "Node scripts to generate blog posts and social media content using OpenAI.",
+      "files": [
+        "scripts/generate_blog_posts.js",
+        "content/mental-health-blogs-draft.md",
+        "content/social-media-posts-mental-health.md"
+      ]
+    }
+  ]
+}

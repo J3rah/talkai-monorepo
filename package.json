@@ -1,0 +1,32 @@
+{
+  "name": "talkai-monorepo",
+  "version": "1.0.0",
+  "description": "talkAI - Empathic Voice Interface Monorepo (English & Spanish)",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=apps/english",
+    "dev:en": "npm run dev --workspace=apps/english",
+    "dev:es": "npm run dev --workspace=apps/spanish",
+    "build": "npm run build --workspace=apps/english && npm run build --workspace=apps/spanish",
+    "build:en": "npm run build --workspace=apps/english",
+    "build:es": "npm run build --workspace=apps/spanish",
+    "start": "npm run start --workspace=apps/english",
+    "start:en": "npm run start --workspace=apps/english",
+    "start:es": "npm run start --workspace=apps/spanish",
+    "lint": "npm run lint --workspace=apps/english && npm run lint --workspace=apps/spanish",
+    "type-check": "npm run type-check --workspace=apps/english && npm run type-check --workspace=apps/spanish",
+    "clean": "rm -rf apps/*/node_modules apps/*/.next packages/*/node_modules node_modules"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}

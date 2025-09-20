@@ -1,0 +1,522 @@
+[
+  {
+    "id": "TC001",
+    "title": "User Signup with Valid Inputs",
+    "description": "Verify that a new user can successfully sign up with valid email, password, and complete initial voice selection and assessment.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the signup page on the mobile app."
+      },
+      {
+        "type": "action",
+        "description": "Enter a valid email and password."
+      },
+      {
+        "type": "action",
+        "description": "Complete the voice selection process by choosing a voice option."
+      },
+      {
+        "type": "action",
+        "description": "Complete the initial emotional assessment questions."
+      },
+      {
+        "type": "action",
+        "description": "Submit the signup form."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify user is successfully registered and redirected to the user dashboard."
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "User Signup with Invalid Email Format",
+    "description": "Verify the signup process rejects an invalid email format and displays an appropriate error message.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the signup page."
+      },
+      {
+        "type": "action",
+        "description": "Input an invalid email format (e.g., 'user@com')."
+      },
+      {
+        "type": "action",
+        "description": "Enter a valid password."
+      },
+      {
+        "type": "action",
+        "description": "Attempt to complete voice selection and submit the form."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the signup fails and an informative email format validation error message is shown."
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "User Login with Correct Credentials",
+    "description": "Verify that an existing user can login successfully with valid credentials.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to login page."
+      },
+      {
+        "type": "action",
+        "description": "Enter valid email and password."
+      },
+      {
+        "type": "action",
+        "description": "Click the login button."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm user is authenticated and navigated to the dashboard."
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "User Login with Incorrect Password",
+    "description": "Verify the login process fails with invalid password and displays error without revealing whether email exists.",
+    "category": "security",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to login page."
+      },
+      {
+        "type": "action",
+        "description": "Enter valid email but incorrect password."
+      },
+      {
+        "type": "action",
+        "description": "Click login button."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify login fails with a generic authentication error message."
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "Start Voice Therapy Session with Real-Time Emotion Detection",
+    "description": "Verify that users can start a live voice therapy session with real-time voice-to-voice interaction and AI-based emotion detection.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login and navigate to the 'Start Call' screen."
+      },
+      {
+        "type": "action",
+        "description": "Initiate a voice therapy session using the live voice chat feature."
+      },
+      {
+        "type": "action",
+        "description": "Speak into the microphone; verify that voice activity detection (VAD) activates."
+      },
+      {
+        "type": "action",
+        "description": "Observe waveform visualization and live transcript display."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm real-time emotion detection is triggered via Hume AI WebSocket and adaptive AI therapeutic responses are provided."
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "Pause and Resume Voice Therapy Session",
+    "description": "Verify the user can pause and resume a live voice therapy session without loss of data or emotional context.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Start a live voice therapy session."
+      },
+      {
+        "type": "action",
+        "description": "Activate the pause button on the session toolbar."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify audio capture and transcription are paused."
+      },
+      {
+        "type": "action",
+        "description": "Press the resume button."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm the session resumes correctly with voice activity detection and waveform visualization."
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Text-Based Chat Therapy Session with Emotion Detection",
+    "description": "Verify that users can conduct a text-based therapy chat with AI emotion detection on messages and receive adaptive responses.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login and open the text chat therapy interface."
+      },
+      {
+        "type": "action",
+        "description": "Send multiple messages exhibiting different emotional tones."
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure each message is processed by AI emotion detection and therapy responses adapt appropriately to emotional tone."
+      },
+      {
+        "type": "action",
+        "description": "Export the conversation transcript."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm the exported transcript matches the session's message history."
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "User Dashboard Emotional Trend Visualization Accuracy",
+    "description": "Verify the emotional trend and session summaries displayed on the user dashboard accurately reflect past sessions and journaling data.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Complete multiple therapy sessions and journaling entries with varied emotional contexts."
+      },
+      {
+        "type": "action",
+        "description": "Navigate to the user dashboard."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that emotional trend charts and session summaries correctly aggregate and display AI-evaluated data."
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Journaling System Entry and AI Mood Insight",
+    "description": "Verify that users can submit journaling entries and receive accurate AI-powered mood and pattern insights.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to journaling section in the app."
+      },
+      {
+        "type": "action",
+        "description": "Write and save journal entries describing mood and events."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm the AI processes the entries and displays mood insights and patterns."
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "Subscription Management and Stripe Billing Integration",
+    "description": "Verify subscription tier upgrades/downgrades work correctly and billing transactions are accurately processed via Stripe.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login and navigate to subscription management."
+      },
+      {
+        "type": "action",
+        "description": "Select a higher subscription tier and initiate upgrade."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify Stripe billing page appears and processes payment successfully."
+      },
+      {
+        "type": "action",
+        "description": "Confirm user subscription tier updates to the new level."
+      },
+      {
+        "type": "action",
+        "description": "Attempt to downgrade to a lower tier."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify downgrade is processed and billing updates accordingly."
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "Voice Configuration Customization Persistence",
+    "description": "Verify that user changes to voice personality and therapeutic style preferences are saved and applied in live sessions.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to voice configuration settings."
+      },
+      {
+        "type": "action",
+        "description": "Modify voice options, personality, and therapeutic style."
+      },
+      {
+        "type": "action",
+        "description": "Save configuration."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm changes persist after logout and are reflected in subsequent live voice sessions."
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "Platform Uptime and Concurrent Sessions Handling",
+    "description": "Verify the platform maintains a minimum 99.9% uptime and supports at least 10,000 concurrent therapy sessions without degradation.",
+    "category": "performance",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Using automated load testing tools, simulate 10,000 concurrent sessions across voice and text therapy modules."
+      },
+      {
+        "type": "assertion",
+        "description": "Monitor platform uptime, response times, and error rates during load test."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm uptime is maintained at 99.9% or above with latency within performance targets."
+      }
+    ]
+  },
+  {
+    "id": "TC013",
+    "title": "Security: End-to-End Data Encryption and Data Privacy Compliance",
+    "description": "Verify that all user data is encrypted in transit and at rest, with compliance to GDPR and HIPAA standards respected.",
+    "category": "security",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Initiate therapy session sending sensitive user data via voice and text."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm data is encrypted using valid TLS connections and stored encrypted in the database."
+      },
+      {
+        "type": "action",
+        "description": "Perform audit of data handling/logging policies to verify no unauthorized access or leakage."
+      },
+      {
+        "type": "assertion",
+        "description": "Check that data retention and user data deletion actions follow GDPR/HIPAA compliance."
+      }
+    ]
+  },
+  {
+    "id": "TC014",
+    "title": "Error Handling: Failure of Hume AI WebSocket Connection",
+    "description": "Verify system behavior and user notification when the Hume AI WebSocket connection for real-time emotion detection drops or fails.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Start a live voice therapy session."
+      },
+      {
+        "type": "action",
+        "description": "Simulate a failure or drop in Hume AI WebSocket connection."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm UI displays an informative error or reconnection attempt."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify therapy session continues in degraded mode without emotion detection and system retries connection."
+      }
+    ]
+  },
+  {
+    "id": "TC015",
+    "title": "Accessibility Compliance with WCAG 2.1 AA Standards",
+    "description": "Verify that the mobile and web app UI meet WCAG 2.1 AA accessibility standards including keyboard navigation, screen reader support, and color contrast.",
+    "category": "ui",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Test various app screens (login, therapy session, dashboard) using screen readers."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify all interactive elements have accessible names and roles."
+      },
+      {
+        "type": "action",
+        "description": "Test color contrast ratios on key UI components."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm contrast meets or exceeds WCAG 2.1 AA minimum thresholds."
+      },
+      {
+        "type": "action",
+        "description": "Verify full app functionality via keyboard-only navigation."
+      }
+    ]
+  },
+  {
+    "id": "TC016",
+    "title": "AI Therapeutic Response Alignment and Crisis Protocol Trigger",
+    "description": "Verify AI therapeutic responses conform to evidence-based methods and crisis intervention protocols trigger correctly based on detected emotional signals and keywords.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Simulate therapy sessions with user inputs indicating mild to severe emotional distress including crisis keywords."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm AI responses are empathetic and evidence-based in non-crisis cases."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify crisis protocol triggers appropriate messaging and support guidance in urgent distress scenarios."
+      }
+    ]
+  },
+  {
+    "id": "TC017",
+    "title": "User Session Scheduling with Reminders and Resumption",
+    "description": "Verify users can schedule therapy sessions, receive reminders, and resume interrupted sessions with preserved context.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to session management and schedule a new voice or text therapy session."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify confirmation message and notification reminder setup."
+      },
+      {
+        "type": "action",
+        "description": "Simulate receiving reminder notification."
+      },
+      {
+        "type": "action",
+        "description": "Resume the scheduled session after interruption."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm session context and history are restored correctly."
+      }
+    ]
+  },
+  {
+    "id": "TC018",
+    "title": "Admin Dashboard: User Analytics and Platform Monitoring Access",
+    "description": "Verify admin users can access and use the platform monitoring and user analytics dashboards with appropriate data visibility controls.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login as admin."
+      },
+      {
+        "type": "action",
+        "description": "Navigate to the admin dashboard."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify access to user behavior analytics, subscription stats, and platform health metrics."
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure admin cannot access unauthorized user personal data outside privacy policies."
+      }
+    ]
+  },
+  {
+    "id": "TC019",
+    "title": "Chat Transcript Export Accuracy for Live and Text Sessions",
+    "description": "Verify that chat transcripts for both live voice and text therapy sessions can be exported completely and accurately reflect all exchanges.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Complete voice and text therapy sessions with multiple exchanges."
+      },
+      {
+        "type": "action",
+        "description": "Use the export function to download session transcripts."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify exported transcripts include the full conversation with timestamps and emotion metadata where applicable."
+      }
+    ]
+  },
+  {
+    "id": "TC020",
+    "title": "Latency Validation for Voice and Text Responses",
+    "description": "Verify platform meets voice chat latency under 500ms and text response under 2 seconds consistently under normal load.",
+    "category": "performance",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Initiate multiple voice therapy sessions and measure end-to-end voice chat latency."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm voice chat latency does not exceed 500 milliseconds."
+      },
+      {
+        "type": "action",
+        "description": "Conduct multiple text-based message exchanges and measure AI response times."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify AI text response latency remains below 2 seconds."
+      }
+    ]
+  }
+]
