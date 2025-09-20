@@ -1,25 +1,7 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "apps/english/package.json",
-      "use": "@vercel/next",
-      "config": {
-        "distDir": ".next"
-      }
-    },
-    {
-      "src": "apps/spanish/package.json", 
-      "use": "@vercel/next",
-      "config": {
-        "distDir": ".next"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "apps/english/$1"
-    }
-  ]
+  "buildCommand": "cd apps/english && npm run build",
+  "outputDirectory": "apps/english/.next",
+  "installCommand": "npm install && cd apps/english && npm install",
+  "framework": "nextjs"
 }
