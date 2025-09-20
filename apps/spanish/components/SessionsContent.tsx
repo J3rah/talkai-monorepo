@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import supabase from "@/supabaseClient";
 import dynamic from "next/dynamic";
 import { ErrorBoundary } from "react-error-boundary";
+import { t } from "@/lib/i18n";
 
 const Chat = dynamic(() => import("@/components/Chat"), {
   ssr: false,
@@ -14,7 +15,7 @@ const TrialChat = dynamic(() => import("@/components/TrialChat"), {
   loading: () => (
     <div className="flex flex-col items-center justify-center min-h-screen p-8 text-center">
       <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-      <p className="text-lg">Loading trial session...</p>
+      <p className="text-lg">{t('sessions.loadingTrialSession')}</p>
     </div>
   )
 });
@@ -75,8 +76,8 @@ export default function SessionsContent({ isTrialMode, accessToken }: SessionsCo
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-8 text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-        <p className="text-lg">Checking authentication...</p>
-        <p className="text-sm text-muted-foreground mt-2">Starting session...</p>
+        <p className="text-lg">{t('sessions.checkingAuth')}</p>
+        <p className="text-sm text-muted-foreground mt-2">{t('sessions.startingSession')}</p>
       </div>
     );
   }
@@ -87,13 +88,13 @@ export default function SessionsContent({ isTrialMode, accessToken }: SessionsCo
       <div className={"grow flex flex-col"}>
         <ErrorBoundary fallback={
           <div className="flex flex-col items-center justify-center min-h-screen p-8 text-center">
-            <h1 className="text-2xl font-bold mb-4">Trial Session Error</h1>
-            <p className="text-lg mb-6">There was an issue loading the trial session. Please try refreshing the page.</p>
+            <h1 className="text-2xl font-bold mb-4">{t('sessions.trialSessionError')}</h1>
+            <p className="text-lg mb-6">{t('sessions.trialSessionErrorDesc')}</p>
             <button 
               onClick={() => window.location.reload()} 
               className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
             >
-              Refresh Page
+              {t('sessions.refreshPage')}
             </button>
           </div>
         }>
@@ -107,15 +108,15 @@ export default function SessionsContent({ isTrialMode, accessToken }: SessionsCo
   if (!isAuthenticated) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-8 text-center">
-        <h1 className="text-2xl font-bold mb-4">Authentication Required</h1>
-        <p className="text-lg mb-6">Please sign in to start a session.</p>
+        <h1 className="text-2xl font-bold mb-4">{t('sessions.authRequired')}</h1>
+        <p className="text-lg mb-6">{t('sessions.pleaseSignIn')}</p>
         <div className="space-y-4">
           <a href="/auth" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-            Sign In
+            {t('sessions.signIn')}
           </a>
           <br />
           <a href="/sessions?trial=true" className="inline-block px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700">
-            Try 5-Minute Trial Instead
+            {t('sessions.tryTrialInstead')}
           </a>
         </div>
       </div>
@@ -126,10 +127,10 @@ export default function SessionsContent({ isTrialMode, accessToken }: SessionsCo
   if (!accessToken) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-8 text-center">
-        <h1 className="text-2xl font-bold mb-4">Unable to Start Session</h1>
-        <p className="text-lg mb-6">There was an issue connecting to the voice service. Please try again.</p>
+        <h1 className="text-2xl font-bold mb-4">{t('sessions.unableToStartSession')}</h1>
+        <p className="text-lg mb-6">{t('sessions.connectionIssue')}</p>
         <a href="/sessions" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-          Retry
+          {t('sessions.retry')}
         </a>
       </div>
     );

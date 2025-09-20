@@ -47,6 +47,7 @@ import {
 import Toast from "@/components/Toast";
 import ConfettiHeart from '@/components/ConfettiHeart';
 import ReferralInvite from "@/components/ReferralInvite";
+import { t } from "@/lib/i18n";
 
 interface ChatSession {
   id: string;
@@ -1386,7 +1387,7 @@ export default function TestDashboardPage() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="w-8 h-8 animate-spin mx-auto text-blue-600" />
-          <p className="mt-2 text-gray-600">Loading dashboard...</p>
+          <p className="mt-2 text-gray-600">{t('dashboard.loadingDashboard')}</p>
         </div>
       </div>
     );
@@ -1396,33 +1397,33 @@ export default function TestDashboardPage() {
   const navigationItems = [
     {
       id: 'overview',
-      label: 'Overview',
+      label: t('dashboard.overview'),
       icon: Home,
       active: activeSection === 'overview'
     },
     {
       id: 'sessions',
-      label: 'Sessions',
+      label: t('dashboard.sessions'),
       icon: MessageSquare,
       active: activeSection === 'sessions',
       badge: chatSessions.length.toString()
     },
     {
       id: 'analytics',
-      label: 'Analytics',
+      label: t('dashboard.analytics'),
       icon: BarChart3,
       active: activeSection === 'analytics',
       premium: userSubscriptionStatus === 'calm'
     },
     {
       id: 'voice',
-      label: 'Voice Settings',
+      label: t('dashboard.voiceSettings'),
       icon: Volume2,
       active: activeSection === 'voice'
     },
     {
       id: 'account',
-      label: 'Account',
+      label: t('dashboard.account'),
       icon: User,
       active: activeSection === 'account'
     }
@@ -1443,7 +1444,7 @@ export default function TestDashboardPage() {
                 <div>
                   <h1 className="font-semibold text-foreground">TalkAI</h1>
                   <p className="text-xs text-muted-foreground">
-                    {userProfile?.full_name ? `${userProfile.full_name} - Dashboard` : 'Dashboard'}
+                    {userProfile?.full_name ? `${userProfile.full_name} - ${t('dashboard.title')}` : t('dashboard.title')}
                   </p>
                 </div>
               )}
@@ -1453,7 +1454,7 @@ export default function TestDashboardPage() {
           {/* Navigation */}
           <div className="flex-1 p-4 space-y-2">
             <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-4">
-              {!sidebarCollapsed && 'Platform'}
+              {!sidebarCollapsed && t('dashboard.platform')}
             </div>
             
             {navigationItems.map((item) => {
@@ -1542,10 +1543,10 @@ export default function TestDashboardPage() {
               </button>
               <div>
                 <h2 className="text-xl font-semibold text-foreground">
-                  {navigationItems.find(item => item.id === activeSection)?.label || 'Dashboard'}
+                  {navigationItems.find(item => item.id === activeSection)?.label || t('dashboard.title')}
                 </h2>
                 <p className="text-sm text-muted-foreground">
-                  Welcome back, {userProfile?.full_name || 'there'}
+                  {t('dashboard.welcome')}, {userProfile?.full_name || 'there'}
                 </p>
               </div>
             </div>
@@ -1554,7 +1555,7 @@ export default function TestDashboardPage() {
               <Link href="/sessions">
                 <Button className="bg-primary hover:bg-primary/90">
                   <MessageSquare className="w-4 h-4 mr-2" />
-                  Start Session
+                  {t('common.start')} {t('dashboard.sessions')}
                 </Button>
               </Link>
               {isAdmin && (
@@ -1578,7 +1579,7 @@ export default function TestDashboardPage() {
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-muted-foreground">Total Sessions</p>
+                      <p className="text-sm font-medium text-muted-foreground">{t('dashboard.totalSessions')}</p>
                       <p className="text-2xl font-bold text-foreground">{chatSessions.length}</p>
                     </div>
                     <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
@@ -1590,7 +1591,7 @@ export default function TestDashboardPage() {
                 <div className="bg-card p-6 rounded-xl border border-border">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-muted-foreground">This Month</p>
+                      <p className="text-sm font-medium text-muted-foreground">{t('dashboard.thisMonth')}</p>
                       <p className="text-2xl font-bold text-foreground">{usageStats.sessionsThisMonth}</p>
                     </div>
                     <div className="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center">
@@ -1602,7 +1603,7 @@ export default function TestDashboardPage() {
                 <div className="bg-card p-6 rounded-xl border border-border">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-muted-foreground">Total Time</p>
+                      <p className="text-sm font-medium text-muted-foreground">{t('dashboard.totalTime')}</p>
                       <p className="text-2xl font-bold text-foreground">{formatDuration(usageStats.durationThisMonth)}</p>
                     </div>
                     <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center">
@@ -1614,7 +1615,7 @@ export default function TestDashboardPage() {
                 <div className="bg-card p-6 rounded-xl border border-border">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-muted-foreground">Current Plan</p>
+                      <p className="text-sm font-medium text-muted-foreground">{t('dashboard.currentPlan')}</p>
                       <p className="text-2xl font-bold text-foreground">{getSubscriptionDisplayName(userSubscriptionStatus)}</p>
                     </div>
                     <div className="w-12 h-12 bg-amber-500/10 rounded-lg flex items-center justify-center">
