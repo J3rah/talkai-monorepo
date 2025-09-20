@@ -15,6 +15,7 @@ import { CheckCircle, Mic, User, Database, Rocket, Shield, ArrowLeft, ArrowRight
 import { getClientAccessToken } from "@/utils/getClientAccessToken";
 import VoiceSamplePlayer from './VoiceSamplePlayer';
 import { Tooltip } from './ui/tooltip';
+import { t } from "@/lib/i18n";
 
 interface StartCallProps {
   onVoiceSelect: (configId: string) => void;
@@ -674,12 +675,12 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
 
   const getStepTitle = (step: number) => {
     switch (step) {
-      case 1: return "Choose Your Therapists Voice";
+      case 1: return t('voiceSelection.chooseVoice');
       // case 2: return "Set Therapist Name"; // COMMENTED OUT - therapist naming step
-      case 2: return userSubscriptionStatus === 'calm' || isTrialMode ? "Medical Disclaimer" : "Data Saving Preference";
-      case 3: return userSubscriptionStatus === 'calm' || isTrialMode ? "Ready to Begin" : "Medical Disclaimer";
-      case 4: return "Ready to Begin";
-      default: return "Choose Your Therapists Voice";
+      case 2: return userSubscriptionStatus === 'calm' || isTrialMode ? t('voiceSelection.medicalDisclaimer') : t('voiceSelection.dataSavingPreference');
+      case 3: return userSubscriptionStatus === 'calm' || isTrialMode ? t('voiceSelection.readyToBegin') : t('voiceSelection.medicalDisclaimer');
+      case 4: return t('voiceSelection.readyToBegin');
+      default: return t('voiceSelection.chooseVoice');
     }
   };
 
@@ -702,27 +703,27 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                 <Mic className="w-8 h-8 text-white" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Choose Your Therapists Voice</h2>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{t('voiceSelection.chooseVoice')}</h2>
                 <p className="text-gray-600 dark:text-gray-300 mt-2">
-                  {isTrialMode ? 'Select a voice for your free trial session' : ''}
+                  {isTrialMode ? t('voiceSelection.selectTrialVoice') : ''}
                 </p>
                 {/* Plan indicator */}
                 {userSubscriptionStatus === 'calm' && (
                   <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-sm mt-3">
                     <span className="w-2 h-2 bg-amber-500 rounded-full"></span>
-                    Calm plan • Basic voices available
+                    {t('voiceSelection.calmPlan')}
                   </div>
                 )}
                 {userSubscriptionStatus === 'centered' && (
                   <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm mt-3">
                     <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                    Centered plan • More voices available
+                    {t('voiceSelection.centeredPlan')}
                   </div>
                 )}
                 {userSubscriptionStatus === 'grounded' && (
                   <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm mt-3">
                     <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                    {userName ? `${userName}, you are on the ` : ''}Grounded plan • All voices available
+                    {userName ? t('voiceSelection.groundedPlanWithName', { name: userName }) : t('voiceSelection.groundedPlan')}
                   </div>
                 )}
               </div>
@@ -788,7 +789,7 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                               </div>
                               <div className="flex items-center gap-1 text-xs text-gray-500">
                                 <Sparkles className="w-3 h-3" />
-                                AI Voice
+                                {t('voiceSelection.aiVoice')}
                               </div>
                             </div>
                           </CardContent>
@@ -808,9 +809,9 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                         <Sparkles className="w-6 h-6 text-white" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900">Want access to more voices?</h3>
+                        <h3 className="font-semibold text-gray-900">{t('voiceSelection.upgradeTitle')}</h3>
                         <p className="text-sm text-gray-600 mt-1">
-                          Upgrade to unlock professional, friendly, and specialty voices
+                          {t('voiceSelection.upgradeDescription')}
                         </p>
                       </div>
                       <Button
@@ -819,7 +820,7 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                         onClick={() => window.open('/subscription', '_blank')}
                         className="bg-white hover:bg-gray-50"
                       >
-                        View Plans
+                        {t('voiceSelection.viewPlans')}
                       </Button>
                     </div>
                   </CardContent>
