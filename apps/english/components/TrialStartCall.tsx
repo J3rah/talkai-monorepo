@@ -72,7 +72,10 @@ export default function TrialStartCall({
       setIsLoadingVoices(true);
       try {
         // For trial users, we give them access to all voices (like grounded subscribers)
-        const groups = await getAvailableVoiceConfigurations('grounded');
+        let groups = await getAvailableVoiceConfigurations('grounded');
+        if(groups.length===0){
+          groups = getFallbackVoiceConfigurations();
+        }
         setVoiceGroups(groups);
         
         // Set the first available voice as default
@@ -237,12 +240,12 @@ export default function TrialStartCall({
               </DialogTitle>
               <DialogDescription className="text-center">
                 Select a voice for your free trial session
-                <div className="mt-2 text-sm text-blue-600">
+                <span className="mt-2 text-sm text-blue-600">
                   ✨ No signup required - Start your 5-minute trial now!
-                </div>
-                <div className="mt-2 text-sm text-green-600">
+                </span>
+                <span className="mt-2 text-sm text-green-600">
                   🎉 Trial users get access to ALL voices!
-                </div>
+                </span>
               </DialogDescription>
             </DialogHeader>
 

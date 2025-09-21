@@ -72,7 +72,10 @@ export default function TrialStartCall({
       setIsLoadingVoices(true);
       try {
         // For trial users, we give them access to all voices (like grounded subscribers)
-        const groups = await getAvailableVoiceConfigurations('grounded');
+        let groups = await getAvailableVoiceConfigurations('grounded');
+        if(groups.length===0){
+          groups = getFallbackVoiceConfigurations();
+        }
         setVoiceGroups(groups);
         
         // Set the first available voice as default
@@ -311,10 +314,10 @@ export default function TrialStartCall({
                             </CardContent>
                           </Card>
                         ))}
-                      </div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
+              </div>
               )}
             </div>
           </>
@@ -579,7 +582,7 @@ export default function TrialStartCall({
 
           {/* Modal content */}
           <div className="flex-1 overflow-y-auto p-6">
-            {renderModalContent()}
+          {renderModalContent()}
           </div>
         </DialogContent>
       </Dialog>
