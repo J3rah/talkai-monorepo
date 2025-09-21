@@ -331,6 +331,7 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
         sessionStorage.setItem('currentVoiceConfigId', config.hume_config_id);
         if (config.display_name) sessionStorage.setItem('currentVoiceDisplayName', config.display_name);
         if (config.internal_name) sessionStorage.setItem('currentVoiceInternalName', config.internal_name);
+        if (config.character_name) sessionStorage.setItem('currentVoiceCharacterName', config.character_name);
       } catch (e) {
         console.warn('StartCall: Failed to persist current voice selection to sessionStorage:', e);
       }

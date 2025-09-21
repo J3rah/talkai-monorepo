@@ -45,6 +45,12 @@ export default function AuthenticatedLanding() {
   };
 
   useEffect(() => {
+    // Failsafe: stop showing spinner if auth check stalls > 8 s
+    const overallTimeout = setTimeout(() => {
+      console.warn('AuthenticatedLanding: overall auth/data timeout – falling back to unauthenticated view');
+      setLoading(false);
+    }, 8000);
+
     let isMounted = true;
 
     const checkAuthAndFetchData = async () => {
@@ -162,9 +168,11 @@ export default function AuthenticatedLanding() {
       }
     });
 
+    // cleanup overall timeout
     return () => {
       isMounted = false;
       subscription.unsubscribe();
+      clearTimeout(overallTimeout);
     };
   }, []);
 

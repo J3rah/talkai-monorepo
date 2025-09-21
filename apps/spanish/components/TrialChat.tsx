@@ -364,7 +364,7 @@ export default function TrialChat({
           </div>
         )}
 
-        <Messages ref={ref} therapistName={therapistName} />
+        <Messages ref={ref} therapistName={therapistName} voiceConfigId={selectedConfigId || defaultConfigId} />
         <Controls />
         <TrialStartCall 
           onVoiceSelect={handleVoiceSelect}

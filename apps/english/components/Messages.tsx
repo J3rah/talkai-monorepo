@@ -9,6 +9,9 @@ import { generateSessionName } from "@/utils/sessionUtils";
 import { shouldTriggerConfetti, triggerEmotionConfetti } from "@/utils/confetti";
 import { getVoiceConfigurationById, getAgentInfoFromVoiceConfig } from "@/utils/voiceConfigUtils";
 
+// Flag to control optional initial greeting message
+const ENABLE_INITIAL_GREETING = false;
+
 interface MessagesProps {
   sessionId?: string | null;
   therapistName?: string;
@@ -646,7 +649,7 @@ const Messages = forwardRef<
   // Combine initial messages with live messages for rendering
   const combinedMessages = useMemo(() => [...initialMessages, ...messages], [initialMessages, messages]);
 
-  // Optional initial greeting – disabled by flag
+2  // Optional initial greeting – disabled by flag
   useEffect(() => {
     if (!ENABLE_INITIAL_GREETING) return;
     if (status?.value !== 'connected') return;

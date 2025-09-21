@@ -12,6 +12,7 @@ import { getVoiceConfigurationById, getAgentInfoFromVoiceConfig } from "@/utils/
 interface MessagesProps {
   sessionId?: string | null;
   therapistName?: string;
+  voiceConfigId?: string | null;
 }
 
 interface ChatMessage {
@@ -39,7 +40,7 @@ const isChatMessage = (msg: unknown): msg is ChatMessage => {
 const Messages = forwardRef<
   ComponentRef<typeof motion.div>,
   MessagesProps
->(function Messages({ sessionId, therapistName }, _ref) {
+>(function Messages({ sessionId, therapistName, voiceConfigId }, _ref) {
   const { messages, status } = useVoice();
   const messagesRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -131,7 +132,7 @@ const Messages = forwardRef<
   useEffect(() => {
     const fetchAgentName = async () => {
       // Prefer a persisted configId from session storage (set by StartCall/TrialStartCall)
-      let configId: string | null = null;
+      let configId: string | null = voiceConfigId || null;
       let characterNameFromStorage: string | null = null;
       try {
         configId = sessionStorage.getItem('currentVoiceConfigId');
@@ -218,7 +219,7 @@ const Messages = forwardRef<
     };
 
     fetchAgentName();
-  }, [therapistName]);
+  }, [therapistName, voiceConfigId]);
 
   // Check if data saving is allowed based on user subscription and preferences
   const checkDataSavingPermission = useCallback(async (userId: string) => {
