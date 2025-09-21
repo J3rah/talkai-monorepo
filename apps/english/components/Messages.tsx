@@ -135,14 +135,14 @@ const Messages = forwardRef<
           });
         }
         
-        // Prioritize custom therapist name over voice configuration character mapping
-        if (therapistName && therapistName !== "Talk Therapist") {
-          console.log('✅ Messages: Using custom therapist name:', therapistName);
-          setAgentName(therapistName);
-        } else if (voiceConfig?.display_name) {
+        // Prioritize voice configuration character name over custom therapist name
+        if (voiceConfig?.display_name) {
           const characterName = getCharacterName(voiceConfig.display_name, voiceConfig.internal_name);
           console.log('✅ Messages: Using character name:', characterName, 'from voice config:', voiceConfig.display_name);
           setAgentName(characterName);
+        } else if (therapistName && therapistName !== "Talk Therapist") {
+          console.log('✅ Messages: Using custom therapist name:', therapistName);
+          setAgentName(therapistName);
         } else {
           console.log('⚠️ Messages: Voice config not found, using fallback mapping or therapist name');
           if (mappedDisplay) {
