@@ -43,7 +43,7 @@ export const Nav = () => {
     try {
       // Add timeout to prevent hanging
       const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Profile fetch timeout')), 3000)
+        setTimeout(() => reject(new Error('Profile fetch timeout')), 5000) // Increased timeout to 5 seconds
       );
       
       const profilePromise = supabase
@@ -55,13 +55,33 @@ export const Nav = () => {
       const { data: profile, error } = await Promise.race([profilePromise, timeoutPromise]) as any;
       
       if (error) {
-        console.error('Error fetching user profile:', error);
+        console.warn('Profile fetch failed, using fallback:', error);
+        // Set a fallback profile with user email if profile fetch fails
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user?.email) {
+          setUserProfile({
+            full_name: session.user.email.split('@')[0],
+            email: session.user.email
+          });
+        }
         return;
       }
       
       setUserProfile(profile);
     } catch (error) {
-      console.error('Error fetching user profile:', error);
+      console.warn('Profile fetch timeout, using fallback:', error);
+      // Set a fallback profile with user email if profile fetch fails
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user?.email) {
+          setUserProfile({
+            full_name: session.user.email.split('@')[0],
+            email: session.user.email
+          });
+        }
+      } catch (fallbackError) {
+        console.error('Fallback profile creation failed:', fallbackError);
+      }
     }
   };
 
@@ -173,7 +193,7 @@ export const Nav = () => {
 
       // Add timeout to prevent hanging
       const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Admin check timeout')), 3000)
+        setTimeout(() => reject(new Error('Admin check timeout')), 5000) // Increased timeout to 5 seconds
       );
       
       const adminCheckPromise = fetch('/api/admin/check', {
@@ -191,7 +211,7 @@ export const Nav = () => {
         setIsAdmin(false);
       }
     } catch (error) {
-      console.error('Error checking admin status:', error);
+      console.warn('Admin check failed, defaulting to false:', error);
       setIsAdmin(false);
     }
   };

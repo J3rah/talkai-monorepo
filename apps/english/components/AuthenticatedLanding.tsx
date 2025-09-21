@@ -271,8 +271,8 @@ export default function AuthenticatedLanding() {
               <CardDescription className="text-white/80 text-center">
                 {userData.lastSessionDate ? (
                   <>
-                    <div className="text-base font-medium text-yellow-700 dark:text-yellow-200">{formatDate(userData.lastSessionDate)}</div>
-                    {userData.lastSessionTitle ? <div className="mt-1 text-sm text-green-700 dark:text-green-200">{userData.lastSessionTitle}</div> : null}
+                    <span className="text-base font-medium text-yellow-700 dark:text-yellow-200">{formatDate(userData.lastSessionDate)}</span>
+                    {userData.lastSessionTitle ? <span className="block mt-1 text-sm text-green-700 dark:text-green-200">{userData.lastSessionTitle}</span> : null}
                   </>
                 ) : <span className="text-gray-600 dark:text-gray-300">No sessions yet</span>}
               </CardDescription>
@@ -285,8 +285,8 @@ export default function AuthenticatedLanding() {
               <CardDescription className="text-white/80 text-center">
                 {userData.topEmotion ? (
                   <>
-                    <div className="text-base font-medium text-purple-700 dark:text-purple-200">Top emotion: {userData.topEmotion}</div>
-                    <div className="mt-1 text-sm text-blue-700 dark:text-blue-200">Avg intensity: {userData.avgEmotionIntensity.toFixed(2)}</div>
+                    <span className="text-base font-medium text-purple-700 dark:text-purple-200">Top emotion: {userData.topEmotion}</span>
+                    <span className="block mt-1 text-sm text-blue-700 dark:text-blue-200">Avg intensity: {userData.avgEmotionIntensity.toFixed(2)}</span>
                   </>
                 ) : <span className="text-gray-600 dark:text-gray-300">No emotion data yet</span>}
               </CardDescription>
@@ -297,8 +297,8 @@ export default function AuthenticatedLanding() {
             <CardHeader className="text-center">
               <CardTitle className="text-xl text-violet-600 dark:text-violet-300">Your Activity</CardTitle>
               <CardDescription className="text-white/80 text-center">
-                <div className="text-base font-medium text-purple-700 dark:text-purple-200">Total sessions: {userData.totalSessions}</div>
-                <div className="mt-1 text-sm text-fuchsia-700 dark:text-fuchsia-200">This month: {userData.sessionsThisMonth} • {formatDuration(userData.durationThisMonthSeconds)}</div>
+                <span className="text-base font-medium text-purple-700 dark:text-purple-200">Total sessions: {userData.totalSessions}</span>
+                <span className="block mt-1 text-sm text-fuchsia-700 dark:text-fuchsia-200">This month: {userData.sessionsThisMonth} • {formatDuration(userData.durationThisMonthSeconds)}</span>
               </CardDescription>
             </CardHeader>
           </Card>

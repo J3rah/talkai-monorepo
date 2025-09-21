@@ -237,6 +237,15 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
 
       } catch (error) {
         console.error('StartCall: auth check failed', error);
+        
+        // Handle auth errors gracefully
+        if (error?.message?.includes('Invalid Refresh Token') || 
+            error?.message?.includes('Refresh Token Not Found')) {
+          console.warn('Refresh token error in StartCall, redirecting to auth...');
+          window.location.href = '/auth?error=session_expired&message=Your session has expired. Please sign in again.';
+          return;
+        }
+        
         setIsAuthenticated(false);
       }
     };

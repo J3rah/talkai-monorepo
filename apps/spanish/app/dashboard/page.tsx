@@ -1629,27 +1629,27 @@ export default function TestDashboardPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Session Stats */}
                 <div className="bg-card p-4 sm:p-6 rounded-xl border border-border flex flex-col">
-                  <h2 className="text-lg sm:text-xl font-semibold mb-4 text-foreground">Session Stats</h2>
+                  <h2 className="text-lg sm:text-xl font-semibold mb-4 text-foreground">{t('dashboard.sessionStats')}</h2>
                   <div className="space-y-2 flex-1">
-                    <p className="text-sm sm:text-base text-foreground">Total Sessions: {therapySessions.length}</p>
-                    <p className="text-sm sm:text-base text-foreground">Last Session: {therapySessions[0] ? new Date(therapySessions[0].created_at).toLocaleDateString() : 'Never'}</p>
-                    <p className="text-sm sm:text-base text-foreground">Total Duration: {formatDuration(therapySessions.reduce((acc, s) => acc + (s.duration || 0), 0))}</p>
+                    <p className="text-sm sm:text-base text-foreground">{t('dashboard.totalSessions')}: {therapySessions.length}</p>
+                    <p className="text-sm sm:text-base text-foreground">{t('dashboard.lastSession')}: {therapySessions[0] ? new Date(therapySessions[0].created_at).toLocaleDateString() : 'Nunca'}</p>
+                    <p className="text-sm sm:text-base text-foreground">{t('dashboard.totalDuration')}: {formatDuration(therapySessions.reduce((acc, s) => acc + (s.duration || 0), 0))}</p>
                     {therapySessions[0]?.chat_sessions && (
-                      <p className="text-xs sm:text-sm text-muted-foreground">Last Summary: {therapySessions[0].chat_sessions.summary || 'N/A'}</p>
+                      <p className="text-xs sm:text-sm text-muted-foreground">{t('dashboard.lastSummary')}: {therapySessions[0].chat_sessions.summary || 'N/A'}</p>
                     )}
                   </div>
                   <div className="pt-4 mt-auto">
-                    <Link href="/" className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full">Start Therapy Session</Link>
+                    <Link href="/" className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full">{t('dashboard.startTherapySession')}</Link>
                   </div>
                 </div>
 
                 {/* Voice Settings Summary */}
                 <div className="bg-card p-4 sm:p-6 rounded-xl border border-border flex flex-col">
-                  <h2 className="text-lg sm:text-xl font-semibold mb-4 text-foreground">Voice Settings</h2>
+                  <h2 className="text-lg sm:text-xl font-semibold mb-4 text-foreground">{t('dashboard.voiceSettings')}</h2>
                   <div className="space-y-2 flex-1">
-                    <p className="text-sm sm:text-base text-foreground">Current Voice: {selectedVoice?.display_name || 'Loading...'}</p>
-                    <p className="text-sm sm:text-base text-foreground">Subscription: {getSubscriptionDisplayName(userSubscriptionStatus)}</p>
-                    <p className="text-sm sm:text-base text-foreground">Available Voices: {getAvailableVoicesCount(userSubscriptionStatus, voiceGroups)} / {totalVoicesCount}</p>
+                    <p className="text-sm sm:text-base text-foreground">{t('dashboard.currentVoice')}: {selectedVoice?.display_name || t('common.loading')}</p>
+                    <p className="text-sm sm:text-base text-foreground">{t('dashboard.subscription')}: {getSubscriptionDisplayName(userSubscriptionStatus)}</p>
+                    <p className="text-sm sm:text-base text-foreground">{t('dashboard.availableVoices')}: {getAvailableVoicesCount(userSubscriptionStatus, voiceGroups)} / {totalVoicesCount}</p>
                   </div>
                   <div className="pt-4 mt-auto">
                     <VoiceSettings className="w-full" onVoiceChange={handleVoiceChange}/>
@@ -1658,15 +1658,15 @@ export default function TestDashboardPage() {
 
                 {/* Emotional Insights */}
                 <div className="bg-card p-4 sm:p-6 rounded-xl border border-border">
-                  <h2 className="text-lg sm:text-xl font-semibold mb-4 text-foreground">Emotional Insights</h2>
-                  <p className="text-sm sm:text-base mb-2 text-foreground">Total Emotions Tracked: {emotionMetrics.length}</p>
-                  <p className="text-sm sm:text-base text-foreground">Average Intensity: {(emotionMetrics.reduce((acc, m) => acc + m.intensity, 0) / Math.max(emotionMetrics.length, 1)).toFixed(2)}</p>
+                  <h2 className="text-lg sm:text-xl font-semibold mb-4 text-foreground">{t('dashboard.emotionalInsights')}</h2>
+                  <p className="text-sm sm:text-base mb-2 text-foreground">{t('dashboard.totalEmotionsTracked')}: {emotionMetrics.length}</p>
+                  <p className="text-sm sm:text-base text-foreground">{t('dashboard.averageIntensity')}: {(emotionMetrics.reduce((acc, m) => acc + m.intensity, 0) / Math.max(emotionMetrics.length, 1)).toFixed(2)}</p>
                 </div>
               </div>
 
               {/* Quick Actions */}
               <div className="bg-card rounded-xl border border-border p-6">
-                <h3 className="text-lg font-semibold text-foreground mb-4">Quick Actions</h3>
+                <h3 className="text-lg font-semibold text-foreground mb-4">{t('dashboard.quickActions')}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <Link href="/chat">
                     <div className="p-4 border border-border rounded-lg hover:border-primary/30 hover:bg-primary/5 transition-colors cursor-pointer">
@@ -1675,8 +1675,8 @@ export default function TestDashboardPage() {
                           <MessageSquare className="w-5 h-5 text-primary" />
                         </div>
                         <div>
-                          <h4 className="font-medium text-foreground">Start New Session</h4>
-                          <p className="text-sm text-muted-foreground">Begin a new therapy conversation</p>
+                          <h4 className="font-medium text-foreground">{t('dashboard.startNewSession')}</h4>
+                          <p className="text-sm text-muted-foreground">{t('dashboard.beginTherapyConversation')}</p>
                         </div>
                       </div>
                     </div>
@@ -1691,8 +1691,8 @@ export default function TestDashboardPage() {
                         <Volume2 className="w-5 h-5 text-purple-500" />
                       </div>
                       <div>
-                        <h4 className="font-medium text-foreground">Voice Settings</h4>
-                        <p className="text-sm text-muted-foreground">Customize your therapy voice</p>
+                        <h4 className="font-medium text-foreground">{t('dashboard.voiceSettings')}</h4>
+                        <p className="text-sm text-muted-foreground">{t('dashboard.customizeTherapyVoice')}</p>
                       </div>
                     </div>
                   </button>
@@ -1706,8 +1706,8 @@ export default function TestDashboardPage() {
                         <BarChart3 className="w-5 h-5 text-green-500" />
                       </div>
                       <div>
-                        <h4 className="font-medium text-foreground">View Analytics</h4>
-                        <p className="text-sm text-muted-foreground">Track your progress</p>
+                        <h4 className="font-medium text-foreground">{t('dashboard.viewAnalytics')}</h4>
+                        <p className="text-sm text-muted-foreground">{t('dashboard.trackProgress')}</p>
                       </div>
                     </div>
                   </button>
@@ -1718,12 +1718,12 @@ export default function TestDashboardPage() {
               {chatSessions.length > 0 && (
                 <div className="bg-card rounded-xl border border-border p-6">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-foreground">Recent Sessions</h3>
+                    <h3 className="text-lg font-semibold text-foreground">{t('dashboard.recentSessions')}</h3>
                     <button 
                       onClick={() => setActiveSection('sessions')}
                       className="text-sm text-primary hover:text-primary/80"
                     >
-                      View all
+                      {t('dashboard.viewAll')}
                     </button>
                   </div>
                   <div className="space-y-3">
@@ -1741,7 +1741,7 @@ export default function TestDashboardPage() {
                           {resumingSessionId === session.id ? (
                             <Loader2 className="w-4 h-4 animate-spin" />
                           ) : (
-                            'Resume'
+                            t('dashboard.resume')
                           )}
                         </button>
                       </div>
@@ -1756,13 +1756,13 @@ export default function TestDashboardPage() {
             <div className="space-y-6">
               <div className="bg-card rounded-xl border border-border p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-foreground">Your Sessions</h3>
+                  <h3 className="text-lg font-semibold text-foreground">{t('dashboard.yourSessions')}</h3>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-muted-foreground">{chatSessions.length} total</span>
+                    <span className="text-sm text-muted-foreground">{chatSessions.length} {t('dashboard.total')}</span>
                     {userSubscriptionStatus === 'grounded' && (
                       <>
-                        <Button size="sm" variant="outline" onClick={() => downloadAllSessionsData('json')}>Download JSON</Button>
-                        <Button size="sm" variant="outline" onClick={() => downloadAllSessionsData('csv')}>Download CSV</Button>
+                        <Button size="sm" variant="outline" onClick={() => downloadAllSessionsData('json')}>{t('dashboard.download')} JSON</Button>
+                        <Button size="sm" variant="outline" onClick={() => downloadAllSessionsData('csv')}>{t('dashboard.download')} CSV</Button>
                       </>
                     )}
                   </div>
@@ -1771,10 +1771,10 @@ export default function TestDashboardPage() {
                 {chatSessions.length === 0 ? (
                   <div className="text-center py-12">
                     <MessageSquare className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                    <h4 className="text-lg font-medium text-foreground mb-2">No sessions yet</h4>
-                    <p className="text-muted-foreground mb-4">Start your first therapy session to begin your journey</p>
+                    <h4 className="text-lg font-medium text-foreground mb-2">{t('dashboard.noSessionsYet')}</h4>
+                    <p className="text-muted-foreground mb-4">{t('dashboard.startFirstSessionDesc')}</p>
                     <Link href="/chat">
-                      <Button>Start First Session</Button>
+                      <Button>{t('dashboard.startFirstSession')}</Button>
                     </Link>
                   </div>
                 ) : (
@@ -1796,7 +1796,7 @@ export default function TestDashboardPage() {
                               {resumingSessionId === session.id ? (
                                 <Loader2 className="w-4 h-4 animate-spin" />
                               ) : (
-                                'Resume'
+                                t('dashboard.resume')
                               )}
                             </button>
                             {userSubscriptionStatus === 'grounded' && (
@@ -1805,13 +1805,13 @@ export default function TestDashboardPage() {
                                 onClick={() => downloadSessionData(session.id)}
                                   className="px-2 py-1 text-sm bg-green-500/10 text-green-500 rounded-md hover:bg-green-500/20"
                               >
-                                  Download
+                                  {t('dashboard.download')}
                               </button>
                                 <button
                                   onClick={() => showAudioInfo(session.id)}
                                   className="px-2 py-1 text-sm bg-purple-500/10 text-purple-500 rounded-md hover:bg-purple-500/20"
                                 >
-                                  Audio
+                                  {t('dashboard.audio')}
                                 </button>
                               </>
                             )}

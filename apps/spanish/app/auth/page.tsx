@@ -55,6 +55,15 @@ export default function AuthPage() {
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search);
       setReturnTo(urlParams.get('returnTo'));
+      
+      // Handle session expired error
+      const error = urlParams.get('error');
+      const errorMessage = urlParams.get('message');
+      if (error === 'session_expired' && errorMessage) {
+        setMessage(errorMessage);
+        // Clear the URL parameters after showing the message
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
     }
   }, []);
 

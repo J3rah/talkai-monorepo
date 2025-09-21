@@ -119,7 +119,7 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
     try {
       // Always fetch fresh user and profile with timeout
       const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('StartCall user fetch timeout')), 3000)
+        setTimeout(() => reject(new Error('StartCall user fetch timeout')), 5000) // Increased timeout to 5 seconds
       );
 
       let { data: { user } } = await Promise.race([supabase.auth.getUser(), timeoutPromise]) as any;
@@ -187,7 +187,7 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
       if (foundVoice) setSelectedVoice(foundVoice);
 
     } catch (err) {
-      console.error('🎵 StartCall: fetchUserPreferences unexpected error', err);
+      console.warn('🎵 StartCall: fetchUserPreferences failed, using fallback:', err);
       if (userSubscriptionStatus === 'loading') setUserSubscriptionStatus('calm');
         const fallbackGroups = getFallbackVoiceConfigurations();
         setVoiceGroups(fallbackGroups);
@@ -218,7 +218,7 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
       try {
         // Timeout guard
         const timeoutPromise = new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('StartCall auth check timeout')), 3000)
+          setTimeout(() => reject(new Error('StartCall auth check timeout')), 5000) // Increased timeout to 5 seconds
         );
 
         let { data: { user } } = await Promise.race([supabase.auth.getUser(), timeoutPromise]) as any;
@@ -235,7 +235,7 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
         }
 
       } catch (error) {
-        console.error('StartCall: auth check failed', error);
+        console.warn('StartCall: auth check failed, defaulting to unauthenticated:', error);
         setIsAuthenticated(false);
       }
     };

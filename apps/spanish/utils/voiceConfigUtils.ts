@@ -120,16 +120,16 @@ export function getFallbackVoiceConfigurations(): VoiceConfigurationGroup[] {
     {
       id: 'classic',
       name: 'classic',
-      display_name: 'Classic Voices',
-      description: 'Traditional, professional therapy voices for everyday sessions',
+      display_name: 'Voces Clásicas',
+      description: 'Voces tradicionales y profesionales de terapia para sesiones cotidianas',
       sort_order: 1,
       is_active: true,
       voice_configurations: [
         {
           id: 'male',
           internal_name: 'male',
-          display_name: 'Male Voice',
-          description: 'A male therapeutic voice',
+          display_name: 'Voz Masculina',
+          description: 'Una voz terapéutica masculina',
           hume_config_id: process.env.NEXT_PUBLIC_HUME_MALE_CONFIG_ID || '793d1f15-4bf9-4beb-a4ab-a62caff84e70',
           base_voice: 'ITO',
           parameters: { speaking_rate: 1.0, pitch: 0.0 },
@@ -141,8 +141,8 @@ export function getFallbackVoiceConfigurations(): VoiceConfigurationGroup[] {
         {
           id: 'female',
           internal_name: 'female',
-          display_name: 'Female Voice',
-          description: 'A female therapeutic voice',
+          display_name: 'Voz Femenina',
+          description: 'Una voz terapéutica femenina',
           hume_config_id: process.env.NEXT_PUBLIC_HUME_FEMALE_CONFIG_ID || '3a451da2-a50a-42c2-83fa-13c79f027643',
           base_voice: 'ITO',
           parameters: { speaking_rate: 1.0, pitch: 0.0 },
@@ -156,8 +156,8 @@ export function getFallbackVoiceConfigurations(): VoiceConfigurationGroup[] {
     {
       id: 'creative',
       name: 'creative',
-      display_name: 'Character Voices',
-      description: 'Unique, engaging voices with personality for a more dynamic experience',
+      display_name: 'Voces de Personajes',
+      description: 'Voces únicas y atractivas con personalidad para una experiencia más dinámica',
       sort_order: 2,
       is_active: true,
       voice_configurations: [
@@ -165,7 +165,7 @@ export function getFallbackVoiceConfigurations(): VoiceConfigurationGroup[] {
           id: 'sass',
           internal_name: 'sass',
           display_name: 'Sass',
-          description: 'A friendly, down-to-earth voice with western charm',
+          description: 'Una voz amigable y sencilla con encanto occidental',
           hume_config_id: process.env.NEXT_PUBLIC_HUME_SASS_CONFIG_ID || '8346ae7f-32c4-40f6-aa81-20ce7081df13',
           base_voice: 'ITO',
           parameters: { speaking_rate: 0.95, pitch: -0.1 },
@@ -177,8 +177,8 @@ export function getFallbackVoiceConfigurations(): VoiceConfigurationGroup[] {
         {
           id: 'jacksparrow',
           internal_name: 'jacksparrow',
-          display_name: 'The Pirate',
-          description: 'A charismatic and witty voice inspired by legendary pirates',
+          display_name: 'El Pirata',
+          description: 'Una voz carismática e ingeniosa inspirada en piratas legendarios',
           hume_config_id: process.env.NEXT_PUBLIC_HUME_JACKSPARROW_CONFIG_ID || 'a608626e-23e0-4070-8e24-dc880d34000b',
           base_voice: 'ITO',
           parameters: { speaking_rate: 0.95, pitch: 0.1 },

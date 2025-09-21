@@ -57,7 +57,7 @@ export default function ClientComponent({
       try {
         // Add timeout to prevent hanging
         const timeoutPromise = new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Therapist name fetch timeout')), 3000)
+          setTimeout(() => reject(new Error('Therapist name fetch timeout')), 5000) // Increased timeout to 5 seconds
         );
         
         const authPromise = supabase.auth.getUser();
@@ -76,7 +76,8 @@ export default function ClientComponent({
           setTherapistName(profile.therapist_name);
         }
       } catch (error) {
-        console.error('Error fetching therapist name:', error);
+        console.warn('Therapist name fetch failed, using default:', error);
+        // Keep default "Talk Therapist" name on timeout/error
       }
     };
 

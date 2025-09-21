@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { handleAuthError, isAuthError } from './lib/authErrorHandler';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -14,6 +15,15 @@ const supabase = createClient(
     }
   }
 );
+
+// Add global error handler for auth errors
+if (typeof window !== 'undefined') {
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_OUT' || event === 'TOKEN_REFRESHED') {
+      console.log('Auth state changed:', event);
+    }
+  });
+}
 
 // Add debug logging for production issues
 if (process.env.NODE_ENV === 'production') {
