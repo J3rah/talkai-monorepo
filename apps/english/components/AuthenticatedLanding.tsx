@@ -46,6 +46,15 @@ export default function AuthenticatedLanding() {
 
   useEffect(() => {
     let isMounted = true;
+    let overallTimeoutId: NodeJS.Timeout;
+
+    // Set a maximum timeout for the entire operation to prevent infinite loading
+    overallTimeoutId = setTimeout(() => {
+      if (isMounted) {
+        console.warn('AuthenticatedLanding: Overall timeout reached, stopping loading state');
+        setLoading(false);
+      }
+    }, 15000); // 15 second maximum timeout
 
     const checkAuthAndFetchData = async () => {
       try {
@@ -74,8 +83,13 @@ export default function AuthenticatedLanding() {
         let avgEmotionIntensity = 0;
 
         try {
+          // Add timeout protection to prevent infinite loading
+          const timeoutPromise = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('User data fetch timeout')), 8000) // 8 second timeout
+          );
+
           const monthStartIso = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString();
-          const [profileResult, sessionsCountResult, lastSessionResult, monthlyTherapyResult, emotionsResult] = await Promise.all([
+          const dataFetchPromise = Promise.all([
             supabase.from('profiles').select('full_name').eq('id', userId).single(),
             supabase.from('chat_sessions').select('id', { count: 'exact', head: true }).eq('user_id', userId),
             supabase.from('chat_sessions').select('id, title, created_at').eq('user_id', userId).order('created_at', { ascending: false }).limit(1),
@@ -87,6 +101,8 @@ export default function AuthenticatedLanding() {
               .order('created_at', { ascending: false })
               .limit(100)
           ]);
+
+          const [profileResult, sessionsCountResult, lastSessionResult, monthlyTherapyResult, emotionsResult] = await Promise.race([dataFetchPromise, timeoutPromise]) as any;
 
           if (!profileResult.error && profileResult.data?.full_name) {
             fullName = profileResult.data.full_name;
@@ -135,15 +151,30 @@ export default function AuthenticatedLanding() {
             });
           }
         } catch (e) {
-          console.error('Error fetching user data:', e);
+          console.warn('Error fetching user data, using defaults:', e);
+          // Set default user data if fetch fails
+          if (isMounted) {
+            setUserData({
+              fullName: session.user.email?.split('@')[0] || 'there',
+              totalSessions: 0,
+              lastSessionDate: null,
+              lastSessionTitle: null,
+              sessionsThisMonth: 0,
+              durationThisMonthSeconds: 0,
+              topEmotion: null,
+              avgEmotionIntensity: 0
+            });
+          }
         }
 
         if (isMounted) {
+          clearTimeout(overallTimeoutId);
           setLoading(false);
         }
       } catch (error) {
         console.error('Error checking auth:', error);
         if (isMounted) {
+          clearTimeout(overallTimeoutId);
           setLoading(false);
         }
       }
@@ -164,6 +195,7 @@ export default function AuthenticatedLanding() {
 
     return () => {
       isMounted = false;
+      clearTimeout(overallTimeoutId);
       subscription.unsubscribe();
     };
   }, []);
