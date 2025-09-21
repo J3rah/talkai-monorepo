@@ -190,4 +190,64 @@ export function getFallbackVoiceConfigurations(): VoiceConfigurationGroup[] {
       ]
     }
   ];
+}
+
+/**
+ * Maps voice configuration display names to character names
+ * This provides consistent character naming across the application
+ */
+export function getCharacterNameFromVoiceConfig(displayName: string, internalName?: string): string {
+  const characterMap: Record<string, string> = {
+    // Classic voices
+    'Male Voice': 'Zander',
+    'Female Voice': 'Sofia',
+    'Calm Voice': 'Zen',
+    'Energetic Voice': 'Spark',
+    'Professional Voice': 'Dr. Williams',
+    'Friendly Voice': 'Alex',
+    
+    // Character voices
+    'Sass': 'Sass',
+    'The Pirate': 'Captain Jack',
+    'Brit': 'Brit',
+    'Julian': 'Julian',
+    'Aven': 'Aven',
+    'Nia': 'Nia',
+    'Zora': 'Zora',
+    'Kai': 'Kai',
+    
+    // Internal name mappings (fallback)
+    'male': 'Zander',
+    'female': 'Sofia',
+    'energetic': 'Spark',
+    'sass': 'Sass',
+    'jacksparrow': 'Captain Jack',
+    'brit': 'Brit',
+    'julian': 'Julian',
+    'maleprotagonist': 'Aven',
+    'nia': 'Nia',
+    'zora': 'Zora',
+    'kai': 'Kai',
+  };
+
+  // Try display name first, then internal name
+  return characterMap[displayName] || characterMap[internalName || ''] || displayName;
+}
+
+/**
+ * Gets agent information from voice configuration
+ * Returns both the display name and character name
+ */
+export function getAgentInfoFromVoiceConfig(voiceConfig: VoiceConfiguration): {
+  displayName: string;
+  characterName: string;
+  configId: string;
+} {
+  const characterName = getCharacterNameFromVoiceConfig(voiceConfig.display_name, voiceConfig.internal_name);
+  
+  return {
+    displayName: voiceConfig.display_name,
+    characterName,
+    configId: voiceConfig.hume_config_id
+  };
 } 

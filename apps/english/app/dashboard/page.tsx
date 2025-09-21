@@ -8,6 +8,7 @@ import VoiceSettings from "@/components/VoiceSettings";
 import { expressionLabels } from "@/utils/expressionLabels";
 // Removed unused import expressionColors
 import { getAvailableVoiceConfigurations, getVoiceConfigurationById, getFallbackVoiceConfigurations, VoiceConfigurationGroup, VoiceConfiguration } from "@/utils/voiceConfigUtils";
+import { calculateMostUsedAgent, getDefaultAgent, getAvailableTherapistCount, UserAgentAnalytics } from "@/utils/agentAnalytics";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { 
@@ -228,6 +229,11 @@ export default function TestDashboardPage() {
   const [selectedVoice, setSelectedVoice] = useState<VoiceConfiguration | null>(null);
   const [voiceGroups, setVoiceGroups] = useState<VoiceConfigurationGroup[]>([]);
   const [totalVoicesCount, setTotalVoicesCount] = useState(0);
+
+  // Agent analytics state
+  const [agentAnalytics, setAgentAnalytics] = useState<UserAgentAnalytics | null>(null);
+  const [defaultAgentName, setDefaultAgentName] = useState<string>('Talk Therapist');
+  const [availableTherapistCount, setAvailableTherapistCount] = useState<number>(1);
 
   // Add password change state after other useState declarations
   const [showChangePassword, setShowChangePassword] = useState(false);
@@ -681,6 +687,9 @@ export default function TestDashboardPage() {
         }
       }
       
+      // Fetch agent analytics for all users
+      await fetchAgentAnalytics(userId);
+      
       // Only fetch analytics data if user has centered/grounded subscription
       if (actualSubscriptionStatus === 'centered' || actualSubscriptionStatus === 'grounded') {
         await fetchAnalyticsData(userId);
@@ -690,6 +699,40 @@ export default function TestDashboardPage() {
       await fetchBasicUserData(userId);
     } catch (error) {
       console.error('Error fetching user data:', error);
+    }
+  };
+
+  const fetchAgentAnalytics = async (userId: string) => {
+    try {
+      console.log('Dashboard: Fetching agent analytics for user:', userId);
+      
+      // Fetch agent analytics data in parallel
+      const [analyticsResult, defaultAgentResult, therapistCountResult] = await Promise.all([
+        calculateMostUsedAgent(userId),
+        getDefaultAgent(userId),
+        getAvailableTherapistCount(userId)
+      ]);
+
+      console.log('Dashboard: Agent analytics results:', {
+        mostUsedAgent: analyticsResult.mostUsedAgent?.characterName || 'None',
+        totalSessions: analyticsResult.totalSessions,
+        defaultAgent: defaultAgentResult,
+        availableCount: therapistCountResult
+      });
+
+      setAgentAnalytics(analyticsResult);
+      setDefaultAgentName(defaultAgentResult);
+      setAvailableTherapistCount(therapistCountResult);
+    } catch (error) {
+      console.error('Dashboard: Error fetching agent analytics:', error);
+      // Set fallback values
+      setAgentAnalytics({
+        mostUsedAgent: null,
+        totalSessions: 0,
+        agentBreakdown: []
+      });
+      setDefaultAgentName('Talk Therapist');
+      setAvailableTherapistCount(1);
     }
   };
 
@@ -1642,16 +1685,24 @@ export default function TestDashboardPage() {
                   </div>
                 </div>
 
-                {/* Voice Settings Summary */}
+                {/* Therapist Information */}
                 <div className="bg-card p-4 sm:p-6 rounded-xl border border-border flex flex-col">
-                  <h2 className="text-lg sm:text-xl font-semibold mb-4 text-foreground">Voice Settings</h2>
+                  <h2 className="text-lg sm:text-xl font-semibold mb-4 text-foreground">Therapist</h2>
                   <div className="space-y-2 flex-1">
-                    <p className="text-sm sm:text-base text-foreground">Current Voice: {selectedVoice?.display_name || 'Loading...'}</p>
-                    <p className="text-sm sm:text-base text-foreground">Subscription: {getSubscriptionDisplayName(userSubscriptionStatus)}</p>
-                    <p className="text-sm sm:text-base text-foreground">Available Voices: {getAvailableVoicesCount(userSubscriptionStatus, voiceGroups)} / {totalVoicesCount}</p>
-                  </div>
-                  <div className="pt-4 mt-auto">
-                    <VoiceSettings className="w-full" onVoiceChange={handleVoiceChange}/>
+                    <p className="text-sm sm:text-base text-foreground">
+                      Default Therapist: {defaultAgentName}
+                    </p>
+                    <p className="text-sm sm:text-base text-foreground">
+                      Most Used: {agentAnalytics?.mostUsedAgent?.characterName || 'Not Available'}
+                      {agentAnalytics?.mostUsedAgent && (
+                        <span className="text-xs text-muted-foreground ml-1">
+                          ({agentAnalytics.mostUsedAgent.sessionCount} sessions)
+                        </span>
+                      )}
+                    </p>
+                    <p className="text-sm sm:text-base text-foreground">
+                      Available Therapists: {availableTherapistCount}
+                    </p>
                   </div>
                 </div>
 

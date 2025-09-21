@@ -7,7 +7,7 @@ import { ComponentRef, forwardRef, useEffect, useRef, useState, useCallback, use
 import supabase from "@/supabaseClient";
 import { generateSessionName } from "@/utils/sessionUtils";
 import { shouldTriggerConfetti, triggerEmotionConfetti } from "@/utils/confetti";
-import { getVoiceConfigurationById } from "@/utils/voiceConfigUtils";
+import { getVoiceConfigurationById, getAgentInfoFromVoiceConfig } from "@/utils/voiceConfigUtils";
 
 interface MessagesProps {
   sessionId?: string | null;
@@ -57,6 +57,13 @@ const Messages = forwardRef<
 
   // Add state for agent name from voice configuration
   const [agentName, setAgentName] = useState<string>("Terapeuta IA");
+  
+  // Add state to track voice configuration info for session creation
+  const [voiceConfigInfo, setVoiceConfigInfo] = useState<{
+    configId: string;
+    displayName: string;
+    characterName: string;
+  } | null>(null);
   
   // Add state for user's display name
   const [userDisplayName, setUserDisplayName] = useState<string>("Tú");
@@ -152,6 +159,16 @@ const Messages = forwardRef<
         console.log('🎵 Messages: Fetching voice configuration for configId:', configId);
         const voiceConfig = await getVoiceConfigurationById(configId);
         
+        // Store voice configuration info for session creation
+        if (voiceConfig) {
+          const agentInfo = getAgentInfoFromVoiceConfig(voiceConfig);
+          setVoiceConfigInfo({
+            configId: agentInfo.configId,
+            displayName: agentInfo.displayName,
+            characterName: agentInfo.characterName
+          });
+        }
+        
         // Prioritize character name from voice configuration over custom therapist name
         if (voiceConfig?.display_name) {
           const characterName = getCharacterName(voiceConfig.display_name, voiceConfig.internal_name);
@@ -165,6 +182,12 @@ const Messages = forwardRef<
           if (mappedDisplay) {
             const characterName = getCharacterName(mappedDisplay, mappedDisplay);
             setAgentName(characterName);
+            // Set fallback voice config info
+            setVoiceConfigInfo({
+              configId: configId,
+              displayName: mappedDisplay,
+              characterName: characterName
+            });
           } else {
             setAgentName(therapistName || "Terapeuta IA");
           }
@@ -421,7 +444,10 @@ const Messages = forwardRef<
                 .insert({
                   user_id: user.id,
                   title: generateSessionName(),
-                  summary: 'Started a new therapy session'
+                  summary: 'Started a new therapy session',
+                  voice_config_id: voiceConfigInfo?.configId || null,
+                  agent_name: voiceConfigInfo?.displayName || null,
+                  character_name: voiceConfigInfo?.characterName || agentName || null
                   // Hume IDs will be updated separately by VoiceProvider when metadata arrives
                 })
                 .select()

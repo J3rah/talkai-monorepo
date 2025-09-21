@@ -221,6 +221,9 @@ export default function LiveVoiceChatScreen() {
           user_id: user?.id,
           title: `Mobile Session${topic ? ` - ${topic}` : ''}`,
           status: 'in_progress',
+          voice_config_id: voiceConfig.configId,
+          agent_name: voiceConfig.displayName,
+          character_name: topic || voiceConfig.displayName,
         })
         .select()
         .single();
