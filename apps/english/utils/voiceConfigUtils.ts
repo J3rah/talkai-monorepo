@@ -182,7 +182,7 @@ export function getFallbackVoiceConfigurations(): VoiceConfigurationGroup[] {
           id: 'jacksparrow',
           internal_name: 'jacksparrow',
           display_name: 'The Pirate',
-          character_name: 'Captain Jack',
+          character_name: 'Captain Jules Vane',
           description: 'A charismatic and witty voice inspired by legendary pirates',
           hume_config_id: process.env.NEXT_PUBLIC_HUME_JACKSPARROW_CONFIG_ID || 'a608626e-23e0-4070-8e24-dc880d34000b',
           base_voice: 'ITO',
@@ -213,7 +213,7 @@ export function getCharacterNameFromVoiceConfig(displayName: string, internalNam
     
     // Character voices
     'Sass': 'Sass',
-    'The Pirate': 'Captain Jack',
+    'The Pirate': 'Captain Jules Vane',
     'Brit': 'Brit',
     'Julian': 'Julian',
     'Aven': 'Aven',
@@ -226,7 +226,7 @@ export function getCharacterNameFromVoiceConfig(displayName: string, internalNam
     'female': 'Mia',
     'energetic': 'Spark',
     'sass': 'Sass',
-    'jacksparrow': 'Captain Jack',
+    'jacksparrow': 'Captain Jules Vane',
     'brit': 'Brit',
     'julian': 'Julian',
     'maleprotagonist': 'Aven',
