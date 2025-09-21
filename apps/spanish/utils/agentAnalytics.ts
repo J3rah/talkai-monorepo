@@ -1,5 +1,21 @@
 import supabase from '@/supabaseClient';
-import { ChatSession } from '@/packages/shared/src/types';
+
+// Define ChatSession interface locally to avoid import path issues
+interface ChatSession {
+  id: string;
+  user_id: string;
+  status: 'active' | 'completed' | 'cancelled';
+  started_at: string;
+  ended_at?: string;
+  last_activity: string;
+  hume_chat_group_id?: string;
+  session_type?: 'trial' | 'premium';
+  voice_config_id?: string;
+  agent_name?: string;
+  character_name?: string;
+  created_at: string;
+  updated_at: string;
+}
 
 export interface AgentUsageStats {
   characterName: string;
