@@ -58,22 +58,69 @@ export default function AuthenticatedLanding() {
 
     const checkAuthAndFetchData = async () => {
       try {
-        // Check authentication
-        const { data: { session } } = await supabase.auth.getSession();
+        console.log('🔍 AuthenticatedLanding: Starting auth check...');
+        
+        // Check authentication with timeout
+        const authTimeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Auth check timeout')), 5000)
+        );
+        
+        const authPromise = supabase.auth.getSession();
+        const { data: { session }, error: authError } = await Promise.race([authPromise, authTimeoutPromise]) as any;
+        
+        if (authError) {
+          console.error('❌ AuthenticatedLanding: Auth check failed:', authError);
+          if (isMounted) {
+            setLoading(false);
+          }
+          return;
+        }
+        
+        console.log('🔍 AuthenticatedLanding: Auth check result:', { 
+          hasSession: !!session, 
+          hasUser: !!session?.user,
+          userId: session?.user?.id 
+        });
         
         if (!isMounted) return;
         
+        let currentUser = null;
+        
         if (!session?.user) {
-          setLoading(false);
-          return;
+          console.log('❌ AuthenticatedLanding: No user found in session, trying getUser()...');
+          
+          // Fallback: try getUser() method
+          try {
+            const { data: { user }, error: userError } = await supabase.auth.getUser();
+            if (userError) {
+              console.error('❌ AuthenticatedLanding: getUser() also failed:', userError);
+              setLoading(false);
+              return;
+            }
+            
+            if (!user) {
+              console.log('❌ AuthenticatedLanding: No user found with getUser() either, showing unauthenticated state');
+              setLoading(false);
+              return;
+            }
+            
+            console.log('✅ AuthenticatedLanding: Found user with getUser():', user.id);
+            currentUser = user;
+            setUser(user);
+          } catch (fallbackError) {
+            console.error('❌ AuthenticatedLanding: Fallback getUser() failed:', fallbackError);
+            setLoading(false);
+            return;
+          }
+        } else {
+          currentUser = session.user;
+          setUser(session.user);
+          console.log('🔍 AuthenticatedLanding: User authenticated:', session.user.id);
         }
 
-        setUser(session.user);
-        console.log('🔍 AuthenticatedLanding: User authenticated:', session.user.id);
-
         // Fetch user data
-        const userId = session.user.id;
-        let fullName = session.user.email?.split('@')[0] || 'there';
+        const userId = currentUser.id;
+        let fullName = currentUser.email?.split('@')[0] || 'there';
         let totalSessions = 0;
         let lastSessionDate: string | null = null;
         let lastSessionTitle: string | null = null;
@@ -155,7 +202,7 @@ export default function AuthenticatedLanding() {
           // Set default user data if fetch fails
           if (isMounted) {
             setUserData({
-              fullName: session.user.email?.split('@')[0] || 'there',
+              fullName: currentUser.email?.split('@')[0] || 'there',
               totalSessions: 0,
               lastSessionDate: null,
               lastSessionTitle: null,
@@ -172,9 +219,12 @@ export default function AuthenticatedLanding() {
           setLoading(false);
         }
       } catch (error) {
-        console.error('Error checking auth:', error);
+        console.error('❌ AuthenticatedLanding: Error in checkAuthAndFetchData:', error);
         if (isMounted) {
           clearTimeout(overallTimeoutId);
+          // If auth check failed, show unauthenticated state
+          setUser(null);
+          setUserData(null);
           setLoading(false);
         }
       }
