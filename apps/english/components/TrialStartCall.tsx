@@ -311,10 +311,10 @@ export default function TrialStartCall({
                             </CardContent>
                           </Card>
                         ))}
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
               )}
             </div>
           </>
