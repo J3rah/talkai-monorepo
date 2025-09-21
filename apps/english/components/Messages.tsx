@@ -12,6 +12,7 @@ import { getVoiceConfigurationById, getAgentInfoFromVoiceConfig } from "@/utils/
 interface MessagesProps {
   sessionId?: string | null;
   therapistName?: string;
+  voiceConfigId?: string | null;
 }
 
 interface ChatMessage {
@@ -39,7 +40,7 @@ const isChatMessage = (msg: unknown): msg is ChatMessage => {
 const Messages = forwardRef<
   ComponentRef<typeof motion.div>,
   MessagesProps
->(function Messages({ sessionId, therapistName }, _ref) {
+>(function Messages({ sessionId, therapistName, voiceConfigId }, _ref) {
   const { messages, status } = useVoice();
   const messagesRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -70,7 +71,7 @@ const Messages = forwardRef<
     // Map voice configurations to character names
     const characterMap: Record<string, string> = {
       'Male Voice': 'Zander',
-      'Female Voice': 'Sofia',
+      'Female Voice': 'Mia',
       'Calm Voice': 'Zen',
       'Energetic Voice': 'Spark',
       'Professional Voice': 'Dr. Williams',
@@ -98,9 +99,11 @@ const Messages = forwardRef<
   useEffect(() => {
     const fetchAgentName = async () => {
       // Prefer a persisted configId from session storage (set by StartCall/TrialStartCall)
-      let configId: string | null = null;
+      let configId: string | null = voiceConfigId || null;
+      let characterNameFromStorage: string | null = null;
       try {
-        configId = sessionStorage.getItem('currentVoiceConfigId');
+        if (!configId) configId = sessionStorage.getItem('currentVoiceConfigId');
+        characterNameFromStorage = sessionStorage.getItem('currentVoiceCharacterName');
       } catch (_ignoredError) {
         /* no-op */
       }
@@ -114,6 +117,9 @@ const Messages = forwardRef<
       if (therapistName && therapistName !== "Talk Therapist") {
         console.log('✅ Messages: Using custom therapist name (immediate):', therapistName);
         setAgentName(therapistName);
+      } else if (characterNameFromStorage) {
+        console.log('✅ Messages: Using character name from sessionStorage:', characterNameFromStorage);
+        setAgentName(characterNameFromStorage);
       } else if (mappedDisplay) {
         const mappedCharacter = getCharacterName(mappedDisplay, mappedDisplay);
         if (mappedCharacter && mappedCharacter !== agentName) {
@@ -136,9 +142,12 @@ const Messages = forwardRef<
         }
         
         // Prioritize voice configuration character name over custom therapist name
-        if (voiceConfig?.display_name) {
+        if (voiceConfig?.character_name) {
+          console.log('✅ Messages: Using character name from database:', voiceConfig.character_name, 'for voice config:', voiceConfig.display_name);
+          setAgentName(voiceConfig.character_name);
+        } else if (voiceConfig?.display_name) {
           const characterName = getCharacterName(voiceConfig.display_name, voiceConfig.internal_name);
-          console.log('✅ Messages: Using character name:', characterName, 'from voice config:', voiceConfig.display_name);
+          console.log('✅ Messages: Using character name from mapping:', characterName, 'from voice config:', voiceConfig.display_name);
           setAgentName(characterName);
         } else if (therapistName && therapistName !== "Talk Therapist") {
           console.log('✅ Messages: Using custom therapist name:', therapistName);
@@ -175,7 +184,7 @@ const Messages = forwardRef<
     };
 
     fetchAgentName();
-  }, [therapistName]);
+  }, [therapistName, voiceConfigId]);
 
   // Check if data saving is allowed based on user subscription and preferences
   const checkDataSavingPermission = useCallback(async (userId: string) => {
@@ -637,8 +646,9 @@ const Messages = forwardRef<
   // Combine initial messages with live messages for rendering
   const combinedMessages = useMemo(() => [...initialMessages, ...messages], [initialMessages, messages]);
 
-  // Ensure an initial assistant greeting is visible shortly after connecting
+  // Optional initial greeting – disabled by flag
   useEffect(() => {
+    if (!ENABLE_INITIAL_GREETING) return;
     if (status?.value !== 'connected') return;
 
     const timer = setTimeout(() => {
@@ -657,7 +667,7 @@ const Messages = forwardRef<
     }, 900);
 
     return () => clearTimeout(timer);
-  }, [status?.value, combinedMessages.length, therapistName, agentName]);
+  }, [status?.value, combinedMessages.length, therapistName, agentName, ENABLE_INITIAL_GREETING]);
 
   // Optimize message rendering with memo
   const renderMessage = useCallback((msg: unknown, index: number) => {

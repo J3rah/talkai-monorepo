@@ -7,34 +7,12 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { useRouter } from "next/navigation";
-
-  // Basic voice configs for trial (only calm voices)
-const trialVoiceConfigs = [
-  {
-    id: "male",
-    name: "Male Voice",
-    description: "A male therapeutic voice",
-    base_voice: "ITO",
-    configId: process.env.NEXT_PUBLIC_HUME_MALE_CONFIG_ID || '793d1f15-4bf9-4beb-a4ab-a62caff84e70',
-    parameters: {
-      speaking_rate: 1.0,
-      pitch: 0.0
-    },
-    requiredPlan: "calm"
-  },
-  {
-    id: "female",
-    name: "Female Voice",
-    description: "A female therapeutic voice",
-    base_voice: "ITO",
-    configId: process.env.NEXT_PUBLIC_HUME_FEMALE_CONFIG_ID || '3a451da2-a50a-42c2-83fa-13c79f027643',
-    parameters: {
-      speaking_rate: 1.0,
-      pitch: 0.0
-    },
-    requiredPlan: "calm"
-  }
-];
+import { getAvailableVoiceConfigurations, getFallbackVoiceConfigurations, VoiceConfigurationGroup, VoiceConfiguration } from "@/utils/voiceConfigUtils";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Badge } from "./ui/badge";
+import { CheckCircle, Mic, Sparkles } from "lucide-react";
+import VoiceSamplePlayer from './VoiceSamplePlayer';
+import { Tooltip } from './ui/tooltip';
 
 const trialTaglines = [
   {
@@ -78,13 +56,46 @@ export default function TrialStartCall({
   const [isOpen, setIsOpen] = useState(false);
   const [modalStep, setModalStep] = useState(1); // 1: Voice, 2: Name, 3: Begin
   const [showTermsAgreement, setShowTermsAgreement] = useState(false);
-  const [selectedVoice, setSelectedVoice] = useState(trialVoiceConfigs[0]);
+  const [selectedVoice, setSelectedVoice] = useState<VoiceConfiguration | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
   const [therapistName, setTherapistName] = useState("Talk Therapist");
   const [currentTagline, setCurrentTagline] = useState(() => {
     return trialTaglines[Math.floor(Math.random() * trialTaglines.length)];
   });
+  const [voiceGroups, setVoiceGroups] = useState<VoiceConfigurationGroup[]>([]);
+  const [isLoadingVoices, setIsLoadingVoices] = useState(true);
   const router = useRouter();
+
+  // Fetch voice configurations for trial (treat as grounded for full access)
+  useEffect(() => {
+    const fetchVoiceConfigurations = async () => {
+      setIsLoadingVoices(true);
+      try {
+        // For trial users, we give them access to all voices (like grounded subscribers)
+        const groups = await getAvailableVoiceConfigurations('grounded');
+        setVoiceGroups(groups);
+        
+        // Set the first available voice as default
+        if (groups.length > 0 && groups[0].voice_configurations.length > 0) {
+          setSelectedVoice(groups[0].voice_configurations[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching voice configurations for trial:', error);
+        // Fallback to basic voices if database fails
+        const fallbackGroups = getFallbackVoiceConfigurations();
+        setVoiceGroups(fallbackGroups);
+        if (fallbackGroups.length > 0 && fallbackGroups[0].voice_configurations.length > 0) {
+          setSelectedVoice(fallbackGroups[0].voice_configurations[0]);
+        }
+      } finally {
+        setIsLoadingVoices(false);
+      }
+    };
+
+    if (isOpen) {
+      fetchVoiceConfigurations();
+    }
+  }, [isOpen]);
 
   // Handle dialog open/close
   useEffect(() => {
@@ -107,18 +118,19 @@ export default function TrialStartCall({
     setModalStep(1);
   };
 
-  const handleVoiceSelect = (voice: typeof trialVoiceConfigs[0]) => {
-    setSelectedVoice(voice);
-    if (voice.configId) {
+  const handleVoiceSelect = (config: VoiceConfiguration) => {
+    setSelectedVoice(config);
+    if (config.hume_config_id) {
       try {
         // Persist the chosen voice so Messages can resolve the agent name immediately in trial
-        sessionStorage.setItem('currentVoiceConfigId', voice.configId);
-        sessionStorage.setItem('currentVoiceDisplayName', voice.name);
-        sessionStorage.setItem('currentVoiceInternalName', voice.id);
+        sessionStorage.setItem('currentVoiceConfigId', config.hume_config_id);
+        sessionStorage.setItem('currentVoiceDisplayName', config.display_name);
+        sessionStorage.setItem('currentVoiceInternalName', config.internal_name);
+        sessionStorage.setItem('currentVoiceCharacterName', config.character_name);
       } catch (e) {
         console.warn('TrialStartCall: Failed to persist current voice selection to sessionStorage:', e);
       }
-      onVoiceSelect(voice.configId);
+      onVoiceSelect(config.hume_config_id);
     }
     // Automatically move to next step - skip therapist naming (step 2)
     setModalStep(2);
@@ -145,7 +157,7 @@ export default function TrialStartCall({
     try {
       console.log('Starting trial session...');
       console.log('Selected voice config:', selectedVoice);
-      console.log('Config ID:', selectedVoice.configId);
+      console.log('Config ID:', selectedVoice?.hume_config_id);
       console.log('Voice status before connect:', status.value);
       
       // Get the access token from the VoiceProvider context
@@ -155,7 +167,7 @@ export default function TrialStartCall({
       // Call connect with proper parameters including auth
       const connectResult = await connect({
         auth: { type: 'accessToken', value: accessToken },
-        configId: selectedVoice.configId,
+        configId: selectedVoice?.hume_config_id,
         audioConstraints: {
           echoCancellation: true,
           noiseSuppression: true
@@ -200,6 +212,20 @@ export default function TrialStartCall({
     }
   }, [status.value]);
 
+  // Helper function to get subscription access levels for a voice
+  const getSubscriptionAccessLevels = (requiredPlan: string): string[] => {
+    switch (requiredPlan) {
+      case 'calm':
+        return ['Calm', 'Centered', 'Grounded'];
+      case 'centered':
+        return ['Centered', 'Grounded'];
+      case 'grounded':
+        return ['Grounded'];
+      default:
+        return [requiredPlan.charAt(0).toUpperCase() + requiredPlan.slice(1)];
+    }
+  };
+
   const renderModalContent = () => {
     switch (modalStep) {
       case 1:
@@ -214,35 +240,82 @@ export default function TrialStartCall({
                 <div className="mt-2 text-sm text-blue-600">
                   ✨ No signup required - Start your 5-minute trial now!
                 </div>
+                <div className="mt-2 text-sm text-green-600">
+                  🎉 Trial users get access to ALL voices!
+                </div>
               </DialogDescription>
             </DialogHeader>
 
             <div className="space-y-4">
-              <div className="grid grid-cols-1 gap-4 max-h-[60vh] overflow-y-auto">
-                {trialVoiceConfigs.map((voice) => (
-                  <div
-                    key={voice.id}
-                    className={`p-6 border rounded-lg cursor-pointer transition-colors hover:bg-gray-50 dark:hover:bg-gray-800 ${
-                      selectedVoice.id === voice.id
-                        ? 'border-primary bg-primary/5'
-                        : 'border-gray-200 dark:border-gray-700'
-                    }`}
-                    onClick={() => handleVoiceSelect(voice)}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h3 className="font-semibold text-lg mb-2">{voice.name}</h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">{voice.description}</p>
+              {isLoadingVoices ? (
+                <div className="flex items-center justify-center py-12">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                </div>
+              ) : (
+                <div className="space-y-6 max-h-[60vh] overflow-y-auto">
+                  {voiceGroups.map((group) => (
+                    <div key={group.id} className="space-y-4">
+                      <div className="text-center">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{group.display_name}</h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">{group.description}</p>
                       </div>
-                      <div className="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center">
-                        {selectedVoice.id === voice.id && (
-                          <div className="w-3 h-3 rounded-full bg-primary"></div>
-                        )}
-                      </div>
+                      
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {group.voice_configurations.map((config) => (
+                          <Card
+                            key={config.id}
+                            className={`cursor-pointer transition-all duration-200 hover:shadow-lg active:scale-[0.98] ${
+                              selectedVoice?.id === config.id
+                                ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-950 border-blue-200 shadow-lg'
+                                : 'hover:border-gray-300 hover:shadow-md'
+                            }`}
+                            onClick={() => handleVoiceSelect(config)}
+                          >
+                            <CardHeader className="pb-3">
+                              <div className="flex items-center justify-between">
+                                <CardTitle className="text-lg">{config.display_name}</CardTitle>
+                                {selectedVoice?.id === config.id && (
+                                  <CheckCircle className="w-6 h-6 text-blue-600" />
+                                )}
+                                {/* Voice sample player for supported voices */}
+                                {(config.internal_name === 'brit' || config.internal_name === 'julian' || config.internal_name === 'maleprotagonist' || config.internal_name === 'jacksparrow' || config.internal_name === 'male' || config.internal_name === 'female' || config.internal_name === 'sass' || config.internal_name === 'nia' || config.internal_name === 'zora' || config.internal_name === 'kai' || config.internal_name === 'energetic') && (
+                                  <VoiceSamplePlayer
+                                    key={`${config.internal_name}-${config.hume_config_id}`}
+                                    voiceConfigId={config.hume_config_id}
+                                    voiceName={config.display_name}
+                                    voiceParameters={config.parameters}
+                                    className="text-xs"
+                                  />
+                                )}
+                              </div>
+                            </CardHeader>
+                            <CardContent className="space-y-3">
+                              <Tooltip content={config.description} side="top">
+                                <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 cursor-help">
+                                {config.description}
+                              </p>
+                            </Tooltip>
+                            <div className="flex items-center justify-between">
+                              <div className="flex flex-col items-start gap-1">
+                                {getSubscriptionAccessLevels(config.required_plan).map((plan) => (
+                                  <Badge key={plan} variant="secondary" className="text-xs">
+                                    {plan}
+                                  </Badge>
+                                ))}
+                              </div>
+                              <div className="flex items-center gap-1 text-xs text-gray-500">
+                                <Sparkles className="w-3 h-3" />
+                                AI Voice
+                              </div>
+                            </div>
+                            </CardContent>
+                          </Card>
+                        ))}
                     </div>
                   </div>
                 ))}
               </div>
+              )}
             </div>
           </>
         );
@@ -267,7 +340,7 @@ export default function TrialStartCall({
                   <span className="text-2xl">🎤</span>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Selected Voice: <span className="font-medium text-foreground">{selectedVoice.name}</span>
+                  Selected Voice: <span className="font-medium text-foreground">{selectedVoice?.display_name}</span>
                 </p>
               </div>
 
@@ -323,7 +396,7 @@ export default function TrialStartCall({
                 <div className="space-y-2">
                   <div className="flex items-center justify-center gap-2">
                     <span className="text-sm text-muted-foreground">Voice:</span>
-                    <span className="font-medium">{selectedVoice.name}</span>
+                    <span className="font-medium">{selectedVoice?.display_name}</span>
                   </div>
                   <div className="flex items-center justify-center gap-2">
                     <span className="text-sm text-muted-foreground">Therapist:</span>
@@ -339,6 +412,7 @@ export default function TrialStartCall({
                   <li>• Real-time emotion detection</li>
                   <li>• Personalized responses</li>
                   <li>• No account required</li>
+                  <li>• Access to ALL voice options</li>
                 </ul>
               </div>
 
@@ -482,8 +556,31 @@ export default function TrialStartCall({
 
       {/* Main Multi-Step Modal */}
       <Dialog open={isOpen && !trialExpired} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-md mx-auto">
-          {renderModalContent()}
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col p-0">
+          {/* Progress indicator */}
+          <div className="bg-gray-50 dark:bg-gray-800 px-6 py-4 border-b">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                Step {modalStep} of 2
+              </span>
+              <span className="text-sm text-gray-500 dark:text-gray-400">
+                {Math.round((modalStep / 2) * 100)}% complete
+              </span>
+            </div>
+            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+              <div 
+                className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300"
+                style={{ 
+                  width: `${(modalStep / 2) * 100}%` 
+                }}
+              ></div>
+            </div>
+          </div>
+
+          {/* Modal content */}
+          <div className="flex-1 overflow-y-auto p-6">
+            {renderModalContent()}
+          </div>
         </DialogContent>
       </Dialog>
     </>

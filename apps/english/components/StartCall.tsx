@@ -122,13 +122,18 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
         setTimeout(() => reject(new Error('StartCall user fetch timeout')), 5000) // Increased timeout to 5 seconds
       );
 
-      let { data: { user } } = await Promise.race([supabase.auth.getUser(), timeoutPromise]) as any;
-
-      if (!user) {
-        console.warn('🎵 StartCall: getUser returned null, trying getSession');
-        const { data: { session } } = await supabase.auth.getSession();
-        user = session?.user ?? null;
+      let user;
+      try {
+        const result = await Promise.race([supabase.auth.getUser(), timeoutPromise]) as any;
+        user = result?.data?.user;
+      } catch (err: any) {
+        if (err?.message?.includes('name fetch timeout')) {
+          console.warn(err.message);
+        } else {
+          throw err;
+        }
       }
+      if (!user) return;
 
         console.log('🎵 StartCall: User data:', user ? 'Found user' : 'No user');
         
@@ -596,7 +601,19 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
             setTimeout(() => reject(new Error('StartCall: name fetch timeout')), 1500)
           );
 
-          const { data: { user } } = await Promise.race([supabase.auth.getUser(), timeoutPromise]) as any;
+          let user;
+          try {
+            const result = await Promise.race([supabase.auth.getUser(), timeoutPromise]) as any;
+            user = result?.data?.user;
+          } catch (err: any) {
+            if (err?.message?.includes('name fetch timeout')) {
+              console.warn(err.message);
+            } else {
+              throw err;
+            }
+          }
+          if (!user) return;
+
           let name = '';
 
           if (user) {

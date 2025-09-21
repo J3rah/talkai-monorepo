@@ -44,8 +44,10 @@ export async function calculateMostUsedAgent(userId: string): Promise<UserAgentA
       .not('character_name', 'is', null)
       .order('created_at', { ascending: false });
 
-    if (error) {
+    if (error && (error as any).message) {
       console.error('Error fetching user sessions for agent analytics:', error);
+    } else if (error) {
+      console.warn('Agent analytics: query returned an unspecified error object');
       return {
         mostUsedAgent: null,
         totalSessions: 0,

@@ -4,6 +4,7 @@ export interface VoiceConfiguration {
   id: string;
   internal_name: string;
   display_name: string;
+  character_name: string;
   description: string;
   hume_config_id: string;
   tts_config_id?: string;
@@ -200,7 +201,7 @@ export function getCharacterNameFromVoiceConfig(displayName: string, internalNam
   const characterMap: Record<string, string> = {
     // Classic voices
     'Male Voice': 'Zander',
-    'Female Voice': 'Sofia',
+    'Female Voice': 'Mia',
     'Calm Voice': 'Zen',
     'Energetic Voice': 'Spark',
     'Professional Voice': 'Dr. Williams',
@@ -218,7 +219,7 @@ export function getCharacterNameFromVoiceConfig(displayName: string, internalNam
     
     // Internal name mappings (fallback)
     'male': 'Zander',
-    'female': 'Sofia',
+    'female': 'Mia',
     'energetic': 'Spark',
     'sass': 'Sass',
     'jacksparrow': 'Captain Jack',
@@ -236,14 +237,15 @@ export function getCharacterNameFromVoiceConfig(displayName: string, internalNam
 
 /**
  * Gets agent information from voice configuration
- * Returns both the display name and character name
+ * Returns both the display name and character name from the database
  */
 export function getAgentInfoFromVoiceConfig(voiceConfig: VoiceConfiguration): {
   displayName: string;
   characterName: string;
   configId: string;
 } {
-  const characterName = getCharacterNameFromVoiceConfig(voiceConfig.display_name, voiceConfig.internal_name);
+  // Use character_name from database as the single source of truth
+  const characterName = voiceConfig.character_name || voiceConfig.display_name;
   
   return {
     displayName: voiceConfig.display_name,

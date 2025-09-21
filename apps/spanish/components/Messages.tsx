@@ -74,7 +74,7 @@ const Messages = forwardRef<
     const characterMap: Record<string, string> = {
       // Classic voices
       'Male Voice': 'Zander',
-      'Female Voice': 'Luna',
+      'Female Voice': 'Mia',
       'Calm Voice': 'Zen',
       'Energetic Voice': 'Energetic',
       'Professional Voice': 'Dr. Williams',
@@ -92,7 +92,7 @@ const Messages = forwardRef<
       
       // Internal name mappings (fallback)
       'male': 'Zander',
-      'female': 'Luna',
+      'female': 'Mia',
       'energetic': 'Energetic',
       'sass': 'Sass',
       'jacksparrow': 'Captain Jack',
@@ -132,8 +132,10 @@ const Messages = forwardRef<
     const fetchAgentName = async () => {
       // Prefer a persisted configId from session storage (set by StartCall/TrialStartCall)
       let configId: string | null = null;
+      let characterNameFromStorage: string | null = null;
       try {
         configId = sessionStorage.getItem('currentVoiceConfigId');
+        characterNameFromStorage = sessionStorage.getItem('currentVoiceCharacterName');
       } catch (_ignoredError) {
         /* no-op */
       }
@@ -144,7 +146,10 @@ const Messages = forwardRef<
       
       // Immediate best-effort fallback based on known config IDs (prevents flashing "Talk Therapist")
       // Prioritize character name from voice configuration over custom therapist name
-      if (mappedDisplay) {
+      if (characterNameFromStorage) {
+        console.log('✅ Messages: Using character name from sessionStorage:', characterNameFromStorage);
+        setAgentName(characterNameFromStorage);
+      } else if (mappedDisplay) {
         const mappedCharacter = getCharacterName(mappedDisplay, mappedDisplay);
         if (mappedCharacter && mappedCharacter !== agentName) {
           console.log('✅ Messages: Using character name (immediate):', mappedCharacter);
@@ -170,9 +175,12 @@ const Messages = forwardRef<
         }
         
         // Prioritize character name from voice configuration over custom therapist name
-        if (voiceConfig?.display_name) {
+        if (voiceConfig?.character_name) {
+          console.log('✅ Messages: Using character name from database:', voiceConfig.character_name, 'for voice config:', voiceConfig.display_name);
+          setAgentName(voiceConfig.character_name);
+        } else if (voiceConfig?.display_name) {
           const characterName = getCharacterName(voiceConfig.display_name, voiceConfig.internal_name);
-          console.log('✅ Messages: Using character name:', characterName, 'from voice config:', voiceConfig.display_name);
+          console.log('✅ Messages: Using character name from mapping:', characterName, 'from voice config:', voiceConfig.display_name);
           setAgentName(characterName);
         } else if (therapistName && therapistName !== "Terapeuta IA") {
           console.log('✅ Messages: Using custom therapist name:', therapistName);

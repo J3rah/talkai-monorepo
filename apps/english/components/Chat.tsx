@@ -114,7 +114,7 @@ export default function ClientComponent({
           setUserHasInteracted(true);
         }} hideForAuthUsers={true} />
         
-        <Messages ref={ref} therapistName={therapistName} />
+        <Messages ref={ref} therapistName={therapistName} voiceConfigId={selectedConfigId} />
         <Controls />
         <StartCall 
           onVoiceSelect={(configId) => {
