@@ -109,7 +109,10 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
   // -----------------------
   // Helper: fetch user preferences & voices
   // -----------------------
-  const fetchUserPreferences = async () => {
+  const PREFETCH_MAX_RETRIES = 3;
+  const PREFETCH_RETRY_DELAY = 1500;
+
+  const fetchUserPreferences = async (attempt: number = 0): Promise<void> => {
     console.log('🎵 StartCall: fetchUserPreferences called');
 
     let subscriptionStatus: string = 'calm';

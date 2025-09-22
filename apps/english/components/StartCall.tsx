@@ -108,8 +108,11 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
   // -----------------------
   // Helper: fetch user preferences & voices
   // -----------------------
-  const fetchUserPreferences = async () => {
-    console.log('🎵 StartCall: fetchUserPreferences called');
+  const PREFETCH_MAX_RETRIES = 3;
+  const PREFETCH_RETRY_DELAY = 1500;
+
+  const fetchUserPreferences = async (attempt: number = 0): Promise<void> => {
+    console.log(`🎵 StartCall: fetchUserPreferences called (attempt ${attempt + 1})`);
 
     let subscriptionStatus: string = 'calm';
     let savedVoiceConfigId: string | null = null;
@@ -135,34 +138,42 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
       }
       if (!user) return;
 
-        console.log('🎵 StartCall: User data:', user ? 'Found user' : 'No user');
-        
-        if (user) {
-          console.log('🎵 StartCall: Fetching profile for user:', user.id);
-          const { data: profile, error } = await supabase
-            .from('profiles')
+      console.log('🎵 StartCall: User data:', user ? 'Found user' : 'No user');
+      
+      if (user) {
+        console.log('🎵 StartCall: Fetching profile for user:', user.id);
+        const { data: profile, error } = await supabase
+          .from('profiles')
           .select('voice_config_id, voice_parameters, therapist_name, subscription_status, data_saving_preference, full_name')
-            .eq('id', user.id)
-            .single();
+          .eq('id', user.id)
+          .single();
 
-          console.log('🎵 StartCall: Profile query result:', { profile, error });
+        console.log('🎵 StartCall: Profile query result:', { profile, error });
 
-          if (profile) {
-            subscriptionStatus = profile.subscription_status || 'calm';
-            savedVoiceConfigId = profile.voice_config_id;
-            savedTherapistName = profile.therapist_name;
-            savedDataSavingPreference = profile.data_saving_preference || false;
+        if (profile) {
+          subscriptionStatus = profile.subscription_status || 'calm';
+          savedVoiceConfigId = profile.voice_config_id;
+          savedTherapistName = profile.therapist_name;
+          savedDataSavingPreference = profile.data_saving_preference || false;
           setUserName(profile.full_name || '');
         }
+      }
+
+      // Check if we got 'calm' status but this might be due to race condition
+      // Retry up to 3 times if we get 'calm' status, as it might be the default before the real status loads
+      if (subscriptionStatus === 'calm' && attempt < PREFETCH_MAX_RETRIES) {
+        console.log(`🎵 StartCall: Got 'calm' status on attempt ${attempt + 1}, retrying in ${PREFETCH_RETRY_DELAY}ms...`);
+        setTimeout(() => fetchUserPreferences(attempt + 1), PREFETCH_RETRY_DELAY);
+        return;
       }
 
       // Ensure we leave loading state
       setUserSubscriptionStatus(subscriptionStatus || 'calm');
       if (savedTherapistName) setTherapistName(savedTherapistName);
-        setDataSavingPreference(savedDataSavingPreference);
+      setDataSavingPreference(savedDataSavingPreference);
 
       // Fetch voice configurations
-        let groups: VoiceConfigurationGroup[] = [];
+      let groups: VoiceConfigurationGroup[] = [];
       try {
         const fetchedGroups = await getAvailableVoiceConfigurations(subscriptionStatus);
         // Remove deprecated voices
@@ -173,34 +184,38 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
         })).filter(g => g.voice_configurations.length > 0);
       } catch (err) {
         console.warn('🎵 StartCall: Failed DB fetch, using fallback', err);
-          groups = getFallbackVoiceConfigurations();
-        }
+        groups = getFallbackVoiceConfigurations();
+      }
 
-        setVoiceGroups(groups);
+      setVoiceGroups(groups);
 
       // Attempt to restore saved voice
-        let foundVoice: VoiceConfiguration | null = null;
-        if (savedVoiceConfigId) {
+      let foundVoice: VoiceConfiguration | null = null;
+      if (savedVoiceConfigId) {
         for (const g of groups) {
           foundVoice = g.voice_configurations.find(c => c.hume_config_id === savedVoiceConfigId) || null;
-            if (foundVoice) break;
-          }
+          if (foundVoice) break;
         }
+      }
       if (!foundVoice && groups[0]?.voice_configurations?.length) {
-          foundVoice = groups[0].voice_configurations[0];
-        }
+        foundVoice = groups[0].voice_configurations[0];
+      }
       if (foundVoice) setSelectedVoice(foundVoice);
 
     } catch (err) {
-      console.warn('🎵 StartCall: fetchUserPreferences failed, using fallback:', err);
+      console.warn('🎵 StartCall: fetchUserPreferences failed, will retry if possible:', err);
+      if (attempt < PREFETCH_MAX_RETRIES) {
+        setTimeout(() => fetchUserPreferences(attempt + 1), PREFETCH_RETRY_DELAY);
+        return; // keep loading state; don't flip to calm yet
+      }
       if (userSubscriptionStatus === 'loading') setUserSubscriptionStatus('calm');
-        const fallbackGroups = getFallbackVoiceConfigurations();
-        setVoiceGroups(fallbackGroups);
+      const fallbackGroups = getFallbackVoiceConfigurations();
+      setVoiceGroups(fallbackGroups);
       if (fallbackGroups[0]?.voice_configurations?.length) {
-          setSelectedVoice(fallbackGroups[0].voice_configurations[0]);
-        }
-      } finally {
-        setIsLoadingVoices(false);
+        setSelectedVoice(fallbackGroups[0].voice_configurations[0]);
+      }
+    } finally {
+      setIsLoadingVoices(false);
     }
   };
 
@@ -213,57 +228,51 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
 
   // Check authentication status (skip in trial mode)
   useEffect(() => {
-    const checkAuth = async () => {
+    const runOnOpen = async () => {
+      if (!isOpen) return;
       if (isTrialMode) {
-        console.log('StartCall: Trial mode, skipping auth check');
-        setIsAuthenticated(false);
+        console.log('🎵 StartCall: Modal opened for trial mode, setting calm voices');
+        setIsLoadingVoices(true);
+        setUserSubscriptionStatus('calm');
+        try {
+          const groups = getFallbackVoiceConfigurations();
+          setVoiceGroups(groups);
+          if (groups.length > 0 && groups[0].voice_configurations.length > 0) {
+            setSelectedVoice(groups[0].voice_configurations[0]);
+          }
+        } catch (error) {
+          console.error('Error setting up trial voices:', error);
+        } finally {
+          setIsLoadingVoices(false);
+        }
         return;
       }
 
+      // Auth check + fresh prefs each open to avoid Calm flash
+      setIsLoadingVoices(true);
       try {
-        // Timeout guard
-        const timeoutPromise = new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('StartCall auth check timeout')), 5000) // Increased timeout to 5 seconds
-        );
-
-        let { data: { user } } = await Promise.race([supabase.auth.getUser(), timeoutPromise]) as any;
-
-        if (!user) {
-          // Fallback if getUser failed right after navigation
-          const { data: { session } } = await supabase.auth.getSession();
-          user = session?.user ?? null;
-        }
-
-        setIsAuthenticated(!!user);
-        if (user) {
-          await checkDataSavingPermission(user.id);
-        }
-
-      } catch (error) {
-        console.warn('StartCall: auth check failed, defaulting to unauthenticated:', error);
+        await (async () => {
+          // Timeout guard
+          const timeoutPromise = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('StartCall auth check timeout')), 5000)
+          );
+          let { data: { user } } = await Promise.race([supabase.auth.getUser(), timeoutPromise]) as any;
+          if (!user) {
+            const { data: { session } } = await supabase.auth.getSession();
+            user = session?.user ?? null;
+          }
+          setIsAuthenticated(!!user);
+          if (user) await checkDataSavingPermission(user.id);
+        })();
+      } catch (e) {
+        console.warn('StartCall: auth check on open failed', e);
         setIsAuthenticated(false);
       }
+      await fetchUserPreferences();
     };
-    if (isOpen && !isTrialMode && !hasPrefetchedPrefs) {
-      console.log('🎵 StartCall: Modal opened for authenticated user, fetching preferences');
-      fetchUserPreferences();
-    } else if (isOpen && isTrialMode) {
-      console.log('🎵 StartCall: Modal opened for trial mode, setting calm voices');
-      setIsLoadingVoices(true);
-      setUserSubscriptionStatus('calm');
-      try {
-        const groups = getFallbackVoiceConfigurations();
-        setVoiceGroups(groups);
-        if (groups.length > 0 && groups[0].voice_configurations.length > 0) {
-          setSelectedVoice(groups[0].voice_configurations[0]);
-        }
-      } catch (error) {
-        console.error('Error setting up trial voices:', error);
-      } finally {
-        setIsLoadingVoices(false);
-      }
-    }
-  }, [isOpen, isTrialMode, hasPrefetchedPrefs]);
+
+    runOnOpen();
+  }, [isOpen, isTrialMode]);
 
   // Prefetch user preferences on initial mount so Step 1 has data immediately
   useEffect(() => {
@@ -703,11 +712,12 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
   };
 
   const renderModalContent = () => {
-    // While we are still determining the user subscription tier, show a small spinner instead of defaulting to Calm
-    if (userSubscriptionStatus === 'loading') {
+    // While we are still determining the user subscription tier or voices, block with homepage-style loading
+    if (userSubscriptionStatus === 'loading' || isLoadingVoices || voiceGroups.length === 0) {
       return (
-        <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+        <div className="flex flex-col items-center justify-center py-16 text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          <p className="mt-4 text-gray-600 dark:text-gray-300">Loading your personalized experience...</p>
         </div>
       );
     }

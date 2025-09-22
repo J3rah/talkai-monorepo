@@ -43,13 +43,23 @@ export default function CookieConsent() {
   return (
     <div
       className={cn(
-        "fixed inset-x-0 bottom-0 z-[1000] mx-auto mb-2 w-[95%] sm:left-4 sm:bottom-4 sm:mb-0 sm:w-auto relative flex flex-col sm:flex-row items-center gap-3 rounded-lg border bg-popover p-3 shadow-lg text-popover-foreground"
+        "fixed z-[1000] relative flex flex-col sm:flex-row items-center gap-3 rounded-lg border bg-popover p-3 shadow-lg text-popover-foreground"
       )}
+      style={{
+        position: 'fixed',
+        bottom: '0.5rem',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 1000,
+        width: '95%',
+        maxWidth: '600px'
+      }}
     >
       {/* Cookie icon – hide on very small screens to save space */}
       <Cookie
         className="hidden sm:block absolute -top-4 -left-4 h-10 w-10 rounded-full bg-popover p-1 text-yellow-500 shadow"
         strokeWidth={1.5}
+        style={{ zIndex: 1001 }}
       />
 
       {/* Message */}

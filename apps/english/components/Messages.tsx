@@ -8,6 +8,7 @@ import supabase from "@/supabaseClient";
 import { generateSessionName } from "@/utils/sessionUtils";
 import { shouldTriggerConfetti, triggerEmotionConfetti } from "@/utils/confetti";
 import { getVoiceConfigurationById, getAgentInfoFromVoiceConfig } from "@/utils/voiceConfigUtils";
+import SessionMessagesContext from '@/contexts/SessionMessagesContext';
 
 // Flag to control optional initial greeting message
 const ENABLE_INITIAL_GREETING = false;
@@ -389,27 +390,40 @@ const Messages = forwardRef<
             console.log('🧹 Cleared old currentChatSessionId from localStorage');
             
             // Create session and link with therapy session in parallel
-            const [sessionResult, therapyUpdateResult] = await Promise.all([
-              supabase
+            const sessionPayloadBase: any = {
+              title: generateSessionName(),
+              summary: 'Started a new therapy session'
+              // Hume IDs will be updated separately by VoiceProvider when metadata arrives
+            };
+
+            const attemptInsert = async (payload: any) => {
+              return await supabase
                 .from('chat_sessions')
-                .insert({
-                  user_id: user.id,
-                  title: generateSessionName(),
-                  summary: 'Started a new therapy session',
-                  voice_config_id: voiceConfigInfo?.configId || null,
-                  agent_name: voiceConfigInfo?.displayName || null,
-                  character_name: voiceConfigInfo?.characterName || agentName || null
-                  // Hume IDs will be updated separately by VoiceProvider when metadata arrives
-                })
+                .insert(payload)
                 .select()
-                .single(),
-              therapySessionId ? 
-                supabase
-                  .from('therapy_sessions')
-                  .update({ chat_session_id: null })
-                  .eq('id', therapySessionId)
-                : Promise.resolve({ error: null })
-            ]);
+                .single();
+            };
+
+            // First try including user_id explicitly
+            let sessionResult = await attemptInsert({ ...sessionPayloadBase, user_id: user.id });
+
+            // If that fails (common with strict RLS), retry without user_id so DB default/auth.uid() can populate it
+            if (sessionResult.error) {
+              console.warn('❌ Session creation failed (with user_id). Retrying without user_id...', {
+                message: sessionResult.error?.message,
+                details: (sessionResult as any).error?.details,
+                hint: (sessionResult as any).error?.hint,
+              });
+              const { user_id, ...withoutUserId } = { ...sessionPayloadBase, user_id: user.id };
+              sessionResult = await attemptInsert(withoutUserId);
+            }
+
+            const therapyUpdateResult = therapySessionId ? 
+              await supabase
+                .from('therapy_sessions')
+                .update({ chat_session_id: null })
+                .eq('id', therapySessionId)
+              : { error: null } as any;
 
             if (sessionResult.error) {
               console.log('❌ Session creation failed:', sessionResult.error);
@@ -769,7 +783,18 @@ const Messages = forwardRef<
     setShouldAutoScroll(true);
   }, []);
 
+  // Filter and map only chat messages for context
+  const chatMessagesForContext = useMemo(() => {
+    return combinedMessages
+      .filter(isChatMessage)
+      .map(m => ({ 
+        role: m.message.role as 'user' | 'assistant' | 'system', 
+        content: m.message.content 
+      }));
+  }, [combinedMessages]);
+
   return (
+    <SessionMessagesContext.Provider value={chatMessagesForContext}>
     <motion.div
       layoutScroll
       className="grow rounded-md overflow-auto p-4 h-full"
@@ -788,6 +813,7 @@ const Messages = forwardRef<
         </AnimatePresence>
       </motion.div>
     </motion.div>
+    </SessionMessagesContext.Provider>
   );
 });
 
