@@ -8,6 +8,7 @@ import supabase from "@/supabaseClient";
 import { generateSessionName } from "@/utils/sessionUtils";
 import { shouldTriggerConfetti, triggerEmotionConfetti } from "@/utils/confetti";
 import { getVoiceConfigurationById, getAgentInfoFromVoiceConfig } from "@/utils/voiceConfigUtils";
+import SessionMessagesContext from '@/contexts/SessionMessagesContext';
 
 interface MessagesProps {
   sessionId?: string | null;
@@ -707,6 +708,16 @@ const Messages = forwardRef<
   // Combine initial messages with live messages for rendering
   const combinedMessages = useMemo(() => [...initialMessages, ...messages], [initialMessages, messages]);
 
+  // Filter and map only chat messages for context
+  const chatMessagesForContext = useMemo(() => {
+    return combinedMessages
+      .filter(isChatMessage)
+      .map(m => ({ 
+        role: m.message.role as 'user' | 'assistant' | 'system', 
+        content: m.message.content 
+      }));
+  }, [combinedMessages]);
+
   // Ensure an initial assistant greeting is visible shortly after connecting
   useEffect(() => {
     if (status?.value !== 'connected') return;
@@ -827,6 +838,7 @@ const Messages = forwardRef<
   }, []);
 
   return (
+    <SessionMessagesContext.Provider value={chatMessagesForContext}>
     <motion.div
       layoutScroll
       className="grow rounded-md overflow-auto p-4 h-full"
@@ -845,6 +857,7 @@ const Messages = forwardRef<
         </AnimatePresence>
       </motion.div>
     </motion.div>
+    </SessionMessagesContext.Provider>
   );
 });
 

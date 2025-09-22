@@ -15,6 +15,7 @@ interface SessionAnalyticsModalProps {
   onClose: () => void;
   sessionDuration: number;
   sessionId: string | null;
+  liveMessages?: { role: string; content: string }[];
 }
 
 interface EmotionData {
@@ -64,11 +65,17 @@ export default function SessionAnalyticsModal({
   isOpen, 
   onClose, 
   sessionDuration,
-  sessionId 
+  sessionId,
+  liveMessages
 }: SessionAnalyticsModalProps) {
   const [sessionStats, setSessionStats] = useState<SessionStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [userSubscriptionStatus, setUserSubscriptionStatus] = useState<string>('loading');
+  const [feedbackNotes, setFeedbackNotes] = useState<string[]>([]);
+  const [feedbackLoading, setFeedbackLoading] = useState<boolean>(false);
+  const [savingFeedback, setSavingFeedback] = useState<boolean>(false);
+  const [saveSuccessId, setSaveSuccessId] = useState<string | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const router = useRouter();
 
   // Fetch user subscription status when modal opens
@@ -153,13 +160,34 @@ export default function SessionAnalyticsModal({
     }
   };
 
-  const fetchSessionAnalytics = async () => {
+  const MAX_RETRIES = 3;
+  const RETRY_DELAY_MS = 1500;
+
+  const fetchSessionAnalytics = async (attempt: number = 0): Promise<void> => {
     if (!sessionId) {
       // For users without session data, still show loading briefly then set to null
       // This allows premium users to see the analytics section even without data
-      setTimeout(() => {
+      setTimeout(async () => {
         setLoading(false);
         setSessionStats(null);
+        // If we have live messages, attempt therapist feedback from them
+        if (liveMessages && liveMessages.length > 0) {
+          try {
+            setFeedbackLoading(true);
+            const transcriptPayload = liveMessages.slice(-100);
+            const res = await fetch('/api/generate-feedback', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ messages: transcriptPayload })
+            });
+            const json = await res.json();
+            if (Array.isArray(json)) setFeedbackNotes(json);
+          } catch (e) {
+            console.warn('Feedback generation (live only) failed:', e);
+          } finally {
+            setFeedbackLoading(false);
+          }
+        }
       }, 1000);
       return;
     }
@@ -174,6 +202,12 @@ export default function SessionAnalyticsModal({
         .order('created_at', { ascending: true });
 
       if (messagesError) throw messagesError;
+
+      if ((messages?.length ?? 0) === 0 && attempt < MAX_RETRIES) {
+        console.log(`SessionAnalyticsModal: los mensajes aún no están listos (intento ${attempt + 1}). Reintentando en ${RETRY_DELAY_MS}ms…`);
+        setTimeout(() => fetchSessionAnalytics(attempt + 1), RETRY_DELAY_MS);
+        return;
+      }
 
       // Fetch emotion metrics
       const { data: emotions, error: emotionsError } = await supabase
@@ -269,6 +303,34 @@ export default function SessionAnalyticsModal({
         topEmotions,
         emotionTrends
       });
+      // Therapist feedback generation: prefer liveMessages, else DB messages (with content fetch)
+      try {
+        const sourceMsgs = (liveMessages && liveMessages.length > 0)
+          ? liveMessages
+          : (await (async () => {
+              const { data: fullMsgs } = await supabase
+                .from('chat_messages')
+                .select('role, content')
+                .eq('chat_session_id', sessionId)
+                .order('created_at', { ascending: true });
+              return (fullMsgs || []).map((m: any) => ({ role: m.role, content: m.content || '' }));
+            })());
+        if (sourceMsgs && sourceMsgs.length > 0) {
+          setFeedbackLoading(true);
+          const transcriptPayload = sourceMsgs.slice(-100);
+          const res = await fetch('/api/generate-feedback', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ messages: transcriptPayload })
+          });
+          const json = await res.json();
+          if (Array.isArray(json)) setFeedbackNotes(json);
+        }
+      } catch (e) {
+        console.warn('Feedback generation failed:', e);
+      } finally {
+        setFeedbackLoading(false);
+      }
     } catch (error) {
       console.error('Error fetching session analytics:', error);
       // Even on error, set loading to false so users can see the fallback
@@ -315,6 +377,41 @@ export default function SessionAnalyticsModal({
   const handleGoToDashboard = () => {
     router.push('/dashboard');
     handleClose();
+  };
+
+  const handleSaveFeedback = async () => {
+    if (!feedbackNotes || feedbackNotes.length === 0 || savingFeedback) return;
+    setSavingFeedback(true);
+    setSaveError(null);
+    try {
+      const content = `Retroalimentación del Terapeuta${sessionId ? ` (Sesión ${sessionId})` : ''}:\n\n` + feedbackNotes.map(n => `- ${n}`).join('\n');
+      const res = await fetch('/api/journal/entries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content })
+      });
+      const json = await res.json();
+      if (!res.ok || !json?.success || !json?.entry?.id) {
+        throw new Error(json?.error || 'No se pudo guardar la entrada del diario');
+      }
+      const entryId = json.entry.id as string;
+      setSaveSuccessId(entryId);
+      // Intentar vincular la entrada al chat_session si existe la columna
+      if (sessionId) {
+        try {
+          await supabase
+            .from('chat_sessions')
+            .update({ journal_entry_id: entryId })
+            .eq('id', sessionId);
+        } catch (_linkErr) {
+          // Ignorar si la columna no existe o falla la actualización
+        }
+      }
+    } catch (e: any) {
+      setSaveError(e?.message || 'No se pudo guardar la entrada del diario');
+    } finally {
+      setSavingFeedback(false);
+    }
   };
 
   const handleWriteReflection = () => {
@@ -433,7 +530,7 @@ export default function SessionAnalyticsModal({
 
             {/* Session Insights */}
             <Card className="p-6">
-              <h3 className="text-lg font-semibold mb-4 text-center">Session Insights</h3>
+              <h3 className="text-lg font-semibold mb-4 text-center">Ideas de la Sesión</h3>
               <div className="space-y-3">
                 {sessionStats.totalMessages > 0 ? (
                   <>
@@ -468,6 +565,36 @@ export default function SessionAnalyticsModal({
                 )}
               </div>
             </Card>
+
+            {/* NUEVO: Notas de Retroalimentación del Terapeuta */}
+            {feedbackLoading ? (
+              <Card className="p-6 text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+                <span className="mt-3 block">Generando retroalimentación del terapeuta…</span>
+              </Card>
+            ) : feedbackNotes.length > 0 && (
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4 text-center">Retroalimentación del Terapeuta</h3>
+                <ul className="list-disc list-inside space-y-2">
+                  {feedbackNotes.map((note, idx) => (
+                    <li key={idx}>{note}</li>
+                  ))}
+                </ul>
+                <div className="mt-4 flex gap-3 justify-center items-center">
+                  <Button onClick={handleSaveFeedback} disabled={savingFeedback || !!saveSuccessId}>
+                    {saveSuccessId ? 'Guardado' : (savingFeedback ? 'Guardando…' : 'Guardar en Diario')}
+                  </Button>
+                  {saveSuccessId && (
+                    <Button variant="outline" onClick={() => router.push(`/journal/${saveSuccessId}`)}>
+                      Ver Entrada
+                    </Button>
+                  )}
+                </div>
+                {saveError && (
+                  <div className="mt-2 text-sm text-destructive text-center">{saveError}</div>
+                )}
+              </Card>
+            )}
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t justify-center">

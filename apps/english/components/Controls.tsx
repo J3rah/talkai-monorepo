@@ -6,12 +6,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Toggle } from "./ui/toggle";
 import MicFFT from "./MicFFT";
 import { cn } from "@/lib/utils";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import SessionAnalyticsModal from "./SessionAnalyticsModal";
 import { useResumption } from "@/contexts/ResumptionContext";
 import supabase from "@/supabaseClient";
 import { useRouter } from "next/navigation";
 import TextInput from "./TextInput";
+import SessionMessagesContext from '@/contexts/SessionMessagesContext';
 
 export default function Controls() {
   const { status, unmute, mute, micFft, disconnect, isMuted, pauseAssistant, resumeAssistant } = useVoice();
@@ -24,6 +25,7 @@ export default function Controls() {
   const [showAnalyticsModal, setShowAnalyticsModal] = useState(false);
   const [completedSessionDuration, setCompletedSessionDuration] = useState(0);
   const [userSubscriptionStatus, setUserSubscriptionStatus] = useState<string>('loading');
+  const liveMessages = useContext(SessionMessagesContext);
   
   const sessionStartTime = useRef<number | null>(null);
   const isPausedRef = useRef(false);
@@ -445,6 +447,7 @@ export default function Controls() {
         onClose={handleAnalyticsModalClose}
         sessionDuration={completedSessionDuration}
         sessionId={currentSessionId}
+        liveMessages={liveMessages}
       />
     </>
   );

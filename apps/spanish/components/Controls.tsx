@@ -6,7 +6,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Toggle } from "./ui/toggle";
 import MicFFT from "./MicFFT";
 import { cn } from "@/lib/utils";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
+import SessionMessagesContext from '@/contexts/SessionMessagesContext';
 import SessionAnalyticsModal from "./SessionAnalyticsModal";
 import { useResumption } from "@/contexts/ResumptionContext";
 import supabase from "@/supabaseClient";
@@ -31,6 +32,7 @@ export default function Controls() {
   const timerInterval = useRef<number | NodeJS.Timeout | null>(null);
   const lastStatusRef = useRef(status.value);
   const prevStatusRef = useRef({ status: '', isMuted: false, hasMicFft: false });
+  const liveMessages = useContext(SessionMessagesContext);
 
   // Fetch user subscription status when component mounts
   useEffect(() => {
@@ -450,6 +452,7 @@ export default function Controls() {
         onClose={handleAnalyticsModalClose}
         sessionDuration={completedSessionDuration}
         sessionId={currentSessionId}
+        liveMessages={liveMessages}
       />
     </>
   );
