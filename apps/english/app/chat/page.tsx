@@ -641,7 +641,7 @@ function ChatPage() {
                 .eq('id', user.id)
                 .single();
             
-            console.log('✅ Found voice config in profile:', profile?.voice_config_id);
+              console.log('✅ Found voice config in profile:', profile?.voice_config_id);
             
             if (profile?.voice_config_id) {
               // Check if the voice config exists in our environment
@@ -689,6 +689,7 @@ function ChatPage() {
               // No voice config in profile, preserve default for fallback
               console.log('💾 No voice config in profile, preserving default for fallback');
               sessionStorage.setItem('fallbackVoiceConfig', '0ea8bb7d-ef50-4174-ae64-be7a621db425');
+            }
             }
             
             // Check if session is completed and fix it
