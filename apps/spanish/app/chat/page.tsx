@@ -620,12 +620,26 @@ function ChatPage() {
             console.log('🎤 Fetching original voice configuration for resumption...');
             
             // Get user's voice configuration
-            const { data: { user } } = await supabase.auth.getUser();
-            const { data: profile } = await supabase
-              .from('profiles')
-              .select('voice_config_id')
-              .eq('id', user?.id)
-              .single();
+            let user = null;
+            try {
+              const { data: { user: userData } } = await supabase.auth.getUser();
+              user = userData;
+            } catch (authError: any) {
+              if (authError?.message === 'Auth session missing!') {
+                console.log('No auth session - skipping voice config fetch');
+                // Continue without user data
+              } else {
+                console.error('Auth error:', authError);
+                throw authError; // Re-throw other auth errors
+              }
+            }
+            
+            if (user) {
+              const { data: profile } = await supabase
+                .from('profiles')
+                .select('voice_config_id')
+                .eq('id', user.id)
+                .single();
             
             console.log('✅ Found voice config in profile:', profile?.voice_config_id);
             

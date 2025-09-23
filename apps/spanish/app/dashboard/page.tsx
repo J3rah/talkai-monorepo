@@ -399,7 +399,19 @@ export default function TestDashboardPage() {
       try {
         // Check both session and user
         const { data: { session } } = await supabase.auth.getSession();
-        const { data: { user } } = await supabase.auth.getUser();
+        let user = null;
+        try {
+          const { data: { user: userData } } = await supabase.auth.getUser();
+          user = userData;
+        } catch (authError: any) {
+          if (authError?.message === 'Auth session missing!') {
+            console.log('No auth session - continuing without user data');
+            // Continue without user data
+          } else {
+            console.error('Auth error:', authError);
+            throw authError; // Re-throw other auth errors
+          }
+        }
         
         if (!isMounted) return; // Component unmounted, abort
         

@@ -132,6 +132,8 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
       } catch (err: any) {
         if (err?.message?.includes('name fetch timeout')) {
           console.warn(err.message);
+        } else if (err?.message === 'Auth session missing!') {
+          console.log('No auth session - continuing without user data');
         } else {
           throw err;
         }
@@ -256,7 +258,17 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
           const timeoutPromise = new Promise((_, reject) =>
             setTimeout(() => reject(new Error('StartCall auth check timeout')), 5000)
           );
-          let { data: { user } } = await Promise.race([supabase.auth.getUser(), timeoutPromise]) as any;
+          let user = null;
+          try {
+            const { data: { user: userData } } = await Promise.race([supabase.auth.getUser(), timeoutPromise]) as any;
+            user = userData;
+          } catch (authError: any) {
+            if (authError?.message === 'Auth session missing!') {
+              console.log('No auth session - continuing without user data');
+            } else {
+              console.error('Auth error:', authError);
+            }
+          }
           if (!user) {
             const { data: { session } } = await supabase.auth.getSession();
             user = session?.user ?? null;
@@ -366,7 +378,19 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
     // Save the data preference to the database for authenticated users
     if (!isTrialMode && isAuthenticated) {
       try {
-        const { data: { user } } = await supabase.auth.getUser();
+        let user = null;
+        try {
+          const { data: { user: userData } } = await supabase.auth.getUser();
+          user = userData;
+        } catch (authError: any) {
+          if (authError?.message === 'Auth session missing!') {
+            console.log('No auth session - skipping data preference update');
+            return;
+          } else {
+            console.error('Auth error:', authError);
+            return;
+          }
+        }
         if (user) {
           const { error } = await supabase
             .from('profiles')
@@ -527,7 +551,19 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
         }
 
         try {
-          const { data: { user } } = await supabase.auth.getUser();
+          let user = null;
+          try {
+            const { data: { user: userData } } = await supabase.auth.getUser();
+            user = userData;
+          } catch (authError: any) {
+            if (authError?.message === 'Auth session missing!') {
+              console.log('No auth session - skipping therapy session creation');
+              return;
+            } else {
+              console.error('Auth error:', authError);
+              return;
+            }
+          }
           if (!user) return;
 
           // Check if data saving is allowed for this user
@@ -619,6 +655,8 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
           } catch (err: any) {
             if (err?.message?.includes('name fetch timeout')) {
               console.warn(err.message);
+            } else if (err?.message === 'Auth session missing!') {
+              console.log('No auth session - continuing without user data');
             } else {
               throw err;
             }
