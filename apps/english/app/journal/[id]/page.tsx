@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Loader2, Share2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import JournalReaction from "@/components/JournalReaction";
 import NextDynamic from "next/dynamic";
+import Link from "next/link";
+import JournalSocialShare from "@/components/JournalSocialShare";
 const SEO = NextDynamic(() => import("@/components/SEO"), { ssr: false });
 import type { JournalEntry, JournalEntryResponse } from "@/types/journal";
 
@@ -34,29 +36,38 @@ export default function JournalEntryPage() {
     if (id) fetchEntry();
   }, [id]);
 
-  const handleShare = async () => {
-    if (!entry) return;
-    const shareText = `Anonymous journal entry on TalkAI:\n\n${entry.content}\n\nTherapist reflection:\n${entry.reflection}`;
-    const url = typeof window !== "undefined" ? window.location.href : "";
-
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: "TalkAI Journal Entry", text: shareText, url });
-      } catch {
-        /* user cancelled */
-      }
-    } else {
-      await navigator.clipboard.writeText(`${shareText}\n\n${url}`);
-      alert("Link copied to clipboard!");
-    }
-  };
-
   // Prepare SEO description based on entry content when available
   const seoDescription = entry
     ? entry.content.length > 150
       ? entry.content.slice(0, 147) + "..."
       : entry.content
     : "Read an anonymous journal entry and therapeutic reflection from the TalkAI community.";
+
+  const renderFormattedContent = (raw: string) => {
+    const lines = raw.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+    const hasHeader = /^(therapist\s+feedback)/i.test(lines[0] || "");
+    const header = hasHeader ? lines[0] : null;
+    const body = hasHeader ? lines.slice(1) : lines;
+
+    return (
+      <div className="space-y-4">
+        {header && (
+          <h3 className="text-lg font-semibold mb-1">{header.replace(/:$/, '')}</h3>
+        )}
+        <div className="space-y-3">
+          {body.map((l, idx) => {
+            const text = l.replace(/^-\s*/, '');
+            const isTheme = /^theme\s*\d*:|^key\s*theme/i.test(text);
+            return (
+              <div key={idx}>
+                {isTheme ? <span className="font-medium">{text}</span> : text}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <>
@@ -73,18 +84,32 @@ export default function JournalEntryPage() {
         ) : error ? (
           <p className="text-red-500 text-center">{error}</p>
         ) : entry ? (
-          <Card className="p-6 space-y-4">
-            <div className="whitespace-pre-wrap leading-relaxed">{entry.content}</div>
-            <div className="border-t pt-4 text-muted-foreground text-sm">
-              <span className="font-medium">Therapist reflection:</span> {entry.reflection}
+          <>
+            {/* Top actions and share */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <Link href="/dashboard">
+                  <Button variant="outline" size="sm">Dashboard</Button>
+                </Link>
+                <Link href="/sessions">
+                  <Button size="sm">Start New Session</Button>
+                </Link>
+              </div>
+              <JournalSocialShare entry={entry} />
             </div>
-            <div className="flex items-center justify-between pt-2">
-              <JournalReaction journalId={entry.id} />
-              <Button size="sm" variant="outline" onClick={handleShare}>
-                <Share2 className="w-4 h-4 mr-2" /> Share
-              </Button>
-            </div>
-          </Card>
+
+            <Card className="p-6 space-y-6">
+              <div className="leading-relaxed">
+                {renderFormattedContent(entry.content)}
+              </div>
+              <div className="border-t pt-6 text-muted-foreground text-sm">
+                <span className="font-medium">Therapist reflection:</span> {entry.reflection}
+              </div>
+              <div className="flex items-center justify-between pt-2">
+                <JournalReaction journalId={entry.id} />
+              </div>
+            </Card>
+          </>
         ) : (
           <p className="text-center text-muted-foreground">Entry not found.</p>
         )}
