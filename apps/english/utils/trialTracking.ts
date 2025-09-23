@@ -92,8 +92,9 @@ export class TrialTracker {
       console.log('TrialTracker: Checking database with fingerprint:', this.browserFingerprint);
 
       // Check database by browser fingerprint with timeout
-      const timeoutPromise = new Promise<never>((_, reject) => {
-        setTimeout(() => reject(new Error('Database query timeout')), 5000);
+      // Soft timeout - if DB is slow, fail open (allow trial) without throwing
+      const timeoutPromise = new Promise<{ data?: any; error?: any }>((resolve) => {
+        setTimeout(() => resolve({ data: null, error: null }), 5000);
       });
 
       const queryPromise = supabase
@@ -103,7 +104,7 @@ export class TrialTracker {
         .eq('trial_started', true)
         .limit(1);
 
-      const { data, error } = await Promise.race([queryPromise, timeoutPromise]);
+      const { data, error } = await Promise.race([queryPromise as any, timeoutPromise as any]);
 
       if (error) {
         console.error('TrialTracker: Error checking trial usage:', error);
@@ -111,7 +112,7 @@ export class TrialTracker {
         return false;
       }
 
-      if (data && data.length > 0) {
+      if (data && Array.isArray(data) && data.length > 0) {
         console.log('TrialTracker: Trial already used (database fingerprint match)');
         // Set localStorage to prevent future checks
         localStorage.setItem('trial_used', 'true');

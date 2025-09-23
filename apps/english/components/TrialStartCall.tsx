@@ -72,8 +72,12 @@ export default function TrialStartCall({
       setIsLoadingVoices(true);
       try {
         // For trial users, we give them access to all voices (like grounded subscribers)
-        let groups = await getAvailableVoiceConfigurations('grounded');
-        if(groups.length===0){
+        const dbPromise = getAvailableVoiceConfigurations('grounded');
+        const timeoutPromise = new Promise<VoiceConfigurationGroup[]>((resolve) =>
+          setTimeout(() => resolve([]), 3500)
+        );
+        let groups = await Promise.race([dbPromise, timeoutPromise]);
+        if (groups.length === 0) {
           groups = getFallbackVoiceConfigurations();
         }
         setVoiceGroups(groups);
