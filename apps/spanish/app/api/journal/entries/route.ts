@@ -86,7 +86,7 @@ export async function POST(req: Request) {
 
     const { data, error } = await supabase
       .from('public_journals')
-      .insert({ content, reflection })
+      .insert({ content, reflection, is_published: false })
       .select('id, content, reflection, created_at')
       .single();
 
