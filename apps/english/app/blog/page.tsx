@@ -418,6 +418,116 @@ const blogPosts = [
     author: 'TalkAI Research Team',
     featured: false,
     tags: ['Couples', 'Check-Ins', 'Communication', 'Relationship Health']
+  },
+  {
+    slug: 'ai-talk-therapy-what-it-is-and-isnt',
+    title: 'The Rise of AI Talk Therapy: What It Is and What It Isn\'t',
+    description: 'AI talk therapy pairs proven therapeutic techniques with 24/7, judgment‑free support. Learn what it is, what it isn\'t, and how it complements human care.',
+    category: 'AI Therapy Basics',
+    readTime: '8 min read',
+    publishDate: '2025-01-15',
+    author: 'TalkAI Research Team',
+    featured: true,
+    tags: ['AI Therapy', 'Mental Health', 'Basics', 'Guidance']
+  },
+  {
+    slug: 'ai-vs-human-therapists-partnership',
+    title: 'AI Therapists vs Human Therapists: A Helpful Partnership',
+    description: 'It\'s not either/or. It\'s both/and. AI excels at consistency and availability; humans excel at nuance and relational attunement. Together they create better outcomes.',
+    category: 'Comparison',
+    readTime: '10 min read',
+    publishDate: '2025-01-15',
+    author: 'TalkAI Research Team',
+    featured: false,
+    tags: ['AI vs Human', 'Partnership', 'Therapy', 'Collaboration']
+  },
+  {
+    slug: 'privacy-in-ai-therapy',
+    title: 'Private by Design: How We Think About Mental Health Data',
+    description: 'Your story is yours. Mental health data deserves the highest standard of protection. Learn about our privacy commitments, data minimization, and user control principles.',
+    category: 'Privacy',
+    readTime: '7 min read',
+    publishDate: '2025-01-15',
+    author: 'TalkAI Security Team',
+    featured: false,
+    tags: ['Privacy', 'Security', 'Data Protection', 'Trust']
+  },
+  {
+    slug: 'cbt-skills-with-ai',
+    title: 'CBT Skills You Can Practice with an AI Assistant',
+    description: 'Cognitive Behavioral Therapy works best with repetition and feedback. Learn how an AI guide can help you practice thought records, cognitive restructuring, and behavioral activation.',
+    category: 'Habits & Tracking',
+    readTime: '9 min read',
+    publishDate: '2025-01-15',
+    author: 'TalkAI Research Team',
+    featured: false,
+    tags: ['CBT', 'Skills Practice', 'AI Assistant', 'Therapy']
+  },
+  {
+    slug: 'five-minute-micro-therapy-sessions',
+    title: 'Five‑Minute Micro‑Sessions That Actually Stick',
+    description: 'Big changes come from tiny, consistent steps. Learn how 5-minute micro-sessions can create momentum, reduce friction, and build lasting mental health habits.',
+    category: 'Habits & Tracking',
+    readTime: '6 min read',
+    publishDate: '2025-01-15',
+    author: 'TalkAI Research Team',
+    featured: false,
+    tags: ['Micro-Sessions', 'Habits', 'Consistency', 'Mental Health']
+  },
+  {
+    slug: 'session-feedback-into-journal',
+    title: 'Turning Session Feedback into a Richer Journal',
+    description: 'Therapy insights fade if they\'re not captured. Learn how AI can transform your feedback into a living, searchable journal that tracks patterns and progress over time.',
+    category: 'Habits & Tracking',
+    readTime: '8 min read',
+    publishDate: '2025-01-15',
+    author: 'TalkAI Research Team',
+    featured: false,
+    tags: ['Journaling', 'Session Feedback', 'Progress Tracking', 'Therapy']
+  },
+  {
+    slug: 'ai-therapy-safety-boundaries',
+    title: 'Safety First: Knowing AI\'s Boundaries (and Yours)',
+    description: 'AI is support—not a substitute—for crisis care. Learn about AI therapy boundaries, when to escalate to human care, and how to use AI safely for mental health support.',
+    category: 'Safety',
+    readTime: '9 min read',
+    publishDate: '2025-01-15',
+    author: 'TalkAI Safety Team',
+    featured: false,
+    tags: ['Safety', 'Boundaries', 'Crisis Care', 'AI Therapy']
+  },
+  {
+    slug: 'multilingual-ai-empathy',
+    title: 'Multilingual Empathy: Building for Culture, Not Just Language',
+    description: 'Mental health is cultural. Learn how we design AI therapy beyond translation, considering idioms, family contexts, stigma, and cultural norms for truly empathetic support.',
+    category: 'Technology',
+    readTime: '10 min read',
+    publishDate: '2025-01-15',
+    author: 'TalkAI Research Team',
+    featured: false,
+    tags: ['Multilingual', 'Culture', 'Empathy', 'Global Health']
+  },
+  {
+    slug: 'teens-and-ai-mental-health',
+    title: 'Teens and AI Companions: Guidance for Families',
+    description: 'With the right boundaries, AI companions can help teens practice coping skills and name emotions. Learn how families can guide healthy AI use for teen mental health.',
+    category: 'Teen Support',
+    readTime: '11 min read',
+    publishDate: '2025-01-15',
+    author: 'TalkAI Research Team',
+    featured: false,
+    tags: ['Teens', 'Family Guidance', 'AI Companions', 'Mental Health']
+  },
+  {
+    slug: 'hybrid-care-ai-plus-clinicians',
+    title: 'The Future of Care is Hybrid: AI + Clinicians',
+    description: 'The most promising future blends AI\'s consistency with clinicians\' wisdom. Learn how hybrid care can improve outcomes, access, and the therapeutic relationship.',
+    category: 'Technology',
+    readTime: '12 min read',
+    publishDate: '2025-01-15',
+    author: 'TalkAI Research Team',
+    featured: true,
+    tags: ['Hybrid Care', 'Future', 'Clinicians', 'AI Integration']
   }
 ];
 
@@ -552,6 +662,7 @@ export default async function BlogPage({
                   case 'ADHD Support': return 'bg-indigo-100 text-indigo-800';
                   case 'Postpartum Support': return 'bg-rose-100 text-rose-800';
                   case 'Teen Support': return 'bg-cyan-100 text-cyan-800';
+                  case 'Safety': return 'bg-red-100 text-red-800';
                   default: return 'bg-slate-100 text-slate-800';
                 }
               };

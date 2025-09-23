@@ -51,4 +51,26 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
   }
 
   return NextResponse.json({ success: true, entry: data });
+}
+
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const authRes = await authenticateAdmin(request);
+  if ('error' in authRes) {
+    return NextResponse.json({ error: authRes.error }, { status: authRes.status ?? 401 });
+  }
+
+  const { id } = await params;
+  if (!id) return NextResponse.json({ error: 'id param required' }, { status: 400 });
+
+  const { error } = await supabaseAdmin
+    .from('public_journals')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    console.error('[Admin Journals] DELETE error', error);
+    return NextResponse.json({ error: 'Failed to delete entry' }, { status: 500 });
+  }
+
+  return NextResponse.json({ success: true });
 } 

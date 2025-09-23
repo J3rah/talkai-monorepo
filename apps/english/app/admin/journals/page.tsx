@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Loader2, Flag, CheckCircle2 } from "lucide-react";
+import { Loader2, Flag, CheckCircle2, Trash2 } from "lucide-react";
 import supabase from "@/supabaseClient";
 import type { JournalEntry } from "@/types/journal";
 
@@ -18,6 +18,7 @@ export default function AdminJournalsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filterFlagged, setFilterFlagged] = useState<"all" | "flagged" | "unflagged">("all");
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const fetchEntries = async (flaggedParam: "all" | "flagged" | "unflagged") => {
     try {
@@ -72,6 +73,31 @@ export default function AdminJournalsPage() {
     }
   };
 
+  const deleteEntry = async (id: string) => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) return;
+    if (!confirm("Delete this journal entry? This cannot be undone.")) return;
+    setDeletingId(id);
+    try {
+      const res = await fetch(`/api/admin/journals/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+        },
+      });
+      if (!res.ok) {
+        throw new Error((await res.json()).error || "Failed to delete entry");
+      }
+      // remove from list
+      setEntries((prev) => prev.filter((e) => e.id !== id));
+    } catch (err: any) {
+      console.error(err);
+      alert(err.message || "Failed to delete entry");
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -120,14 +146,25 @@ export default function AdminJournalsPage() {
                 <span className={`text-sm ${entry.is_flagged ? "text-red-600" : "text-green-600"}`}>
                   {entry.is_flagged ? "Flagged" : "OK"}
                 </span>
-                <Button size="sm" variant="outline" onClick={() => toggleFlag(entry.id, entry.is_flagged)}>
-                  {entry.is_flagged ? (
-                    <CheckCircle2 className="w-4 h-4 mr-1" />
-                  ) : (
-                    <Flag className="w-4 h-4 mr-1" />
-                  )}
-                  {entry.is_flagged ? "Unflag" : "Flag"}
-                </Button>
+                <div className="flex items-center gap-2">
+                  <Button size="sm" variant="outline" onClick={() => toggleFlag(entry.id, entry.is_flagged)}>
+                    {entry.is_flagged ? (
+                      <CheckCircle2 className="w-4 h-4 mr-1" />
+                    ) : (
+                      <Flag className="w-4 h-4 mr-1" />
+                    )}
+                    {entry.is_flagged ? "Unflag" : "Flag"}
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    onClick={() => deleteEntry(entry.id)}
+                    disabled={deletingId === entry.id}
+                    title="Delete entry"
+                  >
+                    <Trash2 className="w-4 h-4 mr-1" /> {deletingId === entry.id ? "Deleting..." : "Delete"}
+                  </Button>
+                </div>
               </div>
             </Card>
           ))}
