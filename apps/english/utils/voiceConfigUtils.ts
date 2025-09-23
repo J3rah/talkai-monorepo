@@ -75,17 +75,27 @@ export async function getAvailableVoiceConfigurations(subscriptionStatus: string
     'premium': ['calm', 'centered', 'grounded']
   } as const;
 
+  // Normalize incoming status (handles 'Grounded', 'Premium', etc.)
+  const normalizedStatus = (subscriptionStatus || '').toLowerCase() as keyof typeof planHierarchy;
   const allowedPlans = [
-    ...(planHierarchy[subscriptionStatus as keyof typeof planHierarchy] ?? ['calm'])
+    ...(planHierarchy[normalizedStatus] ?? ['calm'])
   ] as ('calm' | 'centered' | 'grounded')[];
   
   try {
     const groups = await getVoiceConfigurationGroups();
     
+    // Some rows may have required_plan stored with mixed casing or synonyms
+    const normalizePlan = (plan: string): 'calm' | 'centered' | 'grounded' | any => {
+      const p = (plan || '').toLowerCase();
+      if (p === 'premium') return 'grounded';
+      if (p === 'standard') return 'centered';
+      return p;
+    };
+
     return groups.map(group => ({
       ...group,
-      voice_configurations: group.voice_configurations.filter(config => 
-        allowedPlans.includes(config.required_plan)
+      voice_configurations: group.voice_configurations.filter((config: any) =>
+        allowedPlans.includes(normalizePlan(config.required_plan))
       )
     })).filter(group => group.voice_configurations.length > 0);
   } catch (error) {
