@@ -255,6 +255,12 @@ export default function AuthPage() {
 
     console.log('🔐 AuthPage: Starting login process');
 
+    if (!TURNSTILE_SITE_KEY) {
+      setTurnstileError('Security verification is not configured. Please contact support.');
+      setLoading(false);
+      return;
+    }
+
     if (!turnstileToken) {
       setTurnstileError('Please complete the security verification.');
       setLoading(false);
@@ -373,8 +379,14 @@ export default function AuthPage() {
 
     console.log('🔐 AuthPage: Starting signup process');
 
-    if (!recaptchaToken) {
-      setRecaptchaError('Please complete the reCAPTCHA.');
+    if (!TURNSTILE_SITE_KEY) {
+      setTurnstileError('Security verification is not configured. Please contact support.');
+      setLoading(false);
+      return;
+    }
+
+    if (!turnstileToken) {
+      setTurnstileError('Please complete the security verification.');
       setLoading(false);
       return;
     }
@@ -458,8 +470,14 @@ export default function AuthPage() {
 
     console.log('🔐 AuthPage: Starting password reset process');
 
-    if (!recaptchaToken) {
-      setRecaptchaError('Please complete the reCAPTCHA.');
+    if (!TURNSTILE_SITE_KEY) {
+      setTurnstileError('Security verification is not configured. Please contact support.');
+      setLoading(false);
+      return;
+    }
+
+    if (!turnstileToken) {
+      setTurnstileError('Please complete the security verification.');
       setLoading(false);
       return;
     }
@@ -624,11 +642,17 @@ export default function AuthPage() {
             )}
 
             {/* Turnstile */}
-            <TurnstileComponent
-              siteKey={TURNSTILE_SITE_KEY}
-              onVerify={(token: string | null) => setTurnstileToken(token)}
-              onError={(error: string) => setTurnstileError(error)}
-            />
+            {TURNSTILE_SITE_KEY ? (
+              <TurnstileComponent
+                siteKey={TURNSTILE_SITE_KEY}
+                onVerify={(token: string | null) => setTurnstileToken(token)}
+                onError={(error: string) => setTurnstileError(error)}
+              />
+            ) : (
+              <div className="text-red-500 text-sm p-3 border border-red-300 rounded bg-red-50">
+                ⚠️ Turnstile not configured. Please set NEXT_PUBLIC_TURNSTILE_SITE_KEY in your environment variables.
+              </div>
+            )}
             {turnstileError && <div className="text-red-500 text-sm">{turnstileError}</div>}
 
             <Button type="submit" className="w-full" disabled={loading}>
@@ -710,11 +734,17 @@ export default function AuthPage() {
             </div>
 
             {/* Turnstile */}
-            <TurnstileComponent
-              siteKey={TURNSTILE_SITE_KEY}
-              onVerify={(token: string | null) => setTurnstileToken(token)}
-              onError={(error: string) => setTurnstileError(error)}
-            />
+            {TURNSTILE_SITE_KEY ? (
+              <TurnstileComponent
+                siteKey={TURNSTILE_SITE_KEY}
+                onVerify={(token: string | null) => setTurnstileToken(token)}
+                onError={(error: string) => setTurnstileError(error)}
+              />
+            ) : (
+              <div className="text-red-500 text-sm p-3 border border-red-300 rounded bg-red-50">
+                ⚠️ Turnstile not configured. Please set NEXT_PUBLIC_TURNSTILE_SITE_KEY in your environment variables.
+              </div>
+            )}
             {turnstileError && <div className="text-red-500 text-sm">{turnstileError}</div>}
 
             <Button type="submit" className="w-full" disabled={loading}>
@@ -743,11 +773,17 @@ export default function AuthPage() {
             />
 
             {/* Turnstile */}
-            <TurnstileComponent
-              siteKey={TURNSTILE_SITE_KEY}
-              onVerify={(token: string | null) => setTurnstileToken(token)}
-              onError={(error: string) => setTurnstileError(error)}
-            />
+            {TURNSTILE_SITE_KEY ? (
+              <TurnstileComponent
+                siteKey={TURNSTILE_SITE_KEY}
+                onVerify={(token: string | null) => setTurnstileToken(token)}
+                onError={(error: string) => setTurnstileError(error)}
+              />
+            ) : (
+              <div className="text-red-500 text-sm p-3 border border-red-300 rounded bg-red-50">
+                ⚠️ Turnstile not configured. Please set NEXT_PUBLIC_TURNSTILE_SITE_KEY in your environment variables.
+              </div>
+            )}
             {turnstileError && <div className="text-red-500 text-sm">{turnstileError}</div>}
 
             <Button type="submit" className="w-full" disabled={loading}>
