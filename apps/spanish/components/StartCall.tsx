@@ -230,9 +230,9 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
       }
 
       try {
-        // Timeout guard
+        // Increased timeout guard to 10 seconds for better reliability
         const timeoutPromise = new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('StartCall auth check timeout')), 3000)
+          setTimeout(() => reject(new Error('StartCall auth check timeout')), 10000)
         );
 
         let user = null;
@@ -242,6 +242,15 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
         } catch (authError: any) {
           if (authError?.message === 'Auth session missing!') {
             console.log('No auth session - continuing without user data');
+          } else if (authError?.message === 'StartCall auth check timeout') {
+            console.warn('Auth check timed out, trying fallback method');
+            // Try getSession as fallback when getUser times out
+            try {
+              const { data: { session } } = await supabase.auth.getSession();
+              user = session?.user ?? null;
+            } catch (sessionError: any) {
+              console.warn('Fallback session check also failed:', sessionError);
+            }
           } else {
             console.error('Auth error:', authError);
           }
@@ -258,7 +267,7 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
           await checkDataSavingPermission(user.id);
         }
 
-      } catch (error) {
+      } catch (error: any) {
         console.error('StartCall: auth check failed', error);
         
         // Handle auth errors gracefully
@@ -790,7 +799,7 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                 {userSubscriptionStatus === 'grounded' && (
                   <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm mt-3">
                     <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                    {userName ? t('voiceSelection.groundedPlanWithName', { name: userName }) : t('voiceSelection.groundedPlan')}
+                    {userName ? t('voiceSelection.groundedPlanWithName', { name: userName } as any) : t('voiceSelection.groundedPlan')}
                   </div>
                 )}
               </div>

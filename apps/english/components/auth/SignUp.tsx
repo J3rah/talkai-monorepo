@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import supabase from '../../supabaseClient';
 import { Button } from '../ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
-import ReCAPTCHA from 'react-google-recaptcha';
+import TurnstileComponent from '../Turnstile';
 import { Eye, EyeOff } from 'lucide-react';
 
 interface PasswordStrength {
@@ -34,8 +34,8 @@ export default function SignUp() {
     feedback: [],
     isValid: false
   });
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
-  const [recaptchaError, setRecaptchaError] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileError, setTurnstileError] = useState<string | null>(null);
   const [referralCode, setReferralCode] = useState<string | null>(null);
 
   useEffect(() => {
@@ -49,12 +49,12 @@ export default function SignUp() {
     }
   }, []);
 
-  // Cleanup effect for reCAPTCHA
+  // Cleanup effect for Turnstile
   useEffect(() => {
     return () => {
-      // Clear reCAPTCHA token when component unmounts
-      setRecaptchaToken(null);
-      setRecaptchaError(null);
+      // Clear Turnstile token when component unmounts
+      setTurnstileToken(null);
+      setTurnstileError(null);
     };
   }, []);
 
@@ -145,19 +145,19 @@ export default function SignUp() {
     return 'Strong';
   };
 
-  const verifyRecaptcha = async (token: string) => {
+  const verifyTurnstile = async (token: string) => {
     try {
-      console.log('🔐 Verifying reCAPTCHA token...');
-      const res = await fetch('/api/verify-recaptcha', {
+      console.log('🔐 Verifying Turnstile token...');
+      const res = await fetch('/api/verify-turnstile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token }),
       });
       const data = await res.json();
-      console.log('🔐 reCAPTCHA response:', data);
+      console.log('🔐 Turnstile response:', data);
       return data.success;
     } catch (error) {
-      console.error('❌ reCAPTCHA verification failed:', error);
+      console.error('❌ Turnstile verification failed:', error);
       return false;
     }
   };
@@ -166,21 +166,21 @@ export default function SignUp() {
     e.preventDefault();
     setLoading(true);
     setMessage('');
-    setRecaptchaError(null);
+    setTurnstileError(null);
     
     console.log('🚀 Starting signup process...');
-    console.log('🔐 Current reCAPTCHA token:', recaptchaToken);
+    console.log('🔐 Current Turnstile token:', turnstileToken);
     
-    if (!recaptchaToken) {
-      console.log('❌ No reCAPTCHA token found');
-      setRecaptchaError('Please complete the reCAPTCHA.');
+    if (!turnstileToken) {
+      console.log('❌ No Turnstile token found');
+      setTurnstileError('Please complete the security verification.');
       setLoading(false);
       return;
     }
     
-    const recaptchaValid = await verifyRecaptcha(recaptchaToken);
-    if (!recaptchaValid) {
-      setRecaptchaError('reCAPTCHA verification failed. Please try again.');
+    const turnstileValid = await verifyTurnstile(turnstileToken);
+    if (!turnstileValid) {
+      setTurnstileError('Security verification failed. Please try again.');
       setLoading(false);
       return;
     }
@@ -383,15 +383,15 @@ export default function SignUp() {
             )}
           </button>
         </div>
-        <ReCAPTCHA
-          key="signup-email-recaptcha"
-          sitekey="6LeWV1crAAAAAGg7y41yxfFpxkzbuZb8CuzqCqiR"
-          onChange={(token: string | null) => {
-            console.log('🔐 SignUp reCAPTCHA onChange:', token);
-            setRecaptchaToken(token);
+        <TurnstileComponent
+          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
+          onVerify={(token: string | null) => {
+            console.log('🔐 SignUp Turnstile onVerify:', token);
+            setTurnstileToken(token);
           }}
+          onError={(error: string) => setTurnstileError(error)}
         />
-        {recaptchaError && <div className="text-red-500 text-sm">{recaptchaError}</div>}
+        {turnstileError && <div className="text-red-500 text-sm">{turnstileError}</div>}
 
         <Button type="submit" className="w-full" disabled={loading}>
           {loading ? 'Signing Up...' : 'Sign Up with Email'}

@@ -11,6 +11,7 @@ import { getAvailableVoiceConfigurations, getVoiceConfigurationById, getFallback
 import { calculateMostUsedAgent, getDefaultAgent, getAvailableTherapistCount, UserAgentAnalytics } from "@/utils/agentAnalytics";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { 
   Dialog, 
   DialogContent, 
@@ -202,6 +203,11 @@ export default function TestDashboardPage() {
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [toast, setToast] = useState<{ message: string; type?: 'success' | 'error' | 'info' } | null>(null);
   const showToastMessage = (message: string, type: 'success' | 'error' | 'info' = 'success') => setToast({ message, type });
+  // Feedback history
+  const [feedbackHistory, setFeedbackHistory] = useState<Array<{ id: string; content: string; reflection: string; created_at: string }>>([]);
+  const [isLoadingFeedback, setIsLoadingFeedback] = useState(false);
+  // Per-session UI states
+  const [downloadInProgress, setDownloadInProgress] = useState<Record<string, boolean>>({});
 
   // Sidebar state
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -1115,47 +1121,109 @@ export default function TestDashboardPage() {
     }
 
     try {
-      // Fetch complete session data
-      const [sessionResult, messagesResult, emotionsResult, therapyResult] = await Promise.all([
-        supabase
-          .from('chat_sessions')
-          .select('*')
-          .eq('id', sessionId)
-          .single(),
-        supabase
-          .from('chat_messages')
-          .select('*')
-          .eq('chat_session_id', sessionId)
-          .order('created_at', { ascending: true }),
-        supabase
-          .from('emotion_metrics')
-          .select('*')
-          .eq('chat_session_id', sessionId)
-          .order('created_at', { ascending: true }),
-        supabase
-          .from('therapy_sessions')
-          .select('*')
-          .eq('chat_session_id', sessionId)
-          .single()
+      setDownloadInProgress(prev => ({ ...prev, [sessionId]: true }));
+      showToastMessage('Preparing session download...', 'info');
+      
+      // Add timeout wrapper for database queries
+      const withTimeout = (promise: Promise<any>, timeoutMs: number = 30000) => {
+        return Promise.race([
+          promise,
+          new Promise((_, reject) => 
+            setTimeout(() => reject(new Error(`Query timeout after ${timeoutMs}ms`)), timeoutMs)
+          )
+        ]);
+      };
+
+      // Fetch complete session data with individual error handling
+      console.log('Starting session download for:', sessionId);
+      
+      const [sessionResult, messagesResult, emotionsResult, therapyResult] = await Promise.allSettled([
+        withTimeout((async () => {
+          const result = await supabase
+            .from('chat_sessions')
+            .select('*')
+            .eq('id', sessionId)
+            .single();
+          return result;
+        })(), 30000),
+        withTimeout((async () => {
+          const result = await supabase
+            .from('chat_messages')
+            .select('*')
+            .eq('chat_session_id', sessionId)
+            .order('created_at', { ascending: true });
+          return result;
+        })(), 20000),
+        withTimeout((async () => {
+          const result = await supabase
+            .from('emotion_metrics')
+            .select('*')
+            .eq('chat_session_id', sessionId)
+            .order('created_at', { ascending: true });
+          return result;
+        })(), 15000),
+        withTimeout((async () => {
+          const result = await supabase
+            .from('therapy_sessions')
+            .select('*')
+            .eq('chat_session_id', sessionId)
+            .single();
+          return result;
+        })(), 10000)
       ]);
 
-      if (sessionResult.error) throw sessionResult.error;
+      // Check for errors in each query
+      let sessionData;
+      if (sessionResult.status === 'rejected') {
+        console.warn('Session query failed, using fallback data:', sessionResult.reason);
+        // Create fallback session data
+        sessionData = {
+          id: sessionId,
+          title: 'Session',
+          created_at: new Date().toISOString(),
+          summary: 'Session data unavailable'
+        };
+      } else if (sessionResult.value.error) {
+        console.warn('Session query error, using fallback data:', sessionResult.value.error.message);
+        sessionData = {
+          id: sessionId,
+          title: 'Session',
+          created_at: new Date().toISOString(),
+          summary: 'Session data unavailable'
+        };
+      } else {
+        sessionData = sessionResult.value.data;
+        if (!sessionData) {
+          throw new Error('Session not found');
+        }
+      }
 
-      const sessionData = {
-        session: sessionResult.data,
-        messages: messagesResult.data || [],
-        emotions: emotionsResult.data || [],
-        therapy_session: therapyResult.data || null,
+      // Process other results with fallbacks
+      const messages = messagesResult.status === 'fulfilled' && !messagesResult.value.error 
+        ? messagesResult.value.data || [] 
+        : [];
+      const emotions = emotionsResult.status === 'fulfilled' && !emotionsResult.value.error 
+        ? emotionsResult.value.data || [] 
+        : [];
+      const therapySession = therapyResult.status === 'fulfilled' && !therapyResult.value.error 
+        ? therapyResult.value.data 
+        : null;
+
+      console.log(`Download data: ${messages.length} messages, ${emotions.length} emotions`);
+
+      const exportData = {
+        session: sessionData,
+        messages: messages,
+        emotions: emotions,
+        therapy_session: therapySession,
         exported_at: new Date().toISOString(),
         export_format: format
       };
-
-      const session = sessionResult.data;
-      const fileName = `session_${session.title?.replace(/[^a-zA-Z0-9]/g, '_') || 'untitled'}_${new Date(session.created_at).toISOString().split('T')[0]}`;
+      const fileName = `session_${sessionData.title?.replace(/[^a-zA-Z0-9]/g, '_') || 'untitled'}_${new Date(sessionData.created_at).toISOString().split('T')[0]}`;
 
       if (format === 'json') {
         // Download as JSON
-        const blob = new Blob([JSON.stringify(sessionData, null, 2)], { type: 'application/json' });
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -1164,11 +1232,11 @@ export default function TestDashboardPage() {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
+        showToastMessage('Session downloaded.', 'success');
       } else if (format === 'csv') {
         // Download as CSV (messages only for simplicity)
-        const messages = messagesResult.data || [];
         const csvHeaders = ['Timestamp', 'Role', 'Content', 'Emotions'];
-        const csvRows = messages.map(msg => [
+        const csvRows = messages.map((msg: any) => [
           new Date(msg.created_at).toLocaleString(),
           msg.role,
           `"${msg.content.replace(/"/g, '""')}"`, // Escape quotes
@@ -1188,10 +1256,14 @@ export default function TestDashboardPage() {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
+        showToastMessage('CSV downloaded.', 'success');
       }
     } catch (error) {
       console.error('Error downloading session data:', error);
-      alert('Failed to download session data. Please try again.');
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      showToastMessage(`Download failed: ${errorMessage}`, 'error');
+    } finally {
+      setDownloadInProgress(prev => ({ ...prev, [sessionId]: false }));
     }
   };
 
@@ -1388,6 +1460,29 @@ export default function TestDashboardPage() {
     );
   };
   // === End helper functions ===
+
+  // Load Therapist Feedback history (journal entries)
+  useEffect(() => {
+    const loadFeedback = async () => {
+      try {
+        setIsLoadingFeedback(true);
+        const res = await fetch('/api/journal/entries');
+        const json = await res.json();
+        if (json?.success && Array.isArray(json?.entries)) {
+          setFeedbackHistory(json.entries);
+        } else {
+          setFeedbackHistory([]);
+        }
+      } catch (e) {
+        console.warn('Failed to load feedback history:', e);
+        setFeedbackHistory([]);
+      } finally {
+        setIsLoadingFeedback(false);
+      }
+    };
+    // Load when arriving to dashboard
+    loadFeedback();
+  }, []);
 
   useEffect(() => {
     // Poll audio reconstruction status every 30 seconds
@@ -1816,20 +1911,26 @@ export default function TestDashboardPage() {
 
           {activeSection === 'sessions' && (
             <div className="space-y-6">
-              <div className="bg-card rounded-xl border border-border p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-foreground">Your Sessions</h3>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-muted-foreground">{chatSessions.length} total</span>
-                    {userSubscriptionStatus === 'grounded' && (
-                      <>
-                        <Button size="sm" variant="outline" onClick={() => downloadAllSessionsData('json')}>Download JSON</Button>
-                        <Button size="sm" variant="outline" onClick={() => downloadAllSessionsData('csv')}>Download CSV</Button>
-                      </>
-                    )}
+              <Accordion type="multiple" defaultValue={[]} className="space-y-4">
+                {/* Your Sessions Accordion */}
+                <AccordionItem value="sessions" className="bg-card rounded-xl border border-border">
+                  <div className="px-6 py-4 border-b border-border">
+                    <div className="flex items-center justify-between">
+                      <AccordionTrigger className="hover:no-underline flex-1 text-left">
+                        <h3 className="text-lg font-semibold text-foreground">Your Sessions</h3>
+                      </AccordionTrigger>
+                      <div className="flex items-center gap-2 ml-4">
+                        <span className="text-sm text-muted-foreground">{chatSessions.length} total</span>
+                        {userSubscriptionStatus === 'grounded' && (
+                          <>
+                            <Button size="sm" variant="outline" onClick={() => downloadAllSessionsData('json')}>Download JSON</Button>
+                            <Button size="sm" variant="outline" onClick={() => downloadAllSessionsData('csv')}>Download CSV</Button>
+                          </>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                </div>
-                
+                  <AccordionContent className="px-6 pb-6">
                 {chatSessions.length === 0 ? (
                   <div className="text-center py-12">
                     <MessageSquare className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
@@ -1865,15 +1966,17 @@ export default function TestDashboardPage() {
                               <>
                               <button
                                 onClick={() => downloadSessionData(session.id)}
-                                  className="px-2 py-1 text-sm bg-green-500/10 text-green-500 rounded-md hover:bg-green-500/20"
+                                      disabled={!!downloadInProgress[session.id]}
+                                      className={`px-2 py-1 text-sm rounded-md ${downloadInProgress[session.id] ? 'bg-green-500/10 text-green-500 opacity-60 cursor-not-allowed' : 'bg-green-500/10 text-green-500 hover:bg-green-500/20'}`}
                               >
-                                  Download
+                                      {downloadInProgress[session.id] ? 'Preparing…' : 'Download'}
                               </button>
                                 <button
                                   onClick={() => showAudioInfo(session.id)}
-                                  className="px-2 py-1 text-sm bg-purple-500/10 text-purple-500 rounded-md hover:bg-purple-500/20"
+                                      disabled={Boolean(audioReconstructionStatus[session.id] && audioReconstructionStatus[session.id].status && !['COMPLETE','ERROR','NO_AUDIO'].includes(audioReconstructionStatus[session.id].status))}
+                                      className={`px-2 py-1 text-sm rounded-md ${audioReconstructionStatus[session.id]?.status && !['COMPLETE','ERROR','NO_AUDIO'].includes(audioReconstructionStatus[session.id].status) ? 'bg-purple-500/10 text-purple-500 opacity-60 cursor-not-allowed' : 'bg-purple-500/10 text-purple-500 hover:bg-purple-500/20'}`}
                                 >
-                                  Audio
+                                      {audioReconstructionStatus[session.id]?.status && !['COMPLETE','ERROR','NO_AUDIO'].includes(audioReconstructionStatus[session.id].status) ? 'Reconstructing…' : 'Audio'}
                                 </button>
                               </>
                             )}
@@ -1883,7 +1986,75 @@ export default function TestDashboardPage() {
                     ))}
                   </div>
                 )}
-              </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                {/* Therapist Feedback Accordion */}
+                <AccordionItem value="feedback" className="bg-card rounded-xl border border-border">
+                  <div className="px-6 py-4 border-b border-border">
+                    <div className="flex items-center justify-between">
+                      <AccordionTrigger className="hover:no-underline flex-1 text-left">
+                        <h3 className="text-lg font-semibold text-foreground">Therapist Feedback History</h3>
+                      </AccordionTrigger>
+                      <button
+                        onClick={async () => {
+                          try {
+                            setIsLoadingFeedback(true);
+                            const res = await fetch('/api/journal/entries');
+                            const json = await res.json();
+                            if (json?.success && Array.isArray(json?.entries)) setFeedbackHistory(json.entries);
+                          } catch (e) {
+                            console.warn('Failed to refresh feedback history:', e);
+                          } finally {
+                            setIsLoadingFeedback(false);
+                          }
+                        }}
+                        className="text-sm text-primary hover:text-primary/80 ml-4"
+                      >
+                        Refresh
+                      </button>
+                    </div>
+                  </div>
+                  <AccordionContent className="px-6 pb-6">
+                    {isLoadingFeedback ? (
+                      <div className="text-sm text-muted-foreground">Loading feedback…</div>
+                    ) : feedbackHistory.length === 0 ? (
+                      <div className="text-sm text-muted-foreground">No feedback entries yet.</div>
+                    ) : (
+                      <div className="space-y-3">
+                        {feedbackHistory.map((entry) => (
+                          <div key={entry.id} className="border border-border rounded-lg p-4">
+                            <div className="flex items-start justify-between gap-3">
+                              <div className="flex-1">
+                                <p className="text-xs text-muted-foreground mb-1">{new Date(entry.created_at).toLocaleString()}</p>
+                                <p className="text-sm text-foreground whitespace-pre-line">{entry.reflection || entry.content?.slice(0, 200) + (entry.content?.length > 200 ? '…' : '')}</p>
+                              </div>
+                              <div className="flex flex-col gap-2 ml-2">
+                                <button
+                                  onClick={() => {
+                                    const blob = new Blob([JSON.stringify(entry, null, 2)], { type: 'application/json' });
+                                    const url = URL.createObjectURL(blob);
+                                    const a = document.createElement('a');
+                                    a.href = url;
+                                    a.download = `therapist_feedback_${entry.id}.json`;
+                                    document.body.appendChild(a);
+                                    a.click();
+                                    document.body.removeChild(a);
+                                    URL.revokeObjectURL(url);
+                                  }}
+                                  className="px-2 py-1 text-xs bg-primary/10 text-primary rounded-md hover:bg-primary/20"
+                                >
+                                  Download
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </div>
           )}
 
@@ -2043,6 +2214,7 @@ export default function TestDashboardPage() {
                   </div>
                 </div>
               </div>
+
 
               {/* Change Password */}
               <div className="bg-card rounded-xl border border-border p-6">

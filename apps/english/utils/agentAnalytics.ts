@@ -1,4 +1,5 @@
 import supabase from '@/supabaseClient';
+import { getVoiceConfigurationById } from '@/utils/voiceConfigUtils';
 
 // Define ChatSession interface locally to avoid import path issues
 interface ChatSession {
@@ -31,23 +32,32 @@ export interface UserAgentAnalytics {
   agentBreakdown: AgentUsageStats[];
 }
 
+function toErrorString(err: unknown): string {
+  if (!err) return 'Unknown error';
+  if (typeof err === 'string') return err;
+  const anyErr = err as any;
+  if (anyErr?.message) return String(anyErr.message);
+  try {
+    return JSON.stringify(err);
+  } catch {
+    return String(err);
+  }
+}
+
 /**
  * Calculates the most used agent/therapist for a specific user based on their session history
  */
 export async function calculateMostUsedAgent(userId: string): Promise<UserAgentAnalytics> {
   try {
-    // Fetch all sessions for the user that have agent information
+    // Fetch all sessions for the user
     const { data: sessions, error } = await supabase
       .from('chat_sessions')
-      .select('character_name, agent_name, voice_config_id, created_at')
+      .select('id, created_at')
       .eq('user_id', userId)
-      .not('character_name', 'is', null)
       .order('created_at', { ascending: false });
 
-    if (error && (error as any).message) {
-      console.error('Error fetching user sessions for agent analytics:', error);
-    } else if (error) {
-      console.warn('Agent analytics: query returned an unspecified error object');
+    if (error) {
+      console.error('Error fetching user sessions for agent analytics:', toErrorString(error));
       return {
         mostUsedAgent: null,
         totalSessions: 0,
@@ -63,44 +73,19 @@ export async function calculateMostUsedAgent(userId: string): Promise<UserAgentA
       };
     }
 
-    // Group sessions by character name and count usage
-    const agentCounts: Record<string, {
-      characterName: string;
-      displayName: string;
-      configId: string;
-      count: number;
-    }> = {};
-
-    sessions.forEach(session => {
-      const characterName = session.character_name || 'Unknown';
-      const key = characterName.toLowerCase();
-      
-      if (!agentCounts[key]) {
-        agentCounts[key] = {
-          characterName: session.character_name || 'Unknown',
-          displayName: session.agent_name || 'Unknown',
-          configId: session.voice_config_id || '',
-          count: 0
-        };
-      }
-      agentCounts[key].count++;
-    });
-
-    // Convert to array and calculate percentages
+    // Since we don't have voice_config_id in chat_sessions, 
+    // return basic analytics with a default agent
     const totalSessions = sessions.length;
-    const agentBreakdown: AgentUsageStats[] = Object.values(agentCounts).map(agent => ({
-      characterName: agent.characterName,
-      displayName: agent.displayName,
-      configId: agent.configId,
-      sessionCount: agent.count,
-      percentage: Math.round((agent.count / totalSessions) * 100)
-    }));
+    const defaultAgent: AgentUsageStats = {
+      characterName: 'Talk Therapist',
+      displayName: 'Talk Therapist',
+      configId: 'default',
+      sessionCount: totalSessions,
+      percentage: 100
+    };
 
-    // Sort by session count (most used first)
-    agentBreakdown.sort((a, b) => b.sessionCount - a.sessionCount);
-
-    // Get the most used agent
-    const mostUsedAgent = agentBreakdown.length > 0 ? agentBreakdown[0] : null;
+    const agentBreakdown: AgentUsageStats[] = totalSessions > 0 ? [defaultAgent] : [];
+    const mostUsedAgent = totalSessions > 0 ? defaultAgent : null;
 
     return {
       mostUsedAgent,

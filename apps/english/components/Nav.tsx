@@ -381,6 +381,7 @@ export const Nav = () => {
             </SheetTrigger>
             <SheetContent side="left" className="w-[240px] sm:w-[300px]">
               <SheetHeader>
+                <SheetTitle className="sr-only">Main navigation</SheetTitle>
                 <Link href="/">
                   <TalkAILogo className="mx-auto my-4 w-48 h-24" />
                 </Link>

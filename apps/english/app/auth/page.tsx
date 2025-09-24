@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import supabase from '../../supabaseClient';
 import AutoReload from '@/components/AutoReload';
 import { Eye, EyeOff } from 'lucide-react';
-// Using manual reCAPTCHA rendering via script
+import TurnstileComponent from '../../components/Turnstile';
 
 type AuthMode = 'login' | 'signup' | 'reset';
 
@@ -15,13 +15,8 @@ interface PasswordStrength {
   isValid: boolean;
 }
 
-// Declare global grecaptcha
-declare global {
-  interface Window {
-    grecaptcha: any;
-    onRecaptchaLoad: () => void;
-  }
-}
+// Turnstile configuration
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '';
 
 export default function AuthPage() {
   const [mode, setMode] = useState<AuthMode>('login');
@@ -33,8 +28,8 @@ export default function AuthPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
-  const [recaptchaError, setRecaptchaError] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileError, setTurnstileError] = useState<string | null>(null);
   const [useMagicLink, setUseMagicLink] = useState(false);
   const [magicLinkSent, setMagicLinkSent] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState<PasswordStrength>({
@@ -42,10 +37,6 @@ export default function AuthPage() {
     feedback: [],
     isValid: false
   });
-  const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
-  
-  const recaptchaRef = useRef<HTMLDivElement>(null);
-  const widgetId = useRef<number | null>(null);
   const router = useRouter();
   
   // Get returnTo parameter from URL
@@ -68,95 +59,7 @@ export default function AuthPage() {
     });
   };
 
-  // Load reCAPTCHA script manually
-  useEffect(() => {
-    if (typeof window !== 'undefined' && !window.grecaptcha) {
-      window.onRecaptchaLoad = () => {
-        console.log('🔧 reCAPTCHA script loaded');
-        setRecaptchaLoaded(true);
-      };
 
-      const script = document.createElement('script');
-      script.src = 'https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit';
-      script.async = true;
-      script.defer = true;
-      document.head.appendChild(script);
-    } else if (window.grecaptcha && window.grecaptcha.render) {
-      setRecaptchaLoaded(true);
-    }
-  }, []);
-
-  // Render reCAPTCHA when loaded and mode changes
-  useEffect(() => {
-    if (recaptchaLoaded && recaptchaRef.current) {
-      // Add a small delay to ensure DOM is ready
-      const timer = setTimeout(() => {
-        renderRecaptcha();
-      }, 100);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [mode, recaptchaLoaded]);
-
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (widgetId.current !== null && window.grecaptcha) {
-        try {
-          window.grecaptcha.reset(widgetId.current);
-        } catch (e) {
-          console.log('🔧 Cleanup: Could not reset reCAPTCHA');
-        }
-      }
-    };
-  }, []);
-
-  const renderRecaptcha = () => {
-    if (!window.grecaptcha || !window.grecaptcha.render || !recaptchaRef.current) {
-      console.log('🔧 reCAPTCHA not ready for rendering');
-      return;
-    }
-
-    // Check if already rendered in this element
-    if (recaptchaRef.current.innerHTML.trim() !== '') {
-      console.log('🔧 reCAPTCHA already exists, resetting...');
-      if (widgetId.current !== null) {
-        try {
-          window.grecaptcha.reset(widgetId.current);
-          setRecaptchaToken(null);
-          return;
-        } catch (e) {
-          console.log('🔧 Could not reset, clearing container');
-          recaptchaRef.current.innerHTML = '';
-        }
-      } else {
-        recaptchaRef.current.innerHTML = '';
-      }
-    }
-
-    try {
-      console.log('🔧 Rendering new reCAPTCHA widget');
-      widgetId.current = window.grecaptcha.render(recaptchaRef.current, {
-        sitekey: '6LeWV1crAAAAAGg7y41yxfFpxkzbuZb8CuzqCqiR',
-        callback: (token: string) => {
-          console.log('🔧 reCAPTCHA callback: Token received');
-          setRecaptchaToken(token);
-          setRecaptchaError(null);
-        },
-        'expired-callback': () => {
-          console.log('🔧 reCAPTCHA expired');
-          setRecaptchaToken(null);
-        },
-        'error-callback': () => {
-          console.error('🔧 reCAPTCHA error');
-          setRecaptchaError('reCAPTCHA error occurred');
-        }
-      });
-      console.log('🔧 reCAPTCHA rendered with widget ID:', widgetId.current);
-    } catch (error) {
-      console.error('🔧 Failed to render reCAPTCHA:', error);
-    }
-  };
 
   // Reset form when switching modes
   const switchMode = (newMode: AuthMode) => {
@@ -164,8 +67,8 @@ export default function AuthPage() {
     
     setMode(newMode);
     setMessage('');
-    setRecaptchaError(null);
-    setRecaptchaToken(null);
+    setTurnstileError(null);
+    setTurnstileToken(null);
     setName('');
     setEmail('');
     setPassword('');
@@ -175,12 +78,6 @@ export default function AuthPage() {
     setUseMagicLink(false);
     setMagicLinkSent(false);
     setPasswordStrength({ score: 0, feedback: [], isValid: false });
-    
-    // Clear reCAPTCHA container and reset widget ID to force re-render
-    if (recaptchaRef.current) {
-      recaptchaRef.current.innerHTML = '';
-    }
-    widgetId.current = null;
   };
 
   const checkPasswordStrength = (password: string): PasswordStrength => {
@@ -232,9 +129,9 @@ export default function AuthPage() {
     return 'Strong';
   };
 
-  const verifyRecaptcha = async (token: string) => {
+  const verifyTurnstile = async (token: string) => {
     try {
-      const res = await fetch('/api/verify-recaptcha', {
+      const res = await fetch('/api/verify-turnstile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token }),
@@ -242,7 +139,7 @@ export default function AuthPage() {
       const data = await res.json();
       return data.success;
     } catch (error) {
-      console.error('reCAPTCHA verification failed:', error);
+      console.error('Turnstile verification failed:', error);
       return false;
     }
   };
@@ -251,32 +148,32 @@ export default function AuthPage() {
     e.preventDefault();
     setLoading(true);
     setMessage('');
-    setRecaptchaError(null);
+    setTurnstileError(null);
 
     console.log('🔐 AuthPage: Starting login process');
 
-    if (!recaptchaToken) {
-      setRecaptchaError('Please complete the reCAPTCHA.');
+    if (!turnstileToken) {
+      setTurnstileError('Please complete the security verification.');
       setLoading(false);
       return;
     }
 
-    console.log('🔐 AuthPage: Verifying reCAPTCHA...');
+    console.log('🔐 AuthPage: Verifying Turnstile...');
     try {
-      const recaptchaValid = await Promise.race([
-        verifyRecaptcha(recaptchaToken),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('reCAPTCHA timeout')), 10000))
+      const turnstileValid = await Promise.race([
+        verifyTurnstile(turnstileToken),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('Turnstile timeout')), 10000))
       ]);
       
-      if (!recaptchaValid) {
-        setRecaptchaError('reCAPTCHA verification failed. Please try again.');
+      if (!turnstileValid) {
+        setTurnstileError('Security verification failed. Please try again.');
         setLoading(false);
         return;
       }
-      console.log('🔐 AuthPage: reCAPTCHA verified successfully');
+      console.log('🔐 AuthPage: Turnstile verified successfully');
     } catch (error) {
-      console.error('🔐 AuthPage: reCAPTCHA verification error:', error);
-      setRecaptchaError('reCAPTCHA verification timed out. Please refresh and try again.');
+      console.error('🔐 AuthPage: Turnstile verification error:', error);
+      setTurnstileError('Security verification timed out. Please refresh and try again.');
       setLoading(false);
       return;
     }
@@ -327,12 +224,21 @@ export default function AuthPage() {
 
         // Kick off sign-in request (no race with timeout)
         const authPromise = supabase.auth.signInWithPassword({ email, password });
-        const { error } = await withTimeout(authPromise, 15000, 'Auth timeout');
-
-        if (error && !resolved) {
-          try { unsubscribe.data.subscription.unsubscribe(); } catch {}
-          console.error('🔐 AuthPage: Login error:', error);
-          setMessage(error.message);
+        
+        try {
+          const { error } = await withTimeout(authPromise, 30000, 'Auth timeout');
+          if (error && !resolved) {
+            try { unsubscribe.data.subscription.unsubscribe(); } catch {}
+            console.error('🔐 AuthPage: Login error:', error);
+            setMessage(error.message);
+          }
+        } catch (timeoutError) {
+          // Only show timeout error if login wasn't already successful
+          if (!resolved) {
+            try { unsubscribe.data.subscription.unsubscribe(); } catch {}
+            console.error('🔐 AuthPage: Auth timeout:', timeoutError);
+            setMessage('Login timed out. Please check your connection and try again.');
+          }
         }
 
         // Fallback: if neither error nor event fired in time, check session after a short delay
@@ -369,32 +275,32 @@ export default function AuthPage() {
     e.preventDefault();
     setLoading(true);
     setMessage('');
-    setRecaptchaError(null);
+    setTurnstileError(null);
 
     console.log('🔐 AuthPage: Starting signup process');
 
-    if (!recaptchaToken) {
-      setRecaptchaError('Please complete the reCAPTCHA.');
+    if (!turnstileToken) {
+      setTurnstileError('Please complete the security verification.');
       setLoading(false);
       return;
     }
 
-    console.log('🔐 AuthPage: Verifying reCAPTCHA for signup...');
+    console.log('🔐 AuthPage: Verifying Turnstile for signup...');
     try {
-      const recaptchaValid = await Promise.race([
-        verifyRecaptcha(recaptchaToken),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('reCAPTCHA timeout')), 10000))
+      const turnstileValid = await Promise.race([
+        verifyTurnstile(turnstileToken),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('Turnstile timeout')), 10000))
       ]);
       
-      if (!recaptchaValid) {
-        setRecaptchaError('reCAPTCHA verification failed. Please try again.');
+      if (!turnstileValid) {
+        setTurnstileError('Security verification failed. Please try again.');
         setLoading(false);
         return;
       }
-      console.log('🔐 AuthPage: reCAPTCHA verified for signup');
+      console.log('🔐 AuthPage: Turnstile verified for signup');
     } catch (error) {
-      console.error('🔐 AuthPage: reCAPTCHA verification error during signup:', error);
-      setRecaptchaError('reCAPTCHA verification timed out. Please refresh and try again.');
+      console.error('🔐 AuthPage: Turnstile verification error during signup:', error);
+      setTurnstileError('Security verification timed out. Please refresh and try again.');
       setLoading(false);
       return;
     }
@@ -454,32 +360,32 @@ export default function AuthPage() {
     e.preventDefault();
     setLoading(true);
     setMessage('');
-    setRecaptchaError(null);
+    setTurnstileError(null);
 
     console.log('🔐 AuthPage: Starting password reset process');
 
-    if (!recaptchaToken) {
-      setRecaptchaError('Please complete the reCAPTCHA.');
+    if (!turnstileToken) {
+      setTurnstileError('Please complete the security verification.');
       setLoading(false);
       return;
     }
 
-    console.log('🔐 AuthPage: Verifying reCAPTCHA for reset...');
+    console.log('🔐 AuthPage: Verifying Turnstile for reset...');
     try {
-      const recaptchaValid = await Promise.race([
-        verifyRecaptcha(recaptchaToken),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('reCAPTCHA timeout')), 10000))
+      const turnstileValid = await Promise.race([
+        verifyTurnstile(turnstileToken),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('Turnstile timeout')), 10000))
       ]);
       
-      if (!recaptchaValid) {
-        setRecaptchaError('reCAPTCHA verification failed. Please try again.');
+      if (!turnstileValid) {
+        setTurnstileError('Security verification failed. Please try again.');
         setLoading(false);
         return;
       }
-      console.log('🔐 AuthPage: reCAPTCHA verified for reset');
+      console.log('🔐 AuthPage: Turnstile verified for reset');
     } catch (error) {
-      console.error('🔐 AuthPage: reCAPTCHA verification error during reset:', error);
-      setRecaptchaError('reCAPTCHA verification timed out. Please refresh and try again.');
+      console.error('🔐 AuthPage: Turnstile verification error during reset:', error);
+      setTurnstileError('Security verification timed out. Please refresh and try again.');
       setLoading(false);
       return;
     }
@@ -623,9 +529,13 @@ export default function AuthPage() {
               </div>
             )}
 
-            {/* Manual reCAPTCHA */}
-            <div ref={recaptchaRef} className="g-recaptcha"></div>
-            {recaptchaError && <div className="text-red-500 text-sm">{recaptchaError}</div>}
+            {/* Turnstile */}
+            <TurnstileComponent
+              siteKey={TURNSTILE_SITE_KEY}
+              onVerify={(token: string | null) => setTurnstileToken(token)}
+              onError={(error: string) => setTurnstileError(error)}
+            />
+            {turnstileError && <div className="text-red-500 text-sm">{turnstileError}</div>}
 
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? 'Processing...' : useMagicLink ? 'Send Magic Link' : 'Login'}
@@ -705,9 +615,13 @@ export default function AuthPage() {
               </button>
             </div>
 
-            {/* Manual reCAPTCHA */}
-            <div ref={recaptchaRef} className="g-recaptcha"></div>
-            {recaptchaError && <div className="text-red-500 text-sm">{recaptchaError}</div>}
+            {/* Turnstile */}
+            <TurnstileComponent
+              siteKey={TURNSTILE_SITE_KEY}
+              onVerify={(token: string | null) => setTurnstileToken(token)}
+              onError={(error: string) => setTurnstileError(error)}
+            />
+            {turnstileError && <div className="text-red-500 text-sm">{turnstileError}</div>}
 
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? 'Creating Account...' : 'Sign Up'}
@@ -734,9 +648,13 @@ export default function AuthPage() {
               className="w-full px-3 py-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
             />
 
-            {/* Manual reCAPTCHA */}
-            <div ref={recaptchaRef} className="g-recaptcha"></div>
-            {recaptchaError && <div className="text-red-500 text-sm">{recaptchaError}</div>}
+            {/* Turnstile */}
+            <TurnstileComponent
+              siteKey={TURNSTILE_SITE_KEY}
+              onVerify={(token: string | null) => setTurnstileToken(token)}
+              onError={(error: string) => setTurnstileError(error)}
+            />
+            {turnstileError && <div className="text-red-500 text-sm">{turnstileError}</div>}
 
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? 'Sending...' : 'Send Reset Email'}

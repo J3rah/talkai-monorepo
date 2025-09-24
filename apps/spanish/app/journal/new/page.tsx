@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
+import TurnstileComponent from "@/components/Turnstile";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -13,9 +13,8 @@ export default function NewJournalPage() {
   const [reflection, setReflection] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
-  const recaptchaRef = useRef<ReCAPTCHA | null>(null);
   const router = useRouter();
 
   const handleSubmit = async () => {
@@ -24,22 +23,22 @@ export default function NewJournalPage() {
       setError("Please write something first.");
       return;
     }
-    if (!captchaToken) {
-      setError("Please complete the captcha.");
+    if (!turnstileToken) {
+      setError("Please complete the security verification.");
       return;
     }
     setError(null);
     setLoading(true);
     try {
-      // Verify captcha server-side first
-      const verifyRes = await fetch("/api/verify-recaptcha", {
+      // Verify Turnstile server-side first
+      const verifyRes = await fetch("/api/verify-turnstile", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token: captchaToken }),
+        body: JSON.stringify({ token: turnstileToken }),
       });
       const verifyData = await verifyRes.json();
       if (!verifyRes.ok || !verifyData.success) {
-        throw new Error("Captcha verification failed, please try again.");
+        throw new Error("Security verification failed, please try again.");
       }
 
       const res = await fetch("/api/journal/entries", {
@@ -64,9 +63,8 @@ export default function NewJournalPage() {
   const handlePublishAnother = () => {
     setContent("");
     setReflection(null);
-    setCaptchaToken(null);
+    setTurnstileToken(null);
     setCopied(false);
-    if (recaptchaRef.current) recaptchaRef.current.reset();
   };
 
   const handleViewWall = () => {
@@ -192,13 +190,12 @@ export default function NewJournalPage() {
             placeholder="Write what's on your mind..."
           />
           {error && <p className="text-red-500 text-sm">{error}</p>}
-          <ReCAPTCHA
-            ref={recaptchaRef}
-            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
-            onChange={(token) => setCaptchaToken(token)}
-            className="my-2"
+          <TurnstileComponent
+            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
+            onVerify={(token) => setTurnstileToken(token)}
+            onError={(error) => setError(error)}
           />
-          <Button onClick={handleSubmit} disabled={loading || !captchaToken} className="w-full">
+          <Button onClick={handleSubmit} disabled={loading || !turnstileToken} className="w-full">
             {loading ? <Loader2 className="animate-spin h-4 w-4 mr-2" /> : <Heart className="h-4 w-4 mr-2" />}
             {loading ? "Thinking..." : "Get Reflection & Publish"}
           </Button>

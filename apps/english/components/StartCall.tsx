@@ -254,9 +254,9 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
       setIsLoadingVoices(true);
       try {
         await (async () => {
-          // Timeout guard
+          // Increased timeout guard to 10 seconds for better reliability
           const timeoutPromise = new Promise((_, reject) =>
-            setTimeout(() => reject(new Error('StartCall auth check timeout')), 5000)
+            setTimeout(() => reject(new Error('StartCall auth check timeout')), 10000)
           );
           let user = null;
           try {
@@ -265,6 +265,15 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
           } catch (authError: any) {
             if (authError?.message === 'Auth session missing!') {
               console.log('No auth session - continuing without user data');
+            } else if (authError?.message === 'StartCall auth check timeout') {
+              console.warn('Auth check timed out, trying fallback method');
+              // Try getSession as fallback when getUser times out
+              try {
+                const { data: { session } } = await supabase.auth.getSession();
+                user = session?.user ?? null;
+              } catch (sessionError) {
+                console.warn('Fallback session check also failed:', sessionError);
+              }
             } else {
               console.error('Auth error:', authError);
             }

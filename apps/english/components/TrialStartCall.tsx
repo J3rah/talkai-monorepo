@@ -77,7 +77,8 @@ export default function TrialStartCall({
           setTimeout(() => resolve([]), 3500)
         );
         let groups = await Promise.race([dbPromise, timeoutPromise]);
-        if (groups.length === 0) {
+        const usedFallback = groups.length === 0;
+        if (usedFallback) {
           groups = getFallbackVoiceConfigurations();
         }
         setVoiceGroups(groups);
@@ -85,6 +86,19 @@ export default function TrialStartCall({
         // Set the first available voice as default
         if (groups.length > 0 && groups[0].voice_configurations.length > 0) {
           setSelectedVoice(groups[0].voice_configurations[0]);
+        }
+
+        // Also update with real DB groups if they arrive after timeout
+        try {
+          const dbGroups = await dbPromise;
+          if (Array.isArray(dbGroups) && dbGroups.length > 0) {
+            setVoiceGroups(dbGroups);
+            if (usedFallback && dbGroups[0]?.voice_configurations?.length && !selectedVoice) {
+              setSelectedVoice(dbGroups[0].voice_configurations[0]);
+            }
+          }
+        } catch (e) {
+          // Ignore; fallback already shown
         }
       } catch (error) {
         console.error('Error fetching voice configurations for trial:', error);
@@ -318,10 +332,10 @@ export default function TrialStartCall({
                             </CardContent>
                           </Card>
                         ))}
-                      </div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
+              </div>
               )}
             </div>
           </>
@@ -586,7 +600,7 @@ export default function TrialStartCall({
 
           {/* Modal content */}
           <div className="flex-1 overflow-y-auto p-6">
-            {renderModalContent()}
+          {renderModalContent()}
           </div>
         </DialogContent>
       </Dialog>

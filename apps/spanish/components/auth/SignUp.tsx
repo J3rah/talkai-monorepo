@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import supabase from '../../supabaseClient';
 import { Button } from '../ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
-import ReCAPTCHA from 'react-google-recaptcha';
+import TurnstileComponent from '../Turnstile';
 import { Eye, EyeOff } from 'lucide-react';
 
 interface PasswordStrength {
@@ -34,8 +34,8 @@ export default function SignUp() {
     feedback: [],
     isValid: false
   });
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
-  const [recaptchaError, setRecaptchaError] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileError, setTurnstileError] = useState<string | null>(null);
   const [referralCode, setReferralCode] = useState<string | null>(null);
 
   useEffect(() => {
@@ -383,15 +383,15 @@ export default function SignUp() {
             )}
           </button>
         </div>
-        <ReCAPTCHA
-          key="signup-email-recaptcha"
-          sitekey="6LeWV1crAAAAAGg7y41yxfFpxkzbuZb8CuzqCqiR"
-          onChange={(token: string | null) => {
-            console.log('🔐 SignUp reCAPTCHA onChange:', token);
-            setRecaptchaToken(token);
+        <TurnstileComponent
+          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
+          onVerify={(token: string | null) => {
+            console.log('🔐 SignUp Turnstile onVerify:', token);
+            setTurnstileToken(token);
           }}
+          onError={(error: string) => setTurnstileError(error)}
         />
-        {recaptchaError && <div className="text-red-500 text-sm">{recaptchaError}</div>}
+        {turnstileError && <div className="text-red-500 text-sm">{turnstileError}</div>}
 
         <Button type="submit" className="w-full" disabled={loading}>
           {loading ? 'Signing Up...' : 'Sign Up with Email'}
