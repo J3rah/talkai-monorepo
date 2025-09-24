@@ -18,12 +18,6 @@ interface PasswordStrength {
 // Turnstile configuration
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '';
 
-// Debug logging
-if (typeof window !== 'undefined') {
-  console.log('🔍 TURNSTILE_SITE_KEY:', TURNSTILE_SITE_KEY ? 'SET' : 'NOT_SET');
-  console.log('🔍 Raw env var:', process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ? 'EXISTS' : 'MISSING');
-}
-
 export default function AuthPage() {
   const [mode, setMode] = useState<AuthMode>('login');
   const [name, setName] = useState('');
