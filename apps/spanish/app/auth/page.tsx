@@ -68,95 +68,6 @@ export default function AuthPage() {
     });
   };
 
-  // Load reCAPTCHA script manually
-  useEffect(() => {
-    if (typeof window !== 'undefined' && !window.grecaptcha) {
-      window.onRecaptchaLoad = () => {
-        console.log('🔧 reCAPTCHA script loaded');
-        setRecaptchaLoaded(true);
-      };
-
-      const script = document.createElement('script');
-      script.src = 'https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit';
-      script.async = true;
-      script.defer = true;
-      document.head.appendChild(script);
-    } else if (window.grecaptcha && window.grecaptcha.render) {
-      setRecaptchaLoaded(true);
-    }
-  }, []);
-
-  // Render reCAPTCHA when loaded and mode changes
-  useEffect(() => {
-    if (recaptchaLoaded && recaptchaRef.current) {
-      // Add a small delay to ensure DOM is ready
-      const timer = setTimeout(() => {
-        renderRecaptcha();
-      }, 100);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [mode, recaptchaLoaded]);
-
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (widgetId.current !== null && window.grecaptcha) {
-        try {
-          window.grecaptcha.reset(widgetId.current);
-        } catch (e) {
-          console.log('🔧 Cleanup: Could not reset reCAPTCHA');
-        }
-      }
-    };
-  }, []);
-
-  const renderRecaptcha = () => {
-    if (!window.grecaptcha || !window.grecaptcha.render || !recaptchaRef.current) {
-      console.log('🔧 reCAPTCHA not ready for rendering');
-      return;
-    }
-
-    // Check if already rendered in this element
-    if (recaptchaRef.current.innerHTML.trim() !== '') {
-      console.log('🔧 reCAPTCHA already exists, resetting...');
-      if (widgetId.current !== null) {
-        try {
-          window.grecaptcha.reset(widgetId.current);
-          setRecaptchaToken(null);
-          return;
-        } catch (e) {
-          console.log('🔧 Could not reset, clearing container');
-          recaptchaRef.current.innerHTML = '';
-        }
-      } else {
-        recaptchaRef.current.innerHTML = '';
-      }
-    }
-
-    try {
-      console.log('🔧 Rendering new reCAPTCHA widget');
-      widgetId.current = window.grecaptcha.render(recaptchaRef.current, {
-        sitekey: '6LeWV1crAAAAAGg7y41yxfFpxkzbuZb8CuzqCqiR',
-        callback: (token: string) => {
-          console.log('🔧 reCAPTCHA callback: Token received');
-          setRecaptchaToken(token);
-          setRecaptchaError(null);
-        },
-        'expired-callback': () => {
-          console.log('🔧 reCAPTCHA expired');
-          setRecaptchaToken(null);
-        },
-        'error-callback': () => {
-          console.error('🔧 reCAPTCHA error');
-          setRecaptchaError('reCAPTCHA error occurred');
-        }
-      });
-      console.log('🔧 reCAPTCHA rendered with widget ID:', widgetId.current);
-    } catch (error) {
-      console.error('🔧 Failed to render reCAPTCHA:', error);
-    }
-  };
 
   // Reset form when switching modes
   const switchMode = (newMode: AuthMode) => {
@@ -176,11 +87,6 @@ export default function AuthPage() {
     setMagicLinkSent(false);
     setPasswordStrength({ score: 0, feedback: [], isValid: false });
     
-    // Clear reCAPTCHA container and reset widget ID to force re-render
-    if (recaptchaRef.current) {
-      recaptchaRef.current.innerHTML = '';
-    }
-    widgetId.current = null;
   };
 
   const checkPasswordStrength = (password: string): PasswordStrength => {
@@ -251,7 +157,7 @@ export default function AuthPage() {
     e.preventDefault();
     setLoading(true);
     setMessage('');
-    setRecaptchaError(null);
+    setTurnstileError(null);
 
     console.log('🔐 AuthPage: Starting login process');
 
@@ -375,7 +281,7 @@ export default function AuthPage() {
     e.preventDefault();
     setLoading(true);
     setMessage('');
-    setRecaptchaError(null);
+    setTurnstileError(null);
 
     console.log('🔐 AuthPage: Starting signup process');
 
@@ -391,22 +297,22 @@ export default function AuthPage() {
       return;
     }
 
-    console.log('🔐 AuthPage: Verifying reCAPTCHA for signup...');
+    console.log('🔐 AuthPage: Verifying Turnstile for signup...');
     try {
-      const recaptchaValid = await Promise.race([
-        verifyRecaptcha(recaptchaToken),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('reCAPTCHA timeout')), 10000))
+      const turnstileValid = await Promise.race([
+        verifyTurnstile(turnstileToken),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('Turnstile timeout')), 10000))
       ]);
       
-      if (!recaptchaValid) {
-        setRecaptchaError('reCAPTCHA verification failed. Please try again.');
+      if (!turnstileValid) {
+        setTurnstileError('Security verification failed. Please try again.');
         setLoading(false);
         return;
       }
-      console.log('🔐 AuthPage: reCAPTCHA verified for signup');
+      console.log('🔐 AuthPage: Turnstile verified for signup');
     } catch (error) {
-      console.error('🔐 AuthPage: reCAPTCHA verification error during signup:', error);
-      setRecaptchaError('reCAPTCHA verification timed out. Please refresh and try again.');
+      console.error('🔐 AuthPage: Turnstile verification error during signup:', error);
+      setTurnstileError('Security verification timed out. Please refresh and try again.');
       setLoading(false);
       return;
     }
@@ -466,7 +372,7 @@ export default function AuthPage() {
     e.preventDefault();
     setLoading(true);
     setMessage('');
-    setRecaptchaError(null);
+    setTurnstileError(null);
 
     console.log('🔐 AuthPage: Starting password reset process');
 
@@ -482,22 +388,22 @@ export default function AuthPage() {
       return;
     }
 
-    console.log('🔐 AuthPage: Verifying reCAPTCHA for reset...');
+    console.log('🔐 AuthPage: Verifying Turnstile for reset...');
     try {
-      const recaptchaValid = await Promise.race([
-        verifyRecaptcha(recaptchaToken),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('reCAPTCHA timeout')), 10000))
+      const turnstileValid = await Promise.race([
+        verifyTurnstile(turnstileToken),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('Turnstile timeout')), 10000))
       ]);
       
-      if (!recaptchaValid) {
-        setRecaptchaError('reCAPTCHA verification failed. Please try again.');
+      if (!turnstileValid) {
+        setTurnstileError('Security verification failed. Please try again.');
         setLoading(false);
         return;
       }
-      console.log('🔐 AuthPage: reCAPTCHA verified for reset');
+      console.log('🔐 AuthPage: Turnstile verified for reset');
     } catch (error) {
-      console.error('🔐 AuthPage: reCAPTCHA verification error during reset:', error);
-      setRecaptchaError('reCAPTCHA verification timed out. Please refresh and try again.');
+      console.error('🔐 AuthPage: Turnstile verification error during reset:', error);
+      setTurnstileError('Security verification timed out. Please refresh and try again.');
       setLoading(false);
       return;
     }
