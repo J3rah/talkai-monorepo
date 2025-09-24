@@ -690,6 +690,7 @@ function ChatPage() {
               console.log('💾 No voice config in profile, preserving default for fallback');
               sessionStorage.setItem('fallbackVoiceConfig', '0ea8bb7d-ef50-4174-ae64-be7a621db425');
             }
+            }
             
             // Check if session is completed and fix it
             if (sessionData.status === 'completed') {
