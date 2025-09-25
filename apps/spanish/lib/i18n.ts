@@ -34,7 +34,6 @@ export const translations = {
       overview: "Resumen",
       sessions: "Sesiones",
       analytics: "Análisis",
-      voiceSettings: "Configuración de Voz",
       account: "Cuenta",
       platform: "Plataforma",
       yourSessions: "Tus Sesiones",
