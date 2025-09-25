@@ -47,8 +47,19 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
   const [isDataSavingAllowed, setIsDataSavingAllowed] = useState(true);
   const [dataSavingPreference, setDataSavingPreference] = useState(false);
   const [userName, setUserName] = useState<string>('');
+  const [disclaimerAgreed, setDisclaimerAgreed] = useState(false);
+  const [rememberDisclaimerChoice, setRememberDisclaimerChoice] = useState(false);
+  const [skipDisclaimer, setSkipDisclaimer] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  // Check if user has previously chosen to remember disclaimer choice
+  useEffect(() => {
+    const remembered = localStorage.getItem('rememberDisclaimerChoice');
+    if (remembered === 'true') {
+      setSkipDisclaimer(true);
+    }
+  }, []);
   
   // Check if data saving is allowed based on user subscription and preferences
   const checkDataSavingPermission = async (userId: string) => {
@@ -362,9 +373,13 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
         console.warn('StartCall: Failed to persist current voice selection to sessionStorage:', e);
       }
       onVoiceSelect(config.hume_config_id);
-      // Move to next step based on user subscription
+      // Move to next step based on user subscription and disclaimer skip preference
       if (userSubscriptionStatus === 'calm' || isTrialMode) {
-        setModalStep(2); // Go to disclaimer for calm users
+        if (skipDisclaimer) {
+          setModalStep(3); // Skip disclaimer, go to ready to begin
+        } else {
+          setModalStep(2); // Go to disclaimer for calm users
+        }
       } else {
         setModalStep(2); // Go to data saving preference for non-calm users
       }
@@ -375,9 +390,13 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
 
   const handleNameSet = () => {
     onTherapistNameChange?.(therapistName);
-    // For calm users, go to disclaimer step directly
+    // For calm users, go to disclaimer step directly (or skip if remembered)
     if (userSubscriptionStatus === 'calm' || isTrialMode) {
-      setModalStep(2); // Go to disclaimer step
+      if (skipDisclaimer) {
+        setModalStep(3); // Skip disclaimer, go to ready to begin
+      } else {
+        setModalStep(2); // Go to disclaimer step
+      }
     } else {
       setModalStep(2); // Go to data saving preference step
     }
@@ -418,8 +437,27 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
         console.error('Error updating data preference:', error);
       }
     }
-    // Move to ready to begin step (step 3 for non-calm users)
-    setModalStep(3);
+    // Move to next step based on disclaimer skip preference
+    if (skipDisclaimer) {
+      setModalStep(4); // Skip disclaimer, go to ready to begin
+    } else {
+      setModalStep(3); // Go to disclaimer step
+    }
+  };
+
+  const handleDisclaimerAgree = async () => {
+    // Save the remember choice if selected
+    if (rememberDisclaimerChoice) {
+      localStorage.setItem('rememberDisclaimerChoice', 'true');
+      setSkipDisclaimer(true);
+    }
+    
+    // Move to next step based on user type
+    if (userSubscriptionStatus === 'calm' || isTrialMode) {
+      setModalStep(3); // Ready to begin for calm users
+    } else {
+      setModalStep(4); // Ready to begin for non-calm users
+    }
   };
 
   const handleConnect = async () => {
@@ -1052,6 +1090,35 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                 </CardContent>
               </Card>
 
+              {/* Checkboxes */}
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    id="disclaimer-agree"
+                    checked={disclaimerAgreed}
+                    onChange={(e) => setDisclaimerAgreed(e.target.checked)}
+                    className="mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label htmlFor="disclaimer-agree" className="text-sm text-gray-700 dark:text-gray-300">
+                    I have read and agree to the medical disclaimer above
+                  </label>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    id="remember-choice"
+                    checked={rememberDisclaimerChoice}
+                    onChange={(e) => setRememberDisclaimerChoice(e.target.checked)}
+                    className="mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label htmlFor="remember-choice" className="text-sm text-gray-700 dark:text-gray-300">
+                    Remember my choice (I won't see this disclaimer again)
+                  </label>
+                </div>
+              </div>
+
               {/* Navigation */}
               <div className="flex gap-3">
                 <Button
@@ -1063,7 +1130,8 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                   Back
                 </Button>
                 <Button
-                  onClick={() => setModalStep(3)} // Go to ready to begin for calm users
+                  onClick={handleDisclaimerAgree}
+                  disabled={!disclaimerAgreed}
                   className="flex-1"
                 >
                   Continue
@@ -1340,6 +1408,35 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                 </CardContent>
               </Card>
 
+              {/* Checkboxes */}
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    id="disclaimer-agree-non-calm"
+                    checked={disclaimerAgreed}
+                    onChange={(e) => setDisclaimerAgreed(e.target.checked)}
+                    className="mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label htmlFor="disclaimer-agree-non-calm" className="text-sm text-gray-700 dark:text-gray-300">
+                    I have read and agree to the medical disclaimer above
+                  </label>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    id="remember-choice-non-calm"
+                    checked={rememberDisclaimerChoice}
+                    onChange={(e) => setRememberDisclaimerChoice(e.target.checked)}
+                    className="mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label htmlFor="remember-choice-non-calm" className="text-sm text-gray-700 dark:text-gray-300">
+                    Remember my choice (I won't see this disclaimer again)
+                  </label>
+                </div>
+              </div>
+
               {/* Navigation */}
               <div className="flex gap-3">
                 <Button
@@ -1351,7 +1448,8 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                   Back
                 </Button>
                 <Button
-                  onClick={() => setModalStep(4)} // Go to ready to begin for non-calm users
+                  onClick={handleDisclaimerAgree}
+                  disabled={!disclaimerAgreed}
                   className="flex-1"
                 >
                   Continue
