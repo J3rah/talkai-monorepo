@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { supabase } from '@/supabaseClient';
+import supabase from '@/supabaseClient';
 
 export default function VoiceUpdatesPage() {
   const [isUpdating, setIsUpdating] = useState(false);
