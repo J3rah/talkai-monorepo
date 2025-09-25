@@ -18,17 +18,18 @@ export default function Login() {
   const [turnstileError, setTurnstileError] = useState<string | null>(null);
   const router = useRouter();
 
-  // Cleanup effect for reCAPTCHA
+  // Cleanup effect for Turnstile token
   useEffect(() => {
     return () => {
-      // Clear reCAPTCHA token when component unmounts
-      setRecaptchaToken(null);
-      setRecaptchaError(null);
+      // Clear Turnstile token when component unmounts
+      setTurnstileToken(null);
+      setTurnstileError(null);
     };
   }, []);
 
-  const verifyRecaptcha = async (token: string) => {
-    const res = await fetch('/api/verify-recaptcha', {
+  // Helper to verify Turnstile token server-side
+  const verifyTurnstile = async (token: string) => {
+    const res = await fetch('/api/verify-turnstile', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token }),
