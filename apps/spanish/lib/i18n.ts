@@ -238,7 +238,6 @@ export const translations = {
       yes: "Sí",
       no: "No",
       ok: "OK",
-      close: "Cerrar",
       continue: "Continuar"
     }
   }
