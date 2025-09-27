@@ -11,10 +11,10 @@ export const metadata: Metadata = {
   keywords: [
     'panic attack grounding',
     'panic rescue script',
-    'anxiety grounding exercise',
+    'ansiedad grounding exercise',
     '5-4-3-2-1 senses',
     'breathing for panic',
-    'CBT panic tools',
+    'CBT panic herramientas',
     'TalkAI panic help',
   ],
   openGraph: {
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     type: 'article',
     images: ['/og-image.png'],
     publishedTime: '2025-07-27',
-    authors: ['TalkAI Research Team'],
+    authors: ['TalkAI investigación Team'],
   },
   twitter: {
     card: 'summary_large_image',
@@ -41,14 +41,14 @@ export default function PanicRescuePost() {
         {/* Back Navigation */}
         <Link href="/blog" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-8">
           <ArrowLeft className="w-4 h-4" />
-          Back to Blog
+          Volver al Blog
         </Link>
 
         <article className="max-w-4xl mx-auto">
           {/* Header */}
           <header className="mb-12">
             <div className="flex items-center gap-2 mb-4">
-              <Badge variant="secondary" className="bg-red-100 text-red-800">Anxiety & Panic</Badge>
+              <Badge variant="secondary" className="bg-red-100 text-red-800">ansiedad & Panic</Badge>
               <Badge variant="outline">New</Badge>
             </div>
 
@@ -64,7 +64,7 @@ export default function PanicRescuePost() {
             <div className="flex items-center gap-6 text-sm text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-6">
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4" />
-                TalkAI Research Team
+                TalkAI investigación Team
               </div>
               <div className="flex items-center gap-2">
                 <CalendarDays className="w-4 h-4" />
@@ -72,7 +72,7 @@ export default function PanicRescuePost() {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                6 min read
+                6 min lectura
               </div>
             </div>
           </header>
@@ -184,7 +184,7 @@ export default function PanicRescuePost() {
                     </li>
                     <li className="flex items-start gap-3">
                       <CheckCircle className="w-5 h-5 text-green-600 mt-1" />
-                      <span>Seek professional support for persistent or severe symptoms.</span>
+                      <span>Seek professional apoyo for persistent or severe symptoms.</span>
                     </li>
                   </ul>
                 </CardContent>
@@ -198,7 +198,7 @@ export default function PanicRescuePost() {
                   <h3 className="text-xl font-semibold mb-4">One‑Tap Panic Rescue</h3>
                   <p className="mb-6">Save the “Panic Rescue” grounding flow in TalkAI for instant access during spikes.</p>
                   <Link href="/auth" className="inline-block bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
-                    Start Free Trial →
+                    Iniciar Prueba Gratuita →
                   </Link>
                 </CardContent>
               </Card>
@@ -215,12 +215,12 @@ export default function PanicRescuePost() {
                 <CardHeader>
                   <Badge variant="secondary" className="w-fit mb-2">Basics</Badge>
                   <CardTitle>
-                    <Link href="/blog/ai-therapy-for-anxiety" className="hover:text-blue-600">
-                      AI Therapy for Anxiety
+                    <Link href="/blog/ai-therapy-for-ansiedad" className="hover:text-blue-600">
+                      terapia IA for ansiedad
                     </Link>
                   </CardTitle>
                   <CardContent className="px-0">
-                    <p className="text-slate-600">Evidence‑based techniques and success stories.</p>
+                    <p className="text-slate-600">Evidence‑based técnicas and éxito stories.</p>
                   </CardContent>
                 </CardHeader>
               </Card>
@@ -230,7 +230,7 @@ export default function PanicRescuePost() {
                   <Badge variant="secondary" className="w-fit mb-2">Sleep</Badge>
                   <CardTitle>
                     <Link href="/blog/improving-sleep-with-ai-therapy" className="hover:text-blue-600">
-                      Improving Sleep with AI Therapy
+                      Improving Sleep with terapia IA
                     </Link>
                   </CardTitle>
                   <CardContent className="px-0">

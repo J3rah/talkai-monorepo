@@ -1197,7 +1197,7 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
               </Card>
 
               {/* Explanation */}
-              <Card className="bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200">
+              <Card className="bg-pink-60/80 dark:bg-pink-900/20 border-2 border-pink-300">
                 <CardContent className="py-4">
                   <h4 className="font-medium text-gray-900 dark:text-white mb-3">What this means:</h4>
                   <div className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
@@ -1347,22 +1347,10 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Medical Disclaimer</h2>
                   <p className="text-gray-600 dark:text-gray-300">
-                    Please read and understand the following important information
+                    Please read, understand, and agree to the following important information
                   </p>
                 </div>
               </div>
-
-              {/* Session Preview */}
-              <Card className="bg-gray-50 dark:bg-gray-800">
-                <CardContent className="py-4">
-                  <div className="flex items-center justify-center text-sm">
-                    <div className="flex items-center gap-2">
-                      <Mic className="w-4 h-4 text-blue-600" />
-                      <span>{selectedVoice?.display_name}</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
 
               {/* Disclaimer Content */}
               <Card className="bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800">
@@ -1381,7 +1369,8 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                     "This AI cannot diagnose mental health conditions or provide medical advice",
                     "This service is not suitable for mental health emergencies or crisis situations", 
                     "If you are experiencing thoughts of self-harm, please contact emergency services (911) or the 988 Suicide & Crisis Lifeline immediately",
-                    "For serious mental health conditions, please consult with licensed mental health professionals"
+                    "For serious mental health conditions, please consult with licensed mental health professionals",
+                    "This is an AI tool to be used by adults and teenagers age 13-18. Teenagers agree they have consent from their parent/adult. Kids under 13 are not to use this service."
                   ].map((item, index) => (
                     <div key={index} className="flex items-start gap-3">
                       <div className="w-6 h-6 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -1393,13 +1382,13 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                 </div>
               </div>
 
-              <Card className="bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800">
+              <Card className="bg-blue-50 dark:bg-blue-950 border-2 border-blue-300">
                 <CardContent className="py-4">
                   <div className="flex items-start gap-3">
-                    <Shield className="w-5 h-5 text-yellow-600 dark:text-yellow-500 mt-0.5" />
+                    <Shield className="w-5 h-5 text-blue-600 dark:text-blue-500 mt-0.5" />
                     <div>
-                      <p className="font-semibold text-yellow-800 dark:text-yellow-200 mb-1">Emergency Resources</p>
-                      <p className="text-yellow-700 dark:text-yellow-100 text-sm">
+                      <p className="font-semibold text-blue-800 dark:text-blue-200 mb-1">Emergency Resources</p>
+                      <p className="text-blue-700 dark:text-blue-100 text-sm">
                         If you're in crisis, call 911, contact the 988 Suicide & Crisis Lifeline, 
                         or visit your nearest emergency room. Do not use this service for emergencies.
                       </p>
@@ -1432,7 +1421,7 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                     className="mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label htmlFor="remember-choice-non-calm" className="text-sm text-gray-700 dark:text-gray-300">
-                    Remember my choice (I won't see this disclaimer again)
+                    Remember my choice (Don't show this again)
                   </label>
                 </div>
               </div>
@@ -1520,7 +1509,7 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
             <div className="flex gap-3">
               <Button
                 variant="outline"
-                onClick={() => setModalStep(3)}
+                onClick={() => setModalStep(skipDisclaimer ? 2 : 3)}
                 className="flex-1"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
@@ -1686,17 +1675,17 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
           <div className="bg-gray-50 dark:bg-gray-800 px-6 py-4 border-b">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                Step {modalStep} of {userSubscriptionStatus === 'calm' || isTrialMode ? 3 : 4}
+                Step {modalStep} of {skipDisclaimer ? 3 : (userSubscriptionStatus === 'calm' || isTrialMode ? 3 : 4)}
               </span>
               <span className="text-sm text-gray-500 dark:text-gray-400">
-                {Math.round((modalStep / (userSubscriptionStatus === 'calm' || isTrialMode ? 3 : 4)) * 100)}% complete
+                {Math.round((modalStep / (skipDisclaimer ? 3 : (userSubscriptionStatus === 'calm' || isTrialMode ? 3 : 4))) * 100)}% complete
               </span>
             </div>
             <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
               <div 
                 className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300"
                 style={{ 
-                  width: `${(modalStep / (userSubscriptionStatus === 'calm' || isTrialMode ? 3 : 4)) * 100}%` 
+                  width: `${(modalStep / (skipDisclaimer ? 3 : (userSubscriptionStatus === 'calm' || isTrialMode ? 3 : 4))) * 100}%` 
                 }}
               ></div>
             </div>

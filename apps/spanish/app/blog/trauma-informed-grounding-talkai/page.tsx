@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { CalendarDays, Clock, User, ArrowLeft, Shield, Heart, CheckCircle, AlertTriangle, Anchor } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Trauma‑Informed Grounding with TalkAI',
+  title: 'trauma‑Informed Grounding with TalkAI',
   description:
     'Gentle, trauma‑aware grounding with TalkAI: choice, pacing, and safety-first scripts.',
   keywords: [
@@ -17,17 +17,17 @@ export const metadata: Metadata = {
     'grounding exercises',
   ],
   openGraph: {
-    title: 'Trauma‑Informed Grounding with TalkAI',
+    title: 'trauma‑Informed Grounding with TalkAI',
     description:
-      'Trauma‑aware support is about choice and safety. TalkAI emphasizes consent, pacing, and grounding.',
+      'trauma‑aware apoyo is about choice and safety. TalkAI emphasizes consent, pacing, and grounding.',
     type: 'article',
     images: ['/og-image.png'],
     publishedTime: '2025-07-27',
-    authors: ['TalkAI Research Team'],
+    authors: ['TalkAI investigación Team'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Trauma-Informed Grounding with TalkAI',
+    title: 'trauma-Informed Grounding with TalkAI',
     description: 'Choice, safety, and pacing—grounding that respects trauma history.',
     images: ['/twitter-image.png'],
   },
@@ -40,30 +40,30 @@ export default function TraumaInformedGroundingTalkAIPost() {
         {/* Back Navigation */}
         <Link href="/blog" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-8">
           <ArrowLeft className="w-4 h-4" />
-          Back to Blog
+          Volver al Blog
         </Link>
 
         <article className="max-w-4xl mx-auto">
           {/* Header */}
           <header className="mb-12">
             <div className="flex items-center gap-2 mb-4">
-              <Badge variant="secondary" className="bg-red-100 text-red-800">Trauma Support</Badge>
+              <Badge variant="secondary" className="bg-red-100 text-red-800">trauma apoyo</Badge>
               <Badge variant="outline">New</Badge>
             </div>
 
             <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
-              Trauma‑Informed Grounding with TalkAI
+              trauma‑Informed Grounding with TalkAI
             </h1>
 
             <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-              Trauma‑aware support is about choice and safety. TalkAI emphasizes consent, pacing, and grounding to help
+              trauma‑aware apoyo is about choice and safety. TalkAI emphasizes consent, pacing, and grounding to help
               you stay within your window of tolerance.
             </p>
 
             <div className="flex items-center gap-6 text-sm text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-6">
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4" />
-                TalkAI Research Team
+                TalkAI investigación Team
               </div>
               <div className="flex items-center gap-2">
                 <CalendarDays className="w-4 h-4" />
@@ -71,7 +71,7 @@ export default function TraumaInformedGroundingTalkAIPost() {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                6 min read
+                6 min lectura
               </div>
             </div>
           </header>
@@ -102,9 +102,9 @@ export default function TraumaInformedGroundingTalkAIPost() {
               </h2>
               <Card>
                 <CardContent className="pt-6">
-                  <p className="mb-4">Always ask before offering support:</p>
+                  <p className="mb-4">Always ask before offering apoyo:</p>
                   <p className="italic">"Would you like grounding options now?"</p>
-                  <p className="mt-4">Respect the answer—no is a complete sentence.</p>
+                  <p className="mt-4">Respect the answer—no is a completo sentence.</p>
                 </CardContent>
               </Card>
             </section>
@@ -133,7 +133,7 @@ export default function TraumaInformedGroundingTalkAIPost() {
                 <CardContent className="pt-6">
                   <ul className="space-y-2">
                     <li>• Stop anytime</li>
-                    <li>• Goal is regulation, not performance</li>
+                    <li>• objetivo is regulation, not performance</li>
                     <li>• Honor your limits</li>
                     <li>• Take breaks as needed</li>
                   </ul>
@@ -177,7 +177,7 @@ export default function TraumaInformedGroundingTalkAIPost() {
                     </li>
                     <li className="flex items-start gap-3">
                       <CheckCircle className="w-5 h-5 text-yellow-600 mt-1" />
-                      <span>Exit strategies</span>
+                      <span>Exit estrategias</span>
                     </li>
                   </ul>
                 </CardContent>
@@ -188,10 +188,10 @@ export default function TraumaInformedGroundingTalkAIPost() {
               <h2 className="text-3xl font-bold mb-6">Get Started</h2>
               <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-8">
                 <CardContent className="pt-6">
-                  <h3 className="text-xl font-semibold mb-4">Customize Your Trauma-Safe Menu</h3>
-                  <p className="mb-6">Build grounding options that respect your history and preferences.</p>
+                  <h3 className="text-xl font-semibold mb-4">Customize Your trauma-Safe Menu</h3>
+                  <p className="mb-6">Build grounding options that respect your history and preferencias.</p>
                   <Link href="/auth" className="inline-block bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
-                    Start Free Trial →
+                    Iniciar Prueba Gratuita →
                   </Link>
                 </CardContent>
               </Card>
@@ -206,7 +206,7 @@ export default function TraumaInformedGroundingTalkAIPost() {
             <div className="grid md:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>
-                  <Badge variant="secondary" className="w-fit mb-2">Anxiety</Badge>
+                  <Badge variant="secondary" className="w-fit mb-2">ansiedad</Badge>
                   <CardTitle>
                     <Link href="/blog/panic-attack-grounding-scripts-talkai" className="hover:text-blue-600">
                       Panic Rescue: Grounding Scripts
@@ -222,8 +222,8 @@ export default function TraumaInformedGroundingTalkAIPost() {
                 <CardHeader>
                   <Badge variant="secondary" className="w-fit mb-2">Sleep</Badge>
                   <CardTitle>
-                    <Link href="/blog/sleep-anxiety-rumination-talkai" className="hover:text-blue-600">
-                      Nighttime Anxiety: TalkAI Scripts
+                    <Link href="/blog/sleep-ansiedad-rumination-talkai" className="hover:text-blue-600">
+                      Nighttime ansiedad: TalkAI Scripts
                     </Link>
                   </CardTitle>
                   <CardContent className="px-0">

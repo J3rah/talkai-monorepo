@@ -54,7 +54,7 @@ export default function TrialStartCall({
 }: TrialStartCallProps) {
   const { connect, disconnect, status } = useVoice();
   const [isOpen, setIsOpen] = useState(false);
-  const [modalStep, setModalStep] = useState(1); // 1: Voice, 2: Name, 3: Begin
+  const [modalStep, setModalStep] = useState(1); // 1: Voice, 2: Disclaimer, 3: Begin
   const [showTermsAgreement, setShowTermsAgreement] = useState(false);
   const [selectedVoice, setSelectedVoice] = useState<VoiceConfiguration | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
@@ -64,7 +64,18 @@ export default function TrialStartCall({
   });
   const [voiceGroups, setVoiceGroups] = useState<VoiceConfigurationGroup[]>([]);
   const [isLoadingVoices, setIsLoadingVoices] = useState(true);
+  const [disclaimerAgreed, setDisclaimerAgreed] = useState(false);
+  const [rememberDisclaimerChoice, setRememberDisclaimerChoice] = useState(false);
+  const [skipDisclaimer, setSkipDisclaimer] = useState(false);
   const router = useRouter();
+
+  // Check if user previously chose to remember disclaimer choice
+  useEffect(() => {
+    const remembered = localStorage.getItem('rememberDisclaimerChoice');
+    if (remembered === 'true') {
+      setSkipDisclaimer(true);
+    }
+  }, []);
 
   // Fetch voice configurations for trial (treat as grounded for full access)
   useEffect(() => {
@@ -153,14 +164,33 @@ export default function TrialStartCall({
       }
       onVoiceSelect(config.hume_config_id);
     }
-    // Automatically move to next step - skip therapist naming (step 2)
-    setModalStep(2);
+    // Move to next step based on disclaimer skip preference
+    if (skipDisclaimer) {
+      setModalStep(3); // Skip disclaimer, go to ready to begin
+    } else {
+      setModalStep(2); // Go to disclaimer step
+    }
   };
 
   const handleNameSet = () => {
     onTherapistNameChange?.(therapistName);
-    // Move to ready to begin step
-    setModalStep(2);
+    // Move to next step based on disclaimer skip preference
+    if (skipDisclaimer) {
+      setModalStep(3); // Skip disclaimer, go to ready to begin
+    } else {
+      setModalStep(2); // Go to disclaimer step
+    }
+  };
+
+  const handleDisclaimerAgree = async () => {
+    // Save the remember choice if selected
+    if (rememberDisclaimerChoice) {
+      localStorage.setItem('rememberDisclaimerChoice', 'true');
+      setSkipDisclaimer(true);
+    }
+    
+    // Move to final step
+    setModalStep(3);
   };
 
   const handleConnect = async () => {
@@ -397,6 +427,109 @@ export default function TrialStartCall({
       */
 
       case 2:
+        return (
+          <>
+            <DialogHeader className="text-center">
+              <DialogTitle className="text-center text-xl font-bold text-red-600">
+                DESCARGO MÉDICO IMPORTANTE
+              </DialogTitle>
+              <DialogDescription className="text-center text-sm text-muted-foreground dark:text-gray-300">
+                Por favor lee y acepta lo siguiente antes de iniciar tu sesión de prueba
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-4 py-4">
+              {/* Disclaimer Content */}
+              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+                <p className="text-red-800 dark:text-red-200 font-medium text-sm leading-relaxed">
+                  TalkAI NO es un dispositivo médico, proveedor de atención médica o sustituto de la atención profesional de salud mental. 
+                  Este servicio es solo para fines informativos y de apoyo emocional.
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100">Al usar este servicio, entiendes que:</h4>
+                <div className="space-y-2">
+                  {[
+                    "Esta IA no puede diagnosticar condiciones de salud mental o proporcionar consejo médico",
+                    "Este servicio no es adecuado para emergencias de salud mental o situaciones de crisis",
+                    "Si estás experimentando pensamientos de autolesión, contacta inmediatamente a los servicios de emergencia (911) o la Línea de Crisis y Suicidio 988",
+                    "Para condiciones serias de salud mental, consulta con profesionales de salud mental licenciados"
+                  ].map((item, index) => (
+                    <div key={index} className="flex items-start gap-3">
+                      <div className="w-5 h-5 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-red-600 dark:text-red-400 font-bold text-xs">•</span>
+                      </div>
+                      <span className="text-gray-700 dark:text-gray-200 text-sm">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4">
+                <h4 className="font-semibold text-yellow-900 dark:text-yellow-200 mb-2">🚨 Recursos de Emergencia</h4>
+                <div className="text-yellow-800 dark:text-yellow-300 text-sm space-y-1">
+                  <p><strong>Crisis:</strong> Llama al 911</p>
+                  <p><strong>Prevención del Suicidio:</strong> 988</p>
+                </div>
+              </div>
+
+              {/* Checkboxes */}
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    id="disclaimer-agree"
+                    checked={disclaimerAgreed}
+                    onChange={(e) => setDisclaimerAgreed(e.target.checked)}
+                    className="mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label htmlFor="disclaimer-agree" className="text-sm text-gray-700 dark:text-gray-300">
+                    He leído y acepto el descargo médico anterior
+                  </label>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    id="remember-choice"
+                    checked={rememberDisclaimerChoice}
+                    onChange={(e) => setRememberDisclaimerChoice(e.target.checked)}
+                    className="mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label htmlFor="remember-choice" className="text-sm text-gray-700 dark:text-gray-300">
+                    Recordar mi elección (no veré este descargo nuevamente)
+                  </label>
+                </div>
+              </div>
+
+              <div className="text-xs text-gray-500 dark:text-gray-400 text-center">
+                Al hacer clic en "Continuar" a continuación, reconoces que has leído y entendido este descargo, 
+                y aceptas nuestros <a href="/terms" className="text-blue-600 hover:underline">Términos de Servicio</a> y 
+                <a href="/privacy" className="text-blue-600 hover:underline ml-1">Política de Privacidad</a>.
+              </div>
+            </div>
+
+            <div className="flex gap-3 pt-4">
+              <Button
+                variant="outline"
+                onClick={() => setModalStep(1)}
+                className="px-6"
+              >
+                Atrás
+              </Button>
+              <Button
+                onClick={handleDisclaimerAgree}
+                disabled={!disclaimerAgreed}
+                className="px-6 bg-primary hover:bg-primary/90"
+              >
+                Continuar
+              </Button>
+            </div>
+          </>
+        );
+
+      case 3:
         return (
           <>
             <DialogHeader className="text-center">

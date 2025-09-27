@@ -2,36 +2,36 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { CalendarDays, Clock, User, ArrowLeft, CheckCircle, Brain, Heart, Shield, Zap, Target, Users } from 'lucide-react';
+import { CalendarDays, Clock, User, ArrowLeft, CheckCircle, Brain, Heart, Shield, Zap, meta, Users } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'How to Manage Stress with AI Therapy: Complete Guide for 2024',
-  description: 'Learn effective stress management techniques using AI therapy. Discover how TalkAI can help you reduce stress, anxiety, and improve your mental well-being with 24/7 support.',
+  title: 'Cómo Gestionar el Estrés con Terapia IA: Guía Completa para 2024',
+  description: 'Aprende técnicas efectivas de gestión del estrés usando terapia IA. Descubre cómo TalkAI puede ayudarte a reducir el estrés, la ansiedad y mejorar tu bienestar mental con apoyo 24/7.',
   keywords: [
-    'stress management',
-    'AI therapy for stress',
-    'how to reduce stress',
-    'stress relief techniques',
-    'AI stress management',
-    'mental health stress',
-    'anxiety relief',
-    'stress coping strategies',
-    'AI therapy benefits',
-    'stress reduction tips'
+    'gestión del estrés',
+    'terapia IA para estrés',
+    'cómo reducir el estrés',
+    'técnicas de alivio del estrés',
+    'gestión del estrés con IA',
+    'salud mental estrés',
+    'alivio de ansiedad',
+    'estrategias de afrontamiento del estrés',
+    'beneficios de terapia IA',
+    'consejos para reducir el estrés'
   ],
   openGraph: {
-    title: 'How to Manage Stress with AI Therapy: Complete Guide',
-    description: 'Learn effective stress management techniques using AI therapy. Discover how TalkAI can help you reduce stress and improve mental well-being.',
+    title: 'Cómo Gestionar el Estrés con Terapia IA: Guía Completa',
+    description: 'Aprende técnicas efectivas de gestión del estrés usando terapia IA. Descubre cómo TalkAI puede ayudarte a reducir el estrés y mejorar el bienestar mental.',
     type: 'article',
-    images: ['/og-stress-management.png'],
+    images: ['/og-gestion-estres.png'],
     publishedTime: '2024-12-19',
-    authors: ['TalkAI Research Team'],
+    authors: ['Equipo de Investigación TalkAI'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'How to Manage Stress with AI Therapy',
-    description: 'Learn effective stress management techniques using AI therapy with TalkAI.',
-    images: ['/twitter-stress-management.png'],
+    title: 'Cómo Gestionar el Estrés con Terapia IA',
+    description: 'Aprende técnicas efectivas de gestión del estrés usando terapia IA con TalkAI.',
+    images: ['/twitter-gestion-estres.png'],
   },
 };
 
@@ -42,7 +42,7 @@ export default function StressManagementPost() {
         {/* Back Navigation */}
         <Link href="/blog" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-8">
           <ArrowLeft className="w-4 h-4" />
-          Back to Blog
+          Volver al Blog
         </Link>
 
         <article className="max-w-4xl mx-auto">
@@ -50,32 +50,32 @@ export default function StressManagementPost() {
           <header className="mb-12">
             <div className="flex items-center gap-2 mb-4">
               <Badge variant="secondary" className="bg-green-100 text-green-800">
-                Stress Management
+                Gestión del Estrés
               </Badge>
-              <Badge variant="outline">Mental Health</Badge>
+              <Badge variant="outline">Salud Mental</Badge>
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
-              How to Manage Stress with AI Therapy: A Complete Guide for 2024
+              Cómo Gestionar el Estrés con Terapia IA: Una Guía Completa para 2024
             </h1>
             
             <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-              Discover effective stress management techniques using AI therapy. Learn how TalkAI can help you reduce stress, 
-              anxiety, and improve your mental well-being with 24/7 personalized support.
+              Descubre técnicas efectivas de gestión del estrés usando terapia IA. Aprende cómo TalkAI puede ayudarte a reducir el estrés, 
+              la ansiedad y mejorar tu bienestar mental con apoyo personalizado 24/7.
             </p>
 
             <div className="flex items-center gap-6 text-sm text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-6">
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4" />
-                TalkAI Research Team
+                Equipo de Investigación TalkAI
               </div>
               <div className="flex items-center gap-2">
                 <CalendarDays className="w-4 h-4" />
-                December 19, 2024
+                19 de Diciembre, 2024
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                10 min read
+                10 min lectura
               </div>
             </div>
           </header>
@@ -83,62 +83,62 @@ export default function StressManagementPost() {
           {/* Table of Contents */}
           <Card className="mb-12 bg-green-50 dark:bg-slate-800 border-green-200">
             <CardHeader>
-              <CardTitle className="text-lg">Table of Contents</CardTitle>
+              <CardTitle className="text-lg">Tabla de Contenidos</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="space-y-2">
-                <li><a href="#understanding-stress" className="text-green-600 hover:underline">Understanding Stress and Its Impact</a></li>
-                <li><a href="#ai-therapy-benefits" className="text-green-600 hover:underline">How AI Therapy Helps with Stress Management</a></li>
-                <li><a href="#techniques" className="text-green-600 hover:underline">Effective Stress Management Techniques</a></li>
-                <li><a href="#ai-tools" className="text-green-600 hover:underline">AI-Powered Stress Relief Tools</a></li>
-                <li><a href="#daily-practices" className="text-green-600 hover:underline">Daily Practices for Stress Reduction</a></li>
-                <li><a href="#when-to-seek-help" className="text-green-600 hover:underline">When to Seek Professional Help</a></li>
-                <li><a href="#getting-started" className="text-green-600 hover:underline">Getting Started with AI Stress Management</a></li>
+                <li><a href="#entendiendo-estres" className="text-green-600 hover:underline">Entendiendo el Estrés y su Impacto</a></li>
+                <li><a href="#beneficios-terapia-ia" className="text-green-600 hover:underline">Cómo la Terapia IA Ayuda con la Gestión del Estrés</a></li>
+                <li><a href="#tecnicas" className="text-green-600 hover:underline">Técnicas Efectivas de Gestión del Estrés</a></li>
+                <li><a href="#herramientas-ia" className="text-green-600 hover:underline">Herramientas de Alivio del Estrés Impulsadas por IA</a></li>
+                <li><a href="#practicas-diarias" className="text-green-600 hover:underline">Prácticas Diarias para Reducir el Estrés</a></li>
+                <li><a href="#cuando-buscar-ayuda" className="text-green-600 hover:underline">Cuándo Buscar Ayuda Profesional</a></li>
+                <li><a href="#empezar" className="text-green-600 hover:underline">Comenzando con la Gestión del Estrés con IA</a></li>
               </ul>
             </CardContent>
           </Card>
 
           {/* Main Content */}
           <div className="prose prose-lg max-w-none">
-            <section id="understanding-stress" className="mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Understanding Stress and Its Impact</h2>
+            <section id="entendiendo-estres" className="mb-12">
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Entendiendo el Estrés y su Impacto</h2>
               <p className="text-slate-600 dark:text-slate-300 mb-6">
-                Stress is a natural response to challenges and demands in our lives. While some stress can be motivating, 
-                chronic stress can have serious negative effects on our physical and mental health. Understanding how stress 
-                affects us is the first step toward effective management.
+                El estrés es una respuesta natural a los desafíos y demandas en nuestras vidas. Aunque algo de estrés puede ser motivador, 
+                el estrés crónico puede tener efectos negativos serios en nuestra salud física y mental. Entender cómo el estrés 
+                nos afecta es el primer paso hacia una gestión efectiva.
               </p>
               
               <Card className="mb-6 bg-red-50 dark:bg-red-950 border-red-200">
                 <CardHeader>
-                  <CardTitle className="text-red-800 dark:text-red-200">Common Stress Symptoms</CardTitle>
+                  <CardTitle className="text-red-800 dark:text-red-200">Síntomas Comunes del Estrés</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2 text-red-700 dark:text-red-300">
                     <li className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4" />
-                      Physical: Headaches, muscle tension, fatigue, sleep problems
+                      Físicos: Dolores de cabeza, tensión muscular, fatiga, problemas de sueño
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4" />
-                      Emotional: Irritability, anxiety, depression, mood swings
+                      Emocionales: Irritabilidad, ansiedad, depresión, cambios de humor
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4" />
-                      Cognitive: Difficulty concentrating, memory problems, negative thinking
+                      Cognitivos: Dificultad para concentrarse, problemas de memoria, pensamiento negativo
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4" />
-                      Behavioral: Changes in appetite, social withdrawal, procrastination
+                      Conductuales: Cambios en el apetito, retraimiento social, procrastinación
                     </li>
                   </ul>
                 </CardContent>
               </Card>
             </section>
 
-            <section id="ai-therapy-benefits" className="mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">How AI Therapy Helps with Stress Management</h2>
+            <section id="beneficios-terapia-ia" className="mb-12">
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Cómo la Terapia IA Ayuda con la Gestión del Estrés</h2>
               <p className="text-slate-600 dark:text-slate-300 mb-6">
-                AI therapy offers unique advantages for stress management, providing immediate, personalized support when you need it most.
+                La terapia IA ofrece ventajas únicas para la gestión del estrés, proporcionando apoyo inmediato y personalizado cuando más lo necesitas.
               </p>
               
               <div className="grid md:grid-cols-2 gap-6 mb-8">
@@ -146,12 +146,12 @@ export default function StressManagementPost() {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-blue-800 dark:text-blue-200">
                       <Zap className="w-5 h-5" />
-                      24/7 Availability
+                      Disponibilidad 24/7
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-blue-700 dark:text-blue-300">
-                      Access stress management support anytime, day or night, without waiting for appointments.
+                      Accede al apoyo para la gestión del estrés en cualquier momento, día o noche, sin esperar citas.
                     </p>
                   </CardContent>
                 </Card>
@@ -159,13 +159,13 @@ export default function StressManagementPost() {
                 <Card className="bg-purple-50 dark:bg-purple-950 border-purple-200">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-purple-800 dark:text-purple-200">
-                      <Target className="w-5 h-5" />
-                      Personalized Approach
+                      <meta className="w-5 h-5" />
+                      Enfoque Personalizado
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-purple-700 dark:text-purple-300">
-                      AI adapts to your specific stress patterns and provides tailored coping strategies.
+                      La IA se adapta a tus patrones específicos de estrés y proporciona estrategias de afrontamiento adaptadas.
                     </p>
                   </CardContent>
                 </Card>
@@ -174,12 +174,12 @@ export default function StressManagementPost() {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-green-800 dark:text-green-200">
                       <Shield className="w-5 h-5" />
-                      Judgment-Free Zone
+                      Zona Libre de Juicios
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-green-700 dark:text-green-300">
-                      Express your thoughts and feelings without fear of judgment or stigma.
+                      Expresa tus pensamientos y sentimientos sin miedo al juicio o estigma.
                     </p>
                   </CardContent>
                 </Card>
@@ -188,182 +188,182 @@ export default function StressManagementPost() {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-orange-800 dark:text-orange-200">
                       <Users className="w-5 h-5" />
-                      Consistent Support
+                      Apoyo Consistente
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-orange-700 dark:text-orange-300">
-                      Maintain regular stress management practices with consistent AI guidance.
+                      Mantén prácticas regulares de gestión del estrés con orientación consistente de IA.
                     </p>
                   </CardContent>
                 </Card>
               </div>
             </section>
 
-            <section id="techniques" className="mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Effective Stress Management Techniques</h2>
+            <section id="tecnicas" className="mb-12">
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Técnicas Efectivas de Gestión del Estrés</h2>
               <p className="text-slate-600 dark:text-slate-300 mb-6">
-                Combine traditional stress management techniques with AI therapy for maximum effectiveness.
+                Combina técnicas tradicionales de gestión del estrés con terapia IA para máxima efectividad.
               </p>
               
               <div className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-xl">1. Mindfulness and Meditation</CardTitle>
+                    <CardTitle className="text-xl">1. Mindfulness y Meditación</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="mb-4">
-                      Practice mindfulness techniques to stay present and reduce stress. AI therapy can guide you through 
-                      meditation sessions and help you develop a consistent practice.
+                      Practica técnicas de mindfulness para mantenerte presente y reducir el estrés. La terapia IA puede guiarte a través de 
+                      sesiones de meditación y ayudarte a desarrollar una práctica consistente.
                     </p>
                     <ul className="space-y-2 text-slate-600 dark:text-slate-300">
-                      <li>• Deep breathing exercises</li>
-                      <li>• Body scan meditation</li>
-                      <li>• Mindful walking</li>
-                      <li>• Progressive muscle relaxation</li>
+                      <li>• Ejercicios de respiración profunda</li>
+                      <li>• Meditación de escaneo corporal</li>
+                      <li>• Caminar consciente</li>
+                      <li>• Relajación muscular progresiva</li>
                     </ul>
                   </CardContent>
                 </Card>
                 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-xl">2. Cognitive Behavioral Techniques</CardTitle>
+                    <CardTitle className="text-xl">2. Técnicas Cognitivo-Conductuales</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="mb-4">
-                      Identify and challenge negative thought patterns that contribute to stress. AI therapy can help you 
-                      recognize cognitive distortions and develop healthier thinking patterns.
+                      Identifica y desafía patrones de pensamiento negativo que contribuyen al estrés. La terapia IA puede ayudarte a 
+                      reconocer distorsiones cognitivas y desarrollar patrones de pensamiento más saludables.
                     </p>
                     <ul className="space-y-2 text-slate-600 dark:text-slate-300">
-                      <li>• Thought challenging</li>
-                      <li>• Reframing negative situations</li>
-                      <li>• Problem-solving strategies</li>
-                      <li>• Setting realistic expectations</li>
+                      <li>• Desafío de pensamientos</li>
+                      <li>• Reencuadre de situaciones negativas</li>
+                      <li>• Estrategias de resolución de problemas</li>
+                      <li>• Establecer expectativas realistas</li>
                     </ul>
                   </CardContent>
                 </Card>
                 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-xl">3. Lifestyle Modifications</CardTitle>
+                    <CardTitle className="text-xl">3. Modificaciones del Estilo de Vida</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="mb-4">
-                      Make positive changes to your daily routine to reduce stress levels and improve overall well-being.
+                      Haz cambios positivos en tu rutina diaria para reducir los niveles de estrés y mejorar el bienestar general.
                     </p>
                     <ul className="space-y-2 text-slate-600 dark:text-slate-300">
-                      <li>• Regular exercise and physical activity</li>
-                      <li>• Healthy sleep habits</li>
-                      <li>• Balanced nutrition</li>
-                      <li>• Time management skills</li>
+                      <li>• Ejercicio regular y actividad física</li>
+                      <li>• Hábitos de sueño saludables</li>
+                      <li>• Nutrición equilibrada</li>
+                      <li>• Habilidades de gestión del tiempo</li>
                     </ul>
                   </CardContent>
                 </Card>
               </div>
             </section>
 
-            <section id="ai-tools" className="mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">AI-Powered Stress Relief Tools</h2>
+            <section id="herramientas-ia" className="mb-12">
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Herramientas de Alivio del Estrés Impulsadas por IA</h2>
               <p className="text-slate-600 dark:text-slate-300 mb-6">
-                TalkAI provides advanced tools specifically designed to help you manage stress effectively.
+                TalkAI proporciona herramientas avanzadas específicamente diseñadas para ayudarte a gestionar el estrés de manera efectiva.
               </p>
               
               <div className="grid md:grid-cols-2 gap-6">
                 <Card className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950">
                   <CardHeader>
-                    <CardTitle className="text-blue-800 dark:text-blue-200">Voice-Based Therapy</CardTitle>
+                    <CardTitle className="text-blue-800 dark:text-blue-200">Terapia Basada en Voz</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-blue-700 dark:text-blue-300 mb-4">
-                      Engage in natural conversations with AI therapists that understand emotional context and provide 
-                      empathetic responses to help you process stress.
+                      Participa en conversaciones naturales con terapeutas de IA que entienden el contexto emocional y proporcionan 
+                      respuestas empáticas para ayudarte a procesar el estrés.
                     </p>
                     <ul className="space-y-1 text-sm text-blue-600 dark:text-blue-400">
-                      <li>• Natural voice interactions</li>
-                      <li>• Emotional intelligence</li>
-                      <li>• Personalized responses</li>
+                      <li>• Interacciones de voz naturales</li>
+                      <li>• Inteligencia emocional</li>
+                      <li>• Respuestas personalizadas</li>
                     </ul>
                   </CardContent>
                 </Card>
                 
                 <Card className="bg-gradient-to-br from-green-50 to-teal-50 dark:from-green-950 dark:to-teal-950">
                   <CardHeader>
-                    <CardTitle className="text-green-800 dark:text-green-200">Stress Tracking</CardTitle>
+                    <CardTitle className="text-green-800 dark:text-green-200">Seguimiento del Estrés</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-green-700 dark:text-green-300 mb-4">
-                      Monitor your stress levels over time and identify patterns to develop more effective coping strategies.
+                      Monitorea tus niveles de estrés a lo largo del tiempo e identifica patrones para desarrollar estrategias de afrontamiento más efectivas.
                     </p>
                     <ul className="space-y-1 text-sm text-green-600 dark:text-green-400">
-                      <li>• Daily stress assessments</li>
-                      <li>• Pattern recognition</li>
-                      <li>• Progress tracking</li>
+                      <li>• Evaluaciones diarias de estrés</li>
+                      <li>• Reconocimiento de patrones</li>
+                      <li>• Seguimiento del progreso</li>
                     </ul>
                   </CardContent>
                 </Card>
                 
                 <Card className="bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-950 dark:to-red-950">
                   <CardHeader>
-                    <CardTitle className="text-orange-800 dark:text-orange-200">Guided Relaxation</CardTitle>
+                    <CardTitle className="text-orange-800 dark:text-orange-200">Relajación Guiada</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-orange-700 dark:text-orange-300 mb-4">
-                      Access guided relaxation sessions, breathing exercises, and meditation practices tailored to your needs.
+                      Accede a sesiones de relajación guiada, ejercicios de respiración y prácticas de meditación adaptadas a tus necesidades.
                     </p>
                     <ul className="space-y-1 text-sm text-orange-600 dark:text-orange-400">
-                      <li>• Guided meditation</li>
-                      <li>• Breathing exercises</li>
-                      <li>• Progressive relaxation</li>
+                      <li>• Meditación guiada</li>
+                      <li>• Ejercicios de respiración</li>
+                      <li>• Relajación progresiva</li>
                     </ul>
                   </CardContent>
                 </Card>
                 
                 <Card className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950 dark:to-pink-950">
                   <CardHeader>
-                    <CardTitle className="text-purple-800 dark:text-purple-200">Journaling Support</CardTitle>
+                    <CardTitle className="text-purple-800 dark:text-purple-200">Apoyo para Diario</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-purple-700 dark:text-purple-300 mb-4">
-                      Use AI-assisted journaling to process thoughts and emotions, with therapeutic insights and guidance.
+                      Usa el diario asistido por IA para procesar pensamientos y emociones, con perspectivas terapéuticas y orientación.
                     </p>
                     <ul className="space-y-1 text-sm text-purple-600 dark:text-purple-400">
-                      <li>• Guided prompts</li>
-                      <li>• Emotional processing</li>
-                      <li>• Therapeutic insights</li>
+                      <li>• Prompts guiados</li>
+                      <li>• Procesamiento emocional</li>
+                      <li>• Perspectivas terapéuticas</li>
                     </ul>
                   </CardContent>
                 </Card>
               </div>
             </section>
 
-            <section id="daily-practices" className="mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Daily Practices for Stress Reduction</h2>
+            <section id="practicas-diarias" className="mb-12">
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Prácticas Diarias para Reducir el Estrés</h2>
               <p className="text-slate-600 dark:text-slate-300 mb-6">
-                Incorporate these daily practices into your routine to build resilience and reduce stress levels.
+                Incorpora estas prácticas diarias en tu rutina para construir resiliencia y reducir los niveles de estrés.
               </p>
               
               <Card className="mb-6">
                 <CardHeader>
-                  <CardTitle className="text-xl">Morning Routine</CardTitle>
+                  <CardTitle className="text-xl">Rutina Matutina</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h4 className="font-semibold mb-2">Start Your Day Right</h4>
+                      <h4 className="font-semibold mb-2">Comienza el Día Bien</h4>
                       <ul className="space-y-1 text-sm text-slate-600 dark:text-slate-300">
-                        <li>• 5-minute meditation</li>
-                        <li>• Gratitude practice</li>
-                        <li>• Gentle stretching</li>
-                        <li>• Healthy breakfast</li>
+                        <li>• Meditación de 5 minutos</li>
+                        <li>• Práctica de gratitud</li>
+                        <li>• Estiramientos suaves</li>
+                        <li>• Desayuno saludable</li>
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-semibold mb-2">AI Therapy Integration</h4>
+                      <h4 className="font-semibold mb-2">Integración con Terapia IA</h4>
                       <ul className="space-y-1 text-sm text-slate-600 dark:text-slate-300">
-                        <li>• Morning check-in with AI</li>
-                        <li>• Set daily intentions</li>
-                        <li>• Review stress levels</li>
-                        <li>• Plan coping strategies</li>
+                        <li>• Revisión matutina con IA</li>
+                        <li>• Establecer intenciones diarias</li>
+                        <li>• Revisar niveles de estrés</li>
+                        <li>• Planificar estrategias de afrontamiento</li>
                       </ul>
                     </div>
                   </div>
@@ -372,26 +372,26 @@ export default function StressManagementPost() {
               
               <Card className="mb-6">
                 <CardHeader>
-                  <CardTitle className="text-xl">Throughout the Day</CardTitle>
+                  <CardTitle className="text-xl">Durante el Día</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h4 className="font-semibold mb-2">Stress Management</h4>
+                      <h4 className="font-semibold mb-2">Gestión del Estrés</h4>
                       <ul className="space-y-1 text-sm text-slate-600 dark:text-slate-300">
-                        <li>• Take regular breaks</li>
-                        <li>• Practice deep breathing</li>
-                        <li>• Stay hydrated</li>
-                        <li>• Move your body</li>
+                        <li>• Tomar descansos regulares</li>
+                        <li>• Practicar respiración profunda</li>
+                        <li>• Mantenerse hidratado</li>
+                        <li>• Mover el cuerpo</li>
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-semibold mb-2">AI Support</h4>
+                      <h4 className="font-semibold mb-2">Apoyo de IA</h4>
                       <ul className="space-y-1 text-sm text-slate-600 dark:text-slate-300">
-                        <li>• Quick stress check-ins</li>
-                        <li>• Guided breathing sessions</li>
-                        <li>• Coping strategy reminders</li>
-                        <li>• Emotional processing</li>
+                        <li>• Revisiones rápidas de estrés</li>
+                        <li>• Sesiones de respiración guiada</li>
+                        <li>• Recordatorios de estrategias de afrontamiento</li>
+                        <li>• Procesamiento emocional</li>
                       </ul>
                     </div>
                   </div>
@@ -400,26 +400,26 @@ export default function StressManagementPost() {
               
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-xl">Evening Wind-Down</CardTitle>
+                  <CardTitle className="text-xl">Relajación Nocturna</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h4 className="font-semibold mb-2">Relaxation Practices</h4>
+                      <h4 className="font-semibold mb-2">Prácticas de Relajación</h4>
                       <ul className="space-y-1 text-sm text-slate-600 dark:text-slate-300">
-                        <li>• Gentle evening routine</li>
-                        <li>• Journaling reflection</li>
-                        <li>• Reading or listening</li>
-                        <li>• Prepare for sleep</li>
+                        <li>• Rutina nocturna suave</li>
+                        <li>• Reflexión en diario</li>
+                        <li>• Lectura o escucha</li>
+                        <li>• Preparación para dormir</li>
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-semibold mb-2">AI Evening Session</h4>
+                      <h4 className="font-semibold mb-2">Sesión Nocturna con IA</h4>
                       <ul className="space-y-1 text-sm text-slate-600 dark:text-slate-300">
-                        <li>• Daily reflection</li>
-                        <li>• Guided relaxation</li>
-                        <li>• Sleep preparation</li>
-                        <li>• Tomorrow's planning</li>
+                        <li>• Reflexión diaria</li>
+                        <li>• Relajación guiada</li>
+                        <li>• Preparación para el sueño</li>
+                        <li>• Planificación del mañana</li>
                       </ul>
                     </div>
                   </div>
@@ -427,70 +427,70 @@ export default function StressManagementPost() {
               </Card>
             </section>
 
-            <section id="when-to-seek-help" className="mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">When to Seek Professional Help</h2>
+            <section id="cuando-buscar-ayuda" className="mb-12">
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Cuándo Buscar Ayuda Profesional</h2>
               <p className="text-slate-600 dark:text-slate-300 mb-6">
-                While AI therapy is excellent for stress management, there are times when professional help is necessary.
+                Aunque la terapia IA es excelente para la gestión del estrés, hay momentos en que la ayuda profesional es necesaria.
               </p>
               
               <Card className="bg-red-50 dark:bg-red-950 border-red-200 mb-6">
                 <CardHeader>
-                  <CardTitle className="text-red-800 dark:text-red-200">Warning Signs</CardTitle>
+                  <CardTitle className="text-red-800 dark:text-red-200">Señales de Advertencia</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2 text-red-700 dark:text-red-300">
-                    <li>• Persistent feelings of hopelessness or despair</li>
-                    <li>• Thoughts of self-harm or suicide</li>
-                    <li>• Severe anxiety that interferes with daily life</li>
-                    <li>• Physical symptoms that don't improve</li>
-                    <li>• Substance abuse as a coping mechanism</li>
-                    <li>• Difficulty maintaining relationships or work</li>
+                    <li>• Sentimientos persistentes de desesperanza o desesperación</li>
+                    <li>• Pensamientos de autolesión o suicidio</li>
+                    <li>• Ansiedad severa que interfiere con la vida diaria</li>
+                    <li>• Síntomas físicos que no mejoran</li>
+                    <li>• Abuso de sustancias como mecanismo de afrontamiento</li>
+                    <li>• Dificultad para mantener relaciones o trabajo</li>
                   </ul>
                 </CardContent>
               </Card>
               
               <p className="text-slate-600 dark:text-slate-300 mb-6">
-                If you experience any of these symptoms, please seek immediate professional help. AI therapy can complement 
-                traditional therapy but should not replace professional mental health care in severe cases.
+                Si experimentas alguno de estos síntomas, busca ayuda profesional inmediata. La terapia IA puede complementar 
+                la terapia tradicional pero no debe reemplazar el cuidado profesional de salud mental en casos severos.
               </p>
             </section>
 
-            <section id="getting-started" className="mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Getting Started with AI Stress Management</h2>
+            <section id="empezar" className="mb-12">
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Comenzando con la Gestión del Estrés con IA</h2>
               <p className="text-slate-600 dark:text-slate-300 mb-6">
-                Ready to take control of your stress? Here's how to get started with TalkAI's stress management features.
+                ¿Listo para tomar control de tu estrés? Así es como puedes comenzar con las características de gestión del estrés de TalkAI.
               </p>
               
               <div className="grid md:grid-cols-3 gap-6 mb-8">
                 <Card className="text-center">
                   <CardHeader>
-                    <CardTitle className="text-lg">Step 1: Sign Up</CardTitle>
+                    <CardTitle className="text-lg">Paso 1: Registrarse</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-slate-600 dark:text-slate-300">
-                      Create your TalkAI account and complete your initial assessment to personalize your experience.
+                      Crea tu cuenta de TalkAI y completa tu evaluación inicial para personalizar tu experiencia.
                     </p>
                   </CardContent>
                 </Card>
                 
                 <Card className="text-center">
                   <CardHeader>
-                    <CardTitle className="text-lg">Step 2: Set Goals</CardTitle>
+                    <CardTitle className="text-lg">Paso 2: Establecer Objetivos</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-slate-600 dark:text-slate-300">
-                      Define your stress management goals and preferences to customize your AI therapy experience.
+                      Define tus objetivos de gestión del estrés y preferencias para personalizar tu experiencia de terapia IA.
                     </p>
                   </CardContent>
                 </Card>
                 
                 <Card className="text-center">
                   <CardHeader>
-                    <CardTitle className="text-lg">Step 3: Start Practicing</CardTitle>
+                    <CardTitle className="text-lg">Paso 3: Comenzar a Practicar</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-slate-600 dark:text-slate-300">
-                      Begin with daily check-ins and gradually incorporate more advanced stress management techniques.
+                      Comienza con revisiones diarias y gradualmente incorpora técnicas más avanzadas de gestión del estrés.
                     </p>
                   </CardContent>
                 </Card>
@@ -498,24 +498,24 @@ export default function StressManagementPost() {
               
               <Card className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950 border-blue-200">
                 <CardHeader>
-                  <CardTitle className="text-blue-800 dark:text-blue-200">Ready to Start Your Stress Management Journey?</CardTitle>
+                  <CardTitle className="text-blue-800 dark:text-blue-200">¿Listo para Comenzar tu Viaje de Gestión del Estrés?</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-blue-700 dark:text-blue-300 mb-4">
-                    Join thousands of users who have transformed their stress management with TalkAI's AI-powered therapy platform.
+                    Únete a miles de usuarios que han transformado su gestión del estrés con la plataforma de terapia impulsada por IA de TalkAI.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Link 
                       href="/sessions" 
                       className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                     >
-                      Start Free Trial
+                      Iniciar Prueba Gratuita
                     </Link>
                     <Link 
                       href="/about" 
                       className="inline-flex items-center justify-center px-6 py-3 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
                     >
-                      Learn More
+                      Aprender Más
                     </Link>
                   </div>
                 </CardContent>

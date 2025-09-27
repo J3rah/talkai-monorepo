@@ -13,17 +13,17 @@ export const metadata: Metadata = {
     'social connection',
     'TalkAI loneliness',
     'building friendships',
-    'social anxiety',
+    'social ansiedad',
     'community building',
   ],
   openGraph: {
     title: 'Tackling Loneliness: TalkAI Prompts That Spark Connection',
     description:
-      'Loneliness changes when connection becomes a daily habit. TalkAI helps you take one small step at a time.',
+      'Loneliness changes when connection becomes a daily habit. TalkAI helps you take one small paso at a time.',
     type: 'article',
     images: ['/og-image.png'],
     publishedTime: '2025-07-27',
-    authors: ['TalkAI Research Team'],
+    authors: ['TalkAI investigación Team'],
   },
   twitter: {
     card: 'summary_large_image',
@@ -40,7 +40,7 @@ export default function LonelinessConnectionPromptsTalkAIPost() {
         {/* Back Navigation */}
         <Link href="/blog" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-8">
           <ArrowLeft className="w-4 h-4" />
-          Back to Blog
+          Volver al Blog
         </Link>
 
         <article className="max-w-4xl mx-auto">
@@ -56,14 +56,14 @@ export default function LonelinessConnectionPromptsTalkAIPost() {
             </h1>
 
             <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-              Loneliness changes when connection becomes a daily habit. TalkAI helps you take one small step at a time—no
+              Loneliness changes when connection becomes a daily habit. TalkAI helps you take one small paso at a time—no
               social marathon required.
             </p>
 
             <div className="flex items-center gap-6 text-sm text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-6">
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4" />
-                TalkAI Research Team
+                TalkAI investigación Team
               </div>
               <div className="flex items-center gap-2">
                 <CalendarDays className="w-4 h-4" />
@@ -71,7 +71,7 @@ export default function LonelinessConnectionPromptsTalkAIPost() {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                6 min read
+                6 min lectura
               </div>
             </div>
           </header>
@@ -170,7 +170,7 @@ export default function LonelinessConnectionPromptsTalkAIPost() {
                     </li>
                     <li className="flex items-start gap-3">
                       <CheckCircle className="w-5 h-5 text-green-600 mt-1" />
-                      <span>Track feelings after interactions</span>
+                      <span>Track sentimientos after interactions</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <CheckCircle className="w-5 h-5 text-green-600 mt-1" />
@@ -186,9 +186,9 @@ export default function LonelinessConnectionPromptsTalkAIPost() {
               <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-8">
                 <CardContent className="pt-6">
                   <h3 className="text-xl font-semibold mb-4">Turn on TalkAI's “One Connection a Day” Reminder</h3>
-                  <p className="mb-6">Build connection habits that fit your comfort level.</p>
+                  <p className="mb-6">Build connection habits that fit your comfort nivel.</p>
                   <Link href="/auth" className="inline-block bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
-                    Start Free Trial →
+                    Iniciar Prueba Gratuita →
                   </Link>
                 </CardContent>
               </Card>
@@ -217,10 +217,10 @@ export default function LonelinessConnectionPromptsTalkAIPost() {
 
               <Card>
                 <CardHeader>
-                  <Badge variant="secondary" className="w-fit mb-2">Social Anxiety</Badge>
+                  <Badge variant="secondary" className="w-fit mb-2">Social ansiedad</Badge>
                   <CardTitle>
-                    <Link href="/blog/social-anxiety-exposure-plans-talkai" className="hover:text-blue-600">
-                      Social Anxiety Exposure Plans
+                    <Link href="/blog/social-ansiedad-exposure-plans-talkai" className="hover:text-blue-600">
+                      Social ansiedad Exposure Plans
                     </Link>
                   </CardTitle>
                   <CardContent className="px-0">

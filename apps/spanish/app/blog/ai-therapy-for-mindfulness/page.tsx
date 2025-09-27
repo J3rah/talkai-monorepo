@@ -5,32 +5,32 @@ import { Badge } from '@/components/ui/badge';
 import { CalendarDays, Clock, User, ArrowLeft, CheckCircle, Brain, Heart, Shield, Leaf, Eye, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'AI Therapy for Mindfulness: Enhancing Meditation and Present-Moment Awareness',
-  description: 'Discover how AI therapy can enhance your mindfulness practice, improve meditation techniques, and help you develop present-moment awareness.',
+  title: 'terapia IA for mindfulness: Enhancing meditación and Present-Moment conciencia',
+  description: 'Discover how terapia IA can enhance your mindfulness practice, improve meditación técnicas, and help you develop present-moment conciencia.',
   keywords: [
     'mindfulness therapy',
-    'AI therapy for meditation',
+    'terapia IA for meditación',
     'mindfulness practice',
-    'meditation techniques',
-    'present moment awareness',
+    'meditación técnicas',
+    'present moment conciencia',
     'mindful living',
-    'meditation guidance',
+    'meditación orientación',
     'mindfulness training',
-    'consciousness development',
+    'conciencia desarrollo',
     'mental clarity'
   ],
   openGraph: {
-    title: 'AI Therapy for Mindfulness',
-    description: 'Learn how AI therapy can enhance your mindfulness practice and meditation techniques.',
+    title: 'terapia IA for mindfulness',
+    description: 'Learn how terapia IA can enhance your mindfulness practice and meditación técnicas.',
     type: 'article',
     images: ['/og-mindfulness.png'],
     publishedTime: '2024-12-19',
-    authors: ['TalkAI Research Team'],
+    authors: ['TalkAI investigación Team'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AI Therapy for Mindfulness',
-    description: 'Learn how AI therapy can enhance your mindfulness practice and meditation techniques.',
+    title: 'terapia IA for mindfulness',
+    description: 'Learn how terapia IA can enhance your mindfulness practice and meditación técnicas.',
     images: ['/twitter-mindfulness.png'],
   },
 };
@@ -41,31 +41,31 @@ export default function MindfulnessPost() {
       <div className="container mx-auto px-4 py-8">
         <Link href="/blog" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-8">
           <ArrowLeft className="w-4 h-4" />
-          Back to Blog
+          Volver al Blog
         </Link>
 
         <article className="max-w-4xl mx-auto">
           <header className="mb-12">
             <div className="flex items-center gap-2 mb-4">
               <Badge variant="secondary" className="bg-lime-100 text-lime-800">
-                Mindfulness
+                mindfulness
               </Badge>
-              <Badge variant="outline">Meditation</Badge>
+              <Badge variant="outline">meditación</Badge>
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
-              AI Therapy for Mindfulness: Enhancing Meditation and Present-Moment Awareness
+              terapia IA for mindfulness: Enhancing meditación and Present-Moment conciencia
             </h1>
             
             <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-              Discover how AI therapy can enhance your mindfulness practice, improve meditation techniques, 
-              and help you develop deeper present-moment awareness for better mental health.
+              Discover how terapia IA can enhance your mindfulness practice, improve meditación técnicas, 
+              and help you develop deeper present-moment conciencia for better salud mental.
             </p>
 
             <div className="flex items-center gap-6 text-sm text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-6">
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4" />
-                TalkAI Research Team
+                TalkAI investigación Team
               </div>
               <div className="flex items-center gap-2">
                 <CalendarDays className="w-4 h-4" />
@@ -73,33 +73,33 @@ export default function MindfulnessPost() {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                10 min read
+                10 min lectura
               </div>
             </div>
           </header>
 
           <div className="prose prose-lg max-w-none">
             <section className="mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">The Power of Mindfulness and AI Therapy</h2>
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">The Power of mindfulness and terapia IA</h2>
               <p className="text-slate-600 dark:text-slate-300 mb-6">
-                Mindfulness is a powerful tool for mental health, and AI therapy can enhance your practice 
-                by providing personalized guidance, tracking progress, and offering support when you need it most.
+                mindfulness is a powerful tool for salud mental, and terapia IA can enhance your practice 
+                by providing personalizado orientación, tracking progreso, and offering apoyo when you need it most.
               </p>
             </section>
 
             <section className="mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">AI Therapy Solutions for Mindfulness</h2>
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">terapia IA soluciones for mindfulness</h2>
               <div className="grid md:grid-cols-2 gap-6 mb-8">
                 <Card className="bg-lime-50 dark:bg-lime-950 border-lime-200">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-lime-800 dark:text-lime-200">
                       <Leaf className="w-5 h-5" />
-                      Guided Meditation
+                      Guided meditación
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-lime-700 dark:text-lime-300">
-                      Access personalized guided meditation sessions tailored to your needs.
+                      Access personalizado guided meditación sessions adaptado to your necesidades.
                     </p>
                   </CardContent>
                 </Card>
@@ -108,12 +108,12 @@ export default function MindfulnessPost() {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-green-800 dark:text-green-200">
                       <Eye className="w-5 h-5" />
-                      Present Awareness
+                      Present conciencia
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-green-700 dark:text-green-300">
-                      Develop deeper present-moment awareness and mental clarity.
+                      Develop deeper present-moment conciencia and mental clarity.
                     </p>
                   </CardContent>
                 </Card>
@@ -121,10 +121,10 @@ export default function MindfulnessPost() {
             </section>
 
             <section className="mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Getting Started with AI Mindfulness Therapy</h2>
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Getting Started with AI mindfulness Therapy</h2>
               <Card className="bg-gradient-to-r from-lime-50 to-green-50 dark:from-lime-950 dark:to-green-950 border-lime-200">
                 <CardHeader>
-                  <CardTitle className="text-lime-800 dark:text-lime-200">Ready to Enhance Your Mindfulness Practice?</CardTitle>
+                  <CardTitle className="text-lime-800 dark:text-lime-200">Ready to Enhance Your mindfulness Practice?</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-lime-700 dark:text-lime-300 mb-4">
@@ -135,7 +135,7 @@ export default function MindfulnessPost() {
                       href="/sessions" 
                       className="inline-flex items-center justify-center px-6 py-3 bg-lime-600 text-white rounded-lg hover:bg-lime-700 transition-colors"
                     >
-                      Start Free Trial
+                      Iniciar Prueba Gratuita
                     </Link>
                     <Link 
                       href="/about" 

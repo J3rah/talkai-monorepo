@@ -9,12 +9,12 @@ export const metadata: Metadata = {
   description:
     'Recover from burnout with TalkAI micro‑coaching: capacity-based planning, energy pacing, and compassionate accountability.',
   keywords: [
-    'burnout recovery',
+    'burnout recuperación',
     'energy pacing',
     'capacity planning',
     'TalkAI micro coaching',
-    'work stress recovery',
-    'mental health routines',
+    'work estrés recuperación',
+    'salud mental routines',
   ],
   openGraph: {
     title: 'From Burnout to Baseline: Micro‑Coaching with TalkAI',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     type: 'article',
     images: ['/og-image.png'],
     publishedTime: '2025-07-27',
-    authors: ['TalkAI Research Team'],
+    authors: ['TalkAI investigación Team'],
   },
   twitter: {
     card: 'summary_large_image',
@@ -40,14 +40,14 @@ export default function BurnoutRecoveryMicroCoachingPost() {
         {/* Back Navigation */}
         <Link href="/blog" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-8">
           <ArrowLeft className="w-4 h-4" />
-          Back to Blog
+          Volver al Blog
         </Link>
 
         <article className="max-w-4xl mx-auto">
           {/* Header */}
           <header className="mb-12">
             <div className="flex items-center gap-2 mb-4">
-              <Badge variant="secondary" className="bg-green-100 text-green-800">Burnout Recovery</Badge>
+              <Badge variant="secondary" className="bg-green-100 text-green-800">Burnout recuperación</Badge>
               <Badge variant="outline">New</Badge>
             </div>
 
@@ -56,14 +56,14 @@ export default function BurnoutRecoveryMicroCoachingPost() {
             </h1>
 
             <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-              Burnout recovery is not about doing more—it’s about doing less, deliberately. TalkAI can pace your energy,
+              Burnout recuperación is not about doing more—it’s about doing less, deliberately. TalkAI can pace your energy,
               shrink tasks, and build momentum without self‑judgment.
             </p>
 
             <div className="flex items-center gap-6 text-sm text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-6">
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4" />
-                TalkAI Research Team
+                TalkAI investigación Team
               </div>
               <div className="flex items-center gap-2">
                 <CalendarDays className="w-4 h-4" />
@@ -71,7 +71,7 @@ export default function BurnoutRecoveryMicroCoachingPost() {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                7 min read
+                7 min lectura
               </div>
             </div>
           </header>
@@ -122,7 +122,7 @@ export default function BurnoutRecoveryMicroCoachingPost() {
               <Card>
                 <CardContent className="pt-6">
                   <p className="mb-4">Turn big projects into tiny visible steps. Momentum beats intensity.</p>
-                  <p className="italic">Example: “Finish deck” → “Outline 3 slides.” Celebrate the step.</p>
+                  <p className="italic">Example: “Finish deck” → “Outline 3 slides.” Celebrate the paso.</p>
                 </CardContent>
               </Card>
             </section>
@@ -147,7 +147,7 @@ export default function BurnoutRecoveryMicroCoachingPost() {
               </h2>
               <Card>
                 <CardContent className="pt-6">
-                  <p className="mb-4">Use direct, respectful language that protects recovery:</p>
+                  <p className="mb-4">Use direct, respectful language that protects recuperación:</p>
                   <p className="italic">“I can commit to <strong>X</strong> by <strong>Y</strong>. For <strong>Z</strong>, I need more time.”</p>
                 </CardContent>
               </Card>
@@ -199,7 +199,7 @@ export default function BurnoutRecoveryMicroCoachingPost() {
                   <h3 className="text-xl font-semibold mb-4">Enable TalkAI’s Daily Capacity Check</h3>
                   <p className="mb-6">Protect your baseline with pacing and tiny, repeatable steps.</p>
                   <Link href="/auth" className="inline-block bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
-                    Start Free Trial →
+                    Iniciar Prueba Gratuita →
                   </Link>
                 </CardContent>
               </Card>
@@ -216,12 +216,12 @@ export default function BurnoutRecoveryMicroCoachingPost() {
                 <CardHeader>
                   <Badge variant="secondary" className="w-fit mb-2">Work</Badge>
                   <CardTitle>
-                    <Link href="/blog/ai-therapy-for-workplace-stress" className="hover:text-blue-600">
-                      AI Therapy for Workplace Stress
+                    <Link href="/blog/ai-therapy-for-workplace-estrés" className="hover:text-blue-600">
+                      terapia IA for Workplace estrés
                     </Link>
                   </CardTitle>
                   <CardContent className="px-0">
-                    <p className="text-slate-600">Manage work-related mental health with practical tools.</p>
+                    <p className="text-slate-600">Manage work-related salud mental with practical herramientas.</p>
                   </CardContent>
                 </CardHeader>
               </Card>

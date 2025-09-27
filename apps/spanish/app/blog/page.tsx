@@ -5,30 +5,30 @@ import { Badge } from '@/components/ui/badge';
 import { CalendarDays, Clock, User } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'AI Therapy Blog - Mental Health Insights & AI Technology | TalkAI',
-  description: 'Explore the latest insights on AI therapy, mental health support, and empathetic voice technology. Expert articles on AI counseling, emotional wellness, and the future of mental healthcare.',
+  title: 'Blog de Terapia IA - Perspectivas de Salud Mental y Tecnología IA | TalkAI',
+  description: 'Explora las últimas perspectivas sobre terapia IA, apoyo de salud mental y tecnología de voz empática. Artículos expertos sobre asesoramiento IA, bienestar emocional y el futuro de la atención de salud mental.',
   keywords: [
-    'AI therapy blog',
-    'mental health AI articles',
-    'AI counseling insights',
-    'empathetic AI technology',
-    'AI therapy research',
-    'mental health technology',
-    'AI therapist articles',
-    'emotional AI blog',
-    'AI mental health support',
-    'therapeutic AI insights'
+    'blog terapia IA',
+    'artículos salud mental IA',
+    'perspectivas asesoramiento IA',
+    'tecnología IA empática',
+    'investigación terapia IA',
+    'tecnología salud mental',
+    'artículos terapeuta IA',
+    'blog IA emocional',
+    'apoyo salud mental IA',
+    'perspectivas IA terapéutica'
   ],
   openGraph: {
-    title: 'AI Therapy Blog - Mental Health Insights & Technology',
-    description: 'Expert insights on AI therapy, mental health support, and the future of empathetic AI technology.',
+    title: 'Blog de Terapia IA - Perspectivas de Salud Mental y Tecnología',
+    description: 'Perspectivas expertas sobre terapia IA, apoyo de salud mental y el futuro de la tecnología IA empática.',
     type: 'website',
     images: ['/og-image.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AI Therapy Blog - Mental Health Insights',
-    description: 'Expert insights on AI therapy and mental health technology.',
+    title: 'Blog de Terapia IA - Perspectivas de Salud Mental',
+    description: 'Perspectivas expertas sobre terapia IA y tecnología de salud mental.',
     images: ['/twitter-image.png'],
   },
 };
@@ -36,388 +36,388 @@ export const metadata: Metadata = {
 const blogPosts = [
   {
     slug: 'what-is-ai-therapy',
-    title: 'What is AI Therapy? A Complete Guide to Artificial Intelligence in Mental Health',
-    description: 'Discover how AI therapy works, its benefits, limitations, and why it\'s revolutionizing mental health support. Learn if AI therapy is right for you.',
-    category: 'AI Therapy Basics',
-    readTime: '8 min read',
+    title: '¿Qué es la Terapia IA? Una Guía Completa de Inteligencia Artificial en Salud Mental',
+    description: 'Descubre cómo funciona la terapia IA, sus beneficios, limitaciones y por qué está revolucionando el apoyo de salud mental. Aprende si la terapia IA es adecuada para ti.',
+    category: 'Fundamentos de Terapia IA',
+    readTime: '8 min lectura',
     publishDate: '2024-07-18',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: true,
-    tags: ['AI Therapy', 'Mental Health', 'Technology', 'Beginner Guide']
+    tags: ['Terapia IA', 'Salud Mental', 'Tecnología', 'Guía para Principiantes']
   },
   {
     slug: 'ai-therapy-vs-human-therapy',
-    title: 'AI Therapy vs Human Therapy: Understanding the Differences and Benefits',
-    description: 'Compare AI therapy with traditional human therapy. Explore the advantages, limitations, and when to choose each approach for optimal mental health support.',
-    category: 'Comparison',
-    readTime: '10 min read',
+    title: 'Terapia IA vs Terapia Humana: Entendiendo las Diferencias y Beneficios',
+    description: 'Compara la terapia IA con la terapia humana tradicional. Explora las ventajas, limitaciones y cuándo elegir cada enfoque para un apoyo óptimo de salud mental.',
+    category: 'Comparación',
+    readTime: '10 min lectura',
     publishDate: '2024-07-17',
-    author: 'Dr. Sarah Chen',
+    author: 'Dra. Sarah Chen',
     featured: true,
-    tags: ['AI vs Human', 'Therapy Comparison', 'Mental Health', 'Decision Guide']
+    tags: ['IA vs Humano', 'Comparación de Terapias', 'Salud Mental', 'Guía de Decisión']
   },
   {
     slug: 'how-to-manage-stress-with-ai',
-    title: 'How to Manage Stress with AI Therapy: Complete Guide for 2024',
-    description: 'Learn effective stress management techniques using AI therapy. Discover how TalkAI can help you reduce stress, anxiety, and improve your mental well-being.',
-    category: 'Stress Management',
-    readTime: '10 min read',
+    title: 'Cómo Gestionar el Estrés con Terapia IA: Guía Completa para 2024',
+    description: 'Aprende técnicas efectivas de gestión del estrés usando terapia IA. Descubre cómo TalkAI puede ayudarte a reducir el estrés, la ansiedad y mejorar tu bienestar mental.',
+    category: 'Gestión del Estrés',
+    readTime: '10 min lectura',
     publishDate: '2024-12-19',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Stress Management', 'AI Therapy', 'Mental Health', 'Wellness']
+    tags: ['Gestión del Estrés', 'Terapia IA', 'Salud Mental', 'Bienestar']
   },
   {
     slug: 'improving-sleep-with-ai-therapy',
-    title: 'Improving Sleep with AI Therapy: Complete Guide to Better Rest',
-    description: 'Learn how AI therapy can help you improve sleep quality, overcome insomnia, and develop healthy sleep habits with TalkAI\'s sleep-focused therapy.',
-    category: 'Sleep Health',
-    readTime: '12 min read',
+    title: 'Mejorando el Sueño con Terapia IA: Guía Completa para un Mejor Descanso',
+    description: 'Aprende cómo la terapia IA puede ayudarte a mejorar la calidad del sueño, superar el insomnio y desarrollar hábitos de sueño saludables con la terapia enfocada en el sueño de TalkAI.',
+    category: 'Salud del Sueño',
+    readTime: '12 min lectura',
     publishDate: '2024-12-19',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Sleep Improvement', 'Insomnia', 'Sleep Hygiene', 'Mental Health']
+    tags: ['Mejora del Sueño', 'Insomnio', 'Higiene del Sueño', 'Salud Mental']
   },
   {
     slug: 'ai-therapy-for-relationships',
-    title: 'AI Therapy for Relationships: Improving Communication and Connection',
-    description: 'Discover how AI therapy can help improve relationships, enhance communication skills, and build stronger connections with others.',
-    category: 'Relationships',
-    readTime: '10 min read',
+    title: 'Terapia IA para Relaciones: Mejorando la Comunicación y Conexión',
+    description: 'Descubre cómo la terapia IA puede ayudar a mejorar las relaciones, potenciar las habilidades de comunicación y construir conexiones más fuertes con otros.',
+    category: 'Relaciones',
+    readTime: '10 min lectura',
     publishDate: '2024-12-19',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Relationships', 'Communication', 'Family Therapy', 'Social Skills']
+    tags: ['Relaciones', 'Comunicación', 'Terapia Familiar', 'Habilidades Sociales']
   },
   {
     slug: 'ai-therapy-for-workplace-stress',
-    title: 'AI Therapy for Workplace Stress: Managing Work-Related Mental Health',
-    description: 'Learn how AI therapy can help manage workplace stress, burnout, and work-related mental health challenges.',
-    category: 'Workplace Wellness',
-    readTime: '12 min read',
+    title: 'Terapia IA para Estrés Laboral: Gestionando la Salud Mental Relacionada con el Trabajo',
+    description: 'Aprende cómo la terapia IA puede ayudar a gestionar el estrés laboral, el agotamiento y los desafíos de salud mental relacionados con el trabajo.',
+    category: 'Bienestar Laboral',
+    readTime: '12 min lectura',
     publishDate: '2024-12-19',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Workplace Stress', 'Burnout', 'Work-Life Balance', 'Professional Health']
+    tags: ['Estrés Laboral', 'Agotamiento', 'Equilibrio Trabajo-Vida', 'Salud Profesional']
   },
   {
     slug: 'ai-therapy-for-self-improvement',
-    title: 'AI Therapy for Self-Improvement: Personal Growth and Development',
-    description: 'Discover how AI therapy can support your personal growth journey, build confidence, and achieve your self-improvement goals.',
-    category: 'Personal Growth',
-    readTime: '10 min read',
+    title: 'Terapia IA para Automejora: Crecimiento y Desarrollo Personal',
+    description: 'Descubre cómo la terapia IA puede apoyar tu viaje de crecimiento personal, construir confianza y lograr tus objetivos de automejora.',
+    category: 'Crecimiento Personal',
+    readTime: '10 min lectura',
     publishDate: '2024-12-19',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Self-Improvement', 'Personal Growth', 'Confidence Building', 'Goal Achievement']
+    tags: ['Automejora', 'Crecimiento Personal', 'Construcción de Confianza', 'Logro de Objetivos']
   },
   {
     slug: 'ai-therapy-for-students',
-    title: 'AI Therapy for Students: Managing Academic Stress and Mental Health',
-    description: 'Learn how AI therapy can help students manage academic stress, improve mental health, and achieve academic success.',
-    category: 'Student Wellness',
-    readTime: '10 min read',
+    title: 'Terapia IA para Estudiantes: Gestionando el Estrés Académico y la Salud Mental',
+    description: 'Aprende cómo la terapia IA puede ayudar a los estudiantes a gestionar el estrés académico, mejorar la salud mental y lograr el éxito académico.',
+    category: 'Bienestar Estudiantil',
+    readTime: '10 min lectura',
     publishDate: '2024-12-19',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Student Mental Health', 'Academic Stress', 'College Wellness', 'Study Skills']
+    tags: ['Salud Mental Estudiantil', 'Estrés Académico', 'Bienestar Universitario', 'Habilidades de Estudio']
   },
   {
     slug: 'ai-therapy-for-parents',
-    title: 'AI Therapy for Parents: Managing Parenting Stress and Mental Health',
-    description: 'Learn how AI therapy can help parents manage stress, improve mental health, and build stronger family relationships.',
-    category: 'Parenting Support',
-    readTime: '10 min read',
+    title: 'Terapia IA para Padres: Gestionando el Estrés Parental y la Salud Mental',
+    description: 'Aprende cómo la terapia IA puede ayudar a los padres a gestionar el estrés, mejorar la salud mental y construir relaciones familiares más fuertes.',
+    category: 'Apoyo Parental',
+    readTime: '10 min lectura',
     publishDate: '2024-12-19',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Parenting Stress', 'Family Therapy', 'Parent Mental Health', 'Family Wellness']
+    tags: ['Estrés Parental', 'Terapia Familiar', 'Salud Mental Parental', 'Bienestar Familiar']
   },
   {
     slug: 'ai-therapy-for-grief',
-    title: 'AI Therapy for Grief: Coping with Loss and Finding Healing',
-    description: 'Learn how AI therapy can help you navigate grief, process loss, and find healing during difficult times.',
-    category: 'Grief Support',
-    readTime: '10 min read',
+    title: 'Terapia IA para el Duelo: Afrontando la Pérdida y Encontrando Sanación',
+    description: 'Aprende cómo la terapia IA puede ayudarte a navegar el duelo, procesar la pérdida y encontrar sanación durante momentos difíciles.',
+    category: 'Apoyo en el Duelo',
+    readTime: '10 min lectura',
     publishDate: '2024-12-19',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Grief Therapy', 'Loss Processing', 'Bereavement Support', 'Healing']
+    tags: ['Terapia del Duelo', 'Procesamiento de Pérdida', 'Apoyo en Duelo', 'Sanación']
   },
   {
     slug: 'ai-therapy-for-addiction-recovery',
-    title: 'AI Therapy for Addiction Recovery: Supporting Recovery and Wellness',
-    description: 'Learn how AI therapy can support addiction recovery, provide relapse prevention strategies, and promote long-term wellness.',
-    category: 'Recovery Support',
-    readTime: '10 min read',
+    title: 'Terapia IA para Recuperación de Adicciones: Apoyando la Recuperación y Bienestar',
+    description: 'Aprende cómo la terapia IA puede apoyar la recuperación de adicciones, proporcionar estrategias de prevención de recaídas y promover el bienestar a largo plazo.',
+    category: 'Apoyo en Recuperación',
+    readTime: '10 min lectura',
     publishDate: '2024-12-19',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Addiction Recovery', 'Relapse Prevention', 'Recovery Support', 'Wellness']
+    tags: ['Recuperación de Adicciones', 'Prevención de Recaídas', 'Apoyo en Recuperación', 'Bienestar']
   },
   {
     slug: 'ai-therapy-for-trauma',
-    title: 'AI Therapy for Trauma: Healing from PTSD and Emotional Wounds',
-    description: 'Learn how AI therapy can help you heal from trauma, manage PTSD symptoms, and process emotional wounds in a safe, supportive environment.',
-    category: 'Trauma Healing',
-    readTime: '12 min read',
+    title: 'Terapia IA para Trauma: Sanando del TEPT y Heridas Emocionales',
+    description: 'Aprende cómo la terapia IA puede ayudarte a sanar del trauma, gestionar síntomas de TEPT y procesar heridas emocionales en un ambiente seguro y de apoyo.',
+    category: 'Sanación del Trauma',
+    readTime: '12 min lectura',
     publishDate: '2024-12-19',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Trauma Therapy', 'PTSD Treatment', 'Trauma Healing', 'Emotional Recovery']
+    tags: ['Terapia del Trauma', 'Tratamiento TEPT', 'Sanación del Trauma', 'Recuperación Emocional']
   },
   {
     slug: 'ai-therapy-for-mindfulness',
-    title: 'AI Therapy for Mindfulness: Enhancing Meditation and Present-Moment Awareness',
-    description: 'Discover how AI therapy can enhance your mindfulness practice, improve meditation techniques, and help you develop present-moment awareness.',
+    title: 'Terapia IA para Mindfulness: Mejorando la Meditación y Conciencia del Momento Presente',
+    description: 'Descubre cómo la terapia IA puede mejorar tu práctica de mindfulness, mejorar técnicas de meditación y ayudarte a desarrollar conciencia del momento presente.',
     category: 'Mindfulness',
-    readTime: '10 min read',
+    readTime: '10 min lectura',
     publishDate: '2024-12-19',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Mindfulness', 'Meditation', 'Present Awareness', 'Mental Clarity']
+    tags: ['Mindfulness', 'Meditación', 'Conciencia del Presente', 'Claridad Mental']
   },
   {
     slug: 'ai-therapy-for-confidence',
-    title: 'AI Therapy for Confidence: Building Self-Esteem and Personal Power',
-    description: 'Learn how AI therapy can help you build confidence, improve self-esteem, and develop the personal power to achieve your goals.',
-    category: 'Confidence Building',
-    readTime: '10 min read',
+    title: 'Terapia IA para Confianza: Construyendo Autoestima y Poder Personal',
+    description: 'Aprende cómo la terapia IA puede ayudarte a construir confianza, mejorar la autoestima y desarrollar el poder personal para lograr tus objetivos.',
+    category: 'Construcción de Confianza',
+    readTime: '10 min lectura',
     publishDate: '2024-12-19',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Confidence Building', 'Self-Esteem', 'Personal Power', 'Self-Worth']
+    tags: ['Construcción de Confianza', 'Autoestima', 'Poder Personal', 'Valor Propio']
   },
   {
     slug: 'ai-therapy-for-life-transitions',
-    title: 'AI Therapy for Life Transitions: Navigating Change and New Beginnings',
-    description: 'Learn how AI therapy can help you navigate life transitions, manage change, and embrace new beginnings with confidence and resilience.',
-    category: 'Life Transitions',
-    readTime: '11 min read',
+    title: 'Terapia IA para Transiciones de Vida: Navegando el Cambio y Nuevos Comienzos',
+    description: 'Aprende cómo la terapia IA puede ayudarte a navegar las transiciones de vida, gestionar el cambio y abrazar nuevos comienzos con confianza y resiliencia.',
+    category: 'Transiciones de Vida',
+    readTime: '11 min lectura',
     publishDate: '2024-12-19',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Life Transitions', 'Change Management', 'New Beginnings', 'Resilience']
+    tags: ['Transiciones de Vida', 'Gestión del Cambio', 'Nuevos Comienzos', 'Resiliencia']
   },
   {
     slug: 'benefits-of-24-7-ai-therapy',
-    title: '24/7 AI Therapy: Why Round-the-Clock Mental Health Support Matters',
-    description: 'Explore how 24/7 AI therapy accessibility is transforming mental health care, providing immediate support when you need it most.',
-    category: 'Benefits',
-    readTime: '6 min read',
+    title: 'Terapia IA 24/7: Por Qué el Apoyo de Salud Mental las 24 Horas Importa',
+    description: 'Explora cómo la accesibilidad de terapia IA 24/7 está transformando la atención de salud mental, proporcionando apoyo inmediato cuando más lo necesitas.',
+    category: 'Beneficios',
+    readTime: '6 min lectura',
     publishDate: '2024-07-16',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['24/7 Support', 'Accessibility', 'Crisis Support', 'Mental Health']
+    tags: ['Apoyo 24/7', 'Accesibilidad', 'Apoyo en Crisis', 'Salud Mental']
   },
   {
     slug: 'empathetic-ai-technology',
-    title: 'How Empathetic AI Technology Understands Your Emotions',
-    description: 'Dive deep into the science behind empathetic AI, emotion recognition, and how TalkAI creates meaningful therapeutic connections.',
-    category: 'Technology',
-    readTime: '12 min read',
+    title: 'Cómo la Tecnología IA Empática Entiende tus Emociones',
+    description: 'Sumérgete en la ciencia detrás de la IA empática, reconocimiento de emociones y cómo TalkAI crea conexiones terapéuticas significativas.',
+    category: 'Tecnología',
+    readTime: '12 min lectura',
     publishDate: '2024-07-15',
     author: 'Dr. Michael Rodriguez',
     featured: false,
-    tags: ['Empathetic AI', 'Emotion Recognition', 'Technology', 'Research']
+    tags: ['IA Empática', 'Reconocimiento de Emociones', 'Tecnología', 'Investigación']
   },
   {
     slug: 'ai-therapy-for-anxiety',
-    title: 'AI Therapy for Anxiety: Evidence-Based Techniques and Success Stories',
-    description: 'Learn how AI therapy specifically helps with anxiety disorders, featuring evidence-based techniques and real user success stories.',
-    category: 'Conditions',
-    readTime: '9 min read',
+    title: 'Terapia IA para Ansiedad: Técnicas Basadas en Evidencia e Historias de Éxito',
+    description: 'Aprende cómo la terapia IA ayuda específicamente con trastornos de ansiedad, presentando técnicas basadas en evidencia e historias reales de éxito de usuarios.',
+    category: 'Condiciones',
+    readTime: '9 min lectura',
     publishDate: '2024-07-14',
-    author: 'Dr. Lisa Thompson',
+    author: 'Dra. Lisa Thompson',
     featured: false,
-    tags: ['Anxiety', 'Treatment', 'Success Stories', 'Evidence-Based']
+    tags: ['Ansiedad', 'Tratamiento', 'Historias de Éxito', 'Basado en Evidencia']
   },
   {
     slug: 'ai-therapy-for-depression',
-    title: 'AI Therapy for Depression: Comprehensive Support When You Need It Most',
-    description: 'Discover how AI therapy provides continuous support for depression, offering coping strategies and emotional guidance available 24/7.',
-    category: 'Conditions',
-    readTime: '11 min read',
+    title: 'Terapia IA para Depresión: Apoyo Integral Cuando Más lo Necesitas',
+    description: 'Descubre cómo la terapia IA proporciona apoyo continuo para la depresión, ofreciendo estrategias de afrontamiento y orientación emocional disponibles 24/7.',
+    category: 'Condiciones',
+    readTime: '11 min lectura',
     publishDate: '2024-07-13',
     author: 'Dr. James Wilson',
     featured: false,
-    tags: ['Depression', 'Support', 'Coping Strategies', 'Mental Health']
+    tags: ['Depresión', 'Apoyo', 'Estrategias de Afrontamiento', 'Salud Mental']
   },
   {
     slug: 'voice-ai-therapy-benefits',
-    title: 'Voice AI Therapy: Why Speaking Out Loud Enhances Mental Health Treatment',
-    description: 'Explore the unique benefits of voice-based AI therapy and how speaking aloud can improve therapeutic outcomes and emotional processing.',
-    category: 'Technology',
-    readTime: '7 min read',
+    title: 'Terapia IA de Voz: Por Qué Hablar en Voz Alta Mejora el Tratamiento de Salud Mental',
+    description: 'Explora los beneficios únicos de la terapia IA basada en voz y cómo hablar en voz alta puede mejorar los resultados terapéuticos y el procesamiento emocional.',
+    category: 'Tecnología',
+    readTime: '7 min lectura',
     publishDate: '2024-07-12',
-    author: 'Dr. Emily Foster',
+    author: 'Dra. Emily Foster',
     featured: false,
-    tags: ['Voice Therapy', 'Speaking Benefits', 'Audio Therapy', 'Communication']
+    tags: ['Terapia de Voz', 'Beneficios del Habla', 'Terapia de Audio', 'Comunicación']
   },
   {
     slug: 'ai-therapy-privacy-security',
-    title: 'AI Therapy Privacy & Security: How Your Mental Health Data Stays Protected',
-    description: 'Learn about the robust privacy and security measures protecting your mental health conversations with AI therapy platforms.',
-    category: 'Privacy',
-    readTime: '8 min read',
+    title: 'Privacidad y Seguridad de Terapia IA: Cómo se Protegen tus Datos de Salud Mental',
+    description: 'Aprende sobre las robustas medidas de privacidad y seguridad que protegen tus conversaciones de salud mental con plataformas de terapia IA.',
+    category: 'Privacidad',
+    readTime: '8 min lectura',
     publishDate: '2024-07-11',
-    author: 'TalkAI Security Team',
+    author: 'Equipo de Seguridad TalkAI',
     featured: false,
-    tags: ['Privacy', 'Security', 'Data Protection', 'Confidentiality']
+    tags: ['Privacidad', 'Seguridad', 'Protección de Datos', 'Confidencialidad']
   },
   {
     slug: 'talkai-journaling-daily-mood-tracker',
-    title: 'TalkAI Journaling: A Daily Mood Tracker That Actually Sticks',
-    description: "Build a sustainable journaling habit with TalkAI. Track mood, triggers, coping skills, and wins in minutes a day—no perfection required.",
-    category: 'Habits & Tracking',
-    readTime: '7 min read',
+    title: 'Diario TalkAI: Un Rastreador de Estado de Ánimo Diario que Realmente Funciona',
+    description: "Construye un hábito de diario sostenible con TalkAI. Rastrea estado de ánimo, desencadenantes, habilidades de afrontamiento y victorias en minutos al día—sin necesidad de perfección.",
+    category: 'Hábitos y Seguimiento',
+    readTime: '7 min lectura',
     publishDate: '2025-07-27',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Journaling', 'Mood Tracking', 'Habits', 'TalkAI']
+    tags: ['Diario', 'Seguimiento de Estado de Ánimo', 'Hábitos', 'TalkAI']
   },
   {
     slug: 'panic-attack-grounding-scripts-talkai',
-    title: 'Panic Rescue: Grounding Scripts You Can Speak with TalkAI',
-    description: 'Use TalkAI grounding scripts to ride out panic: orient, breathe, name, and re-engage—practical steps you can voice on the spot.',
-    category: 'Anxiety & Panic',
-    readTime: '6 min read',
+    title: 'Rescate de Pánico: Guiones de Conexión a Tierra que Puedes Hablar con TalkAI',
+    description: 'Usa guiones de conexión a tierra de TalkAI para superar el pánico: orientar, respirar, nombrar y re-enganchar—pasos prácticos que puedes vocalizar en el momento.',
+    category: 'Ansiedad y Pánico',
+    readTime: '6 min lectura',
     publishDate: '2025-07-27',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Panic', 'Grounding', 'Breathing', 'Anxiety']
+    tags: ['Pánico', 'Conexión a Tierra', 'Respiración', 'Ansiedad']
   },
   {
     slug: 'burnout-recovery-micro-coaching-talkai',
-    title: 'From Burnout to Baseline: Micro‑Coaching with TalkAI',
-    description: 'Recover from burnout with TalkAI micro‑coaching: capacity-based planning, energy pacing, and compassionate accountability.',
-    category: 'Burnout Recovery',
-    readTime: '7 min read',
+    title: 'Del Agotamiento a la Línea Base: Micro-Coaching con TalkAI',
+    description: 'Recupérate del agotamiento con micro-coaching de TalkAI: planificación basada en capacidad, ritmo de energía y responsabilidad compasiva.',
+    category: 'Recuperación del Agotamiento',
+    readTime: '7 min lectura',
     publishDate: '2025-07-27',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Burnout', 'Energy Pacing', 'Capacity Planning', 'Recovery']
+    tags: ['Agotamiento', 'Ritmo de Energía', 'Planificación de Capacidad', 'Recuperación']
   },
   {
     slug: 'social-anxiety-exposure-plans-talkai',
-    title: 'Social Anxiety Steps: TalkAI Exposure Plans That Feel Safe',
-    description: 'Gradual exposure with TalkAI: small challenges, safety scripts, and celebration rituals that build real-world confidence.',
-    category: 'Social Anxiety',
-    readTime: '7 min read',
+    title: 'Pasos para Ansiedad Social: Planes de Exposición TalkAI que se Sienten Seguros',
+    description: 'Exposición gradual con TalkAI: pequeños desafíos, guiones de seguridad y rituales de celebración que construyen confianza en el mundo real.',
+    category: 'Ansiedad Social',
+    readTime: '7 min lectura',
     publishDate: '2025-07-27',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Social Anxiety', 'Exposure', 'Confidence', 'CBT']
+    tags: ['Ansiedad Social', 'Exposición', 'Confianza', 'TCC']
   },
   {
     slug: 'financial-stress-coping-talkai',
-    title: 'Financial Stress Coping: TalkAI Strategies for Money Anxiety',
-    description: 'Learn practical TalkAI strategies to manage financial stress, reduce money anxiety, and build financial confidence.',
-    category: 'Financial Wellness',
-    readTime: '8 min read',
+    title: 'Afrontamiento del Estrés Financiero: Estrategias TalkAI para Ansiedad por Dinero',
+    description: 'Aprende estrategias prácticas de TalkAI para gestionar el estrés financiero, reducir la ansiedad por dinero y construir confianza financiera.',
+    category: 'Bienestar Financiero',
+    readTime: '8 min lectura',
     publishDate: '2025-07-27',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Financial Stress', 'Money Anxiety', 'Financial Wellness', 'Stress Management']
+    tags: ['Estrés Financiero', 'Ansiedad por Dinero', 'Bienestar Financiero', 'Gestión del Estrés']
   },
   {
     slug: 'caregiver-burnout-talkai',
-    title: 'Caregiver Burnout Recovery: TalkAI Support for Exhausted Caregivers',
-    description: 'Find TalkAI support for caregiver burnout recovery with practical strategies for self-care and boundary setting.',
-    category: 'Caregiver Support',
-    readTime: '9 min read',
+    title: 'Recuperación del Agotamiento del Cuidador: Apoyo TalkAI para Cuidadores Agotados',
+    description: 'Encuentra apoyo TalkAI para la recuperación del agotamiento del cuidador con estrategias prácticas para autocuidado y establecimiento de límites.',
+    category: 'Apoyo al Cuidador',
+    readTime: '9 min lectura',
     publishDate: '2025-07-27',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Caregiver Burnout', 'Self-Care', 'Boundaries', 'Recovery']
+    tags: ['Agotamiento del Cuidador', 'Autocuidado', 'Límites', 'Recuperación']
   },
   {
     slug: 'mens-mental-health-talkai',
-    title: 'Men\'s Mental Health: TalkAI Support for Breaking the Silence',
-    description: 'Discover TalkAI support for men\'s mental health challenges, breaking stigma and building emotional resilience.',
-    category: 'Men\'s Health',
-    readTime: '8 min read',
+    title: 'Salud Mental Masculina: Apoyo TalkAI para Romper el Silencio',
+    description: 'Descubre el apoyo TalkAI para los desafíos de salud mental masculina, rompiendo el estigma y construyendo resiliencia emocional.',
+    category: 'Salud Masculina',
+    readTime: '8 min lectura',
     publishDate: '2025-07-27',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Men\'s Mental Health', 'Stigma Breaking', 'Emotional Resilience', 'Support']
+    tags: ['Salud Mental Masculina', 'Romper Estigma', 'Resiliencia Emocional', 'Apoyo']
   },
   {
     slug: 'trauma-informed-grounding-talkai',
-    title: 'Trauma-Informed Grounding: TalkAI Techniques for Safety',
-    description: 'Learn trauma-informed grounding techniques with TalkAI for creating safety and managing trauma responses.',
-    category: 'Trauma Healing',
-    readTime: '10 min read',
+    title: 'Conexión a Tierra Informada por Trauma: Técnicas TalkAI para Seguridad',
+    description: 'Aprende técnicas de conexión a tierra informadas por trauma con TalkAI para crear seguridad y gestionar respuestas al trauma.',
+    category: 'Sanación del Trauma',
+    readTime: '10 min lectura',
     publishDate: '2025-07-27',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Trauma-Informed', 'Grounding', 'Safety', 'Trauma Recovery']
+    tags: ['Informado por Trauma', 'Conexión a Tierra', 'Seguridad', 'Recuperación del Trauma']
   },
   {
     slug: 'loneliness-connection-prompts-talkai',
-    title: 'Loneliness to Connection: TalkAI Prompts for Building Relationships',
-    description: 'Transform loneliness into connection with TalkAI prompts and strategies for building meaningful relationships.',
-    category: 'Social Connection',
-    readTime: '7 min read',
+    title: 'De la Soledad a la Conexión: Prompts TalkAI para Construir Relaciones',
+    description: 'Transforma la soledad en conexión con prompts y estrategias de TalkAI para construir relaciones significativas.',
+    category: 'Conexión Social',
+    readTime: '7 min lectura',
     publishDate: '2025-07-27',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Loneliness', 'Connection', 'Relationships', 'Social Skills']
+    tags: ['Soledad', 'Conexión', 'Relaciones', 'Habilidades Sociales']
   },
   {
     slug: 'sleep-anxiety-rumination-talkai',
-    title: 'Sleep Anxiety & Rumination: TalkAI Solutions for Restful Nights',
-    description: 'Break the cycle of sleep anxiety and rumination with TalkAI techniques for peaceful, restful sleep.',
-    category: 'Sleep Health',
-    readTime: '8 min read',
+    title: 'Ansiedad del Sueño y Rumiación: Soluciones TalkAI para Noches Tranquilas',
+    description: 'Rompe el ciclo de ansiedad del sueño y rumiación con técnicas TalkAI para un sueño pacífico y reparador.',
+    category: 'Salud del Sueño',
+    readTime: '8 min lectura',
     publishDate: '2025-07-27',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Sleep Anxiety', 'Rumination', 'Sleep Quality', 'Mental Health']
+    tags: ['Ansiedad del Sueño', 'Rumiación', 'Calidad del Sueño', 'Salud Mental']
   },
   {
     slug: 'adhd-focus-routines-talkai',
-    title: 'ADHD Focus Routines: TalkAI Strategies for Better Concentration',
-    description: 'Build effective focus routines for ADHD with TalkAI support, improving concentration and productivity.',
-    category: 'ADHD Support',
-    readTime: '9 min read',
+    title: 'Rutinas de Enfoque TDAH: Estrategias TalkAI para Mejor Concentración',
+    description: 'Construye rutinas de enfoque efectivas para TDAH con apoyo TalkAI, mejorando la concentración y productividad.',
+    category: 'Apoyo TDAH',
+    readTime: '9 min lectura',
     publishDate: '2025-07-27',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['ADHD', 'Focus', 'Routines', 'Productivity']
+    tags: ['TDAH', 'Enfoque', 'Rutinas', 'Productividad']
   },
   {
     slug: 'postpartum-mental-health-talkai',
-    title: 'Postpartum Mental Health: TalkAI Support for New Parents',
-    description: 'Find TalkAI support for postpartum mental health challenges, from baby blues to postpartum depression.',
-    category: 'Postpartum Support',
-    readTime: '10 min read',
+    title: 'Salud Mental Postparto: Apoyo TalkAI para Nuevos Padres',
+    description: 'Encuentra apoyo TalkAI para los desafíos de salud mental postparto, desde la tristeza del bebé hasta la depresión postparto.',
+    category: 'Apoyo Postparto',
+    readTime: '10 min lectura',
     publishDate: '2025-07-27',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Postpartum', 'Mental Health', 'New Parents', 'Recovery']
+    tags: ['Postparto', 'Salud Mental', 'Nuevos Padres', 'Recuperación']
   },
   {
     slug: 'teen-mental-health-talkai-safety',
-    title: 'Teen Mental Health Safety: TalkAI Support for Adolescents',
-    description: 'Safe TalkAI support for teen mental health challenges, promoting emotional wellness and resilience.',
-    category: 'Teen Support',
-    readTime: '8 min read',
+    title: 'Seguridad de Salud Mental Adolescente: Apoyo TalkAI para Adolescentes',
+    description: 'Apoyo seguro TalkAI para desafíos de salud mental adolescente, promoviendo bienestar emocional y resiliencia.',
+    category: 'Apoyo Adolescente',
+    readTime: '8 min lectura',
     publishDate: '2025-07-27',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Teen Mental Health', 'Adolescent Support', 'Safety', 'Wellness']
+    tags: ['Salud Mental Adolescente', 'Apoyo Adolescente', 'Seguridad', 'Bienestar']
   },
   {
     slug: 'couples-check-ins-talkai',
-    title: 'Couples Check-Ins: TalkAI Tools for Relationship Health',
-    description: 'Strengthen your relationship with TalkAI couples check-ins, improving communication and connection.',
-    category: 'Relationships',
-    readTime: '7 min read',
+    title: 'Revisiones de Pareja: Herramientas TalkAI para Salud Relacional',
+    description: 'Fortalece tu relación con revisiones de pareja TalkAI, mejorando la comunicación y conexión.',
+    category: 'Relaciones',
+    readTime: '7 min lectura',
     publishDate: '2025-07-27',
-    author: 'TalkAI Research Team',
+    author: 'Equipo de Investigación TalkAI',
     featured: false,
-    tags: ['Couples', 'Check-Ins', 'Communication', 'Relationship Health']
+    tags: ['Parejas', 'Revisiones', 'Comunicación', 'Salud Relacional']
   }
 ];
 
@@ -439,17 +439,17 @@ export default function BlogPage({
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">
-            AI Therapy Blog
+            Blog de Terapia IA
           </h1>
           <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
-            Expert insights on AI therapy, mental health support, and the future of empathetic technology. 
-            Stay informed with the latest research and developments in AI-powered mental healthcare.
+            Perspectivas expertas sobre terapia IA, apoyo de salud mental y el futuro de la tecnología empática. 
+            Mantente informado con las últimas investigaciones y desarrollos en atención de salud mental impulsada por IA.
           </p>
         </div>
 
         {/* Featured Posts */}
         <section className="mb-16">
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-8">Featured Articles</h2>
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-8">Artículos Destacados</h2>
           <div className="grid md:grid-cols-2 gap-8">
             {featuredPosts.map((post) => (
               <Card key={post.slug} className="group hover:shadow-lg transition-all duration-300 border-2 border-blue-100 hover:border-blue-300">
@@ -458,7 +458,7 @@ export default function BlogPage({
                     <Badge variant="secondary" className="bg-blue-100 text-blue-800">
                       {post.category}
                     </Badge>
-                    <Badge variant="outline">Featured</Badge>
+                    <Badge variant="outline">Destacado</Badge>
                   </div>
                   <CardTitle className="group-hover:text-blue-600 transition-colors">
                     <Link href={`/blog/${post.slug}`}>
@@ -505,14 +505,14 @@ export default function BlogPage({
         <section className="mb-16">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
-              {selectedCategory ? `${selectedCategory} Articles` : 'Browse by Category'}
+              {selectedCategory ? `Artículos de ${selectedCategory}` : 'Explorar por Categoría'}
             </h2>
             {selectedCategory && (
               <Link 
                 href="/blog" 
                 className="text-blue-600 hover:text-blue-800 underline text-sm"
               >
-                ← Back to All Categories
+                ← Volver a Todas las Categorías
               </Link>
             )}
           </div>
@@ -521,36 +521,36 @@ export default function BlogPage({
               const categoryPosts = blogPosts.filter(post => post.category === category);
               const getCategoryColor = (cat: string) => {
                 switch(cat) {
-                  case 'AI Therapy Basics': return 'bg-blue-100 text-blue-800';
-                  case 'Comparison': return 'bg-purple-100 text-purple-800';
-                  case 'Benefits': return 'bg-green-100 text-green-800';
-                  case 'Technology': return 'bg-orange-100 text-orange-800';
-                  case 'Conditions': return 'bg-red-100 text-red-800';
-                  case 'Privacy': return 'bg-gray-100 text-gray-800';
-                  case 'Stress Management': return 'bg-amber-100 text-amber-800';
-                  case 'Sleep Health': return 'bg-indigo-100 text-indigo-800';
-                  case 'Relationships': return 'bg-pink-100 text-pink-800';
-                  case 'Workplace Wellness': return 'bg-teal-100 text-teal-800';
-                  case 'Personal Growth': return 'bg-emerald-100 text-emerald-800';
-                  case 'Student Wellness': return 'bg-cyan-100 text-cyan-800';
-                  case 'Parenting Support': return 'bg-rose-100 text-rose-800';
-                  case 'Grief Support': return 'bg-violet-100 text-violet-800';
-                  case 'Recovery Support': return 'bg-lime-100 text-lime-800';
-                  case 'Trauma Healing': return 'bg-red-100 text-red-800';
+                  case 'Fundamentos de Terapia IA': return 'bg-blue-100 text-blue-800';
+                  case 'Comparación': return 'bg-purple-100 text-purple-800';
+                  case 'Beneficios': return 'bg-green-100 text-green-800';
+                  case 'Tecnología': return 'bg-orange-100 text-orange-800';
+                  case 'Condiciones': return 'bg-red-100 text-red-800';
+                  case 'Privacidad': return 'bg-gray-100 text-gray-800';
+                  case 'Gestión del Estrés': return 'bg-amber-100 text-amber-800';
+                  case 'Salud del Sueño': return 'bg-indigo-100 text-indigo-800';
+                  case 'Relaciones': return 'bg-pink-100 text-pink-800';
+                  case 'Bienestar Laboral': return 'bg-teal-100 text-teal-800';
+                  case 'Crecimiento Personal': return 'bg-emerald-100 text-emerald-800';
+                  case 'Bienestar Estudiantil': return 'bg-cyan-100 text-cyan-800';
+                  case 'Apoyo Parental': return 'bg-rose-100 text-rose-800';
+                  case 'Apoyo en el Duelo': return 'bg-violet-100 text-violet-800';
+                  case 'Apoyo en Recuperación': return 'bg-lime-100 text-lime-800';
+                  case 'Sanación del Trauma': return 'bg-red-100 text-red-800';
                   case 'Mindfulness': return 'bg-sky-100 text-sky-800';
-                  case 'Confidence Building': return 'bg-yellow-100 text-yellow-800';
-                  case 'Life Transitions': return 'bg-fuchsia-100 text-fuchsia-800';
-                  case 'Habits & Tracking': return 'bg-stone-100 text-stone-800';
-                  case 'Anxiety & Panic': return 'bg-orange-100 text-orange-800';
-                  case 'Burnout Recovery': return 'bg-red-100 text-red-800';
-                  case 'Social Anxiety': return 'bg-purple-100 text-purple-800';
-                  case 'Financial Wellness': return 'bg-green-100 text-green-800';
-                  case 'Caregiver Support': return 'bg-blue-100 text-blue-800';
-                  case 'Men\'s Health': return 'bg-slate-100 text-slate-800';
-                  case 'Social Connection': return 'bg-pink-100 text-pink-800';
-                  case 'ADHD Support': return 'bg-indigo-100 text-indigo-800';
-                  case 'Postpartum Support': return 'bg-rose-100 text-rose-800';
-                  case 'Teen Support': return 'bg-cyan-100 text-cyan-800';
+                  case 'Construcción de Confianza': return 'bg-yellow-100 text-yellow-800';
+                  case 'Transiciones de Vida': return 'bg-fuchsia-100 text-fuchsia-800';
+                  case 'Hábitos y Seguimiento': return 'bg-stone-100 text-stone-800';
+                  case 'Ansiedad y Pánico': return 'bg-orange-100 text-orange-800';
+                  case 'Recuperación del Agotamiento': return 'bg-red-100 text-red-800';
+                  case 'Ansiedad Social': return 'bg-purple-100 text-purple-800';
+                  case 'Bienestar Financiero': return 'bg-green-100 text-green-800';
+                  case 'Apoyo al Cuidador': return 'bg-blue-100 text-blue-800';
+                  case 'Salud Masculina': return 'bg-slate-100 text-slate-800';
+                  case 'Conexión Social': return 'bg-pink-100 text-pink-800';
+                  case 'Apoyo TDAH': return 'bg-indigo-100 text-indigo-800';
+                  case 'Apoyo Postparto': return 'bg-rose-100 text-rose-800';
+                  case 'Apoyo Adolescente': return 'bg-cyan-100 text-cyan-800';
                   default: return 'bg-slate-100 text-slate-800';
                 }
               };
@@ -562,7 +562,7 @@ export default function BlogPage({
                       <Badge variant="secondary" className={`mx-auto mb-2 ${getCategoryColor(category)}`}>
                         {category}
                       </Badge>
-                      <CardTitle className="text-lg group-hover:text-blue-600 transition-colors">{categoryPosts.length} Article{categoryPosts.length !== 1 ? 's' : ''}</CardTitle>
+                      <CardTitle className="text-lg group-hover:text-blue-600 transition-colors">{categoryPosts.length} Artículo{categoryPosts.length !== 1 ? 's' : ''}</CardTitle>
                     </CardHeader>
                   </Card>
                 </Link>
@@ -574,7 +574,7 @@ export default function BlogPage({
         {/* All Posts */}
         <section>
           <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-8">
-            {selectedCategory ? `${selectedCategory} Articles` : 'All Articles'}
+            {selectedCategory ? `Artículos de ${selectedCategory}` : 'Todos los Artículos'}
           </h2>
           <div className="grid gap-6">
             {regularPosts.map((post) => (
@@ -632,23 +632,23 @@ export default function BlogPage({
           <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
             <CardHeader className="text-center pb-8">
               <CardTitle className="text-2xl mb-4">
-                Stay Updated on AI Therapy Insights
+                Mantente Actualizado sobre Perspectivas de Terapia IA
               </CardTitle>
               <CardDescription className="text-blue-100 text-lg mb-6">
-                Get the latest articles on AI therapy, mental health technology, and empathetic AI delivered to your inbox.
+                Recibe los últimos artículos sobre terapia IA, tecnología de salud mental e IA empática directamente en tu bandeja de entrada.
               </CardDescription>
               <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
                 <input 
                   type="email" 
-                  placeholder="Enter your email"
+                  placeholder="Ingresa tu email"
                   className="flex-1 px-4 py-3 rounded-lg text-slate-900"
                 />
                 <button className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
-                  Subscribe
+                  Suscribirse
                 </button>
               </div>
               <p className="text-blue-200 text-sm mt-4">
-                Join 10,000+ readers who trust our insights. Unsubscribe anytime.
+                Únete a más de 10,000 lectores que confían en nuestras perspectivas. Cancela la suscripción en cualquier momento.
               </p>
             </CardHeader>
           </Card>
@@ -659,16 +659,16 @@ export default function BlogPage({
           <Card className="bg-gradient-to-r from-green-600 to-blue-600 text-white">
             <CardHeader className="pb-8">
               <CardTitle className="text-2xl mb-4">
-                Ready to Experience AI Therapy?
+                ¿Listo para Experimentar la Terapia IA?
               </CardTitle>
               <CardDescription className="text-green-100 text-lg mb-6">
-                Start your journey with TalkAI today and discover the future of mental health support.
+                Comienza tu viaje con TalkAI hoy y descubre el futuro del apoyo de salud mental.
               </CardDescription>
               <Link 
                 href="/auth" 
                 className="inline-block bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
               >
-                Start Free Trial
+                Iniciar Prueba Gratuita
               </Link>
             </CardHeader>
           </Card>

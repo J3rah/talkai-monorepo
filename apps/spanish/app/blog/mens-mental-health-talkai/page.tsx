@@ -2,33 +2,33 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { CalendarDays, Clock, User, ArrowLeft, Shield, Target, CheckCircle, TrendingUp, Users } from 'lucide-react';
+import { CalendarDays, Clock, User, ArrowLeft, Shield, meta, CheckCircle, TrendingUp, Users } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: "Men's Mental Health: Quiet Support, Real Tools",
+  title: "Men's salud mental: Quiet apoyo, Real herramientas",
   description:
-    "Discreet, practical support for men's mental health with TalkAI—skills, scripts, and stepwise action.",
+    "Discreet, practical apoyo for men's salud mental with TalkAI—habilidades, scripts, and stepwise action.",
   keywords: [
-    'mens mental health',
+    'mens salud mental',
     'men therapy',
     'TalkAI men',
-    'male mental health',
-    'men support',
-    'mental health men',
+    'male salud mental',
+    'men apoyo',
+    'salud mental men',
   ],
   openGraph: {
-    title: "Men's Mental Health: Quiet Support, Real Tools",
+    title: "Men's salud mental: Quiet apoyo, Real herramientas",
     description:
-      "Many men prefer private, practical help. TalkAI offers low‑friction tools that respect autonomy.",
+      "Many men prefer private, practical help. TalkAI offers low‑friction herramientas that respect autonomy.",
     type: 'article',
     images: ['/og-image.png'],
     publishedTime: '2025-07-27',
-    authors: ['TalkAI Research Team'],
+    authors: ['TalkAI investigación Team'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Men's Mental Health: Quiet Support, Real Tools",
-    description: "Discreet, practical tools for men's mental health journey.",
+    title: "Men's salud mental: Quiet apoyo, Real herramientas",
+    description: "Discreet, practical herramientas for men's salud mental journey.",
     images: ['/twitter-image.png'],
   },
 };
@@ -40,7 +40,7 @@ export default function MensMentalHealthTalkAIPost() {
         {/* Back Navigation */}
         <Link href="/blog" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-8">
           <ArrowLeft className="w-4 h-4" />
-          Back to Blog
+          Volver al Blog
         </Link>
 
         <article className="max-w-4xl mx-auto">
@@ -52,18 +52,18 @@ export default function MensMentalHealthTalkAIPost() {
             </div>
 
             <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
-              Men's Mental Health: Quiet Support, Real Tools
+              Men's salud mental: Quiet apoyo, Real herramientas
             </h1>
 
             <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-              Many men prefer private, practical help. TalkAI offers low‑friction tools—structured plans, brief
+              Many men prefer private, practical help. TalkAI offers low‑friction herramientas—structured plans, brief
               check‑ins, and direct scripts that respect autonomy.
             </p>
 
             <div className="flex items-center gap-6 text-sm text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-6">
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4" />
-                TalkAI Research Team
+                TalkAI investigación Team
               </div>
               <div className="flex items-center gap-2">
                 <CalendarDays className="w-4 h-4" />
@@ -71,7 +71,7 @@ export default function MensMentalHealthTalkAIPost() {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                6 min read
+                6 min lectura
               </div>
             </div>
           </header>
@@ -86,7 +86,7 @@ export default function MensMentalHealthTalkAIPost() {
                 <li><a href="#check-in" className="text-blue-600 hover:underline">3‑Minute Check‑In</a></li>
                 <li><a href="#scripts" className="text-blue-600 hover:underline">Direct Scripts</a></li>
                 <li><a href="#decompression" className="text-blue-600 hover:underline">Decompression</a></li>
-                <li><a href="#skills" className="text-blue-600 hover:underline">Skills on Demand</a></li>
+                <li><a href="#habilidades" className="text-blue-600 hover:underline">habilidades on Demand</a></li>
                 <li><a href="#next-steps" className="text-blue-600 hover:underline">Next Steps</a></li>
                 <li><a href="#cta" className="text-blue-600 hover:underline">Get Started</a></li>
               </ul>
@@ -97,16 +97,16 @@ export default function MensMentalHealthTalkAIPost() {
           <div className="prose prose-lg max-w-none dark:prose-invert">
             <section id="check-in" className="mb-12">
               <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                <Target className="w-8 h-8 text-blue-600" />
+                <meta className="w-8 h-8 text-blue-600" />
                 3‑Minute Check‑In
               </h2>
               <Card>
                 <CardContent className="pt-6">
                   <p className="mb-4">Quick, structured assessment:</p>
                   <ul className="space-y-2">
-                    <li>• Stress (0–10)</li>
+                    <li>• estrés (0–10)</li>
                     <li>• Biggest pressure</li>
-                    <li>• One next step</li>
+                    <li>• One next paso</li>
                   </ul>
                 </CardContent>
               </Card>
@@ -120,7 +120,7 @@ export default function MensMentalHealthTalkAIPost() {
                   <ul className="space-y-2">
                     <li>• Ask for time</li>
                     <li>• Set boundaries</li>
-                    <li>• Request support</li>
+                    <li>• Request apoyo</li>
                   </ul>
                 </CardContent>
               </Card>
@@ -143,17 +143,17 @@ export default function MensMentalHealthTalkAIPost() {
               </Card>
             </section>
 
-            <section id="skills" className="mb-12">
+            <section id="habilidades" className="mb-12">
               <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
                 <Shield className="w-8 h-8 text-blue-600" />
-                Skills on Demand
+                habilidades on Demand
               </h2>
               <Card>
                 <CardContent className="pt-6">
-                  <p className="mb-4">Practical tools for common challenges:</p>
+                  <p className="mb-4">Practical herramientas for common desafíos:</p>
                   <ul className="space-y-2">
                     <li>• Conflict resolution</li>
-                    <li>• Status stress</li>
+                    <li>• Status estrés</li>
                     <li>• Fatherhood</li>
                     <li>• Friendships</li>
                   </ul>
@@ -176,7 +176,7 @@ export default function MensMentalHealthTalkAIPost() {
                     </li>
                     <li className="flex items-start gap-3">
                       <CheckCircle className="w-5 h-5 text-green-600 mt-1" />
-                      <span>Track progress</span>
+                      <span>Track progreso</span>
                     </li>
                   </ul>
                 </CardContent>
@@ -188,9 +188,9 @@ export default function MensMentalHealthTalkAIPost() {
               <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-8">
                 <CardContent className="pt-6">
                   <h3 className="text-xl font-semibold mb-4">Start TalkAI's “3‑Minute Pressure Check”</h3>
-                  <p className="mb-6">Regain control with practical, private support.</p>
+                  <p className="mb-6">Regain control with practical, private apoyo.</p>
                   <Link href="/auth" className="inline-block bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
-                    Start Free Trial →
+                    Iniciar Prueba Gratuita →
                   </Link>
                 </CardContent>
               </Card>
@@ -205,7 +205,7 @@ export default function MensMentalHealthTalkAIPost() {
                 <CardHeader>
                   <Badge variant="secondary" className="w-fit mb-2">Burnout</Badge>
                   <CardTitle>
-                    <Link href="/blog/burnout-recovery-micro-coaching-talkai" className="hover:text-blue-600">
+                    <Link href="/blog/burnout-recuperación-micro-coaching-talkai" className="hover:text-blue-600">
                       From Burnout to Baseline
                     </Link>
                   </CardTitle>
@@ -219,12 +219,12 @@ export default function MensMentalHealthTalkAIPost() {
                 <CardHeader>
                   <Badge variant="secondary" className="w-fit mb-2">Work</Badge>
                   <CardTitle>
-                    <Link href="/blog/ai-therapy-for-workplace-stress" className="hover:text-blue-600">
-                      AI Therapy for Workplace Stress
+                    <Link href="/blog/ai-therapy-for-workplace-estrés" className="hover:text-blue-600">
+                      terapia IA for Workplace estrés
                     </Link>
                   </CardTitle>
                   <CardContent className="px-0">
-                    <p className="text-slate-600">Manage work-related mental health challenges.</p>
+                    <p className="text-slate-600">Manage work-related salud mental desafíos.</p>
                   </CardContent>
                 </CardHeader>
               </Card>

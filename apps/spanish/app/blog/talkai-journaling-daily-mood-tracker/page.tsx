@@ -7,25 +7,25 @@ import { CalendarDays, Clock, User, ArrowLeft, NotebookPen, ListChecks, Heart, S
 export const metadata: Metadata = {
   title: 'TalkAI Journaling: A Daily Mood Tracker That Actually Sticks',
   description:
-    "Build a sustainable journaling habit with TalkAI. Track mood, triggers, coping skills, and wins in minutes a day—no perfection required.",
+    "Build a sustainable journaling habit with TalkAI. Track mood, triggers, afrontamiento habilidades, and wins in minutes a day—no perfection required.",
   keywords: [
     'TalkAI journaling',
     'AI mood tracker',
-    'daily mental health journal',
-    'habit tracking mental health',
-    'emotional awareness',
+    'daily salud mental journal',
+    'habit tracking salud mental',
+    'emotional conciencia',
     'CBT journaling prompts',
     'voice journaling',
-    'AI therapy tools',
+    'terapia IA herramientas',
   ],
   openGraph: {
     title: 'TalkAI Journaling: A Daily Mood Tracker That Actually Sticks',
     description:
-      'Build a sustainable journaling habit with TalkAI—fast voice check-ins, emotion tagging, and weekly insights.',
+      'Build a sustainable journaling habit with TalkAI—fast voice check-ins, emotion tagging, and weekly perspectivas.',
     type: 'article',
     images: ['/og-image.png'],
     publishedTime: '2025-07-27',
-    authors: ['TalkAI Research Team'],
+    authors: ['TalkAI investigación Team'],
   },
   twitter: {
     card: 'summary_large_image',
@@ -42,7 +42,7 @@ export default function TalkAIJournalingPost() {
         {/* Back Navigation */}
         <Link href="/blog" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-8">
           <ArrowLeft className="w-4 h-4" />
-          Back to Blog
+          Volver al Blog
         </Link>
 
         <article className="max-w-4xl mx-auto">
@@ -58,7 +58,7 @@ export default function TalkAIJournalingPost() {
             </h1>
 
             <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-              Journaling shouldn’t feel like homework. With TalkAI, you can record quick voice check-ins, tag emotions,
+              Journaling shouldn’t feel like homework. With TalkAI, you can record quick voice check-ins, tag emociones,
               and surface trends in minutes. This rhythm helps you move from guesswork to clarity—without pressure to
               write long entries.
             </p>
@@ -66,7 +66,7 @@ export default function TalkAIJournalingPost() {
             <div className="flex items-center gap-6 text-sm text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-6">
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4" />
-                TalkAI Research Team
+                TalkAI investigación Team
               </div>
               <div className="flex items-center gap-2">
                 <CalendarDays className="w-4 h-4" />
@@ -74,7 +74,7 @@ export default function TalkAIJournalingPost() {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                7 min read
+                7 min lectura
               </div>
             </div>
           </header>
@@ -89,7 +89,7 @@ export default function TalkAIJournalingPost() {
                 <li><a href="#why-talkai-journal" className="text-blue-600 hover:underline">Why TalkAI for Journaling</a></li>
                 <li><a href="#2-minute-flow" className="text-blue-600 hover:underline">The 2‑Minute Voice Flow</a></li>
                 <li><a href="#what-to-track" className="text-blue-600 hover:underline">What to Track Daily</a></li>
-                <li><a href="#weekly-review" className="text-blue-600 hover:underline">Weekly Review & Insights</a></li>
+                <li><a href="#weekly-review" className="text-blue-600 hover:underline">Weekly Review & perspectivas</a></li>
                 <li><a href="#nudges-tags" className="text-blue-600 hover:underline">Nudges, Tags, and Routines</a></li>
                 <li><a href="#when-to-escalate" className="text-blue-600 hover:underline">When to Escalate</a></li>
                 <li><a href="#get-started" className="text-blue-600 hover:underline">Get Started</a></li>
@@ -120,15 +120,15 @@ export default function TalkAIJournalingPost() {
                 </Card>
                 <Card className="border-purple-200 bg-purple-50">
                   <CardHeader>
-                    <CardTitle className="text-purple-800 text-base">Emotion Awareness</CardTitle>
+                    <CardTitle className="text-purple-800 text-base">Emotion conciencia</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-purple-700">Tag feelings and triggers to make patterns obvious.</p>
+                    <p className="text-purple-700">Tag sentimientos and triggers to make patterns obvious.</p>
                   </CardContent>
                 </Card>
                 <Card className="border-blue-200 bg-blue-50">
                   <CardHeader>
-                    <CardTitle className="text-blue-800 text-base">Actionable Insights</CardTitle>
+                    <CardTitle className="text-blue-800 text-base">Actionable perspectivas</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-blue-700">Weekly summaries surface what helps—and what doesn’t.</p>
@@ -147,7 +147,7 @@ export default function TalkAIJournalingPost() {
                   <ol className="list-decimal list-inside space-y-3">
                     <li><strong>State mood (1–10)</strong> and your top emotion.</li>
                     <li><strong>Name one trigger</strong> or context that influenced your mood.</li>
-                    <li><strong>Note one coping skill</strong> you used or will try next.</li>
+                    <li><strong>Note one afrontamiento habilidad</strong> you used or will try next.</li>
                     <li><strong>Celebrate one win</strong>—even a tiny one.</li>
                   </ol>
                 </CardContent>
@@ -156,7 +156,7 @@ export default function TalkAIJournalingPost() {
                 <CardContent className="pt-6">
                   <p className="mb-2 font-semibold">Example script</p>
                   <p>
-                    “I felt <em>[emotion]</em> because <em>[trigger]</em>. I used <em>[coping skill]</em>. One thing I’m proud of is
+                    “I felt <em>[emotion]</em> because <em>[trigger]</em>. I used <em>[afrontamiento habilidad]</em>. One thing I’m proud of is
                     <em>[win]</em>.”
                   </p>
                 </CardContent>
@@ -179,7 +179,7 @@ export default function TalkAIJournalingPost() {
                       <li>• Mood score (1–10)</li>
                       <li>• Primary emotion</li>
                       <li>• One trigger or context</li>
-                      <li>• One coping skill</li>
+                      <li>• One afrontamiento habilidad</li>
                       <li>• One win or gratitude</li>
                     </ul>
                   </CardContent>
@@ -191,7 +191,7 @@ export default function TalkAIJournalingPost() {
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2">
-                      <li>• Sleep quality</li>
+                      <li>• Sleep calidad</li>
                       <li>• Energy (0–10)</li>
                       <li>• Context tags: work, family, social, health</li>
                       <li>• Notes (1–2 sentences)</li>
@@ -204,10 +204,10 @@ export default function TalkAIJournalingPost() {
             <section id="weekly-review" className="mb-12">
               <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
                 <Star className="w-8 h-8 text-blue-600" />
-                Weekly Review & Insights
+                Weekly Review & perspectivas
               </h2>
               <p className="mb-6">
-                Every 7 days, spend 5 minutes reviewing your logs. Look for repeated triggers, best‑performing coping skills,
+                Every 7 days, spend 5 minutes reviewing your logs. Look for repeated triggers, best‑performing afrontamiento habilidades,
                 and time‑of‑day patterns. Decide on one small experiment for the coming week.
               </p>
               <div className="grid md:grid-cols-3 gap-4">
@@ -221,10 +221,10 @@ export default function TalkAIJournalingPost() {
                 </Card>
                 <Card className="border-green-200 bg-green-50">
                   <CardHeader>
-                    <CardTitle className="text-green-800 text-base">Best Coping Skills</CardTitle>
+                    <CardTitle className="text-green-800 text-base">Best afrontamiento habilidades</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-green-700">Which skills raise mood 2+ points within a day?</p>
+                    <p className="text-green-700">Which habilidades raise mood 2+ points within a day?</p>
                   </CardContent>
                 </Card>
                 <Card className="border-purple-200 bg-purple-50">
@@ -246,11 +246,11 @@ export default function TalkAIJournalingPost() {
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-600 mt-1" />
-                  <span><strong>Smart reminders:</strong> Schedule prompts around typical stress peaks (e.g., after work).</span>
+                  <span><strong>Smart reminders:</strong> Schedule prompts around typical estrés peaks (e.g., after work).</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-600 mt-1" />
-                  <span><strong>Tags that matter:</strong> work, sleep, family, social, health—keep them consistent for clean insights.</span>
+                  <span><strong>Tags that matter:</strong> work, sleep, family, social, health—keep them consistent for clean perspectivas.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-600 mt-1" />
@@ -267,7 +267,7 @@ export default function TalkAIJournalingPost() {
               <Card className="bg-yellow-50 border-yellow-200">
                 <CardContent className="pt-6">
                   <p className="text-yellow-800">
-                    If your mood stays ≤3 for 3+ days, or safety concerns arise, consider crisis resources and contacting a
+                    If your mood stays ≤3 for 3+ days, or safety concerns arise, consider crisis recursos and contacting a
                     licensed professional. TalkAI is supportive but not a substitute for professional care.
                   </p>
                 </CardContent>
@@ -278,13 +278,13 @@ export default function TalkAIJournalingPost() {
               <h2 className="text-3xl font-bold mb-6">Get Started</h2>
               <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-8">
                 <CardContent className="pt-6">
-                  <h3 className="text-xl font-semibold mb-4">Try a 7‑Day TalkAI Journaling Challenge</h3>
-                  <p className="mb-6">Two minutes a day. Track mood, name one trigger, one coping skill, and one win.</p>
+                  <h3 className="text-xl font-semibold mb-4">Try a 7‑Day TalkAI Journaling desafío</h3>
+                  <p className="mb-6">Two minutes a day. Track mood, name one trigger, one afrontamiento habilidad, and one win.</p>
                   <Link
                     href="/auth"
                     className="inline-block bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
                   >
-                    Start Free Trial →
+                    Iniciar Prueba Gratuita →
                   </Link>
                 </CardContent>
               </Card>
@@ -302,25 +302,25 @@ export default function TalkAIJournalingPost() {
                   <Badge variant="secondary" className="w-fit mb-2">Basics</Badge>
                   <CardTitle>
                     <Link href="/blog/what-is-ai-therapy" className="hover:text-blue-600">
-                      What is AI Therapy? A Complete Guide
+                      What is terapia IA? A completo Guide
                     </Link>
                   </CardTitle>
                   <CardContent className="px-0">
-                    <p className="text-slate-600">Understand how AI therapy works and when to use it.</p>
+                    <p className="text-slate-600">Understand how terapia IA works and when to use it.</p>
                   </CardContent>
                 </CardHeader>
               </Card>
 
               <Card>
                 <CardHeader>
-                  <Badge variant="secondary" className="w-fit mb-2">Stress</Badge>
+                  <Badge variant="secondary" className="w-fit mb-2">estrés</Badge>
                   <CardTitle>
-                    <Link href="/blog/how-to-manage-stress-with-ai" className="hover:text-blue-600">
-                      How to Manage Stress with AI Therapy
+                    <Link href="/blog/how-to-manage-estrés-with-ai" className="hover:text-blue-600">
+                      How to Manage estrés with terapia IA
                     </Link>
                   </CardTitle>
                   <CardContent className="px-0">
-                    <p className="text-slate-600">Evidence‑based techniques to reduce stress with TalkAI.</p>
+                    <p className="text-slate-600">Evidence‑based técnicas to reduce estrés with TalkAI.</p>
                   </CardContent>
                 </CardHeader>
               </Card>

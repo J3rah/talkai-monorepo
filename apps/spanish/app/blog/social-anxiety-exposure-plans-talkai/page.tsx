@@ -5,29 +5,29 @@ import { Badge } from '@/components/ui/badge';
 import { CalendarDays, Clock, User, ArrowLeft, Layers, Anchor, ThumbsUp, CheckCircle } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Social Anxiety Steps: TalkAI Exposure Plans That Feel Safe',
+  title: 'Social ansiedad Steps: TalkAI Exposure Plans That Feel Safe',
   description:
-    'Gradual exposure with TalkAI: small challenges, safety scripts, and celebration rituals that build real-world confidence.',
+    'Gradual exposure with TalkAI: small desafíos, safety scripts, and celebration rituals that build real-world confidence.',
   keywords: [
-    'social anxiety exposure',
+    'social ansiedad exposure',
     'graded exposure plan',
-    'anxiety ladder',
+    'ansiedad ladder',
     'TalkAI exposure therapy',
-    'CBT social anxiety',
+    'CBT social ansiedad',
     'confidence building',
   ],
   openGraph: {
-    title: 'Social Anxiety Steps: TalkAI Exposure Plans That Feel Safe',
+    title: 'Social ansiedad Steps: TalkAI Exposure Plans That Feel Safe',
     description:
       'Design a safe exposure ladder, use grounding scripts, and reinforce wins with TalkAI—at a pace that fits you.',
     type: 'article',
     images: ['/og-image.png'],
     publishedTime: '2025-07-27',
-    authors: ['TalkAI Research Team'],
+    authors: ['TalkAI investigación Team'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'TalkAI Social Anxiety Exposure Plans',
+    title: 'TalkAI Social ansiedad Exposure Plans',
     description: 'Small steps, clear scripts, gentle pacing—confidence without overwhelm.',
     images: ['/twitter-image.png'],
   },
@@ -40,30 +40,30 @@ export default function SocialAnxietyExposurePlansPost() {
         {/* Back Navigation */}
         <Link href="/blog" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-8">
           <ArrowLeft className="w-4 h-4" />
-          Back to Blog
+          Volver al Blog
         </Link>
 
         <article className="max-w-4xl mx-auto">
           {/* Header */}
           <header className="mb-12">
             <div className="flex items-center gap-2 mb-4">
-              <Badge variant="secondary" className="bg-purple-100 text-purple-800">Social Anxiety</Badge>
+              <Badge variant="secondary" className="bg-purple-100 text-purple-800">Social ansiedad</Badge>
               <Badge variant="outline">New</Badge>
             </div>
 
             <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
-              Social Anxiety Steps: TalkAI Exposure Plans That Feel Safe
+              Social ansiedad Steps: TalkAI Exposure Plans That Feel Safe
             </h1>
 
             <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-              Exposure doesn’t need to be extreme to work. TalkAI helps you plan micro‑challenges, debrief, and reinforce
-              progress at a sustainable pace.
+              Exposure doesn’t need to be extreme to work. TalkAI helps you plan micro‑desafíos, debrief, and reinforce
+              progreso at a sustainable pace.
             </p>
 
             <div className="flex items-center gap-6 text-sm text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-6">
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4" />
-                TalkAI Research Team
+                TalkAI investigación Team
               </div>
               <div className="flex items-center gap-2">
                 <CalendarDays className="w-4 h-4" />
@@ -71,7 +71,7 @@ export default function SocialAnxietyExposurePlansPost() {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                7 min read
+                7 min lectura
               </div>
             </div>
           </header>
@@ -102,7 +102,7 @@ export default function SocialAnxietyExposurePlansPost() {
               </h2>
               <Card>
                 <CardContent className="pt-6">
-                  <p className="mb-4">List 8–10 small situations from easiest to hardest. Focus on tiny, repeatable steps.</p>
+                  <p className="mb-4">List 8–10 small situations from easiest to hardest. enfoque on tiny, repeatable steps.</p>
                   <ul className="space-y-2">
                     <li>• Make eye contact and say hello</li>
                     <li>• Ask a cashier one question</li>
@@ -117,7 +117,7 @@ export default function SocialAnxietyExposurePlansPost() {
               <h2 className="text-3xl font-bold mb-6">Pre‑Exposure Script</h2>
               <Card>
                 <CardContent className="pt-6">
-                  <p className="italic">“My goal is showing up, not perfection. I can leave if I need. I will measure success by whether I tried.”</p>
+                  <p className="italic">“My objetivo is showing up, not perfection. I can leave if I need. I will measure éxito by whether I tried.”</p>
                 </CardContent>
               </Card>
             </section>
@@ -161,7 +161,7 @@ export default function SocialAnxietyExposurePlansPost() {
                   <ul className="space-y-3">
                     <li className="flex items-start gap-3">
                       <CheckCircle className="w-5 h-5 text-green-600 mt-1" />
-                      <span>Repeat a step until discomfort drops by ~30–50%.</span>
+                      <span>Repeat a paso until discomfort drops by ~30–50%.</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <CheckCircle className="w-5 h-5 text-green-600 mt-1" />
@@ -169,7 +169,7 @@ export default function SocialAnxietyExposurePlansPost() {
                     </li>
                     <li className="flex items-start gap-3">
                       <CheckCircle className="w-5 h-5 text-green-600 mt-1" />
-                      <span>Celebrate progress to lock in confidence.</span>
+                      <span>Celebrate progreso to lock in confidence.</span>
                     </li>
                   </ul>
                 </CardContent>
@@ -181,9 +181,9 @@ export default function SocialAnxietyExposurePlansPost() {
               <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-8">
                 <CardContent className="pt-6">
                   <h3 className="text-xl font-semibold mb-4">Build Your First Exposure Ladder</h3>
-                  <p className="mb-6">Create a 10‑step ladder in under 5 minutes. Debrief after each attempt.</p>
+                  <p className="mb-6">Create a 10‑paso ladder in under 5 minutes. Debrief after each attempt.</p>
                   <Link href="/auth" className="inline-block bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
-                    Start Free Trial →
+                    Iniciar Prueba Gratuita →
                   </Link>
                 </CardContent>
               </Card>
@@ -198,14 +198,14 @@ export default function SocialAnxietyExposurePlansPost() {
             <div className="grid md:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>
-                  <Badge variant="secondary" className="w-fit mb-2">Anxiety</Badge>
+                  <Badge variant="secondary" className="w-fit mb-2">ansiedad</Badge>
                   <CardTitle>
-                    <Link href="/blog/ai-therapy-for-anxiety" className="hover:text-blue-600">
-                      AI Therapy for Anxiety
+                    <Link href="/blog/ai-therapy-for-ansiedad" className="hover:text-blue-600">
+                      terapia IA for ansiedad
                     </Link>
                   </CardTitle>
                   <CardContent className="px-0">
-                    <p className="text-slate-600">Evidence‑based techniques and success stories.</p>
+                    <p className="text-slate-600">Evidence‑based técnicas and éxito stories.</p>
                   </CardContent>
                 </CardHeader>
               </Card>

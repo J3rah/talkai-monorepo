@@ -5,32 +5,32 @@ import { Badge } from '@/components/ui/badge';
 import { CalendarDays, Clock, User, ArrowLeft, CheckCircle, Moon, Sun, Phone, Heart, Shield, Zap } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: '24/7 AI Therapy: Why Round-the-Clock Mental Health Support Matters | TalkAI',
-  description: 'Explore how 24/7 AI therapy accessibility is transforming mental health care, providing immediate support when you need it most. Learn the benefits of always-available therapy.',
+  title: '24/7 terapia IA: Why Round-the-Clock salud mental apoyo Matters | TalkAI',
+  description: 'Explore how 24/7 terapia IA accesibilidad is transforming salud mental care, providing immediate apoyo when you need it most. Learn the beneficios of always-available therapy.',
   keywords: [
-    '24/7 AI therapy',
+    '24/7 terapia IA',
     'round the clock therapy',
-    '24 hour mental health support',
+    '24 hour salud mental apoyo',
     'always available therapy',
-    'instant mental health help',
-    'crisis support AI',
-    'emergency mental health',
+    'instant salud mental help',
+    'crisis apoyo AI',
+    'emergency salud mental',
     'accessible therapy',
     'immediate therapy help',
-    'anytime mental health support'
+    'anytime salud mental apoyo'
   ],
   openGraph: {
-    title: '24/7 AI Therapy: Round-the-Clock Mental Health Support',
-    description: 'Discover how 24/7 AI therapy provides immediate mental health support whenever you need it most.',
+    title: '24/7 terapia IA: Round-the-Clock salud mental apoyo',
+    description: 'Discover how 24/7 terapia IA provides immediate salud mental apoyo whenever you need it most.',
     type: 'article',
     images: ['/og-24-7-therapy.png'],
     publishedTime: '2024-07-16',
-    authors: ['TalkAI Research Team'],
+    authors: ['TalkAI investigación Team'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: '24/7 AI Therapy: Always-Available Mental Health Support',
-    description: 'Learn why round-the-clock AI therapy access is transforming mental healthcare.',
+    title: '24/7 terapia IA: Always-Available salud mental apoyo',
+    description: 'Learn why round-the-clock terapia IA access is transforming mental healthcare.',
     images: ['/twitter-24-7-therapy.png'],
   },
 };
@@ -42,7 +42,7 @@ export default function Benefits247AITherapyPost() {
         {/* Back Navigation */}
         <Link href="/blog" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-8">
           <ArrowLeft className="w-4 h-4" />
-          Back to Blog
+          Volver al Blog
         </Link>
 
         <article className="max-w-4xl mx-auto">
@@ -50,23 +50,23 @@ export default function Benefits247AITherapyPost() {
           <header className="mb-12">
             <div className="flex items-center gap-2 mb-4">
               <Badge variant="secondary" className="bg-green-100 text-green-800">
-                Benefits
+                beneficios
               </Badge>
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
-              24/7 AI Therapy: Why Round-the-Clock Mental Health Support Matters
+              24/7 terapia IA: Why Round-the-Clock salud mental apoyo Matters
             </h1>
             
             <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-              Explore how 24/7 AI therapy accessibility is transforming mental health care, providing immediate support 
-              when you need it most. Discover why always-available therapy is revolutionizing mental wellness.
+              Explore how 24/7 terapia IA accesibilidad is transforming salud mental care, providing immediate apoyo 
+              when you need it most. Discover why always-available therapy is revolutionizing mental bienestar.
             </p>
 
             <div className="flex items-center gap-6 text-sm text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-6">
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4" />
-                TalkAI Research Team
+                TalkAI investigación Team
               </div>
               <div className="flex items-center gap-2">
                 <CalendarDays className="w-4 h-4" />
@@ -74,7 +74,7 @@ export default function Benefits247AITherapyPost() {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                6 min read
+                6 min lectura
               </div>
             </div>
           </header>
@@ -82,15 +82,15 @@ export default function Benefits247AITherapyPost() {
           {/* Hero Stats */}
           <Card className="mb-12 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
             <CardContent className="pt-8">
-              <h2 className="text-2xl font-bold mb-6 text-center">Mental Health Happens 24/7</h2>
+              <h2 className="text-2xl font-bold mb-6 text-center">salud mental Happens 24/7</h2>
               <div className="grid md:grid-cols-3 gap-8 text-center">
                 <div>
                   <div className="text-3xl font-bold mb-2">3 AM</div>
-                  <p className="text-blue-100">Peak time for anxiety attacks</p>
+                  <p className="text-blue-100">Peak time for ansiedad attacks</p>
                 </div>
                 <div>
                   <div className="text-3xl font-bold mb-2">70%</div>
-                  <p className="text-blue-100">of mental health crises occur outside business hours</p>
+                  <p className="text-blue-100">of salud mental crises occur outside business hours</p>
                 </div>
                 <div>
                   <div className="text-3xl font-bold mb-2">6-8 weeks</div>
@@ -104,12 +104,12 @@ export default function Benefits247AITherapyPost() {
           <div className="prose prose-lg max-w-none dark:prose-invert">
             
             <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">The Reality of Mental Health Timing</h2>
+              <h2 className="text-3xl font-bold mb-6">The Reality of salud mental Timing</h2>
               
               <p className="text-lg mb-6">
-                Mental health doesn't follow a 9-to-5 schedule. Anxiety attacks happen at 2 AM. Depression hits hardest on 
+                salud mental doesn't follow a 9-to-5 schedule. ansiedad attacks happen at 2 AM. depresión hits hardest on 
                 Sunday evenings. Panic strikes before important presentations. Yet traditional therapy operates within limited 
-                business hours, leaving millions without support when they need it most.
+                business hours, leaving millions without apoyo when they need it most.
               </p>
 
               <Card className="bg-red-50 border-red-200 mb-8">
@@ -118,29 +118,29 @@ export default function Benefits247AITherapyPost() {
                   <ul className="space-y-2 text-red-700">
                     <li>• <strong>Most therapists</strong> work Monday-Friday, 9 AM - 6 PM</li>
                     <li>• <strong>Crisis hotlines</strong> are overwhelmed and understaffed</li>
-                    <li>• <strong>Emergency rooms</strong> aren't equipped for non-crisis mental health support</li>
-                    <li>• <strong>Waiting until Monday</strong> can turn manageable stress into a crisis</li>
+                    <li>• <strong>Emergency rooms</strong> aren't equipped for non-crisis salud mental apoyo</li>
+                    <li>• <strong>Waiting until Monday</strong> can turn manageable estrés into a crisis</li>
                   </ul>
                 </CardContent>
               </Card>
 
               <p>
-                This is where <strong>24/7 AI therapy</strong> becomes a game-changer. By providing immediate, empathetic support 
-                at any hour, AI therapy bridges the gap between crisis and care, offering interventions when they're most needed.
+                This is where <strong>24/7 terapia IA</strong> becomes a game-changer. By providing immediate, empathetic apoyo 
+                at any hour, terapia IA bridges the gap between crisis and care, offering interventions when they're most needed.
               </p>
             </section>
 
             <section className="mb-12">
               <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
                 <Moon className="w-8 h-8 text-purple-600" />
-                When Mental Health Needs Don't Wait
+                When salud mental necesidades Don't Wait
               </h2>
               
               <div className="grid md:grid-cols-2 gap-8 mb-8">
                 <Card className="border-blue-200 bg-blue-50">
                   <CardHeader>
                     <CardTitle className="text-lg flex items-center gap-2">
-                      🌙 Late Night Anxiety
+                      🌙 Late Night ansiedad
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -150,7 +150,7 @@ export default function Benefits247AITherapyPost() {
                     <div className="bg-white p-3 rounded border">
                       <strong className="text-blue-700">24/7 AI Solution:</strong>
                       <p className="text-sm mt-1">
-                        Immediate breathing exercises, grounding techniques, and calming voice guidance available instantly.
+                        Immediate breathing exercises, grounding técnicas, and calming voice orientación available instantly.
                       </p>
                     </div>
                   </CardContent>
@@ -159,7 +159,7 @@ export default function Benefits247AITherapyPost() {
                 <Card className="border-green-200 bg-green-50">
                   <CardHeader>
                     <CardTitle className="text-lg flex items-center gap-2">
-                      🌅 Morning Depression
+                      🌅 Morning depresión
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -178,17 +178,17 @@ export default function Benefits247AITherapyPost() {
                 <Card className="border-purple-200 bg-purple-50">
                   <CardHeader>
                     <CardTitle className="text-lg flex items-center gap-2">
-                      🏢 Workplace Stress
+                      🏢 Workplace estrés
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm mb-3">
-                      "I'm having a panic attack before my big presentation. I need help now but my therapist isn't available."
+                      "I'm having a panic attack before my big presentation. I need help now but my terapeuta isn't available."
                     </p>
                     <div className="bg-white p-3 rounded border">
                       <strong className="text-purple-700">24/7 AI Solution:</strong>
                       <p className="text-sm mt-1">
-                        Quick stress relief techniques, confidence building, and pre-performance anxiety management.
+                        Quick estrés relief técnicas, confidence building, and pre-performance ansiedad management.
                       </p>
                     </div>
                   </CardContent>
@@ -207,7 +207,7 @@ export default function Benefits247AITherapyPost() {
                     <div className="bg-white p-3 rounded border">
                       <strong className="text-orange-700">24/7 AI Solution:</strong>
                       <p className="text-sm mt-1">
-                        Study stress management, perspective reframing, and academic anxiety support strategies.
+                        Study estrés management, perspective reframing, and academic ansiedad apoyo estrategias.
                       </p>
                     </div>
                   </CardContent>
@@ -222,33 +222,33 @@ export default function Benefits247AITherapyPost() {
               </h2>
               
               <p className="text-lg mb-6">
-                Research shows that <strong>early intervention</strong> is crucial for mental health outcomes. The sooner someone 
-                receives support during a mental health episode, the shorter and less severe it tends to be.
+                investigación shows that <strong>early intervention</strong> is crucial for salud mental outcomes. The sooner someone 
+                receives apoyo during a salud mental episode, the shorter and less severe it tends to be.
               </p>
 
               <div className="grid md:grid-cols-2 gap-8 mb-8">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg text-red-600">❌ Without 24/7 Support</CardTitle>
+                    <CardTitle className="text-lg text-red-600">❌ Without 24/7 apoyo</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2 text-sm">
-                      <li>• Anxiety escalates throughout the night</li>
+                      <li>• ansiedad escalates throughout the night</li>
                       <li>• Negative thought patterns intensify</li>
                       <li>• Physical symptoms worsen</li>
                       <li>• Crisis intervention may be needed</li>
-                      <li>• Recovery takes longer</li>
+                      <li>• recuperación takes longer</li>
                     </ul>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg text-green-600">✅ With 24/7 AI Support</CardTitle>
+                    <CardTitle className="text-lg text-green-600">✅ With 24/7 AI apoyo</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2 text-sm">
-                      <li>• Immediate coping strategies provided</li>
+                      <li>• Immediate afrontamiento estrategias provided</li>
                       <li>• Negative patterns interrupted quickly</li>
                       <li>• Symptoms managed before escalation</li>
                       <li>• Crisis prevention achieved</li>
@@ -260,15 +260,15 @@ export default function Benefits247AITherapyPost() {
 
               <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-green-200">
                 <CardContent className="pt-6">
-                  <h3 className="font-semibold text-lg mb-3">Research Findings</h3>
+                  <h3 className="font-semibold text-lg mb-3">investigación Findings</h3>
                   <div className="grid md:grid-cols-2 gap-4">
                     <ul className="space-y-2 text-sm">
                       <li>• <strong>85% reduction</strong> in crisis escalation with immediate intervention</li>
-                      <li>• <strong>60% shorter</strong> recovery time with early support</li>
+                      <li>• <strong>60% shorter</strong> recuperación time with early apoyo</li>
                     </ul>
                     <ul className="space-y-2 text-sm">
                       <li>• <strong>40% fewer</strong> emergency room visits</li>
-                      <li>• <strong>75% improvement</strong> in long-term outcomes</li>
+                      <li>• <strong>75% mejora</strong> in long-term outcomes</li>
                     </ul>
                   </div>
                 </CardContent>
@@ -282,54 +282,54 @@ export default function Benefits247AITherapyPost() {
               </h2>
               
               <p className="text-lg mb-6">
-                While crisis prevention is crucial, 24/7 AI therapy offers benefits that extend far beyond emergency situations. 
-                It's about creating a continuous support system that enhances overall mental wellness.
+                While crisis prevention is crucial, 24/7 terapia IA offers beneficios that extend far beyond emergency situations. 
+                It's about creating a continuous apoyo system that enhances overall mental bienestar.
               </p>
 
               <div className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-xl">🏃‍♀️ Consistent Daily Support</CardTitle>
+                    <CardTitle className="text-xl">🏃‍♀️ Consistent Daily apoyo</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="mb-3">
-                      Mental health maintenance requires consistent effort. 24/7 AI therapy enables daily check-ins, 
-                      mood tracking, and gradual skill building that compounds over time.
+                      salud mental maintenance requires consistent effort. 24/7 terapia IA enables daily check-ins, 
+                      mood tracking, and gradual habilidad building that compounds over time.
                     </p>
                     <div className="bg-slate-50 p-4 rounded">
                       <strong>Example:</strong> Daily 10-minute morning sessions that help users start each day with 
-                      positive intentions and coping strategies, leading to significant long-term improvements.
+                      positive intentions and afrontamiento estrategias, leading to significant long-term improvements.
                     </div>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-xl">🎯 Personalized Learning</CardTitle>
+                    <CardTitle className="text-xl">🎯 personalizado Learning</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="mb-3">
-                      Available 24/7, AI can observe patterns in your mental health across different times, situations, 
-                      and stressors, providing highly personalized insights and interventions.
+                      Available 24/7, AI can observe patterns in your salud mental across different times, situations, 
+                      and stressors, providing highly personalizado perspectivas and interventions.
                     </p>
                     <div className="bg-slate-50 p-4 rounded">
-                      <strong>Example:</strong> Learning that your anxiety peaks on Sunday evenings and proactively 
-                      offering support strategies every weekend to prevent "Sunday Scaries."
+                      <strong>Example:</strong> Learning that your ansiedad peaks on Sunday evenings and proactively 
+                      offering apoyo estrategias every weekend to prevent "Sunday Scaries."
                     </div>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-xl">🌱 Gradual Skill Building</CardTitle>
+                    <CardTitle className="text-xl">🌱 Gradual habilidad Building</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="mb-3">
-                      With constant availability, users can practice mental health skills in real-time situations, 
+                      With constant disponibilidad, users can practice salud mental habilidades in real-time situations, 
                       getting immediate feedback and reinforcement when it matters most.
                     </p>
                     <div className="bg-slate-50 p-4 rounded">
-                      <strong>Example:</strong> Practicing mindfulness techniques during actual stressful moments 
+                      <strong>Example:</strong> Practicing mindfulness técnicas during actual stressful moments 
                       at work, rather than just during scheduled therapy sessions.
                     </div>
                   </CardContent>
@@ -340,7 +340,7 @@ export default function Benefits247AITherapyPost() {
             <section className="mb-12">
               <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
                 <Heart className="w-8 h-8 text-red-500" />
-                Special Populations Who Benefit Most
+                Special Populations Who beneficio Most
               </h2>
               
               <div className="grid md:grid-cols-2 gap-6">
@@ -350,10 +350,10 @@ export default function Benefits247AITherapyPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm mb-2">
-                      <strong>Challenge:</strong> Irregular shifts, high stress, limited time for self-care
+                      <strong>desafío:</strong> Irregular shifts, high estrés, limited time for autocuidado
                     </p>
                     <p className="text-sm">
-                      <strong>24/7 Solution:</strong> Support between shifts, stress relief during breaks, 
+                      <strong>24/7 Solution:</strong> apoyo between shifts, estrés relief during breaks, 
                       trauma processing after difficult cases
                     </p>
                   </CardContent>
@@ -365,7 +365,7 @@ export default function Benefits247AITherapyPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm mb-2">
-                      <strong>Challenge:</strong> Isolation, work-life balance, varying time zones
+                      <strong>desafío:</strong> Isolation, work-life balance, varying time zones
                     </p>
                     <p className="text-sm">
                       <strong>24/7 Solution:</strong> Combat loneliness, manage burnout, provide structure 
@@ -380,11 +380,11 @@ export default function Benefits247AITherapyPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm mb-2">
-                      <strong>Challenge:</strong> Academic pressure, social anxiety, irregular schedules
+                      <strong>desafío:</strong> Academic pressure, social ansiedad, irregular schedules
                     </p>
                     <p className="text-sm">
-                      <strong>24/7 Solution:</strong> Study stress support, social anxiety help, 
-                      crisis support during finals
+                      <strong>24/7 Solution:</strong> Study estrés apoyo, social ansiedad help, 
+                      crisis apoyo during finals
                     </p>
                   </CardContent>
                 </Card>
@@ -395,11 +395,11 @@ export default function Benefits247AITherapyPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm mb-2">
-                      <strong>Challenge:</strong> Sleep deprivation, overwhelming responsibility, postpartum issues
+                      <strong>desafío:</strong> Sleep deprivation, overwhelming responsibility, postpartum issues
                     </p>
                     <p className="text-sm">
-                      <strong>24/7 Solution:</strong> Night-time anxiety support, parenting stress relief, 
-                      postpartum depression monitoring
+                      <strong>24/7 Solution:</strong> Night-time ansiedad apoyo, parenting estrés relief, 
+                      postpartum depresión monitoring
                     </p>
                   </CardContent>
                 </Card>
@@ -410,11 +410,11 @@ export default function Benefits247AITherapyPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm mb-2">
-                      <strong>Challenge:</strong> Time zone differences, cultural barriers, limited local resources
+                      <strong>desafío:</strong> Time zone differences, cultural barriers, limited local recursos
                     </p>
                     <p className="text-sm">
-                      <strong>24/7 Solution:</strong> Support in any time zone, culturally-aware assistance, 
-                      bridge to local resources
+                      <strong>24/7 Solution:</strong> apoyo in any time zone, culturally-aware assistance, 
+                      bridge to local recursos
                     </p>
                   </CardContent>
                 </Card>
@@ -425,10 +425,10 @@ export default function Benefits247AITherapyPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm mb-2">
-                      <strong>Challenge:</strong> Limited mental health resources, stigma, travel barriers
+                      <strong>desafío:</strong> Limited salud mental recursos, stigma, travel barriers
                     </p>
                     <p className="text-sm">
-                      <strong>24/7 Solution:</strong> Private support from home, no travel required, 
+                      <strong>24/7 Solution:</strong> Private apoyo from home, no travel required, 
                       reduced stigma concerns
                     </p>
                   </CardContent>
@@ -439,12 +439,12 @@ export default function Benefits247AITherapyPost() {
             <section className="mb-12">
               <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
                 <Shield className="w-8 h-8 text-green-600" />
-                Safety and Quality Assurance
+                Safety and calidad Assurance
               </h2>
               
               <p className="text-lg mb-6">
-                With great accessibility comes great responsibility. 24/7 AI therapy platforms must maintain high safety 
-                standards and know when to escalate to human professionals.
+                With great accesibilidad comes great responsibility. 24/7 terapia IA platforms must maintain high safety 
+                estándares and know when to escalate to human professionals.
               </p>
 
               <div className="grid md:grid-cols-2 gap-6 mb-8">
@@ -455,9 +455,9 @@ export default function Benefits247AITherapyPost() {
                   <CardContent>
                     <ul className="space-y-2 text-sm">
                       <li>• Crisis detection algorithms</li>
-                      <li>• Automatic escalation to human support</li>
+                      <li>• Automatic escalation to human apoyo</li>
                       <li>• Emergency contact integration</li>
-                      <li>• Risk assessment monitoring</li>
+                      <li>• riesgo assessment monitoring</li>
                       <li>• Professional oversight protocols</li>
                     </ul>
                   </CardContent>
@@ -469,7 +469,7 @@ export default function Benefits247AITherapyPost() {
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2 text-sm">
-                      <li>• Suicidal or self-harm thoughts</li>
+                      <li>• suicida or autolesión thoughts</li>
                       <li>• Severe psychotic episodes</li>
                       <li>• Substance abuse crises</li>
                       <li>• Domestic violence situations</li>
@@ -481,12 +481,12 @@ export default function Benefits247AITherapyPost() {
 
               <Card className="bg-green-50 border-green-200">
                 <CardContent className="pt-6">
-                  <h3 className="font-semibold text-lg mb-3 text-green-800">Quality Standards</h3>
+                  <h3 className="font-semibold text-lg mb-3 text-green-800">calidad estándares</h3>
                   <p className="text-green-700 mb-3">
-                    Effective 24/7 AI therapy platforms maintain quality through:
+                    Effective 24/7 terapia IA platforms maintain calidad through:
                   </p>
                   <ul className="space-y-2 text-green-700">
-                    <li>• Evidence-based therapeutic approaches</li>
+                    <li>• basado en evidencia terapéutico approaches</li>
                     <li>• Regular model training and updates</li>
                     <li>• Professional clinical oversight</li>
                     <li>• User feedback integration</li>
@@ -497,27 +497,27 @@ export default function Benefits247AITherapyPost() {
             </section>
 
             <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">The Future of Always-Available Support</h2>
+              <h2 className="text-3xl font-bold mb-6">The Future of Always-Available apoyo</h2>
               
               <p className="text-lg mb-6">
-                24/7 AI therapy represents a fundamental shift in how we approach mental health care. It's moving us from 
-                a reactive, appointment-based model to a proactive, always-available support system that meets people 
+                24/7 terapia IA represents a fundamental shift in how we enfoque salud mental care. It's moving us from 
+                a reactive, appointment-based model to a proactive, always-available apoyo system that meets people 
                 where they are, when they need it.
               </p>
 
               <Card className="bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 mb-8">
                 <CardContent className="pt-6">
-                  <h3 className="font-semibold text-lg mb-4">Looking Ahead: Emerging Benefits</h3>
+                  <h3 className="font-semibold text-lg mb-4">Looking Ahead: Emerging beneficios</h3>
                   <div className="grid md:grid-cols-2 gap-4">
                     <ul className="space-y-2 text-sm">
-                      <li>• <strong>Predictive Support:</strong> AI anticipating needs before crises</li>
+                      <li>• <strong>Predictive apoyo:</strong> AI anticipating necesidades before crises</li>
                       <li>• <strong>Integration:</strong> Seamless connection with wearables and health data</li>
-                      <li>• <strong>Personalization:</strong> Hyper-customized therapeutic approaches</li>
+                      <li>• <strong>Personalization:</strong> Hyper-personalizado terapéutico approaches</li>
                     </ul>
                     <ul className="space-y-2 text-sm">
                       <li>• <strong>Global Access:</strong> Breaking down geographical barriers</li>
-                      <li>• <strong>Cost Reduction:</strong> Making mental health care truly affordable</li>
-                      <li>• <strong>Prevention Focus:</strong> Stopping problems before they start</li>
+                      <li>• <strong>Cost Reduction:</strong> Making salud mental care truly affordable</li>
+                      <li>• <strong>Prevention enfoque:</strong> Stopping problems before they start</li>
                     </ul>
                   </div>
                 </CardContent>
@@ -525,23 +525,23 @@ export default function Benefits247AITherapyPost() {
 
               <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
                 <CardContent className="pt-6">
-                  <h3 className="text-xl font-semibold mb-4">Experience 24/7 AI Therapy Today</h3>
+                  <h3 className="text-xl font-semibold mb-4">Experience 24/7 terapia IA Today</h3>
                   <p className="mb-6">
                     Don't wait for the next crisis or the next available appointment. TalkAI provides empathetic, 
-                    professional-quality mental health support whenever you need it – day or night.
+                    professional-calidad salud mental apoyo whenever you need it – day or night.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Link 
                       href="/auth" 
                       className="inline-block bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors text-center"
                     >
-                      Start 24/7 Support →
+                      Start 24/7 apoyo →
                     </Link>
                     <Link 
                       href="/blog/what-is-ai-therapy" 
                       className="inline-block border border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors text-center"
                     >
-                      Learn More About AI Therapy
+                      Learn More About terapia IA
                     </Link>
                   </div>
                 </CardContent>

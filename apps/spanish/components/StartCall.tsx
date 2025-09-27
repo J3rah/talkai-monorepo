@@ -48,8 +48,19 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
   const [isDataSavingAllowed, setIsDataSavingAllowed] = useState(true);
   const [dataSavingPreference, setDataSavingPreference] = useState(false);
   const [userName, setUserName] = useState<string>('');
+  const [disclaimerAgreed, setDisclaimerAgreed] = useState(false);
+  const [rememberDisclaimerChoice, setRememberDisclaimerChoice] = useState(false);
+  const [skipDisclaimer, setSkipDisclaimer] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
+  
+  // Check if user previously chose to remember disclaimer choice
+  useEffect(() => {
+    const remembered = localStorage.getItem('rememberDisclaimerChoice');
+    if (remembered === 'true') {
+      setSkipDisclaimer(true);
+    }
+  }, []);
   
   // Check if data saving is allowed based on user subscription and preferences
   const checkDataSavingPermission = async (userId: string) => {
@@ -370,7 +381,11 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
       onVoiceSelect(config.hume_config_id);
       // Move to next step based on user subscription
       if (userSubscriptionStatus === 'calm' || isTrialMode) {
-        setModalStep(2); // Go to disclaimer for calm users
+        if (skipDisclaimer) {
+          setModalStep(3); // Skip disclaimer, go to ready to begin
+        } else {
+          setModalStep(2); // Go to disclaimer for calm users
+        }
       } else {
         setModalStep(2); // Go to data saving preference for non-calm users
       }
@@ -383,7 +398,11 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
     onTherapistNameChange?.(therapistName);
     // For calm users, go to disclaimer step directly
     if (userSubscriptionStatus === 'calm' || isTrialMode) {
-      setModalStep(2); // Go to disclaimer step
+      if (skipDisclaimer) {
+        setModalStep(3); // Skip disclaimer, go to ready to begin
+      } else {
+        setModalStep(2); // Go to disclaimer step
+      }
     } else {
       setModalStep(2); // Go to data saving preference step
     }
@@ -424,8 +443,27 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
         console.error('Error updating data preference:', error);
       }
     }
-    // Move to ready to begin step (step 3 for non-calm users)
-    setModalStep(3);
+    // Move to next step based on disclaimer skip preference
+    if (skipDisclaimer) {
+      setModalStep(4); // Skip disclaimer, go to ready to begin
+    } else {
+      setModalStep(3); // Go to disclaimer step
+    }
+  };
+
+  const handleDisclaimerAgree = async () => {
+    // Save the remember choice if selected
+    if (rememberDisclaimerChoice) {
+      localStorage.setItem('rememberDisclaimerChoice', 'true');
+      setSkipDisclaimer(true);
+    }
+    
+    // Move to next step based on user type
+    if (userSubscriptionStatus === 'calm' || isTrialMode) {
+      setModalStep(3); // Ready to begin for calm users
+    } else {
+      setModalStep(4); // Ready to begin for non-calm users
+    }
   };
 
   const handleConnect = async () => {
@@ -993,7 +1031,7 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Medical Disclaimer</h2>
                   <p className="text-gray-600 dark:text-gray-300">
-                    Please read and understand the following important information
+                    Please read, understand, and agree to the following important information
                   </p>
                 </div>
               </div>
@@ -1027,7 +1065,8 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                     "This AI cannot diagnose mental health conditions or provide medical advice",
                     "This service is not suitable for mental health emergencies or crisis situations", 
                     "If you are experiencing thoughts of self-harm, please contact emergency services (911) or the 988 Suicide & Crisis Lifeline immediately",
-                    "For serious mental health conditions, please consult with licensed mental health professionals"
+                    "For serious mental health conditions, please consult with licensed mental health professionals",
+                    "This is an AI tool to be used by adults and teenagers age 13-18. Teenagers agree they have consent from their parent/adult. Kids under 13 are not to use this service."
                   ].map((item, index) => (
                     <div key={index} className="flex items-start gap-3">
                       <div className="w-6 h-6 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -1039,13 +1078,13 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                 </div>
               </div>
 
-              <Card className="bg-muted/50 dark:bg-muted/30 border-border">
+              <Card className="bg-blue-50 dark:bg-blue-950 border-2 border-blue-300">
                 <CardContent className="py-4">
                   <div className="flex items-start gap-3">
-                    <Shield className="w-5 h-5 text-primary mt-0.5" />
+                    <Shield className="w-5 h-5 text-blue-600 dark:text-blue-500 mt-0.5" />
                     <div>
-                      <p className="font-semibold text-foreground mb-1">Emergency Resources</p>
-                      <p className="text-muted-foreground text-sm">
+                      <p className="font-semibold text-blue-800 dark:text-blue-200 mb-1">Emergency Resources</p>
+                      <p className="text-blue-700 dark:text-blue-100 text-sm">
                         If you're in crisis, call 911, contact the 988 Suicide & Crisis Lifeline, 
                         or visit your nearest emergency room. Do not use this service for emergencies.
                       </p>
@@ -1053,6 +1092,35 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                   </div>
                 </CardContent>
               </Card>
+
+              {/* Checkboxes */}
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    id="disclaimer-agree"
+                    checked={disclaimerAgreed}
+                    onChange={(e) => setDisclaimerAgreed(e.target.checked)}
+                    className="mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label htmlFor="disclaimer-agree" className="text-sm text-gray-700 dark:text-gray-300">
+                    I have read and agree to the medical disclaimer above
+                  </label>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    id="remember-choice"
+                    checked={rememberDisclaimerChoice}
+                    onChange={(e) => setRememberDisclaimerChoice(e.target.checked)}
+                    className="mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label htmlFor="remember-choice" className="text-sm text-gray-700 dark:text-gray-300">
+                    Remember my choice (Don't show this again)
+                  </label>
+                </div>
+              </div>
 
               {/* Navigation */}
               <div className="flex gap-3">
@@ -1065,7 +1133,8 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                   Back
                 </Button>
                 <Button
-                  onClick={() => setModalStep(3)} // Go to ready to begin for calm users
+                  onClick={handleDisclaimerAgree}
+                  disabled={!disclaimerAgreed}
                   className="flex-1"
                 >
                   Continue
@@ -1131,9 +1200,9 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
               </Card>
 
               {/* Explanation */}
-              <Card className="bg-muted/50 dark:bg-muted/30 border-border">
+              <Card className="bg-pink-60/80 dark:bg-pink-900/20 border-2 border-pink-300">
                 <CardContent className="py-4">
-                  <h4 className="font-medium text-foreground mb-3">What this means:</h4>
+                  <h4 className="font-medium text-gray-900 dark:text-white mb-3">What this means:</h4>
                   <div className="space-y-2 text-sm text-muted-foreground">
                     <div className="flex items-start gap-2">
                       <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
@@ -1281,7 +1350,7 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Medical Disclaimer</h2>
                   <p className="text-gray-600 dark:text-gray-300">
-                    Please read and understand the following important information
+                    Please read, understand, and agree to the following important information
                   </p>
                 </div>
               </div>
@@ -1315,7 +1384,8 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                     "This AI cannot diagnose mental health conditions or provide medical advice",
                     "This service is not suitable for mental health emergencies or crisis situations", 
                     "If you are experiencing thoughts of self-harm, please contact emergency services (911) or the 988 Suicide & Crisis Lifeline immediately",
-                    "For serious mental health conditions, please consult with licensed mental health professionals"
+                    "For serious mental health conditions, please consult with licensed mental health professionals",
+                    "This is an AI tool to be used by adults and teenagers age 13-18. Teenagers agree they have consent from their parent/adult. Kids under 13 are not to use this service."
                   ].map((item, index) => (
                     <div key={index} className="flex items-start gap-3">
                       <div className="w-6 h-6 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -1327,13 +1397,13 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                 </div>
               </div>
 
-              <Card className="bg-muted/50 dark:bg-muted/30 border-border">
+              <Card className="bg-blue-50 dark:bg-blue-950 border-2 border-blue-300">
                 <CardContent className="py-4">
                   <div className="flex items-start gap-3">
-                    <Shield className="w-5 h-5 text-primary mt-0.5" />
+                    <Shield className="w-5 h-5 text-blue-600 dark:text-blue-500 mt-0.5" />
                     <div>
-                      <p className="font-semibold text-foreground mb-1">Emergency Resources</p>
-                      <p className="text-muted-foreground text-sm">
+                      <p className="font-semibold text-blue-800 dark:text-blue-200 mb-1">Emergency Resources</p>
+                      <p className="text-blue-700 dark:text-blue-100 text-sm">
                         If you're in crisis, call 911, contact the 988 Suicide & Crisis Lifeline, 
                         or visit your nearest emergency room. Do not use this service for emergencies.
                       </p>
@@ -1341,6 +1411,35 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                   </div>
                 </CardContent>
               </Card>
+
+              {/* Checkboxes */}
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    id="disclaimer-agree-non-calm"
+                    checked={disclaimerAgreed}
+                    onChange={(e) => setDisclaimerAgreed(e.target.checked)}
+                    className="mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label htmlFor="disclaimer-agree-non-calm" className="text-sm text-gray-700 dark:text-gray-300">
+                    I have read and agree to the medical disclaimer above
+                  </label>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    id="remember-choice-non-calm"
+                    checked={rememberDisclaimerChoice}
+                    onChange={(e) => setRememberDisclaimerChoice(e.target.checked)}
+                    className="mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label htmlFor="remember-choice-non-calm" className="text-sm text-gray-700 dark:text-gray-300">
+                    Remember my choice (Don't show this again)
+                  </label>
+                </div>
+              </div>
 
               {/* Navigation */}
               <div className="flex gap-3">
@@ -1353,7 +1452,8 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
                   Back
                 </Button>
                 <Button
-                  onClick={() => setModalStep(4)} // Go to ready to begin for non-calm users
+                  onClick={handleDisclaimerAgree}
+                  disabled={!disclaimerAgreed}
                   className="flex-1"
                 >
                   Continue
@@ -1424,7 +1524,7 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
             <div className="flex gap-3">
               <Button
                 variant="outline"
-                onClick={() => setModalStep(3)}
+                onClick={() => setModalStep(skipDisclaimer ? 2 : 3)}
                 className="flex-1"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
@@ -1590,17 +1690,17 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
           <div className="bg-gray-50 dark:bg-gray-800 px-6 py-4 border-b">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                Step {modalStep} of {userSubscriptionStatus === 'calm' || isTrialMode ? 3 : 4}
+                Step {modalStep} of {skipDisclaimer ? 3 : (userSubscriptionStatus === 'calm' || isTrialMode ? 3 : 4)}
               </span>
               <span className="text-sm text-gray-500 dark:text-gray-400">
-                {Math.round((modalStep / (userSubscriptionStatus === 'calm' || isTrialMode ? 3 : 4)) * 100)}% complete
+                {Math.round((modalStep / (skipDisclaimer ? 3 : (userSubscriptionStatus === 'calm' || isTrialMode ? 3 : 4))) * 100)}% complete
               </span>
             </div>
             <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
               <div 
                 className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300"
                 style={{ 
-                  width: `${(modalStep / (userSubscriptionStatus === 'calm' || isTrialMode ? 3 : 4)) * 100}%` 
+                  width: `${(modalStep / (skipDisclaimer ? 3 : (userSubscriptionStatus === 'calm' || isTrialMode ? 3 : 4))) * 100}%` 
                 }}
               ></div>
             </div>

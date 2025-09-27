@@ -5,23 +5,23 @@ import { Badge } from '@/components/ui/badge';
 import { CalendarDays, Clock, User, ArrowLeft, CheckCircle, Mic, Volume2, Brain, Heart, Zap } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Voice AI Therapy: Why Speaking Out Loud Enhances Mental Health Treatment',
-  description: 'Explore the unique benefits of voice-based AI therapy and how speaking aloud can improve therapeutic outcomes and emotional processing compared to text-based therapy.',
+  title: 'Voice terapia IA: Why Speaking Out Loud Enhances salud mental tratamiento',
+  description: 'Explore the unique beneficios of voice-based terapia IA and how speaking aloud can improve terapéutico outcomes and emotional processing compared to text-based therapy.',
   keywords: [
-    'voice AI therapy',
+    'voice terapia IA',
     'voice-based therapy',
     'speaking therapy AI',
-    'voice mental health',
-    'audio AI therapy',
-    'voice therapy benefits',
+    'voice salud mental',
+    'audio terapia IA',
+    'voice therapy beneficios',
     'speaking out loud therapy',
-    'voice AI counseling',
+    'voice AI asesoramiento',
     'audio therapy AI',
-    'voice-based mental health'
+    'voice-based salud mental'
   ],
   openGraph: {
-    title: 'Voice AI Therapy: The Power of Speaking Your Truth',
-    description: 'Discover why voice-based AI therapy is more effective than text for emotional processing and therapeutic outcomes.',
+    title: 'Voice terapia IA: The Power of Speaking Your Truth',
+    description: 'Discover why voice-based terapia IA is more effective than text for emotional processing and terapéutico outcomes.',
     type: 'article',
     images: ['/og-voice-ai-therapy.png'],
     publishedTime: '2024-07-12',
@@ -29,8 +29,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Voice AI Therapy: Why Speaking Out Loud Heals',
-    description: 'Learn how voice-based AI therapy enhances emotional processing and therapeutic connection.',
+    title: 'Voice terapia IA: Why Speaking Out Loud Heals',
+    description: 'Learn how voice-based terapia IA enhances emotional processing and terapéutico connection.',
     images: ['/twitter-voice-ai-therapy.png'],
   },
 };
@@ -42,7 +42,7 @@ export default function VoiceAITherapyBenefitsPost() {
         {/* Back Navigation */}
         <Link href="/blog" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-8">
           <ArrowLeft className="w-4 h-4" />
-          Back to Blog
+          Volver al Blog
         </Link>
 
         <article className="max-w-4xl mx-auto">
@@ -56,12 +56,12 @@ export default function VoiceAITherapyBenefitsPost() {
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
-              Voice AI Therapy: Why Speaking Out Loud Enhances Mental Health Treatment
+              Voice terapia IA: Why Speaking Out Loud Enhances salud mental tratamiento
             </h1>
             
             <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-              Explore the unique benefits of voice-based AI therapy and how speaking aloud can improve therapeutic outcomes 
-              and emotional processing. Discover why your voice is your most powerful tool for healing.
+              Explore the unique beneficios of voice-based terapia IA and how speaking aloud can improve terapéutico outcomes 
+              and emotional processing. Discover why your voice is your most powerful tool for sanación.
             </p>
 
             <div className="flex items-center gap-6 text-sm text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-6">
@@ -75,7 +75,7 @@ export default function VoiceAITherapyBenefitsPost() {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                7 min read
+                7 min lectura
               </div>
             </div>
           </header>
@@ -93,8 +93,8 @@ export default function VoiceAITherapyBenefitsPost() {
                 </div>
                 <h2 className="text-2xl font-bold mb-4">Your Voice → Your Brain → Your Heart</h2>
                 <p className="text-lg text-green-100 max-w-2xl mx-auto">
-                  When you speak your thoughts and feelings aloud, you activate multiple neural pathways that enhance 
-                  emotional processing, self-awareness, and therapeutic healing.
+                  When you speak your thoughts and sentimientos aloud, you activate multiple neural pathways that enhance 
+                  emotional processing, self-conciencia, and terapéutico sanación.
                 </p>
               </div>
             </CardContent>
@@ -110,23 +110,23 @@ export default function VoiceAITherapyBenefitsPost() {
               </h2>
               
               <p className="text-lg mb-6">
-                Speaking out loud isn't just about communication – it's a fundamental human process that engages multiple 
-                brain regions simultaneously. When we vocalize our thoughts and emotions, we activate neural pathways 
+                Speaking out loud isn't just about communication – it's a fundamental human proceso that engages multiple 
+                brain regions simultaneously. When we vocalize our thoughts and emociones, we activate neural pathways 
                 that typing or thinking alone simply cannot reach.
               </p>
 
               <Card className="bg-blue-50 border-blue-200 mb-8">
                 <CardContent className="pt-6">
-                  <h3 className="font-semibold text-lg mb-3 text-blue-800">Neurological Benefits of Speaking</h3>
+                  <h3 className="font-semibold text-lg mb-3 text-blue-800">Neurological beneficios of Speaking</h3>
                   <div className="grid md:grid-cols-2 gap-4">
                     <ul className="space-y-2 text-blue-700 text-sm">
                       <li>• <strong>Broca's Area Activation:</strong> Speech production centers enhance cognitive processing</li>
-                      <li>• <strong>Auditory Feedback Loop:</strong> Hearing yourself creates self-awareness</li>
+                      <li>• <strong>Auditory Feedback Loop:</strong> Hearing yourself creates self-conciencia</li>
                       <li>• <strong>Emotional Integration:</strong> Voice connects thinking and feeling centers</li>
                     </ul>
                     <ul className="space-y-2 text-blue-700 text-sm">
                       <li>• <strong>Memory Consolidation:</strong> Speaking strengthens memory formation</li>
-                      <li>• <strong>Stress Reduction:</strong> Vocalization releases physical tension</li>
+                      <li>• <strong>estrés Reduction:</strong> Vocalization releases physical tension</li>
                       <li>• <strong>Social Connection:</strong> Voice activates attachment and bonding systems</li>
                     </ul>
                   </div>
@@ -134,18 +134,18 @@ export default function VoiceAITherapyBenefitsPost() {
               </Card>
 
               <p>
-                Research shows that when people verbally express their emotions, activity increases in the prefrontal cortex 
+                investigación shows that when people verbally express their emociones, activity increases in the prefrontal cortex 
                 while decreasing in the amygdala – the brain's fear center. This neurological shift is exactly what we want 
                 to achieve in therapy: more rational thinking and less emotional reactivity.
               </p>
             </section>
 
             <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">Voice vs. Text: The Therapeutic Difference</h2>
+              <h2 className="text-3xl font-bold mb-6">Voice vs. Text: The terapéutico Difference</h2>
               
               <p className="text-lg mb-6">
-                While text-based therapy has its place, voice-based AI therapy offers unique advantages that can significantly 
-                enhance therapeutic outcomes. Here's why speaking out loud matters:
+                While text-based therapy has its place, voice-based terapia IA offers unique ventajas that can significantly 
+                enhance terapéutico outcomes. Here's why speaking out loud matters:
               </p>
 
               <div className="grid md:grid-cols-2 gap-8 mb-8">
@@ -178,8 +178,8 @@ export default function VoiceAITherapyBenefitsPost() {
                     <ul className="space-y-2 text-gray-700 text-sm">
                       <li>• <strong>Thoughtful responses:</strong> Time to carefully craft words</li>
                       <li>• <strong>Written record:</strong> Easy to review conversations</li>
-                      <li>• <strong>Privacy:</strong> Can use in public without being heard</li>
-                      <li>• <strong>Accessibility:</strong> Works for hearing-impaired users</li>
+                      <li>• <strong>privacidad:</strong> Can use in public without being heard</li>
+                      <li>• <strong>accesibilidad:</strong> Works for hearing-impaired users</li>
                       <li>• <strong>Precision:</strong> Can be very specific with language</li>
                       <li>• <strong>Comfort:</strong> Some prefer writing to speaking</li>
                     </ul>
@@ -195,7 +195,7 @@ export default function VoiceAITherapyBenefitsPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm">
-                      Voice therapy excels when you need to process complex emotions. Speaking allows for natural pauses, 
+                      Voice therapy excels when you need to proceso complex emociones. Speaking allows for natural pauses, 
                       voice breaks, and emotional release that text simply cannot capture. The AI can detect when you're 
                       holding back tears or getting angry, responding with appropriate empathy.
                     </p>
@@ -208,7 +208,7 @@ export default function VoiceAITherapyBenefitsPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm">
-                      During anxiety attacks or emotional crises, speaking is often easier than typing. Voice therapy 
+                      During ansiedad attacks or emotional crises, speaking is often easier than typing. Voice therapy 
                       provides immediate, soothing responses that can help regulate breathing and emotional state in real-time.
                     </p>
                   </CardContent>
@@ -220,8 +220,8 @@ export default function VoiceAITherapyBenefitsPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm">
-                      Voice therapy integrates seamlessly into daily routines. You can have therapeutic conversations 
-                      while walking, cooking, or commuting, making mental health support a natural part of your day.
+                      Voice therapy integrates seamlessly into daily routines. You can have terapéutico conversations 
+                      while walking, cooking, or commuting, making salud mental apoyo a natural part of your day.
                     </p>
                   </CardContent>
                 </Card>
@@ -235,8 +235,8 @@ export default function VoiceAITherapyBenefitsPost() {
               </h2>
               
               <p className="text-lg mb-6">
-                Advanced voice AI can detect subtle emotional cues that even humans might miss. This creates a uniquely 
-                responsive therapeutic experience that adapts to your emotional state in real-time.
+                avanzado voice AI can detect subtle emotional cues that even humans might miss. This creates a uniquely 
+                responsive terapéutico experience that adapts to your emotional state in real-time.
               </p>
 
               <div className="grid md:grid-cols-2 gap-6 mb-8">
@@ -246,11 +246,11 @@ export default function VoiceAITherapyBenefitsPost() {
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2 text-sm">
-                      <li>• <strong>Pitch changes:</strong> Indicate stress or excitement</li>
-                      <li>• <strong>Speaking rate:</strong> Fast speech may signal anxiety</li>
+                      <li>• <strong>Pitch changes:</strong> Indicate estrés or excitement</li>
+                      <li>• <strong>Speaking rate:</strong> Fast speech may signal ansiedad</li>
                       <li>• <strong>Voice tremor:</strong> Can indicate emotional distress</li>
                       <li>• <strong>Pause patterns:</strong> Hesitation reveals uncertainty</li>
-                      <li>• <strong>Volume fluctuations:</strong> Energy level indicators</li>
+                      <li>• <strong>Volume fluctuations:</strong> Energy nivel indicators</li>
                     </ul>
                   </CardContent>
                 </Card>
@@ -263,9 +263,9 @@ export default function VoiceAITherapyBenefitsPost() {
                     <ul className="space-y-2 text-sm">
                       <li>• <strong>Tone matching:</strong> Mirrors your emotional energy</li>
                       <li>• <strong>Pace adjustment:</strong> Slows down when you're overwhelmed</li>
-                      <li>• <strong>Intervention timing:</strong> Knows when to interject with support</li>
-                      <li>• <strong>Technique selection:</strong> Chooses methods based on mood</li>
-                      <li>• <strong>Empathy calibration:</strong> Adjusts supportiveness level</li>
+                      <li>• <strong>Intervention timing:</strong> Knows when to interject with apoyo</li>
+                      <li>• <strong>técnica selection:</strong> Chooses methods based on mood</li>
+                      <li>• <strong>Empathy calibration:</strong> Adjusts supportiveness nivel</li>
                     </ul>
                   </CardContent>
                 </Card>
@@ -291,10 +291,10 @@ export default function VoiceAITherapyBenefitsPost() {
             </section>
 
             <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">The Therapeutic Power of Being Heard</h2>
+              <h2 className="text-3xl font-bold mb-6">The terapéutico Power of Being Heard</h2>
               
               <p className="text-lg mb-6">
-                One of the most healing aspects of voice therapy is the experience of being truly heard. When you speak 
+                One of the most sanación aspects of voice therapy is the experience of being truly heard. When you speak 
                 your truth aloud and receive an empathetic response, it validates your experience in a way that text cannot.
               </p>
 
@@ -310,19 +310,19 @@ export default function VoiceAITherapyBenefitsPost() {
                     </p>
                     <div className="bg-white p-3 rounded text-sm">
                       <strong>Example:</strong> "I can hear the exhaustion in your voice. It sounds like you've been 
-                      carrying a heavy load for a long time. That takes incredible strength."
+                      carrying a heavy load for a long time. That takes incredible fortaleza."
                     </div>
                   </CardContent>
                 </Card>
 
                 <Card className="border-green-200 bg-green-50">
                   <CardHeader>
-                    <CardTitle className="text-lg text-green-800">🌱 Self-Discovery Through Speaking</CardTitle>
+                    <CardTitle className="text-lg text-green-800">🌱 Self-descubrimiento Through Speaking</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-green-700 text-sm mb-3">
                       Many people discover things about themselves simply by speaking their thoughts aloud. The act of 
-                      verbalizing helps organize thoughts and can lead to sudden insights and "aha" moments.
+                      verbalizing helps organize thoughts and can lead to sudden perspectivas and "aha" moments.
                     </p>
                     <div className="bg-white p-3 rounded text-sm">
                       <strong>Common experience:</strong> "I didn't realize how angry I was until I heard myself say it out loud."
@@ -332,15 +332,15 @@ export default function VoiceAITherapyBenefitsPost() {
 
                 <Card className="border-purple-200 bg-purple-50">
                   <CardHeader>
-                    <CardTitle className="text-lg text-purple-800">🔗 Building Therapeutic Relationship</CardTitle>
+                    <CardTitle className="text-lg text-purple-800">🔗 Building terapéutico Relationship</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-purple-700 text-sm mb-3">
                       Voice creates intimacy and connection. Even though you're talking to AI, the conversational nature 
-                      of voice therapy builds a sense of relationship and trust that enhances therapeutic outcomes.
+                      of voice therapy builds a sense of relationship and trust that enhances terapéutico outcomes.
                     </p>
                     <div className="bg-white p-3 rounded text-sm">
-                      <strong>Research finding:</strong> Users report feeling more connected to voice AI than text-based systems.
+                      <strong>investigación finding:</strong> Users report feeling more connected to voice AI than text-based systems.
                     </div>
                   </CardContent>
                 </Card>
@@ -350,7 +350,7 @@ export default function VoiceAITherapyBenefitsPost() {
             <section className="mb-12">
               <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
                 <Zap className="w-8 h-8 text-yellow-600" />
-                Practical Benefits of Voice AI Therapy
+                Practical beneficios of Voice terapia IA
               </h2>
               
               <div className="grid md:grid-cols-2 gap-6">
@@ -360,11 +360,11 @@ export default function VoiceAITherapyBenefitsPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm mb-2">
-                      <strong>Benefit:</strong> Exercise releases endorphins that enhance mood
+                      <strong>beneficio:</strong> Exercise releases endorphins that enhance mood
                     </p>
                     <p className="text-sm">
-                      Have therapeutic conversations while walking, jogging, or doing household chores. 
-                      Movement + therapy = double mental health benefits.
+                      Have terapéutico conversations while walking, jogging, or doing household chores. 
+                      Movement + therapy = double salud mental beneficios.
                     </p>
                   </CardContent>
                 </Card>
@@ -375,40 +375,40 @@ export default function VoiceAITherapyBenefitsPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm mb-2">
-                      <strong>Benefit:</strong> Feels like talking to a friend
+                      <strong>beneficio:</strong> Feels like talking to a friend
                     </p>
                     <p className="text-sm">
                       Voice therapy mirrors natural conversation patterns, making it easier to open up 
-                      and share difficult emotions without feeling like you're "doing therapy."
+                      and share difficult emociones without feeling like you're "doing therapy."
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">🌙 Accessibility in Dark Moments</CardTitle>
+                    <CardTitle className="text-lg">🌙 accesibilidad in Dark Moments</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm mb-2">
-                      <strong>Benefit:</strong> Works when you can't see or type
+                      <strong>beneficio:</strong> Works when you can't see or type
                     </p>
                     <p className="text-sm">
                       During dark emotional moments when you can barely function, speaking is often 
-                      easier than typing. Voice therapy provides support when you need it most.
+                      easier than typing. Voice therapy provides apoyo when you need it most.
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">🧘‍♀️ Mindfulness Integration</CardTitle>
+                    <CardTitle className="text-lg">🧘‍♀️ mindfulness Integration</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm mb-2">
-                      <strong>Benefit:</strong> Combines speaking with breathing awareness
+                      <strong>beneficio:</strong> Combines speaking with breathing conciencia
                     </p>
                     <p className="text-sm">
-                      Voice therapy naturally incorporates breath awareness and present-moment focus, 
+                      Voice therapy naturally incorporates breath conciencia and present-moment enfoque, 
                       making it inherently mindful and grounding.
                     </p>
                   </CardContent>
@@ -421,7 +421,7 @@ export default function VoiceAITherapyBenefitsPost() {
               
               <p className="text-lg mb-6">
                 Some people feel hesitant about voice therapy initially. Here are common concerns and why they shouldn't 
-                hold you back from this powerful therapeutic tool:
+                hold you back from this powerful terapéutico tool:
               </p>
 
               <div className="space-y-4">
@@ -432,7 +432,7 @@ export default function VoiceAITherapyBenefitsPost() {
                   <CardContent>
                     <p className="text-sm">
                       <strong>Reality:</strong> This feeling fades quickly as the AI responds naturally and empathetically. 
-                      Most users report feeling comfortable within 2-3 conversations. The therapeutic benefits far outweigh 
+                      Most users report feeling comfortable within 2-3 conversations. The terapéutico beneficios far outweigh 
                       initial awkwardness.
                     </p>
                   </CardContent>
@@ -445,7 +445,7 @@ export default function VoiceAITherapyBenefitsPost() {
                   <CardContent>
                     <p className="text-sm">
                       <strong>Solution:</strong> Use private spaces, headphones, or speak quietly. Many users find that once 
-                      they start, they're less concerned about being overheard because the therapeutic value is so significant.
+                      they start, they're less concerned about being overheard because the terapéutico valor is so significant.
                     </p>
                   </CardContent>
                 </Card>
@@ -456,7 +456,7 @@ export default function VoiceAITherapyBenefitsPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm">
-                      <strong>Therapeutic benefit:</strong> Voice therapy actually helps you become more comfortable with your 
+                      <strong>terapéutico beneficio:</strong> Voice therapy actually helps you become more comfortable with your 
                       voice and self-expression. Many users report increased confidence in speaking up in other areas of life.
                     </p>
                   </CardContent>
@@ -468,8 +468,8 @@ export default function VoiceAITherapyBenefitsPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm">
-                      <strong>Growth opportunity:</strong> Voice therapy is excellent practice for verbal expression. The AI 
-                      is patient, non-judgmental, and will help you find the words for your feelings. It's a safe space to practice.
+                      <strong>Growth oportunidad:</strong> Voice therapy is excellent practice for verbal expression. The AI 
+                      is patient, non-judgmental, and will help you find the words for your sentimientos. It's a safe space to practice.
                     </p>
                   </CardContent>
                 </Card>
@@ -477,16 +477,16 @@ export default function VoiceAITherapyBenefitsPost() {
             </section>
 
             <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">Getting Started with Voice AI Therapy</h2>
+              <h2 className="text-3xl font-bold mb-6">Getting Started with Voice terapia IA</h2>
               
               <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-green-200 mb-8">
                 <CardContent className="pt-6">
-                  <h3 className="font-semibold text-lg mb-4">Your First Voice Therapy Session</h3>
+                  <h3 className="font-semibold text-lg mb-4">Your First Voice sesión de terapia</h3>
                   <ol className="list-decimal list-inside space-y-2 text-sm">
                     <li><strong>Find a comfortable space:</strong> Choose somewhere you feel safe to speak openly</li>
                     <li><strong>Start simple:</strong> Begin with "How are you feeling today?" or "I need someone to listen"</li>
                     <li><strong>Speak naturally:</strong> Don't worry about perfect sentences – just express yourself</li>
-                    <li><strong>Notice the difference:</strong> Pay attention to how speaking feels compared to typing</li>
+                    <li><strong>Notice the difference:</strong> Pay atención to how speaking feels compared to typing</li>
                     <li><strong>Be patient:</strong> Give yourself time to get comfortable with the format</li>
                   </ol>
                 </CardContent>
@@ -498,8 +498,8 @@ export default function VoiceAITherapyBenefitsPost() {
                     <Mic className="w-12 h-12 mx-auto mb-4 text-green-200" />
                     <h3 className="text-2xl font-semibold mb-4">Ready to Find Your Voice?</h3>
                     <p className="mb-6 text-lg">
-                      Experience the power of voice-based AI therapy with TalkAI. Speak your truth, be heard, 
-                      and discover the healing that comes from authentic expression.
+                      Experience the power of voice-based terapia IA with TalkAI. Speak your truth, be heard, 
+                      and discover the sanación that comes from authentic expression.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                       <Link 
@@ -512,7 +512,7 @@ export default function VoiceAITherapyBenefitsPost() {
                         href="/blog/what-is-ai-therapy" 
                         className="inline-block border border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors text-center"
                       >
-                        Learn More About AI Therapy
+                        Learn More About terapia IA
                       </Link>
                     </div>
                   </div>

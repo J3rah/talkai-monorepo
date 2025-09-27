@@ -5,32 +5,32 @@ import { Badge } from '@/components/ui/badge';
 import { CalendarDays, Clock, User, ArrowLeft, CheckCircle, X, Users, Bot, DollarSign, Calendar, Heart, Shield } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'AI Therapy vs Human Therapy: Complete Comparison Guide 2024 | Which is Better?',
-  description: 'Compare AI therapy with traditional human therapy. Understand the advantages, limitations, and when to choose each approach for optimal mental health support.',
+  title: 'Terapia IA vs Terapia Humana: Guía de Comparación Completa 2024 | ¿Cuál es Mejor?',
+  description: 'Compara la terapia IA con la terapia humana tradicional. Entiende las ventajas, limitaciones y cuándo elegir cada enfoque para un apoyo óptimo de salud mental.',
   keywords: [
-    'AI therapy vs human therapy',
-    'AI therapist vs human therapist',
-    'artificial intelligence therapy comparison',
-    'digital therapy vs traditional therapy',
-    'AI counseling vs human counseling',
-    'online therapy comparison',
-    'AI therapy benefits',
-    'human therapy advantages',
-    'mental health technology',
-    'therapy options comparison'
+    'terapia IA vs terapia humana',
+    'terapeuta IA vs terapeuta humano',
+    'comparación terapia inteligencia artificial',
+    'terapia digital vs terapia tradicional',
+    'asesoramiento IA vs asesoramiento humano',
+    'comparación terapia online',
+    'beneficios terapia IA',
+    'ventajas terapia humana',
+    'tecnología salud mental',
+    'comparación opciones terapia'
   ],
   openGraph: {
-    title: 'AI Therapy vs Human Therapy: Which is Better for You?',
-    description: 'Comprehensive comparison of AI therapy and human therapy. Learn the pros, cons, and when to choose each approach.',
+    title: 'Terapia IA vs Terapia Humana: ¿Cuál es Mejor para Ti?',
+    description: 'Comparación integral de terapia IA y terapia humana. Aprende los pros, contras y cuándo elegir cada enfoque.',
     type: 'article',
     images: ['/og-ai-vs-human-therapy.png'],
     publishedTime: '2024-07-17',
-    authors: ['Dr. Sarah Chen'],
+    authors: ['Dra. Sarah Chen'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AI Therapy vs Human Therapy: Complete Comparison',
-    description: 'Which therapy approach is right for you? Compare AI and human therapy options.',
+    title: 'Terapia IA vs Terapia Humana: Comparación Completa',
+    description: '¿Qué enfoque de terapia es adecuado para ti? Compara las opciones de terapia IA y humana.',
     images: ['/twitter-ai-vs-human-therapy.png'],
   },
 };
@@ -42,7 +42,7 @@ export default function AIvsHumanTherapyPost() {
         {/* Back Navigation */}
         <Link href="/blog" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-8">
           <ArrowLeft className="w-4 h-4" />
-          Back to Blog
+          Volver al Blog
         </Link>
 
         <article className="max-w-4xl mx-auto">
@@ -50,32 +50,32 @@ export default function AIvsHumanTherapyPost() {
           <header className="mb-12">
             <div className="flex items-center gap-2 mb-4">
               <Badge variant="secondary" className="bg-purple-100 text-purple-800">
-                Comparison
+                Comparación
               </Badge>
-              <Badge variant="outline">Featured</Badge>
+              <Badge variant="outline">Destacado</Badge>
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
-              AI Therapy vs Human Therapy: Understanding the Differences and Benefits
+              Terapia IA vs Terapia Humana: Entendiendo las Diferencias y Beneficios
             </h1>
             
             <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-              Compare AI therapy with traditional human therapy to understand the advantages, limitations, and when to choose 
-              each approach for optimal mental health support. Make an informed decision about your mental health journey.
+              Compara la terapia IA con la terapia humana tradicional para entender las ventajas, limitaciones y cuándo elegir 
+              cada enfoque para un apoyo óptimo de salud mental. Toma una decisión informada sobre tu viaje de salud mental.
             </p>
 
             <div className="flex items-center gap-6 text-sm text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-6">
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4" />
-                Dr. Sarah Chen
+                Dra. Sarah Chen
               </div>
               <div className="flex items-center gap-2">
                 <CalendarDays className="w-4 h-4" />
-                July 17, 2024
+                17 de Julio, 2024
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                10 min read
+                10 min lectura
               </div>
             </div>
           </header>
@@ -83,22 +83,22 @@ export default function AIvsHumanTherapyPost() {
           {/* Quick Comparison */}
           <Card className="mb-12 bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
             <CardHeader>
-              <CardTitle className="text-2xl text-center">Quick Comparison Overview</CardTitle>
+              <CardTitle className="text-2xl text-center">Resumen de Comparación Rápida</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="text-center">
                   <Bot className="w-12 h-12 mx-auto mb-4 text-blue-600" />
-                  <h3 className="text-xl font-semibold mb-2">AI Therapy</h3>
+                  <h3 className="text-xl font-semibold mb-2">Terapia IA</h3>
                   <p className="text-sm text-slate-600">
-                    Available 24/7, cost-effective, immediate access, consistent quality, privacy-focused
+                    Disponible 24/7, costo-efectiva, acceso inmediato, calidad consistente, enfocada en privacidad
                   </p>
                 </div>
                 <div className="text-center">
                   <Users className="w-12 h-12 mx-auto mb-4 text-green-600" />
-                  <h3 className="text-xl font-semibold mb-2">Human Therapy</h3>
+                  <h3 className="text-xl font-semibold mb-2">Terapia Humana</h3>
                   <p className="text-sm text-slate-600">
-                    Deep empathy, complex problem-solving, medical expertise, personalized treatment, cultural understanding
+                    Empatía profunda, resolución de problemas complejos, experiencia médica, tratamiento personalizado, comprensión cultural
                   </p>
                 </div>
               </div>
@@ -109,35 +109,35 @@ export default function AIvsHumanTherapyPost() {
           <div className="prose prose-lg max-w-none dark:prose-invert">
             
             <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">The Mental Health Landscape Today</h2>
+              <h2 className="text-3xl font-bold mb-6">El Panorama de Salud Mental Hoy</h2>
               
               <p className="text-lg mb-6">
-                Mental health support has evolved dramatically in recent years. While traditional human therapy remains the gold standard 
-                for many conditions, AI therapy has emerged as a powerful complementary tool that addresses many barriers to mental healthcare. 
-                Understanding when to use each approach – or how to combine them – is crucial for optimal mental health outcomes.
+                El apoyo de salud mental ha evolucionado dramáticamente en los últimos años. Mientras que la terapia humana tradicional sigue siendo el estándar de oro 
+                para muchas condiciones, la terapia IA ha surgido como una herramienta complementaria poderosa que aborda muchas barreras a la atención de salud mental. 
+                Entender cuándo usar cada enfoque – o cómo combinarlos – es crucial para resultados óptimos de salud mental.
               </p>
 
               <Card className="bg-yellow-50 border-yellow-200 mb-8">
                 <CardContent className="pt-6">
-                  <h3 className="font-semibold mb-2">The Mental Health Crisis</h3>
+                  <h3 className="font-semibold mb-2">La Crisis de Salud Mental</h3>
                   <ul className="space-y-2 text-sm">
-                    <li>• <strong>1 in 4 people</strong> worldwide will experience mental health issues</li>
-                    <li>• <strong>70% of people</strong> with mental health conditions receive no treatment</li>
-                    <li>• Average wait time for therapy appointments: <strong>6-8 weeks</strong></li>
-                    <li>• <strong>Cost barriers</strong> prevent 45% of people from seeking help</li>
+                    <li>• <strong>1 de cada 4 personas</strong> en el mundo experimentará problemas de salud mental</li>
+                    <li>• <strong>70% de las personas</strong> con condiciones de salud mental no reciben tratamiento</li>
+                    <li>• Tiempo promedio de espera para citas de terapia: <strong>6-8 semanas</strong></li>
+                    <li>• <strong>Barreras de costo</strong> impiden que el 45% de las personas busquen ayuda</li>
                   </ul>
                 </CardContent>
               </Card>
             </section>
 
             <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">Detailed Comparison: AI Therapy vs Human Therapy</h2>
+              <h2 className="text-3xl font-bold mb-6">Comparación Detallada: Terapia IA vs Terapia Humana</h2>
               
-              {/* Accessibility */}
+              {/* Accesibilidad */}
               <div className="mb-8">
                 <h3 className="text-2xl font-semibold mb-4 flex items-center gap-2">
                   <Calendar className="w-6 h-6 text-blue-600" />
-                  Accessibility & Availability
+                  Accesibilidad y Disponibilidad
                 </h3>
                 
                 <div className="grid md:grid-cols-2 gap-6">
@@ -145,26 +145,26 @@ export default function AIvsHumanTherapyPost() {
                     <CardHeader>
                       <CardTitle className="text-lg flex items-center gap-2">
                         <Bot className="w-5 h-5 text-blue-600" />
-                        AI Therapy
+                        terapia IA
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-3">
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">Available 24/7, 365 days a year</span>
+                          <span className="text-sm">Disponible 24/7, 365 días al año</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">Instant access, no waiting lists</span>
+                          <span className="text-sm">Acceso instantáneo, sin listas de espera</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">Works from anywhere with internet</span>
+                          <span className="text-sm">Funciona desde cualquier lugar con internet</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">No geographical limitations</span>
+                          <span className="text-sm">Sin limitaciones geográficas</span>
                         </div>
                       </div>
                     </CardContent>
@@ -181,19 +181,19 @@ export default function AIvsHumanTherapyPost() {
                       <div className="space-y-3">
                         <div className="flex items-center gap-2">
                           <X className="w-4 h-4 text-red-500" />
-                          <span className="text-sm">Limited to business hours</span>
+                          <span className="text-sm">Limitado a horarios de oficina</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <X className="w-4 h-4 text-red-500" />
-                          <span className="text-sm">Often has waiting lists (6-8 weeks)</span>
+                          <span className="text-sm">A menudo tiene listas de espera (6-8 semanas)</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">In-person and online options</span>
+                          <span className="text-sm">Opciones presenciales y en línea</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <X className="w-4 h-4 text-red-500" />
-                          <span className="text-sm">May be limited by location</span>
+                          <span className="text-sm">Puede estar limitado por ubicación</span>
                         </div>
                       </div>
                     </CardContent>
@@ -201,11 +201,11 @@ export default function AIvsHumanTherapyPost() {
                 </div>
               </div>
 
-              {/* Cost */}
+              {/* Costo */}
               <div className="mb-8">
                 <h3 className="text-2xl font-semibold mb-4 flex items-center gap-2">
                   <DollarSign className="w-6 h-6 text-green-600" />
-                  Cost & Affordability
+                  Costo y Asequibilidad
                 </h3>
                 
                 <div className="grid md:grid-cols-2 gap-6">
@@ -213,26 +213,26 @@ export default function AIvsHumanTherapyPost() {
                     <CardHeader>
                       <CardTitle className="text-lg flex items-center gap-2">
                         <Bot className="w-5 h-5 text-blue-600" />
-                        AI Therapy
+                        terapia IA
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-3">
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">$20-50/month for unlimited access</span>
+                          <span className="text-sm">$20-50/mes por acceso ilimitado</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">Often includes free trial periods</span>
+                          <span className="text-sm">A menudo incluye períodos de prueba gratuitos</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">No insurance requirements</span>
+                          <span className="text-sm">Sin requisitos de seguro</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">Scales with usage</span>
+                          <span className="text-sm">Se escala con el uso</span>
                         </div>
                       </div>
                     </CardContent>
@@ -249,19 +249,19 @@ export default function AIvsHumanTherapyPost() {
                       <div className="space-y-3">
                         <div className="flex items-center gap-2">
                           <X className="w-4 h-4 text-red-500" />
-                          <span className="text-sm">$100-300+ per session</span>
+                          <span className="text-sm">$100-300+ por sesión</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">May be covered by insurance</span>
+                          <span className="text-sm">Puede estar cubierto por seguro</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <X className="w-4 h-4 text-red-500" />
-                          <span className="text-sm">Insurance often limits sessions</span>
+                          <span className="text-sm">El seguro a menudo limita las sesiones</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <X className="w-4 h-4 text-red-500" />
-                          <span className="text-sm">Additional costs for specialization</span>
+                          <span className="text-sm">Costos adicionales por especialización</span>
                         </div>
                       </div>
                     </CardContent>
@@ -269,11 +269,11 @@ export default function AIvsHumanTherapyPost() {
                 </div>
               </div>
 
-              {/* Treatment Quality */}
+              {/* Calidad del Tratamiento */}
               <div className="mb-8">
                 <h3 className="text-2xl font-semibold mb-4 flex items-center gap-2">
                   <Heart className="w-6 h-6 text-red-500" />
-                  Treatment Quality & Approach
+                  Calidad del Tratamiento y Enfoque
                 </h3>
                 
                 <div className="grid md:grid-cols-2 gap-6">
@@ -281,26 +281,26 @@ export default function AIvsHumanTherapyPost() {
                     <CardHeader>
                       <CardTitle className="text-lg flex items-center gap-2">
                         <Bot className="w-5 h-5 text-blue-600" />
-                        AI Therapy
+                        terapia IA
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-3">
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">Consistent, evidence-based responses</span>
+                          <span className="text-sm">Respuestas consistentes basadas en evidencia</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">No therapist burnout or bad days</span>
+                          <span className="text-sm">Sin agotamiento del terapeuta o malos días</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">Data-driven insights and tracking</span>
+                          <span className="text-sm">Perspectivas y seguimiento basados en datos</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <X className="w-4 h-4 text-red-500" />
-                          <span className="text-sm">Limited emotional nuance understanding</span>
+                          <span className="text-sm">Comprensión limitada de matices emocionales</span>
                         </div>
                       </div>
                     </CardContent>
@@ -317,19 +317,19 @@ export default function AIvsHumanTherapyPost() {
                       <div className="space-y-3">
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">Deep empathy and emotional connection</span>
+                          <span className="text-sm">Empatía profunda y conexión emocional</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">Complex problem-solving abilities</span>
+                          <span className="text-sm">Habilidades complejas de resolución de problemas</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">Cultural and contextual understanding</span>
+                          <span className="text-sm">Comprensión cultural y contextual</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <X className="w-4 h-4 text-red-500" />
-                          <span className="text-sm">Quality varies by therapist</span>
+                          <span className="text-sm">La calidad varía según el terapeuta</span>
                         </div>
                       </div>
                     </CardContent>
@@ -337,11 +337,11 @@ export default function AIvsHumanTherapyPost() {
                 </div>
               </div>
 
-              {/* Privacy & Comfort */}
+              {/* Privacidad y Comodidad */}
               <div className="mb-8">
                 <h3 className="text-2xl font-semibold mb-4 flex items-center gap-2">
                   <Shield className="w-6 h-6 text-purple-600" />
-                  Privacy & Comfort
+                  Privacidad y Comodidad
                 </h3>
                 
                 <div className="grid md:grid-cols-2 gap-6">
@@ -349,26 +349,26 @@ export default function AIvsHumanTherapyPost() {
                     <CardHeader>
                       <CardTitle className="text-lg flex items-center gap-2">
                         <Bot className="w-5 h-5 text-blue-600" />
-                        AI Therapy
+                        terapia IA
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-3">
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">Complete anonymity if desired</span>
+                          <span className="text-sm">Anonimato completo si se desea</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">Reduced stigma and social anxiety</span>
+                          <span className="text-sm">Estigma reducido y ansiedad social</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">Use from comfort of home</span>
+                          <span className="text-sm">Uso desde la comodidad del hogar</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">No fear of judgment</span>
+                          <span className="text-sm">Sin miedo al juicio</span>
                         </div>
                       </div>
                     </CardContent>
@@ -385,19 +385,19 @@ export default function AIvsHumanTherapyPost() {
                       <div className="space-y-3">
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">Professional confidentiality</span>
+                          <span className="text-sm">Confidencialidad profesional</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <X className="w-4 h-4 text-red-500" />
-                          <span className="text-sm">May involve insurance records</span>
+                          <span className="text-sm">Puede involucrar registros de seguro</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span className="text-sm">Human connection and warmth</span>
+                          <span className="text-sm">Conexión humana y calidez</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <X className="w-4 h-4 text-red-500" />
-                          <span className="text-sm">Some people feel judged initially</span>
+                          <span className="text-sm">Algunas personas se sienten juzgadas inicialmente</span>
                         </div>
                       </div>
                     </CardContent>
@@ -407,74 +407,74 @@ export default function AIvsHumanTherapyPost() {
             </section>
 
             <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">When to Choose AI Therapy</h2>
+              <h2 className="text-3xl font-bold mb-6">Cuándo Elegir Terapia IA</h2>
               
               <Card className="bg-blue-50 border-blue-200 mb-6">
                 <CardContent className="pt-6">
-                  <h3 className="font-semibold text-lg mb-3 text-blue-800">AI Therapy is Ideal For:</h3>
+                  <h3 className="font-semibold text-lg mb-3 text-blue-800">La Terapia IA es Ideal Para:</h3>
                   <div className="grid md:grid-cols-2 gap-4">
                     <ul className="space-y-2">
-                      <li>• <strong>Immediate support needs</strong> (anxiety attacks, stress)</li>
-                      <li>• <strong>Mild to moderate</strong> mental health conditions</li>
-                      <li>• <strong>Budget-conscious</strong> individuals</li>
-                      <li>• <strong>Busy schedules</strong> requiring flexibility</li>
+                      <li>• <strong>Necesidades inmediatas de apoyo</strong> (ataques de ansiedad, estrés)</li>
+                      <li>• <strong>Condiciones leves a moderadas</strong> de salud mental</li>
+                      <li>• <strong>Personas conscientes del presupuesto</strong></li>
+                      <li>• <strong>Horarios ocupados</strong> que requieren flexibilidad</li>
                     </ul>
                     <ul className="space-y-2">
-                      <li>• <strong>Privacy-focused</strong> people</li>
-                      <li>• <strong>Tech-comfortable</strong> users</li>
-                      <li>• <strong>Supplemental support</strong> between human sessions</li>
-                      <li>• <strong>Initial exploration</strong> of therapy</li>
+                      <li>• <strong>Personas enfocadas en privacidad</strong></li>
+                      <li>• <strong>Usuarios cómodos con la tecnología</strong></li>
+                      <li>• <strong>Apoyo complementario</strong> entre sesiones humanas</li>
+                      <li>• <strong>Exploración inicial</strong> de terapia</li>
                     </ul>
                   </div>
                 </CardContent>
               </Card>
 
-              <h3 className="text-2xl font-semibold mb-4">Perfect Use Cases for AI Therapy</h3>
+              <h3 className="text-2xl font-semibold mb-4">Casos de Uso Perfectos para Terapia IA</h3>
               <div className="grid md:grid-cols-2 gap-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">🌙 Late-Night Anxiety</CardTitle>
+                    <CardTitle className="text-lg">🌙 Ansiedad Nocturna</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm">
-                      When anxiety strikes at 2 AM, AI therapy provides immediate coping strategies and emotional support 
-                      without waiting for morning appointments.
+                      Cuando la ansiedad ataca a las 2 AM, la terapia IA proporciona estrategias inmediatas de afrontamiento y apoyo emocional 
+                      sin esperar citas matutinas.
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">💼 Workplace Stress</CardTitle>
+                    <CardTitle className="text-lg">💼 Estrés Laboral</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm">
-                      Quick stress management techniques between meetings, without scheduling conflicts or privacy concerns 
-                      in office environments.
+                      Técnicas rápidas de gestión del estrés entre reuniones, sin conflictos de programación o preocupaciones de privacidad 
+                      en entornos de oficina.
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">📚 Student Mental Health</CardTitle>
+                    <CardTitle className="text-lg">📚 Salud Mental Estudiantil</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm">
-                      Affordable mental health support for students dealing with academic pressure, social anxiety, 
-                      and transition challenges.
+                      Apoyo de salud mental asequible para estudiantes que lidian con presión académica, ansiedad social, 
+                      y desafíos de transición.
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">🔄 Ongoing Maintenance</CardTitle>
+                    <CardTitle className="text-lg">🔄 Mantenimiento Continuo</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm">
-                      Daily check-ins and mood tracking for people maintaining mental wellness or between 
-                      traditional therapy sessions.
+                      Revisiones diarias y seguimiento del estado de ánimo para personas que mantienen bienestar mental o entre 
+                      sesiones de terapia tradicional.
                     </p>
                   </CardContent>
                 </Card>
@@ -482,23 +482,23 @@ export default function AIvsHumanTherapyPost() {
             </section>
 
             <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">When to Choose Human Therapy</h2>
+              <h2 className="text-3xl font-bold mb-6">Cuándo Elegir Terapia Humana</h2>
               
               <Card className="bg-green-50 border-green-200 mb-6">
                 <CardContent className="pt-6">
-                  <h3 className="font-semibold text-lg mb-3 text-green-800">Human Therapy is Essential For:</h3>
+                  <h3 className="font-semibold text-lg mb-3 text-green-800">La Terapia Humana es Esencial Para:</h3>
                   <div className="grid md:grid-cols-2 gap-4">
                     <ul className="space-y-2">
-                      <li>• <strong>Severe mental health conditions</strong> (bipolar, schizophrenia)</li>
-                      <li>• <strong>Crisis situations</strong> (suicidal thoughts, self-harm)</li>
-                      <li>• <strong>Complex trauma</strong> and PTSD</li>
-                      <li>• <strong>Medication management</strong> needs</li>
+                      <li>• <strong>Condiciones severas de salud mental</strong> (bipolar, esquizofrenia)</li>
+                      <li>• <strong>Situaciones de crisis</strong> (pensamientos suicidas, autolesión)</li>
+                      <li>• <strong>Trauma complejo</strong> y TEPT</li>
+                      <li>• <strong>Gestión de medicamentos</strong> necesidades</li>
                     </ul>
                     <ul className="space-y-2">
-                      <li>• <strong>Relationship therapy</strong> (couples, family)</li>
-                      <li>• <strong>Eating disorders</strong> and addiction</li>
-                      <li>• <strong>Legal/ethical situations</strong> requiring professional judgment</li>
-                      <li>• <strong>Cultural-specific</strong> therapy needs</li>
+                      <li>• <strong>Terapia de pareja</strong> (parejas, familia)</li>
+                      <li>• <strong>Trastornos alimentarios</strong> y adicción</li>
+                      <li>• <strong>Situaciones legales/éticas</strong> que requieren juicio profesional</li>
+                      <li>• <strong>Terapia específica cultural</strong> necesidades</li>
                     </ul>
                   </div>
                 </CardContent>
@@ -506,83 +506,83 @@ export default function AIvsHumanTherapyPost() {
 
               <Card className="bg-red-50 border-red-200">
                 <CardContent className="pt-6">
-                  <h3 className="font-semibold text-lg mb-3 text-red-800">⚠️ When AI Therapy Isn't Enough</h3>
+                  <h3 className="font-semibold text-lg mb-3 text-red-800">⚠️ Cuándo la Terapia IA No es Suficiente</h3>
                   <p className="text-red-700 mb-3">
-                    If you're experiencing any of these situations, seek immediate human professional help:
+                    Si estás experimentando alguna de estas situaciones, busca ayuda profesional humana inmediata:
                   </p>
                   <ul className="space-y-2 text-red-700">
-                    <li>• Thoughts of suicide or self-harm</li>
-                    <li>• Hearing voices or experiencing hallucinations</li>
-                    <li>• Severe depression preventing daily functioning</li>
-                    <li>• Substance abuse or addiction issues</li>
-                    <li>• Domestic violence or abuse situations</li>
+                    <li>• Pensamientos de suicidio o autolesión</li>
+                    <li>• Escuchar voces o experimentar alucinaciones</li>
+                    <li>• Depresión severa que impide el funcionamiento diario</li>
+                    <li>• Problemas de abuso de sustancias o adicción</li>
+                    <li>• Situaciones de violencia doméstica o abuso</li>
                   </ul>
                 </CardContent>
               </Card>
             </section>
 
             <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">The Hybrid Approach: Combining Both</h2>
+              <h2 className="text-3xl font-bold mb-6">El Enfoque Híbrido: Combinando Ambos</h2>
               
               <p className="text-lg mb-6">
-                Many mental health professionals now recommend a <strong>hybrid approach</strong> that combines the strengths 
-                of both AI and human therapy for optimal outcomes.
+                Muchos profesionales de salud mental ahora recomiendan un <strong>enfoque híbrido</strong> que combina las fortalezas 
+                de tanto la IA como la terapia humana para resultados óptimos.
               </p>
 
               <Card className="bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 mb-8">
                 <CardContent className="pt-6">
-                  <h3 className="font-semibold text-lg mb-4">Hybrid Approach Benefits:</h3>
+                  <h3 className="font-semibold text-lg mb-4">Beneficios del Enfoque Híbrido:</h3>
                   <div className="grid md:grid-cols-2 gap-4">
                     <ul className="space-y-2">
-                      <li>• <strong>Continuous support</strong> between human sessions</li>
-                      <li>• <strong>Cost optimization</strong> - fewer expensive human sessions needed</li>
-                      <li>• <strong>Better preparation</strong> for human therapy sessions</li>
-                      <li>• <strong>Consistent progress tracking</strong> and insights</li>
+                      <li>• <strong>Apoyo continuo</strong> entre sesiones humanas</li>
+                      <li>• <strong>Optimización de costos</strong> - menos sesiones humanas costosas necesarias</li>
+                      <li>• <strong>Mejor preparación</strong> para sesiones de terapia humana</li>
+                      <li>• <strong>Seguimiento consistente del progreso</strong> y perspectivas</li>
                     </ul>
                     <ul className="space-y-2">
-                      <li>• <strong>Crisis prevention</strong> through early intervention</li>
-                      <li>• <strong>Skill practice</strong> and reinforcement</li>
-                      <li>• <strong>Reduced dependency</strong> on human therapist availability</li>
-                      <li>• <strong>Enhanced self-awareness</strong> through data insights</li>
+                      <li>• <strong>Prevención de crisis</strong> a través de intervención temprana</li>
+                      <li>• <strong>Práctica de habilidades</strong> y refuerzo</li>
+                      <li>• <strong>Dependencia reducida</strong> de la disponibilidad del terapeuta humano</li>
+                      <li>• <strong>Autoconciencia mejorada</strong> a través de perspectivas de datos</li>
                     </ul>
                   </div>
                 </CardContent>
               </Card>
 
-              <h3 className="text-2xl font-semibold mb-4">Sample Hybrid Treatment Plan</h3>
+              <h3 className="text-2xl font-semibold mb-4">Plan de Tratamiento Híbrido de Ejemplo</h3>
               <div className="space-y-4">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">Week 1-2: Assessment & Foundation</CardTitle>
+                    <CardTitle className="text-lg">Semana 1-2: Evaluación y Fundación</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm">
-                      Start with human therapist for assessment and treatment plan. Use AI therapy daily for 
-                      mood tracking and initial coping skill practice.
+                      Comienza con terapeuta humano para evaluación y plan de tratamiento. Usa terapia IA diariamente para 
+                      seguimiento del estado de ánimo y práctica inicial de habilidades de afrontamiento.
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">Week 3-6: Active Treatment</CardTitle>
+                    <CardTitle className="text-lg">Semana 3-6: Tratamiento Activo</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm">
-                      Bi-weekly human sessions for complex issues. Daily AI support for stress management, 
-                      anxiety coping, and therapy homework reinforcement.
+                      Sesiones humanas quincenales para problemas complejos. Apoyo de IA diario para gestión del estrés, 
+                      afrontamiento de ansiedad, y refuerzo de tareas de terapia.
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">Week 7+: Maintenance</CardTitle>
+                    <CardTitle className="text-lg">Semana 7+: Mantenimiento</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm">
-                      Monthly human check-ins for progress review. AI therapy as primary support for 
-                      ongoing maintenance and crisis prevention.
+                      Revisiones humanas mensuales para revisión del progreso. Terapia IA como apoyo primario para 
+                      mantenimiento continuo y prevención de crisis.
                     </p>
                   </CardContent>
                 </Card>
@@ -590,40 +590,40 @@ export default function AIvsHumanTherapyPost() {
             </section>
 
             <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">Making Your Decision: Key Questions</h2>
+              <h2 className="text-3xl font-bold mb-6">Tomando Tu Decisión: Preguntas Clave</h2>
               
               <Card className="bg-slate-50 dark:bg-slate-800 mb-8">
                 <CardContent className="pt-6">
-                  <h3 className="font-semibold text-lg mb-4">Ask Yourself:</h3>
+                  <h3 className="font-semibold text-lg mb-4">Pregúntate a Ti Mismo:</h3>
                   <div className="space-y-4">
                     <div>
-                      <h4 className="font-medium mb-2">🎯 What's your primary goal?</h4>
+                      <h4 className="font-medium mb-2">🎯 ¿Cuál es tu objetivo primario?</h4>
                       <p className="text-sm text-slate-600">
-                        Immediate relief, ongoing support, skill building, or deep therapeutic work?
+                        ¿Alivio inmediato, apoyo continuo, construcción de habilidades, o trabajo terapéutico profundo?
                       </p>
                     </div>
                     <div>
-                      <h4 className="font-medium mb-2">💰 What's your budget?</h4>
+                      <h4 className="font-medium mb-2">💰 ¿Cuál es tu presupuesto?</h4>
                       <p className="text-sm text-slate-600">
-                        Can you afford $100-300/session, or do you need a more affordable option?
+                        ¿Puedes permitirte $100-300 por sesión, o necesitas una opción más asequible?
                       </p>
                     </div>
                     <div>
-                      <h4 className="font-medium mb-2">⏰ How urgent is your need?</h4>
+                      <h4 className="font-medium mb-2">⏰ ¿Qué tan urgente es tu necesidad?</h4>
                       <p className="text-sm text-slate-600">
-                        Do you need help immediately, or can you wait for an appointment?
+                        ¿Necesitas ayuda inmediatamente, o puedes esperar una cita?
                       </p>
                     </div>
                     <div>
-                      <h4 className="font-medium mb-2">🤝 What's your comfort level?</h4>
+                      <h4 className="font-medium mb-2">🤝 ¿Cuál es tu nivel de comodidad?</h4>
                       <p className="text-sm text-slate-600">
-                        Are you comfortable with technology, or do you prefer human interaction?
+                        ¿Te sientes cómodo con la tecnología, o prefieres la interacción humana?
                       </p>
                     </div>
                     <div>
-                      <h4 className="font-medium mb-2">📊 How severe are your symptoms?</h4>
+                      <h4 className="font-medium mb-2">📊 ¿Qué tan severos son tus síntomas?</h4>
                       <p className="text-sm text-slate-600">
-                        Mild stress/anxiety, or complex conditions requiring medical expertise?
+                        ¿Estrés/ansiedad leve, o condiciones complejas que requieren experiencia médica?
                       </p>
                     </div>
                   </div>
@@ -632,31 +632,31 @@ export default function AIvsHumanTherapyPost() {
             </section>
 
             <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">The Future of Mental Health Care</h2>
+              <h2 className="text-3xl font-bold mb-6">El Futuro de la Atención de Salud Mental</h2>
               
               <p className="text-lg mb-6">
-                The future of mental health care isn't about choosing between AI and human therapy – it's about intelligent 
-                integration of both approaches to create more accessible, effective, and personalized mental health support.
+                El futuro de la atención de salud mental no se trata de elegir entre IA y terapia humana – se trata de la integración inteligente 
+                de ambos enfoques para crear apoyo de salud mental más accesible, efectivo y personalizado.
               </p>
 
               <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
                 <CardContent className="pt-6">
-                  <h3 className="text-xl font-semibold mb-4">Ready to Start Your Mental Health Journey?</h3>
+                  <h3 className="text-xl font-semibold mb-4">¿Listo para Comenzar Tu Viaje de Salud Mental?</h3>
                   <p className="mb-6">
-                    Whether you choose AI therapy, human therapy, or a combination of both, taking the first step 
-                    is what matters most. TalkAI provides accessible, empathetic AI support available 24/7.
+                    Ya sea que elijas terapia IA, terapia humana, o una combinación de ambas, dar el primer paso 
+                    es lo que más importa. TalkAI proporciona apoyo de IA accesible y empático disponible 24/7.
                   </p>
                   <Link 
                     href="/auth" 
                     className="inline-block bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors mr-4"
                   >
-                    Try AI Therapy Free →
+                    Probar Terapia IA Gratis →
                   </Link>
                   <Link 
-                    href="/mental-health-resources" 
+                    href="/mental-health-recursos" 
                     className="inline-block border border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors"
                   >
-                    Find Human Therapists
+                    Encontrar Terapeutas Humanos
                   </Link>
                 </CardContent>
               </Card>

@@ -5,23 +5,23 @@ import { Badge } from '@/components/ui/badge';
 import { CalendarDays, Clock, User, ArrowLeft, CheckCircle, Heart, Brain, Zap, Mic, Eye, Cpu } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'How Empathetic AI Technology Understands Your Emotions | The Science Behind AI Therapy',
-  description: 'Dive deep into the science behind empathetic AI, emotion recognition, and how TalkAI creates meaningful therapeutic connections through advanced emotional intelligence.',
+  title: 'How Empathetic AI Technology Understands Your emociones | The Science Behind terapia IA',
+  description: 'Dive deep into the science behind empathetic AI, emotion recognition, and how TalkAI creates meaningful terapéutico connections through avanzado emotional intelligence.',
   keywords: [
     'empathetic AI technology',
     'emotion recognition AI',
-    'emotional AI therapy',
+    'emotional terapia IA',
     'AI emotional intelligence',
     'empathetic artificial intelligence',
     'emotion detection AI',
     'AI empathy technology',
-    'emotional AI understanding',
-    'AI therapy emotions',
+    'emotional AI comprensión',
+    'terapia IA emociones',
     'empathetic voice AI'
   ],
   openGraph: {
-    title: 'How Empathetic AI Technology Understands Your Emotions',
-    description: 'Discover the cutting-edge science behind AI that can recognize, understand, and respond to human emotions with genuine empathy.',
+    title: 'How Empathetic AI Technology Understands Your emociones',
+    description: 'Discover the vanguardista science behind AI that can recognize, understand, and respond to human emociones with genuine empathy.',
     type: 'article',
     images: ['/og-empathetic-ai-technology.png'],
     publishedTime: '2024-07-15',
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'The Science of Empathetic AI: How Machines Learn to Care',
-    description: 'Explore how advanced AI technology recognizes and responds to human emotions with therapeutic empathy.',
+    description: 'Explore how avanzado AI technology recognizes and responds to human emociones with terapéutico empathy.',
     images: ['/twitter-empathetic-ai-technology.png'],
   },
 };
@@ -42,7 +42,7 @@ export default function EmpatheticAITechnologyPost() {
         {/* Back Navigation */}
         <Link href="/blog" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-8">
           <ArrowLeft className="w-4 h-4" />
-          Back to Blog
+          Volver al Blog
         </Link>
 
         <article className="max-w-4xl mx-auto">
@@ -56,12 +56,12 @@ export default function EmpatheticAITechnologyPost() {
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
-              How Empathetic AI Technology Understands Your Emotions
+              How Empathetic AI Technology Understands Your emociones
             </h1>
             
             <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
               Dive deep into the science behind empathetic AI, emotion recognition, and how TalkAI creates meaningful 
-              therapeutic connections. Discover how machines are learning to understand and respond to human emotions 
+              terapéutico connections. Discover how machines are learning to understand and respond to human emociones 
               with genuine care.
             </p>
 
@@ -76,7 +76,7 @@ export default function EmpatheticAITechnologyPost() {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                12 min read
+                12 min lectura
               </div>
             </div>
           </header>
@@ -101,10 +101,10 @@ export default function EmpatheticAITechnologyPost() {
                     <div className="text-sm">Empathetic Response</div>
                   </div>
                 </div>
-                <h2 className="text-2xl font-bold mb-4">The Journey from Sound to Understanding</h2>
+                <h2 className="text-2xl font-bold mb-4">The Journey from Sound to comprensión</h2>
                 <p className="text-lg text-purple-100 max-w-3xl mx-auto">
-                  Modern empathetic AI doesn't just hear your words – it understands the emotions behind them, 
-                  recognizes your mental state, and responds with appropriate therapeutic care.
+                  Modern empathetic AI doesn't just hear your words – it understands the emociones behind them, 
+                  recognizes your mental state, and responds with appropriate terapéutico care.
                 </p>
               </div>
             </CardContent>
@@ -117,9 +117,9 @@ export default function EmpatheticAITechnologyPost() {
               <h2 className="text-3xl font-bold mb-6">What Makes AI "Empathetic"?</h2>
               
               <p className="text-lg mb-6">
-                Empathy in humans involves understanding and sharing the feelings of another person. For AI to be truly 
-                empathetic, it must go beyond simple pattern matching to develop a sophisticated understanding of human 
-                emotional states and respond in ways that demonstrate genuine care and understanding.
+                Empathy in humans involves comprensión and sharing the sentimientos of another person. For AI to be truly 
+                empathetic, it must go beyond simple pattern matching to develop a sofisticado comprensión of human 
+                emotional states and respond in ways that demonstrate genuine care and comprensión.
               </p>
 
               <Card className="bg-blue-50 border-blue-200 mb-8">
@@ -133,21 +133,21 @@ export default function EmpatheticAITechnologyPost() {
                     </div>
                     <div className="text-center">
                       <Brain className="w-8 h-8 mx-auto mb-2 text-blue-600" />
-                      <h4 className="font-semibold mb-2">Understanding</h4>
+                      <h4 className="font-semibold mb-2">comprensión</h4>
                       <p className="text-sm text-blue-700">Comprehending the context and meaning behind emotional expressions</p>
                     </div>
                     <div className="text-center">
                       <Heart className="w-8 h-8 mx-auto mb-2 text-blue-600" />
                       <h4 className="font-semibold mb-2">Response</h4>
-                      <p className="text-sm text-blue-700">Generating appropriate, caring responses that provide genuine support</p>
+                      <p className="text-sm text-blue-700">Generating appropriate, caring responses that provide genuine apoyo</p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
               <p>
-                Unlike traditional AI that simply processes information, empathetic AI combines multiple advanced technologies 
-                to create a system that can truly understand and respond to human emotional needs in a therapeutic context.
+                Unlike traditional AI that simply processes information, empathetic AI combines multiple avanzado technologies 
+                to create a system that can truly understand and respond to human emotional necesidades in a terapéutico context.
               </p>
             </section>
 
@@ -159,7 +159,7 @@ export default function EmpatheticAITechnologyPost() {
               
               <p className="text-lg mb-6">
                 Your voice carries a wealth of emotional information that empathetic AI can detect and interpret. 
-                Advanced voice analysis goes far beyond understanding words to decode the emotions underlying your speech.
+                avanzado voice analysis goes far beyond comprensión words to decode the emociones underlying your speech.
               </p>
 
               <h3 className="text-2xl font-semibold mb-4">Vocal Biomarkers of Emotion</h3>
@@ -171,11 +171,11 @@ export default function EmpatheticAITechnologyPost() {
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2 text-sm">
-                      <li>• <strong>Pitch (Fundamental Frequency):</strong> Higher pitch often indicates stress or excitement</li>
-                      <li>• <strong>Pitch Variability:</strong> Monotone speech may suggest depression</li>
-                      <li>• <strong>Speaking Rate:</strong> Fast speech can indicate anxiety, slow speech may suggest sadness</li>
+                      <li>• <strong>Pitch (Fundamental Frequency):</strong> Higher pitch often indicates estrés or excitement</li>
+                      <li>• <strong>Pitch Variability:</strong> Monotone speech may suggest depresión</li>
+                      <li>• <strong>Speaking Rate:</strong> Fast speech can indicate ansiedad, slow speech may suggest sadness</li>
                       <li>• <strong>Volume (Intensity):</strong> Sudden volume changes reflect emotional shifts</li>
-                      <li>• <strong>Voice Quality:</strong> Breathiness, harshness, or tremor indicate emotional states</li>
+                      <li>• <strong>Voice calidad:</strong> Breathiness, harshness, or tremor indicate emotional states</li>
                     </ul>
                   </CardContent>
                 </Card>
@@ -190,7 +190,7 @@ export default function EmpatheticAITechnologyPost() {
                       <li>• <strong>Pause Frequency:</strong> Many pauses can suggest uncertainty or distress</li>
                       <li>• <strong>Speech Rhythm:</strong> Irregular rhythms may indicate emotional turbulence</li>
                       <li>• <strong>Syllable Timing:</strong> Changes in timing patterns reveal emotional shifts</li>
-                      <li>• <strong>Breathing Patterns:</strong> Audible breathing changes indicate anxiety or calm</li>
+                      <li>• <strong>Breathing Patterns:</strong> Audible breathing changes indicate ansiedad or calm</li>
                     </ul>
                   </CardContent>
                 </Card>
@@ -199,7 +199,7 @@ export default function EmpatheticAITechnologyPost() {
               <h3 className="text-2xl font-semibold mb-4">Real-Time Emotional State Detection</h3>
               <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-green-200">
                 <CardContent className="pt-6">
-                  <h4 className="font-semibold mb-3">Example: How AI Detects Anxiety in Real-Time</h4>
+                  <h4 className="font-semibold mb-3">Example: How AI Detects ansiedad in Real-Time</h4>
                   <div className="space-y-3 text-sm">
                     <div className="bg-white p-3 rounded border-l-4 border-orange-400">
                       <strong>User speaks:</strong> "I... um... I don't know if I can... *voice shaking* ...handle this presentation tomorrow."
@@ -209,13 +209,13 @@ export default function EmpatheticAITechnologyPost() {
                       <ul className="mt-2 space-y-1">
                         <li>• Voice tremor indicating nervousness</li>
                         <li>• Increased speech disfluencies ("um", "I...")</li>
-                        <li>• Rising pitch suggesting stress</li>
+                        <li>• Rising pitch suggesting estrés</li>
                         <li>• Hesitation patterns indicating uncertainty</li>
                       </ul>
                     </div>
                     <div className="bg-white p-3 rounded border-l-4 border-green-400">
                       <strong>AI responds empathetically:</strong> "I can hear the nervousness in your voice about tomorrow. 
-                      That presentation is really weighing on you, isn't it? Let's work through some strategies to help you feel more prepared and confident."
+                      That presentation is really weighing on you, isn't it? Let's work through some estrategias to help you feel more prepared and confident."
                     </div>
                   </div>
                 </CardContent>
@@ -225,11 +225,11 @@ export default function EmpatheticAITechnologyPost() {
             <section className="mb-12">
               <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
                 <Brain className="w-8 h-8 text-purple-600" />
-                Natural Language Understanding & Emotional Context
+                Natural Language comprensión & Emotional Context
               </h2>
               
               <p className="text-lg mb-6">
-                Beyond voice analysis, empathetic AI uses advanced natural language processing to understand the emotional 
+                Beyond voice analysis, empathetic AI uses avanzado natural language processing to understand the emotional 
                 content and context of what you're saying, not just the literal meaning of your words.
               </p>
 
@@ -242,11 +242,11 @@ export default function EmpatheticAITechnologyPost() {
                   <CardContent>
                     <p className="mb-3 text-sm">
                       AI analyzes the emotional polarity and intensity of your language, identifying positive, negative, 
-                      or neutral sentiments along with their strength.
+                      or neutral sentiments along with their fortaleza.
                     </p>
                     <div className="bg-slate-50 p-3 rounded text-sm">
                       <strong>Example:</strong> "I'm completely exhausted and nothing seems to matter anymore" 
-                      → Detected: Strong negative sentiment, possible depression indicators
+                      → Detected: Strong negative sentiment, possible depresión indicators
                     </div>
                   </CardContent>
                 </Card>
@@ -257,7 +257,7 @@ export default function EmpatheticAITechnologyPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="mb-3 text-sm">
-                      Advanced models classify specific emotions (joy, sadness, anger, fear, surprise, disgust) 
+                      avanzado models classify specific emociones (joy, sadness, anger, fear, surprise, disgust) 
                       and their intensities based on language patterns.
                     </p>
                     <div className="bg-slate-50 p-3 rounded text-sm">
@@ -269,7 +269,7 @@ export default function EmpatheticAITechnologyPost() {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">🔗 Contextual Understanding</CardTitle>
+                    <CardTitle className="text-lg">🔗 Contextual comprensión</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="mb-3 text-sm">
@@ -277,7 +277,7 @@ export default function EmpatheticAITechnologyPost() {
                       the deeper meaning behind emotional expressions.
                     </p>
                     <div className="bg-slate-50 p-3 rounded text-sm">
-                      <strong>Example:</strong> "I'm fine" could indicate actual wellness or masked distress, 
+                      <strong>Example:</strong> "I'm fine" could indicate actual bienestar or masked distress, 
                       depending on voice tone, conversation context, and personal history
                     </div>
                   </CardContent>
@@ -292,8 +292,8 @@ export default function EmpatheticAITechnologyPost() {
               </h2>
               
               <p className="text-lg mb-6">
-                Empathetic AI relies on sophisticated machine learning models trained on vast datasets of human emotional 
-                expression and therapeutic interactions to develop genuine understanding and appropriate responses.
+                Empathetic AI relies on sofisticado machine learning models trained on vast datasets of human emotional 
+                expression and terapéutico interactions to develop genuine comprensión and appropriate responses.
               </p>
 
               <h3 className="text-2xl font-semibold mb-4">Training Empathetic AI</h3>
@@ -304,10 +304,10 @@ export default function EmpatheticAITechnologyPost() {
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2 text-sm">
-                      <li>• Therapeutic conversation transcripts (anonymized)</li>
+                      <li>• terapéutico conversation transcripts (anonymized)</li>
                       <li>• Emotional speech databases</li>
                       <li>• Psychological assessment data</li>
-                      <li>• Facial expression and voice correlation studies</li>
+                      <li>• Facial expression and voice correlation estudios</li>
                       <li>• Literature on emotional expression and empathy</li>
                     </ul>
                   </CardContent>
@@ -320,16 +320,16 @@ export default function EmpatheticAITechnologyPost() {
                   <CardContent>
                     <ul className="space-y-2 text-sm">
                       <li>• Accurate emotion recognition across diverse populations</li>
-                      <li>• Understanding emotional context and nuance</li>
+                      <li>• comprensión emotional context and nuance</li>
                       <li>• Generating appropriate empathetic responses</li>
-                      <li>• Maintaining therapeutic rapport and trust</li>
+                      <li>• Maintaining terapéutico rapport and trust</li>
                       <li>• Recognizing when to escalate to human professionals</li>
                     </ul>
                   </CardContent>
                 </Card>
               </div>
 
-              <h3 className="text-2xl font-semibold mb-4">Advanced AI Architectures</h3>
+              <h3 className="text-2xl font-semibold mb-4">avanzado AI Architectures</h3>
               <div className="space-y-4">
                 <Card>
                   <CardHeader>
@@ -337,8 +337,8 @@ export default function EmpatheticAITechnologyPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm">
-                      <strong>Purpose:</strong> Process sequential emotional data and maintain context across long conversations. 
-                      These models excel at understanding emotional progression throughout therapy sessions.
+                      <strong>propósito:</strong> proceso sequential emotional data and maintain context across long conversations. 
+                      These models excel at comprensión emotional progression throughout therapy sessions.
                     </p>
                   </CardContent>
                 </Card>
@@ -349,7 +349,7 @@ export default function EmpatheticAITechnologyPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm">
-                      <strong>Purpose:</strong> Analyze temporal patterns in voice and speech to detect emotional changes over time. 
+                      <strong>propósito:</strong> Analyze temporal patterns in voice and speech to detect emotional changes over time. 
                       Perfect for tracking mood fluctuations within and between sessions.
                     </p>
                   </CardContent>
@@ -361,8 +361,8 @@ export default function EmpatheticAITechnologyPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm">
-                      <strong>Purpose:</strong> Combine voice, language, and behavioral data for comprehensive emotional understanding. 
-                      This creates a more complete picture of your emotional state.
+                      <strong>propósito:</strong> Combine voice, language, and behavioral data for integral emotional comprensión. 
+                      This creates a more completo picture of your emotional state.
                     </p>
                   </CardContent>
                 </Card>
@@ -373,8 +373,8 @@ export default function EmpatheticAITechnologyPost() {
               <h2 className="text-3xl font-bold mb-6">Personalization and Adaptive Empathy</h2>
               
               <p className="text-lg mb-6">
-                What makes empathetic AI truly effective is its ability to learn and adapt to your unique emotional patterns, 
-                communication style, and therapeutic needs over time.
+                What makes empathetic AI truly effective is its capacidad to learn and adapt to your unique emotional patterns, 
+                communication style, and terapéutico necesidades over time.
               </p>
 
               <div className="space-y-6">
@@ -384,7 +384,7 @@ export default function EmpatheticAITechnologyPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-green-700 text-sm mb-3">
-                      AI learns your unique ways of expressing emotions. Some people are very verbal about feelings, 
+                      AI learns your unique ways of expressing emociones. Some people are very verbal about sentimientos, 
                       others are more subtle. The AI adapts to your communication style.
                     </p>
                     <div className="bg-white p-3 rounded text-sm">
@@ -396,16 +396,16 @@ export default function EmpatheticAITechnologyPost() {
 
                 <Card className="border-blue-200 bg-blue-50">
                   <CardHeader>
-                    <CardTitle className="text-lg text-blue-800">📈 Progress Tracking</CardTitle>
+                    <CardTitle className="text-lg text-blue-800">📈 progreso Tracking</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-blue-700 text-sm mb-3">
-                      AI monitors emotional patterns over time to understand your mental health trends, 
-                      triggers, and what therapeutic approaches work best for you.
+                      AI monitors emotional patterns over time to understand your salud mental trends, 
+                      triggers, and what terapéutico approaches work best for you.
                     </p>
                     <div className="bg-white p-3 rounded text-sm">
-                      <strong>Insight:</strong> "I've noticed your anxiety levels tend to spike on Sunday evenings. 
-                      Would you like to work on some strategies for managing Sunday anxiety?"
+                      <strong>Insight:</strong> "I've noticed your ansiedad levels tend to spike on Sunday evenings. 
+                      Would you like to work on some estrategias for managing Sunday ansiedad?"
                     </div>
                   </CardContent>
                 </Card>
@@ -416,12 +416,12 @@ export default function EmpatheticAITechnologyPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-purple-700 text-sm mb-3">
-                      AI adjusts its communication style based on what resonates with you. Some prefer direct advice, 
+                      AI adjusts its communication style based on what resonates with you. Some prefer direct consejos, 
                       others need gentle encouragement or reflective listening.
                     </p>
                     <div className="bg-white p-3 rounded text-sm">
                       <strong>Adaptation:</strong> Learning that you respond better to collaborative problem-solving 
-                      rather than directive advice, and adjusting accordingly.
+                      rather than directive consejos, and adjusting accordingly.
                     </div>
                   </CardContent>
                 </Card>
@@ -435,7 +435,7 @@ export default function EmpatheticAITechnologyPost() {
               </h2>
               
               <p className="text-lg mb-6">
-                The ultimate test of empathetic AI is its ability to generate responses that feel genuinely caring, 
+                The ultimate test of empathetic AI is its capacidad to generate responses that feel genuinely caring, 
                 appropriate, and therapeutically helpful in real-time.
               </p>
 
@@ -447,7 +447,7 @@ export default function EmpatheticAITechnologyPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm mb-2">
-                      <strong>Purpose:</strong> Acknowledge and validate the user's emotional experience
+                      <strong>propósito:</strong> Acknowledge and validate the user's emotional experience
                     </p>
                     <p className="text-sm">
                       "I can hear how frustrated you are right now. That must be really difficult to deal with."
@@ -457,11 +457,11 @@ export default function EmpatheticAITechnologyPost() {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">🤝 Empathetic Understanding</CardTitle>
+                    <CardTitle className="text-lg">🤝 Empathetic comprensión</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm mb-2">
-                      <strong>Purpose:</strong> Demonstrate understanding of the emotional context
+                      <strong>propósito:</strong> Demonstrate comprensión of the emotional context
                     </p>
                     <p className="text-sm">
                       "It sounds like you're feeling overwhelmed by all these changes happening at once."
@@ -471,11 +471,11 @@ export default function EmpatheticAITechnologyPost() {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">💡 Therapeutic Guidance</CardTitle>
+                    <CardTitle className="text-lg">💡 terapéutico orientación</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm mb-2">
-                      <strong>Purpose:</strong> Offer appropriate support and coping strategies
+                      <strong>propósito:</strong> Offer appropriate apoyo and afrontamiento estrategias
                     </p>
                     <p className="text-sm">
                       "Let's try a breathing exercise together to help you feel more grounded right now."
@@ -489,24 +489,24 @@ export default function EmpatheticAITechnologyPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm mb-2">
-                      <strong>Purpose:</strong> Provide hope and motivation for continued healing
+                      <strong>propósito:</strong> Provide hope and motivation for continued sanación
                     </p>
                     <p className="text-sm">
-                      "You've made it through difficult times before, and I believe in your strength to get through this too."
+                      "You've made it through difficult times before, and I believe in your fortaleza to get through this too."
                     </p>
                   </CardContent>
                 </Card>
               </div>
 
-              <h3 className="text-2xl font-semibold mb-4">The Response Generation Process</h3>
+              <h3 className="text-2xl font-semibold mb-4">The Response Generation proceso</h3>
               <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-200">
                 <CardContent className="pt-6">
                   <ol className="list-decimal list-inside space-y-3 text-sm">
                     <li><strong>Emotional Assessment:</strong> AI analyzes voice tone, language, and context to understand current emotional state</li>
                     <li><strong>Pattern Recognition:</strong> AI considers personal history and patterns to understand individual context</li>
-                    <li><strong>Therapeutic Matching:</strong> AI selects appropriate therapeutic approach based on situation and user preferences</li>
-                    <li><strong>Response Crafting:</strong> AI generates response that combines validation, understanding, and helpful guidance</li>
-                    <li><strong>Delivery Optimization:</strong> AI adjusts tone, pace, and style to match user's emotional needs</li>
+                    <li><strong>terapéutico Matching:</strong> AI selects appropriate terapéutico enfoque based on situation and user preferencias</li>
+                    <li><strong>Response Crafting:</strong> AI generates response that combines validation, comprensión, and helpful orientación</li>
+                    <li><strong>Delivery optimización:</strong> AI adjusts tone, pace, and style to match user's emotional necesidades</li>
                     <li><strong>Continuous Learning:</strong> AI observes user response to improve future interactions</li>
                   </ol>
                 </CardContent>
@@ -514,23 +514,23 @@ export default function EmpatheticAITechnologyPost() {
             </section>
 
             <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">Ethical Considerations in Empathetic AI</h2>
+              <h2 className="text-3xl font-bold mb-6">Ethical consideraciones in Empathetic AI</h2>
               
               <p className="text-lg mb-6">
-                With great empathetic capability comes great responsibility. Developers of empathetic AI must carefully 
-                consider the ethical implications of creating machines that can understand and influence human emotions.
+                With great empathetic capacidad comes great responsibility. Developers of empathetic AI must carefully 
+                consider the ethical implications of creating machines that can understand and influence human emociones.
               </p>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg text-green-600">✅ Ethical Principles</CardTitle>
+                    <CardTitle className="text-lg text-green-600">✅ Ethical principios</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2 text-sm">
-                      <li>• Transparency about AI limitations</li>
+                      <li>• Transparency about AI limitaciones</li>
                       <li>• User autonomy and choice</li>
-                      <li>• Privacy and data protection</li>
+                      <li>• privacidad and data protection</li>
                       <li>• Beneficence (do good) and non-maleficence (do no harm)</li>
                       <li>• Cultural sensitivity and inclusivity</li>
                       <li>• Professional oversight and accountability</li>
@@ -544,11 +544,11 @@ export default function EmpatheticAITechnologyPost() {
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2 text-sm">
-                      <li>• Over-reliance on AI for emotional support</li>
-                      <li>• Manipulation through emotional understanding</li>
+                      <li>• Over-reliance on AI for emotional apoyo</li>
+                      <li>• Manipulation through emotional comprensión</li>
                       <li>• Bias in emotion recognition across demographics</li>
-                      <li>• False sense of human-like understanding</li>
-                      <li>• Privacy concerns with emotional data</li>
+                      <li>• False sense of human-like comprensión</li>
+                      <li>• privacidad concerns with emotional data</li>
                       <li>• Replacing human connection inappropriately</li>
                     </ul>
                   </CardContent>
@@ -560,8 +560,8 @@ export default function EmpatheticAITechnologyPost() {
               <h2 className="text-3xl font-bold mb-6">The Future of Empathetic AI</h2>
               
               <p className="text-lg mb-6">
-                Empathetic AI technology continues to evolve rapidly, promising even more sophisticated emotional understanding 
-                and more natural, helpful therapeutic interactions.
+                Empathetic AI technology continues to evolve rapidly, promising even more sofisticado emotional comprensión 
+                and more natural, helpful terapéutico interactions.
               </p>
 
               <Card className="bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 mb-8">
@@ -570,11 +570,11 @@ export default function EmpatheticAITechnologyPost() {
                   <div className="grid md:grid-cols-2 gap-4">
                     <ul className="space-y-2 text-sm">
                       <li>• <strong>Multimodal Integration:</strong> Combining voice, text, and biometric data</li>
-                      <li>• <strong>Predictive Empathy:</strong> Anticipating emotional needs before they're expressed</li>
-                      <li>• <strong>Cultural Adaptation:</strong> Understanding emotions across different cultural contexts</li>
+                      <li>• <strong>Predictive Empathy:</strong> Anticipating emotional necesidades before they're expressed</li>
+                      <li>• <strong>Cultural Adaptation:</strong> comprensión emociones across different cultural contexts</li>
                     </ul>
                     <ul className="space-y-2 text-sm">
-                      <li>• <strong>Personalized Emotional Models:</strong> Unique AI understanding for each individual</li>
+                      <li>• <strong>personalizado Emotional Models:</strong> Unique AI comprensión for each individual</li>
                       <li>• <strong>Real-time Physiological Integration:</strong> Using heart rate, breathing for emotion detection</li>
                       <li>• <strong>Collaborative AI-Human Therapy:</strong> Seamless handoffs between AI and human therapists</li>
                     </ul>
@@ -588,8 +588,8 @@ export default function EmpatheticAITechnologyPost() {
                     <Heart className="w-12 h-12 mx-auto mb-4 text-pink-200" />
                     <h3 className="text-2xl font-semibold mb-4">Experience Empathetic AI Today</h3>
                     <p className="mb-6 text-lg">
-                      TalkAI represents the cutting edge of empathetic AI technology, combining advanced emotion recognition 
-                      with genuine therapeutic care. Experience how technology can truly understand and support your emotional journey.
+                      TalkAI represents the cutting edge of empathetic AI technology, combining avanzado emotion recognition 
+                      with genuine terapéutico care. Experience how technology can truly understand and apoyo your emotional journey.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                       <Link 
@@ -602,7 +602,7 @@ export default function EmpatheticAITechnologyPost() {
                         href="/blog/what-is-ai-therapy" 
                         className="inline-block border border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors text-center"
                       >
-                        Learn About AI Therapy
+                        Learn About terapia IA
                       </Link>
                     </div>
                   </div>

@@ -5,33 +5,33 @@ import { Badge } from '@/components/ui/badge';
 import { CalendarDays, Clock, User, ArrowLeft, CheckCircle, Brain, Heart, Shield, Moon, Bed, Coffee } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Improving Sleep with AI Therapy: Complete Guide to Better Rest',
-  description: 'Learn how AI therapy can help you improve sleep quality, overcome insomnia, and develop healthy sleep habits. Discover TalkAI\'s sleep-focused therapy techniques.',
+  title: 'Mejorando el Sueño con Terapia IA: Guía Completa para un Mejor Descanso',
+  description: 'Aprende cómo la terapia IA puede ayudarte a mejorar la calidad del sueño, superar el insomnio y desarrollar hábitos de sueño saludables. Descubre las técnicas de terapia enfocadas en el sueño de TalkAI.',
   keywords: [
-    'sleep improvement',
-    'AI therapy for sleep',
-    'insomnia treatment',
-    'better sleep habits',
-    'sleep hygiene',
-    'AI sleep therapy',
-    'sleep disorders',
-    'sleep quality',
-    'sleep anxiety',
-    'restful sleep'
+    'mejora del sueño',
+    'terapia IA para sueño',
+    'tratamiento del insomnio',
+    'mejores hábitos de sueño',
+    'higiene del sueño',
+    'terapia de sueño con IA',
+    'trastornos del sueño',
+    'calidad del sueño',
+    'ansiedad del sueño',
+    'sueño reparador'
   ],
   openGraph: {
-    title: 'Improving Sleep with AI Therapy: Complete Guide',
-    description: 'Learn how AI therapy can help you improve sleep quality and overcome insomnia with TalkAI.',
+    title: 'Mejorando el Sueño con Terapia IA: Guía Completa',
+    description: 'Aprende cómo la terapia IA puede ayudarte a mejorar la calidad del sueño y superar el insomnio con TalkAI.',
     type: 'article',
-    images: ['/og-sleep-improvement.png'],
+    images: ['/og-mejora-sueno.png'],
     publishedTime: '2024-12-19',
-    authors: ['TalkAI Research Team'],
+    authors: ['Equipo de Investigación TalkAI'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Improving Sleep with AI Therapy',
-    description: 'Learn how AI therapy can help you improve sleep quality and overcome insomnia.',
-    images: ['/twitter-sleep-improvement.png'],
+    title: 'Mejorando el Sueño con Terapia IA',
+    description: 'Aprende cómo la terapia IA puede ayudarte a mejorar la calidad del sueño y superar el insomnio.',
+    images: ['/twitter-mejora-sueno.png'],
   },
 };
 
@@ -41,66 +41,66 @@ export default function SleepImprovementPost() {
       <div className="container mx-auto px-4 py-8">
         <Link href="/blog" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-8">
           <ArrowLeft className="w-4 h-4" />
-          Back to Blog
+          Volver al Blog
         </Link>
 
         <article className="max-w-4xl mx-auto">
           <header className="mb-12">
             <div className="flex items-center gap-2 mb-4">
               <Badge variant="secondary" className="bg-indigo-100 text-indigo-800">
-                Sleep Health
+                Salud del Sueño
               </Badge>
-              <Badge variant="outline">Mental Health</Badge>
+              <Badge variant="outline">Salud Mental</Badge>
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
-              Improving Sleep with AI Therapy: A Complete Guide to Better Rest
+              Mejorando el Sueño con Terapia IA: Una Guía Completa para un Mejor Descanso
             </h1>
             
             <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-              Discover how AI therapy can help you overcome sleep problems, develop healthy sleep habits, 
-              and achieve the restful sleep you deserve with TalkAI's sleep-focused therapy techniques.
+              Descubre cómo la terapia IA puede ayudarte a superar problemas de sueño, desarrollar hábitos de sueño saludables, 
+              y lograr el sueño reparador que mereces con las técnicas de terapia enfocadas en el sueño de TalkAI.
             </p>
 
             <div className="flex items-center gap-6 text-sm text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-6">
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4" />
-                TalkAI Research Team
+                Equipo de Investigación TalkAI
               </div>
               <div className="flex items-center gap-2">
                 <CalendarDays className="w-4 h-4" />
-                December 19, 2024
+                19 de Diciembre, 2024
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                12 min read
+                12 min lectura
               </div>
             </div>
           </header>
 
           <div className="prose prose-lg max-w-none">
             <section className="mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">The Importance of Quality Sleep</h2>
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">La Importancia del Sueño de Calidad</h2>
               <p className="text-slate-600 dark:text-slate-300 mb-6">
-                Quality sleep is fundamental to our physical and mental well-being. Poor sleep can affect everything 
-                from our mood and cognitive function to our immune system and overall health. AI therapy offers 
-                innovative approaches to address sleep issues and improve sleep quality.
+                El sueño de calidad es fundamental para nuestro bienestar físico y mental. El sueño deficiente puede afectar todo, 
+                desde nuestro estado de ánimo y función cognitiva hasta nuestro sistema inmunológico y salud general. La terapia IA ofrece 
+                enfoques innovadores para abordar problemas de sueño y mejorar la calidad del sueño.
               </p>
             </section>
 
             <section className="mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">How AI Therapy Helps with Sleep</h2>
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Cómo la Terapia IA Ayuda con el Sueño</h2>
               <div className="grid md:grid-cols-2 gap-6 mb-8">
                 <Card className="bg-indigo-50 dark:bg-indigo-950 border-indigo-200">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-indigo-800 dark:text-indigo-200">
                       <Moon className="w-5 h-5" />
-                      Sleep Pattern Analysis
+                      Análisis de Patrones de Sueño
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-indigo-700 dark:text-indigo-300">
-                      AI analyzes your sleep patterns and identifies factors affecting your sleep quality.
+                      La IA analiza tus patrones de sueño e identifica factores que afectan la calidad de tu sueño.
                     </p>
                   </CardContent>
                 </Card>
@@ -109,12 +109,12 @@ export default function SleepImprovementPost() {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-purple-800 dark:text-purple-200">
                       <Bed className="w-5 h-5" />
-                      Personalized Sleep Plans
+                      Planes de Sueño Personalizados
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-purple-700 dark:text-purple-300">
-                      Create customized sleep improvement strategies based on your unique needs and lifestyle.
+                      Crea estrategias personalizadas de mejora del sueño basadas en tus necesidades únicas y estilo de vida.
                     </p>
                   </CardContent>
                 </Card>
@@ -122,40 +122,40 @@ export default function SleepImprovementPost() {
             </section>
 
             <section className="mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Common Sleep Problems and Solutions</h2>
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Problemas Comunes del Sueño y Soluciones</h2>
               <div className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-xl">Insomnia</CardTitle>
+                    <CardTitle className="text-xl">Insomnio</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="mb-4">
-                      Difficulty falling or staying asleep can be addressed through cognitive behavioral therapy for insomnia (CBT-I) 
-                      techniques delivered by AI.
+                      La dificultad para conciliar o mantener el sueño puede abordarse a través de la terapia cognitivo-conductual para el insomnio (TCC-I) 
+                      técnicas entregadas por IA.
                     </p>
                     <ul className="space-y-2 text-slate-600 dark:text-slate-300">
-                      <li>• Sleep restriction therapy</li>
-                      <li>• Stimulus control</li>
-                      <li>• Relaxation techniques</li>
-                      <li>• Cognitive restructuring</li>
+                      <li>• Terapia de restricción del sueño</li>
+                      <li>• Control de estímulos</li>
+                      <li>• Técnicas de relajación</li>
+                      <li>• Reestructuración cognitiva</li>
                     </ul>
                   </CardContent>
                 </Card>
                 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-xl">Sleep Anxiety</CardTitle>
+                    <CardTitle className="text-xl">Ansiedad del Sueño</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="mb-4">
-                      Anxiety about sleep can create a vicious cycle. AI therapy helps break this pattern through 
-                      anxiety management techniques.
+                      La ansiedad sobre el sueño puede crear un círculo vicioso. La terapia IA ayuda a romper este patrón a través de 
+                      técnicas de manejo de la ansiedad.
                     </p>
                     <ul className="space-y-2 text-slate-600 dark:text-slate-300">
-                      <li>• Anxiety reduction strategies</li>
-                      <li>• Mindfulness practices</li>
-                      <li>• Progressive muscle relaxation</li>
-                      <li>• Thought challenging</li>
+                      <li>• Estrategias de reducción de ansiedad</li>
+                      <li>• Prácticas de mindfulness</li>
+                      <li>• Relajación muscular progresiva</li>
+                      <li>• Desafío de pensamientos</li>
                     </ul>
                   </CardContent>
                 </Card>
@@ -163,38 +163,38 @@ export default function SleepImprovementPost() {
             </section>
 
             <section className="mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">AI-Powered Sleep Improvement Tools</h2>
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Herramientas de Mejora del Sueño Impulsadas por IA</h2>
               <div className="grid md:grid-cols-2 gap-6">
                 <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950 dark:to-indigo-950">
                   <CardHeader>
-                    <CardTitle className="text-blue-800 dark:text-blue-200">Guided Sleep Sessions</CardTitle>
+                    <CardTitle className="text-blue-800 dark:text-blue-200">Sesiones de Sueño Guiadas</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-blue-700 dark:text-blue-300 mb-4">
-                      Access guided relaxation and sleep preparation sessions designed to help you fall asleep naturally.
+                      Accede a sesiones de relajación guiada y preparación para el sueño diseñadas para ayudarte a conciliar el sueño naturalmente.
                     </p>
                     <ul className="space-y-1 text-sm text-blue-600 dark:text-blue-400">
-                      <li>• Sleep meditation</li>
-                      <li>• Breathing exercises</li>
-                      <li>• Progressive relaxation</li>
-                      <li>• Sleep stories</li>
+                      <li>• Meditación para dormir</li>
+                      <li>• Ejercicios de respiración</li>
+                      <li>• Relajación progresiva</li>
+                      <li>• Historias para dormir</li>
                     </ul>
                   </CardContent>
                 </Card>
                 
                 <Card className="bg-gradient-to-br from-green-50 to-teal-50 dark:from-green-950 dark:to-teal-950">
                   <CardHeader>
-                    <CardTitle className="text-green-800 dark:text-green-200">Sleep Tracking</CardTitle>
+                    <CardTitle className="text-green-800 dark:text-green-200">Seguimiento del Sueño</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-green-700 dark:text-green-300 mb-4">
-                      Monitor your sleep patterns and identify factors that affect your sleep quality.
+                      Monitorea tus patrones de sueño e identifica factores que afectan la calidad de tu sueño.
                     </p>
                     <ul className="space-y-1 text-sm text-green-600 dark:text-green-400">
-                      <li>• Sleep diary</li>
-                      <li>• Pattern analysis</li>
-                      <li>• Progress tracking</li>
-                      <li>• Sleep quality metrics</li>
+                      <li>• Diario del sueño</li>
+                      <li>• Análisis de patrones</li>
+                      <li>• Seguimiento del progreso</li>
+                      <li>• Métricas de calidad del sueño</li>
                     </ul>
                   </CardContent>
                 </Card>
@@ -202,27 +202,27 @@ export default function SleepImprovementPost() {
             </section>
 
             <section className="mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Getting Started with AI Sleep Therapy</h2>
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Comenzando con la Terapia de Sueño con IA</h2>
               <Card className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-950 dark:to-purple-950 border-indigo-200">
                 <CardHeader>
-                  <CardTitle className="text-indigo-800 dark:text-indigo-200">Ready to Improve Your Sleep?</CardTitle>
+                  <CardTitle className="text-indigo-800 dark:text-indigo-200">¿Listo para Mejorar tu Sueño?</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-indigo-700 dark:text-indigo-300 mb-4">
-                    Start your journey to better sleep with TalkAI's AI-powered sleep therapy platform.
+                    Comienza tu viaje hacia un mejor sueño con la plataforma de terapia de sueño impulsada por IA de TalkAI.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Link 
                       href="/sessions" 
                       className="inline-flex items-center justify-center px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
                     >
-                      Start Free Trial
+                      Iniciar Prueba Gratuita
                     </Link>
                     <Link 
                       href="/about" 
                       className="inline-flex items-center justify-center px-6 py-3 border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition-colors"
                     >
-                      Learn More
+                      Aprender Más
                     </Link>
                   </div>
                 </CardContent>

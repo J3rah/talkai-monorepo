@@ -5,32 +5,32 @@ import { Badge } from '@/components/ui/badge';
 import { CalendarDays, Clock, User, ArrowLeft, CheckCircle, Brain, Heart, Shield, Users, MessageCircle, HeartHandshake } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'AI Therapy for Relationships: Improving Communication and Connection',
-  description: 'Discover how AI therapy can help improve relationships, enhance communication skills, and build stronger connections with others.',
+  title: 'terapia IA for Relationships: Improving Communication and Connection',
+  description: 'Discover how terapia IA can help improve relationships, enhance communication habilidades, and build stronger connections with others.',
   keywords: [
     'relationship therapy',
-    'AI therapy for relationships',
-    'communication skills',
+    'terapia IA for relationships',
+    'communication habilidades',
     'couples therapy',
-    'relationship counseling',
+    'relationship asesoramiento',
     'emotional intelligence',
     'conflict resolution',
-    'relationship advice',
-    'marriage counseling',
-    'interpersonal skills'
+    'relationship consejos',
+    'marriage asesoramiento',
+    'interpersonal habilidades'
   ],
   openGraph: {
-    title: 'AI Therapy for Relationships: Improving Communication',
-    description: 'Learn how AI therapy can help improve relationships and enhance communication skills.',
+    title: 'terapia IA for Relationships: Improving Communication',
+    description: 'Learn how terapia IA can help improve relationships and enhance communication habilidades.',
     type: 'article',
     images: ['/og-relationships.png'],
     publishedTime: '2024-12-19',
-    authors: ['TalkAI Research Team'],
+    authors: ['TalkAI investigación Team'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AI Therapy for Relationships',
-    description: 'Learn how AI therapy can help improve relationships and communication.',
+    title: 'terapia IA for Relationships',
+    description: 'Learn how terapia IA can help improve relationships and communication.',
     images: ['/twitter-relationships.png'],
   },
 };
@@ -41,7 +41,7 @@ export default function RelationshipsPost() {
       <div className="container mx-auto px-4 py-8">
         <Link href="/blog" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-8">
           <ArrowLeft className="w-4 h-4" />
-          Back to Blog
+          Volver al Blog
         </Link>
 
         <article className="max-w-4xl mx-auto">
@@ -54,18 +54,18 @@ export default function RelationshipsPost() {
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
-              AI Therapy for Relationships: Improving Communication and Connection
+              terapia IA for Relationships: Improving Communication and Connection
             </h1>
             
             <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-              Discover how AI therapy can help improve relationships, enhance communication skills, 
-              and build stronger connections with others through personalized guidance and support.
+              Discover how terapia IA can help improve relationships, enhance communication habilidades, 
+              and build stronger connections with others through personalizado orientación and apoyo.
             </p>
 
             <div className="flex items-center gap-6 text-sm text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-6">
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4" />
-                TalkAI Research Team
+                TalkAI investigación Team
               </div>
               <div className="flex items-center gap-2">
                 <CalendarDays className="w-4 h-4" />
@@ -73,33 +73,33 @@ export default function RelationshipsPost() {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                10 min read
+                10 min lectura
               </div>
             </div>
           </header>
 
           <div className="prose prose-lg max-w-none">
             <section className="mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">The Role of AI Therapy in Relationship Health</h2>
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">The Role of terapia IA in Relationship Health</h2>
               <p className="text-slate-600 dark:text-slate-300 mb-6">
-                Healthy relationships are fundamental to our well-being. AI therapy offers unique opportunities 
+                Healthy relationships are fundamental to our well-being. terapia IA offers unique opportunities 
                 to improve communication, resolve conflicts, and build stronger connections with others.
               </p>
             </section>
 
             <section className="mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Key Benefits of AI Therapy for Relationships</h2>
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Key beneficios of terapia IA for Relationships</h2>
               <div className="grid md:grid-cols-2 gap-6 mb-8">
                 <Card className="bg-pink-50 dark:bg-pink-950 border-pink-200">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-pink-800 dark:text-pink-200">
                       <MessageCircle className="w-5 h-5" />
-                      Communication Skills
+                      Communication habilidades
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-pink-700 dark:text-pink-300">
-                      Learn effective communication techniques and active listening skills.
+                      Learn effective communication técnicas and active listening habilidades.
                     </p>
                   </CardContent>
                 </Card>
@@ -113,7 +113,7 @@ export default function RelationshipsPost() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-purple-700 dark:text-purple-300">
-                      Develop healthy conflict resolution strategies and emotional regulation.
+                      Develop healthy conflict resolution estrategias and emotional regulation.
                     </p>
                   </CardContent>
                 </Card>
@@ -135,7 +135,7 @@ export default function RelationshipsPost() {
                       href="/sessions" 
                       className="inline-flex items-center justify-center px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors"
                     >
-                      Start Free Trial
+                      Iniciar Prueba Gratuita
                     </Link>
                     <Link 
                       href="/about" 

@@ -5,29 +5,29 @@ import { Badge } from '@/components/ui/badge';
 import { CalendarDays, Clock, User, ArrowLeft, Heart, Shield, CheckCircle, Users, Timer } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Caregiver Burnout: Sustainable Support with TalkAI',
+  title: 'Caregiver Burnout: Sustainable apoyo with TalkAI',
   description:
     'Caregiving is hard. TalkAI helps you set boundaries, pace energy, and ask for help without guilt.',
   keywords: [
     'caregiver burnout',
-    'caregiver support',
+    'caregiver apoyo',
     'TalkAI caregivers',
-    'caregiver mental health',
-    'caregiver stress',
+    'caregiver salud mental',
+    'caregiver estrés',
     'family caregiving',
   ],
   openGraph: {
-    title: 'Caregiver Burnout: Sustainable Support with TalkAI',
+    title: 'Caregiver Burnout: Sustainable apoyo with TalkAI',
     description:
       'Caregivers deserve care, too. TalkAI helps you right-size obligations and protect energy.',
     type: 'article',
     images: ['/og-image.png'],
     publishedTime: '2025-07-27',
-    authors: ['TalkAI Research Team'],
+    authors: ['TalkAI investigación Team'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Caregiver Burnout: Sustainable Support with TalkAI',
+    title: 'Caregiver Burnout: Sustainable apoyo with TalkAI',
     description: 'Set boundaries, pace energy, and ask for help without guilt.',
     images: ['/twitter-image.png'],
   },
@@ -40,19 +40,19 @@ export default function CaregiverBurnoutTalkAIPost() {
         {/* Back Navigation */}
         <Link href="/blog" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-8">
           <ArrowLeft className="w-4 h-4" />
-          Back to Blog
+          Volver al Blog
         </Link>
 
         <article className="max-w-4xl mx-auto">
           {/* Header */}
           <header className="mb-12">
             <div className="flex items-center gap-2 mb-4">
-              <Badge variant="secondary" className="bg-green-100 text-green-800">Caregiver Support</Badge>
+              <Badge variant="secondary" className="bg-green-100 text-green-800">Caregiver apoyo</Badge>
               <Badge variant="outline">New</Badge>
             </div>
 
             <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
-              Caregiver Burnout: Sustainable Support with TalkAI
+              Caregiver Burnout: Sustainable apoyo with TalkAI
             </h1>
 
             <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
@@ -63,7 +63,7 @@ export default function CaregiverBurnoutTalkAIPost() {
             <div className="flex items-center gap-6 text-sm text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-6">
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4" />
-                TalkAI Research Team
+                TalkAI investigación Team
               </div>
               <div className="flex items-center gap-2">
                 <CalendarDays className="w-4 h-4" />
@@ -71,7 +71,7 @@ export default function CaregiverBurnoutTalkAIPost() {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                6 min read
+                6 min lectura
               </div>
             </div>
           </header>
@@ -132,7 +132,7 @@ export default function CaregiverBurnoutTalkAIPost() {
                   <ul className="space-y-2">
                     <li>• "Can you sit with Mom for 2 hours Tuesday?"</li>
                     <li>• "I need help with grocery shopping this week"</li>
-                    <li>• "Could you research respite care options?"</li>
+                    <li>• "Could you investigación respite care options?"</li>
                   </ul>
                 </CardContent>
               </Card>
@@ -185,7 +185,7 @@ export default function CaregiverBurnoutTalkAIPost() {
                   <h3 className="text-xl font-semibold mb-4">Activate TalkAI's “Caregiver Capacity” Daily Check-In</h3>
                   <p className="mb-6">Protect your energy and care sustainably.</p>
                   <Link href="/auth" className="inline-block bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
-                    Start Free Trial →
+                    Iniciar Prueba Gratuita →
                   </Link>
                 </CardContent>
               </Card>
@@ -202,7 +202,7 @@ export default function CaregiverBurnoutTalkAIPost() {
                 <CardHeader>
                   <Badge variant="secondary" className="w-fit mb-2">Burnout</Badge>
                   <CardTitle>
-                    <Link href="/blog/burnout-recovery-micro-coaching-talkai" className="hover:text-blue-600">
+                    <Link href="/blog/burnout-recuperación-micro-coaching-talkai" className="hover:text-blue-600">
                       From Burnout to Baseline
                     </Link>
                   </CardTitle>

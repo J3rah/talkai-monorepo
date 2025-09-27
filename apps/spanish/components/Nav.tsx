@@ -346,7 +346,7 @@ export const Nav = () => {
     <>
       <div className="px-4 py-6 flex items-center h-20 z-50 border-b border-border bg-background">
         <div>
-          <Link href="/">
+          <Link href="/landing">
             <TalkAILogo className="h-24 w-auto -mt-8" />
           </Link>
         </div>
@@ -361,7 +361,7 @@ export const Nav = () => {
             </SheetTrigger>
             <SheetContent side="left" className="w-[240px] sm:w-[300px]">
               <SheetHeader>
-                <Link href="/">
+                <Link href="/landing">
                   <TalkAILogo className="mx-auto my-4 w-48 h-24" />
                 </Link>
               </SheetHeader>

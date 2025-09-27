@@ -7,7 +7,7 @@ import { CalendarDays, Clock, User, ArrowLeft, Heart, Timer, MessageSquare, Chec
 export const metadata: Metadata = {
   title: 'Couples Micro‑Check‑Ins: AI‑Guided Connection in 10 Minutes',
   description:
-    'TalkAI guides short, structured couples check-ins—repair quickly, share appreciations, and align on needs weekly.',
+    'TalkAI guides short, structured couples check-ins—repair quickly, share appreciations, and align on necesidades weekly.',
   keywords: [
     'couples check-ins',
     'relationship communication',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     type: 'article',
     images: ['/og-image.png'],
     publishedTime: '2025-07-27',
-    authors: ['TalkAI Research Team'],
+    authors: ['TalkAI investigación Team'],
   },
   twitter: {
     card: 'summary_large_image',
@@ -40,7 +40,7 @@ export default function CouplesCheckInsPost() {
         {/* Back Navigation */}
         <Link href="/blog" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-8">
           <ArrowLeft className="w-4 h-4" />
-          Back to Blog
+          Volver al Blog
         </Link>
 
         <article className="max-w-4xl mx-auto">
@@ -63,7 +63,7 @@ export default function CouplesCheckInsPost() {
             <div className="flex items-center gap-6 text-sm text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-6">
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4" />
-                TalkAI Research Team
+                TalkAI investigación Team
               </div>
               <div className="flex items-center gap-2">
                 <CalendarDays className="w-4 h-4" />
@@ -71,7 +71,7 @@ export default function CouplesCheckInsPost() {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                6 min read
+                6 min lectura
               </div>
             </div>
           </header>
@@ -88,7 +88,7 @@ export default function CouplesCheckInsPost() {
                 <li><a href="#time-box" className="text-blue-600 hover:underline">Time Box</a></li>
                 <li><a href="#repair" className="text-blue-600 hover:underline">Repair Scripts</a></li>
                 <li><a href="#ritual" className="text-blue-600 hover:underline">Weekly Ritual</a></li>
-                <li><a href="#track" className="text-blue-600 hover:underline">Track Progress</a></li>
+                <li><a href="#track" className="text-blue-600 hover:underline">Track progreso</a></li>
                 <li><a href="#cta" className="text-blue-600 hover:underline">Get Started</a></li>
               </ul>
             </CardContent>
@@ -168,7 +168,7 @@ export default function CouplesCheckInsPost() {
             </section>
 
             <section id="track" className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">Track Progress</h2>
+              <h2 className="text-3xl font-bold mb-6">Track progreso</h2>
               <Card className="bg-blue-50 border-blue-200">
                 <CardContent className="pt-6">
                   <ul className="space-y-3">
@@ -196,7 +196,7 @@ export default function CouplesCheckInsPost() {
                   <h3 className="text-xl font-semibold mb-4">Load the Couples Check-In Template</h3>
                   <p className="mb-6">Set a weekly reminder and start building connection.</p>
                   <Link href="/auth" className="inline-block bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
-                    Start Free Trial →
+                    Iniciar Prueba Gratuita →
                   </Link>
                 </CardContent>
               </Card>
@@ -214,7 +214,7 @@ export default function CouplesCheckInsPost() {
                   <Badge variant="secondary" className="w-fit mb-2">Relationships</Badge>
                   <CardTitle>
                     <Link href="/blog/ai-therapy-for-relationships" className="hover:text-blue-600">
-                      AI Therapy for Relationships
+                      terapia IA for Relationships
                     </Link>
                   </CardTitle>
                   <CardContent className="px-0">
@@ -232,7 +232,7 @@ export default function CouplesCheckInsPost() {
                     </Link>
                   </CardTitle>
                   <CardContent className="px-0">
-                    <p className="text-slate-600">Build sustainable mental health habits.</p>
+                    <p className="text-slate-600">Build sustainable salud mental habits.</p>
                   </CardContent>
                 </CardHeader>
               </Card>

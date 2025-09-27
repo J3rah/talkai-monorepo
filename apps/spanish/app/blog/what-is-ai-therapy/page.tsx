@@ -89,10 +89,10 @@ export default function WhatIsAITherapyPost() {
               <ul className="space-y-2">
                 <li><a href="#what-is-ai-therapy" className="text-blue-600 hover:underline">¿Qué es la Terapia IA?</a></li>
                 <li><a href="#how-it-works" className="text-blue-600 hover:underline">¿Cómo Funciona la Terapia IA?</a></li>
-                <li><a href="#benefits" className="text-blue-600 hover:underline">Beneficios Clave de la Terapia IA</a></li>
+                <li><a href="#beneficios" className="text-blue-600 hover:underline">Beneficios Clave de la Terapia IA</a></li>
                 <li><a href="#types" className="text-blue-600 hover:underline">Tipos de Terapia IA</a></li>
-                <li><a href="#effectiveness" className="text-blue-600 hover:underline">¿Es Efectiva la Terapia IA?</a></li>
-                <li><a href="#limitations" className="text-blue-600 hover:underline">Limitaciones y Consideraciones</a></li>
+                <li><a href="#efectividad" className="text-blue-600 hover:underline">¿Es Efectiva la Terapia IA?</a></li>
+                <li><a href="#limitaciones" className="text-blue-600 hover:underline">Limitaciones y Consideraciones</a></li>
                 <li><a href="#getting-started" className="text-blue-600 hover:underline">Comenzando con la Terapia IA</a></li>
               </ul>
             </CardContent>
@@ -108,10 +108,10 @@ export default function WhatIsAITherapyPost() {
               </h2>
               
               <p className="text-lg mb-6">
-                <strong>AI therapy</strong> (Artificial Intelligence therapy) is a form of mental health support that uses advanced AI technology 
-                to provide therapeutic conversations, emotional guidance, and mental health resources. Unlike traditional therapy with human 
-                therapists, AI therapy uses sophisticated algorithms, natural language processing, and emotional recognition to understand 
-                and respond to your mental health needs.
+                <strong>La terapia IA</strong> (terapia de Inteligencia Artificial) es una forma de apoyo de salud mental que utiliza tecnología IA avanzada 
+                para proporcionar conversaciones terapéuticas, orientación emocional y recursos de salud mental. A diferencia de la terapia tradicional con 
+                terapeutas humanos, la terapia IA utiliza algoritmos sofisticados, procesamiento de lenguaje natural y reconocimiento emocional para entender 
+                y responder a tus necesidades de salud mental.
               </p>
 
               <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200 mb-8">
@@ -119,10 +119,10 @@ export default function WhatIsAITherapyPost() {
                   <div className="flex items-start gap-4">
                     <Heart className="w-6 h-6 text-red-500 mt-1" />
                     <div>
-                      <h3 className="font-semibold mb-2 text-slate-800">Key Definition</h3>
+                      <h3 className="font-semibold mb-2 text-slate-800">Definición Clave</h3>
                       <p className="text-slate-700">
-                        AI therapy combines the accessibility of technology with evidence-based therapeutic techniques to provide 
-                        24/7 mental health support that's empathetic, personalized, and immediately available whenever you need it.
+                        La terapia IA combina la accesibilidad de la tecnología con técnicas terapéuticas basadas en evidencia para proporcionar 
+                        apoyo de salud mental 24/7 que es empático, personalizado e inmediatamente disponible cuando lo necesites.
                       </p>
                     </div>
                   </div>
@@ -130,9 +130,9 @@ export default function WhatIsAITherapyPost() {
               </Card>
 
               <p>
-                Modern AI therapy platforms like TalkAI use <strong>empathetic voice technology</strong> that can detect emotions in your 
-                voice, understand context, and respond with appropriate therapeutic interventions. This isn't just a chatbot – it's a 
-                sophisticated mental health tool designed to provide genuine support and guidance.
+                Las plataformas modernas de terapia IA como TalkAI utilizan <strong>tecnología de voz empática</strong> que puede detectar emociones en tu 
+                voz, entender el contexto y responder con intervenciones terapéuticas apropiadas. Esto no es solo un chatbot – es una 
+                herramienta sofisticada de salud mental diseñada para proporcionar apoyo y orientación genuinos.
               </p>
             </section>
 
@@ -140,58 +140,58 @@ export default function WhatIsAITherapyPost() {
               <h2 className="text-3xl font-bold mb-6">¿Cómo Funciona la Terapia IA?</h2>
               
               <p className="text-lg mb-6">
-                AI therapy operates through several advanced technologies working together to create a therapeutic experience:
+                La terapia IA opera a través de varias tecnologías avanzadas que trabajan juntas para crear una experiencia terapéutica:
               </p>
 
               <div className="grid md:grid-cols-2 gap-6 mb-8">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">🧠 Natural Language Processing</CardTitle>
+                    <CardTitle className="text-lg">🧠 Procesamiento de Lenguaje Natural</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p>Advanced NLP understands the nuances of human language, context, and emotional undertones in your conversations.</p>
+                    <p>El PLN avanzado entiende los matices del lenguaje humano, el contexto y los matices emocionales en tus conversaciones.</p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">🎤 Emotion Recognition</CardTitle>
+                    <CardTitle className="text-lg">🎤 Reconocimiento de Emociones</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p>Voice analysis technology detects emotional states through tone, pace, and vocal patterns to provide appropriate responses.</p>
+                    <p>La tecnología de análisis de voz detecta estados emocionales a través del tono, ritmo y patrones vocales para proporcionar respuestas apropiadas.</p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">📚 Evidence-Based Techniques</CardTitle>
+                    <CardTitle className="text-lg">📚 Técnicas Basadas en Evidencia</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p>AI applies proven therapeutic methods like CBT, mindfulness, and emotional regulation techniques.</p>
+                    <p>La IA aplica métodos terapéuticos probados como TCC, mindfulness y técnicas de regulación emocional.</p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">🎯 Personalization</CardTitle>
+                    <CardTitle className="text-lg">🎯 Personalización</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p>Machine learning adapts to your unique communication style, preferences, and therapeutic needs over time.</p>
+                    <p>El aprendizaje automático se adapta a tu estilo único de comunicación, preferencias y necesidades terapéuticas con el tiempo.</p>
                   </CardContent>
                 </Card>
               </div>
 
-              <h3 className="text-2xl font-semibold mb-4">The AI Therapy Process</h3>
+              <h3 className="text-2xl font-semibold mb-4">El Proceso de Terapia IA</h3>
               <ol className="list-decimal list-inside space-y-3 mb-6">
-                <li><strong>Initial Assessment:</strong> The AI conducts a comprehensive evaluation of your mental health needs and goals</li>
-                <li><strong>Personalized Approach:</strong> Based on your assessment, the AI tailors its therapeutic approach and communication style</li>
-                <li><strong>Ongoing Conversations:</strong> Regular therapeutic conversations that adapt and evolve based on your progress</li>
-                <li><strong>Continuous Learning:</strong> The AI learns from each interaction to provide increasingly personalized support</li>
-                <li><strong>Progress Tracking:</strong> Monitor your mental health journey with insights and analytics</li>
+                <li><strong>Evaluación Inicial:</strong> La IA realiza una evaluación integral de tus necesidades y objetivos de salud mental</li>
+                <li><strong>Enfoque Personalizado:</strong> Basado en tu evaluación, la IA adapta su enfoque terapéutico y estilo de comunicación</li>
+                <li><strong>Conversaciones Continuas:</strong> Conversaciones terapéuticas regulares que se adaptan y evolucionan según tu progreso</li>
+                <li><strong>Aprendizaje Continuo:</strong> La IA aprende de cada interacción para proporcionar apoyo cada vez más personalizado</li>
+                <li><strong>Seguimiento del Progreso:</strong> Monitorea tu viaje de salud mental con perspectivas y análisis</li>
               </ol>
             </section>
 
-            <section id="benefits" className="mb-12">
+            <section id="beneficios" className="mb-12">
               <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
                 <CheckCircle className="w-8 h-8 text-green-600" />
                 Beneficios Clave de la Terapia IA
@@ -200,70 +200,70 @@ export default function WhatIsAITherapyPost() {
               <div className="grid gap-6 mb-8">
                 <Card className="border-green-200 bg-green-50">
                   <CardHeader>
-                    <CardTitle className="text-xl text-green-800">🕐 24/7 Availability</CardTitle>
+                    <CardTitle className="text-xl text-green-800">🕐 Disponibilidad 24/7</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-green-700">
-                      Unlike traditional therapy with scheduled appointments, AI therapy is available whenever you need support – 
-                      during a panic attack at 3 AM, before a stressful presentation, or anytime you're struggling.
+                      A diferencia de la terapia tradicional con citas programadas, la terapia IA está disponible cuando necesites apoyo – 
+                      durante un ataque de pánico a las 3 AM, antes de una presentación estresante, o en cualquier momento que estés luchando.
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card className="border-blue-200 bg-blue-50">
                   <CardHeader>
-                    <CardTitle className="text-xl text-blue-800">💰 Cost-Effective</CardTitle>
+                    <CardTitle className="text-xl text-blue-800">💰 Costo-Efectiva</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-blue-700">
-                      AI therapy costs significantly less than traditional therapy sessions, making mental health support 
-                      accessible to people who might not otherwise afford professional help.
+                      La terapia IA cuesta significativamente menos que las sesiones de terapia tradicional, haciendo el apoyo de salud mental 
+                      accesible para personas que de otra manera no podrían permitirse ayuda profesional.
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card className="border-purple-200 bg-purple-50">
                   <CardHeader>
-                    <CardTitle className="text-xl text-purple-800">🔒 Privacy & Anonymity</CardTitle>
+                    <CardTitle className="text-xl text-purple-800">🔒 Privacidad y Anonimato</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-purple-700">
-                      Many people feel more comfortable opening up to AI initially, reducing the stigma and anxiety 
-                      that can come with seeking human professional help.
+                      Muchas personas se sienten más cómodas abriéndose inicialmente a la IA, reduciendo el estigma y la ansiedad 
+                      que puede venir con buscar ayuda profesional humana.
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card className="border-orange-200 bg-orange-50">
                   <CardHeader>
-                    <CardTitle className="text-xl text-orange-800">📍 Immediate Access</CardTitle>
+                    <CardTitle className="text-xl text-orange-800">📍 Acceso Inmediato</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-orange-700">
-                      No waiting lists, no scheduling conflicts – start your mental health journey immediately 
-                      without barriers that often delay traditional therapy.
+                      Sin listas de espera, sin conflictos de programación – comienza tu viaje de salud mental inmediatamente 
+                      sin barreras que a menudo retrasan la terapia tradicional.
                     </p>
                   </CardContent>
                 </Card>
               </div>
 
-              <h3 className="text-2xl font-semibold mb-4">Additional Benefits</h3>
+              <h3 className="text-2xl font-semibold mb-4">Beneficios Adicionales</h3>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-600 mt-1" />
-                  <span><strong>Consistent Quality:</strong> AI provides consistent, unbiased support without bad days or personal issues affecting treatment</span>
+                  <span><strong>Calidad Consistente:</strong> La IA proporciona apoyo consistente e imparcial sin malos días o problemas personales que afecten el tratamiento</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-600 mt-1" />
-                  <span><strong>Scalable Support:</strong> Can help unlimited people simultaneously, addressing the global mental health professional shortage</span>
+                  <span><strong>Apoyo Escalable:</strong> Puede ayudar a un número ilimitado de personas simultáneamente, abordando la escasez global de profesionales de salud mental</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-600 mt-1" />
-                  <span><strong>Data-Driven Insights:</strong> Provides detailed analytics about your mental health patterns and progress</span>
+                  <span><strong>Perspectivas Basadas en Datos:</strong> Proporciona análisis detallados sobre tus patrones de salud mental y progreso</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-600 mt-1" />
-                  <span><strong>Complementary Care:</strong> Works alongside traditional therapy to provide additional support between sessions</span>
+                  <span><strong>Cuidado Complementario:</strong> Funciona junto con la terapia tradicional para proporcionar apoyo adicional entre sesiones</span>
                 </li>
               </ul>
             </section>
@@ -274,90 +274,90 @@ export default function WhatIsAITherapyPost() {
               <div className="grid md:grid-cols-2 gap-6 mb-8">
                 <Card>
                   <CardHeader>
-                    <CardTitle>🗣️ Voice-Based AI Therapy</CardTitle>
+                    <CardTitle>🗣️ Terapia IA Basada en Voz</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p>
-                      Conversational AI that you speak with directly, like TalkAI. This feels most natural and allows 
-                      for emotional expression through voice tone and inflection.
+                      IA conversacional con la que hablas directamente, como TalkAI. Esto se siente más natural y permite 
+                      la expresión emocional a través del tono de voz y la inflexión.
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle>💬 Text-Based AI Therapy</CardTitle>
+                    <CardTitle>💬 Terapia IA Basada en Texto</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p>
-                      Chat-based platforms where you type your thoughts and receive written responses. Good for 
-                      people who prefer written communication.
+                      Plataformas basadas en chat donde escribes tus pensamientos y recibes respuestas escritas. Bueno para 
+                      personas que prefieren la comunicación escrita.
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle>📱 App-Integrated AI</CardTitle>
+                    <CardTitle>📱 IA Integrada en Aplicaciones</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p>
-                      AI integrated into mental health apps that provide exercises, mood tracking, and guided 
-                      interventions based on your data.
+                      IA integrada en aplicaciones de salud mental que proporcionan ejercicios, seguimiento del estado de ánimo y 
+                      intervenciones guiadas basadas en tus datos.
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle>🤖 Avatar-Based Therapy</CardTitle>
+                    <CardTitle>🤖 Terapia Basada en Avatares</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p>
-                      AI presented through virtual characters or avatars, combining visual and conversational 
-                      elements for a more immersive experience.
+                      IA presentada a través de personajes virtuales o avatares, combinando elementos visuales y conversacionales 
+                      para una experiencia más inmersiva.
                     </p>
                   </CardContent>
                 </Card>
               </div>
             </section>
 
-            <section id="effectiveness" className="mb-12">
+            <section id="efectividad" className="mb-12">
               <h2 className="text-3xl font-bold mb-6">¿Es Efectiva la Terapia IA?</h2>
               
               <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-green-200 mb-6">
                 <CardContent className="pt-6">
-                  <h3 className="font-semibold text-lg mb-3 text-slate-800">Research Findings</h3>
+                  <h3 className="font-semibold text-lg mb-3 text-slate-800">Hallazgos de Investigación</h3>
                   <p className="mb-4 text-slate-700">
-                    Recent studies show promising results for AI therapy effectiveness:
+                    Estudios recientes muestran resultados prometedores para la efectividad de la terapia IA:
                   </p>
                   <ul className="space-y-2 text-slate-700">
-                    <li>• <strong>70% of users</strong> report reduced anxiety symptoms after 4 weeks of AI therapy</li>
-                    <li>• <strong>65% improvement</strong> in mood tracking scores among depression patients</li>
-                    <li>• <strong>80% satisfaction rate</strong> with AI therapy accessibility and convenience</li>
-                    <li>• <strong>45% reduction</strong> in crisis intervention needs when AI therapy is used as preventive care</li>
+                    <li>• <strong>70% de usuarios</strong> reportan síntomas reducidos de ansiedad después de 4 semanas de terapia IA</li>
+                    <li>• <strong>65% de mejora</strong> en puntuaciones de seguimiento del estado de ánimo entre pacientes con depresión</li>
+                    <li>• <strong>80% de tasa de satisfacción</strong> con la accesibilidad y conveniencia de la terapia IA</li>
+                    <li>• <strong>45% de reducción</strong> en necesidades de intervención en crisis cuando la terapia IA se usa como cuidado preventivo</li>
                   </ul>
                 </CardContent>
               </Card>
 
-              <h3 className="text-2xl font-semibold mb-4">What Conditions Can AI Therapy Help With?</h3>
+              <h3 className="text-2xl font-semibold mb-4">¿Con Qué Condiciones Puede Ayudar la Terapia IA?</h3>
               <div className="grid md:grid-cols-2 gap-4 mb-6">
                 <ul className="space-y-2">
-                  <li>• <strong>Anxiety disorders</strong> and panic attacks</li>
-                  <li>• <strong>Depression</strong> and mood disorders</li>
-                  <li>• <strong>Stress management</strong> and burnout</li>
-                  <li>• <strong>Sleep issues</strong> and insomnia</li>
+                  <li>• <strong>Trastornos de ansiedad</strong> y ataques de pánico</li>
+                  <li>• <strong>Depresión</strong> y trastornos del estado de ánimo</li>
+                  <li>• <strong>Gestión del estrés</strong> y agotamiento</li>
+                  <li>• <strong>Problemas de sueño</strong> e insomnio</li>
                 </ul>
                 <ul className="space-y-2">
-                  <li>• <strong>Relationship concerns</strong> and communication</li>
-                  <li>• <strong>Grief and loss</strong> processing</li>
-                  <li>• <strong>Work-related stress</strong> and career anxiety</li>
-                  <li>• <strong>Self-esteem</strong> and confidence building</li>
+                  <li>• <strong>Preocupaciones relacionales</strong> y comunicación</li>
+                  <li>• <strong>Duelo y pérdida</strong> procesamiento</li>
+                  <li>• <strong>Estrés relacionado con el trabajo</strong> y ansiedad profesional</li>
+                  <li>• <strong>Autoestima</strong> y construcción de confianza</li>
                 </ul>
               </div>
             </section>
 
-            <section id="limitations" className="mb-12">
+            <section id="limitaciones" className="mb-12">
               <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
                 <Shield className="w-8 h-8 text-yellow-600" />
                 Limitaciones y Consideraciones
@@ -365,29 +365,29 @@ export default function WhatIsAITherapyPost() {
               
               <Card className="bg-yellow-50 border-yellow-200 mb-6">
                 <CardContent className="pt-6">
-                  <h3 className="font-semibold text-lg mb-3 text-yellow-800">Important Considerations</h3>
+                  <h3 className="font-semibold text-lg mb-3 text-yellow-800">Consideraciones Importantes</h3>
                   <p className="text-yellow-700">
-                    While AI therapy is highly effective for many people, it's important to understand its limitations 
-                    and when human professional help may be necessary.
+                    Aunque la terapia IA es altamente efectiva para muchas personas, es importante entender sus limitaciones 
+                    y cuándo la ayuda profesional humana puede ser necesaria.
                   </p>
                 </CardContent>
               </Card>
 
-              <h3 className="text-2xl font-semibold mb-4">When Human Therapy May Be Better</h3>
+              <h3 className="text-2xl font-semibold mb-4">Cuándo la Terapia Humana Puede Ser Mejor</h3>
               <ul className="space-y-3 mb-6">
-                <li>• <strong>Severe mental health conditions:</strong> Bipolar disorder, schizophrenia, severe PTSD</li>
-                <li>• <strong>Crisis situations:</strong> Suicidal thoughts, self-harm, immediate danger</li>
-                <li>• <strong>Complex trauma:</strong> Deep-rooted trauma requiring specialized human expertise</li>
-                <li>• <strong>Medication management:</strong> When psychiatric medication evaluation is needed</li>
-                <li>• <strong>Legal/ethical issues:</strong> Situations requiring professional judgment and accountability</li>
+                <li>• <strong>Condiciones severas de salud mental:</strong> Trastorno bipolar, esquizofrenia, TEPT severo</li>
+                <li>• <strong>Situaciones de crisis:</strong> Pensamientos suicidas, autolesión, peligro inmediato</li>
+                <li>• <strong>Trauma complejo:</strong> Trauma arraigado que requiere experiencia humana especializada</li>
+                <li>• <strong>Gestión de medicamentos:</strong> Cuando se necesita evaluación de medicación psiquiátrica</li>
+                <li>• <strong>Problemas legales/éticos:</strong> Situaciones que requieren juicio profesional y responsabilidad</li>
               </ul>
 
-              <h3 className="text-2xl font-semibold mb-4">Current AI Limitations</h3>
+              <h3 className="text-2xl font-semibold mb-4">Limitaciones Actuales de la IA</h3>
               <ul className="space-y-3">
-                <li>• Cannot provide medical diagnoses or prescribe medication</li>
-                <li>• May not fully understand complex cultural or personal contexts</li>
-                <li>• Limited ability to handle crisis situations requiring immediate intervention</li>
-                <li>• Still developing in terms of understanding subtle emotional nuances</li>
+                <li>• No puede proporcionar diagnósticos médicos o recetar medicamentos</li>
+                <li>• Puede no entender completamente contextos culturales o personales complejos</li>
+                <li>• Capacidad limitada para manejar situaciones de crisis que requieren intervención inmediata</li>
+                <li>• Aún se está desarrollando en términos de comprensión de matices emocionales sutiles</li>
               </ul>
             </section>
 
@@ -410,21 +410,21 @@ export default function WhatIsAITherapyPost() {
                 </CardContent>
               </Card>
 
-              <h3 className="text-2xl font-semibold mb-4">Steps to Begin</h3>
+              <h3 className="text-2xl font-semibold mb-4">Pasos para Comenzar</h3>
               <ol className="list-decimal list-inside space-y-3 mb-6">
-                <li><strong>Assessment:</strong> Complete an initial mental health assessment to personalize your experience</li>
-                <li><strong>Set Goals:</strong> Define what you want to achieve with AI therapy support</li>
-                <li><strong>Start Conversations:</strong> Begin regular sessions at your own pace and schedule</li>
-                <li><strong>Track Progress:</strong> Monitor your mental health journey with built-in analytics</li>
-                <li><strong>Adjust as Needed:</strong> Modify your approach based on what works best for you</li>
+                <li><strong>Evaluación:</strong> Completa una evaluación inicial de salud mental para personalizar tu experiencia</li>
+                <li><strong>Establecer Objetivos:</strong> Define lo que quieres lograr con el apoyo de terapia IA</li>
+                <li><strong>Iniciar Conversaciones:</strong> Comienza sesiones regulares a tu propio ritmo y horario</li>
+                <li><strong>Seguir el Progreso:</strong> Monitorea tu viaje de salud mental con análisis integrados</li>
+                <li><strong>Ajustar Según Sea Necesario:</strong> Modifica tu enfoque basado en lo que funciona mejor para ti</li>
               </ol>
 
               <Card className="border-blue-200 bg-blue-50">
                 <CardContent className="pt-6">
-                  <h3 className="font-semibold mb-3">Pro Tip</h3>
+                  <h3 className="font-semibold mb-3">Consejo Profesional</h3>
                   <p>
-                    AI therapy works best when used consistently. Even 10-15 minutes of daily conversation can 
-                    provide significant mental health benefits over time.
+                    La terapia IA funciona mejor cuando se usa consistentemente. Incluso 10-15 minutos de conversación diaria pueden 
+                    proporcionar beneficios significativos de salud mental con el tiempo.
                   </p>
                 </CardContent>
               </Card>
@@ -438,15 +438,15 @@ export default function WhatIsAITherapyPost() {
             <div className="grid md:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>
-                  <Badge variant="secondary" className="w-fit mb-2">Comparison</Badge>
+                  <Badge variant="secondary" className="w-fit mb-2">Comparación</Badge>
                   <CardTitle>
                     <Link href="/blog/ai-therapy-vs-human-therapy" className="hover:text-blue-600">
-                      AI Therapy vs Human Therapy: Understanding the Differences
+                      Terapia IA vs Terapia Humana: Entendiendo las Diferencias
                     </Link>
                   </CardTitle>
                   <CardContent className="px-0">
                     <p className="text-slate-600">
-                      Compare AI therapy with traditional human therapy to understand when each approach works best.
+                      Compara la terapia IA con la terapia humana tradicional para entender cuándo cada enfoque funciona mejor.
                     </p>
                   </CardContent>
                 </CardHeader>
@@ -454,15 +454,15 @@ export default function WhatIsAITherapyPost() {
 
               <Card>
                 <CardHeader>
-                  <Badge variant="secondary" className="w-fit mb-2">Benefits</Badge>
+                  <Badge variant="secondary" className="w-fit mb-2">Beneficios</Badge>
                   <CardTitle>
-                    <Link href="/blog/benefits-of-24-7-ai-therapy" className="hover:text-blue-600">
-                      24/7 AI Therapy: Why Round-the-Clock Support Matters
+                    <Link href="/blog/beneficios-of-24-7-ai-therapy" className="hover:text-blue-600">
+                      Terapia IA 24/7: Por Qué el Apoyo las 24 Horas Importa
                     </Link>
                   </CardTitle>
                   <CardContent className="px-0">
                     <p className="text-slate-600">
-                      Discover how 24/7 accessibility is transforming mental health care and crisis support.
+                      Descubre cómo la accesibilidad 24/7 está transformando la atención de salud mental y el apoyo en crisis.
                     </p>
                   </CardContent>
                 </CardHeader>
