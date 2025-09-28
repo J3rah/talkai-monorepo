@@ -416,11 +416,6 @@ function HeaderSection({ onStartSession }: { onStartSession: () => void }) {
         </div>
       </div>
 
-      <div className="bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-lg p-2 mx-4 mb-3 md:p-1 md:mb-2 md:mx-auto md:max-w-xs">
-        <p className="text-blue-800 dark:text-blue-200 text-center text-sm md:text-xs">
-          🎯 <strong>Free 5-Minute Trial</strong> - Experience our empathic AI therapy session
-        </p>
-      </div>
       <div className="mx-4 md:mx-8 lg:mx-16">
         <button
           onClick={onStartSession}

@@ -283,11 +283,7 @@ export default function TrialStartCall({
                 Choose Your Therapists Voice
               </DialogTitle>
               <DialogDescription className="text-center">
-                Select a voice for your free trial session
-                <span className="mt-2 text-sm text-blue-600">
-                  ✨ No signup required - Start your 5-minute trial now!
-                </span>
-                <span className="mt-2 text-sm text-green-600">
+                <span className="block mt-2 text-sm text-green-600">
                   🎉 Trial users get access to ALL voices!
                 </span>
               </DialogDescription>

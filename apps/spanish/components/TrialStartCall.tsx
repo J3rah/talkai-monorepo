@@ -287,13 +287,9 @@ export default function TrialStartCall({
                 Elige la Voz de tu Terapeuta
               </DialogTitle>
               <DialogDescription className="text-center">
-                Selecciona una voz para tu sesión de prueba gratuita
-                <div className="mt-2 text-sm text-blue-600">
-                  ✨ No se requiere registro - ¡Inicia tu prueba de 5 minutos ahora!
-                </div>
-                <div className="mt-2 text-sm text-green-600">
+                <span className="block mt-2 text-sm text-green-600">
                   🎉 ¡Los usuarios de prueba tienen acceso a TODAS las voces!
-                </div>
+                </span>
               </DialogDescription>
             </DialogHeader>
 
