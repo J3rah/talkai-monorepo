@@ -117,18 +117,19 @@ const Messages = forwardRef<
       const mappedDisplay = CONFIG_ID_TO_DISPLAY[configId];
       
       // Immediate best-effort fallback based on known config IDs (prevents flashing "Talk Therapist")
-      // But prioritize custom therapist name if available
-      if (therapistName && therapistName !== "Talk Therapist") {
-        console.log('✅ Messages: Using custom therapist name (immediate):', therapistName);
-        setAgentName(therapistName);
-      } else if (characterNameFromStorage) {
+      // Prioritize character name from voice configuration over custom therapist name
+      if (characterNameFromStorage) {
         console.log('✅ Messages: Using character name from sessionStorage:', characterNameFromStorage);
         setAgentName(characterNameFromStorage);
       } else if (mappedDisplay) {
         const mappedCharacter = getCharacterName(mappedDisplay, mappedDisplay);
         if (mappedCharacter && mappedCharacter !== agentName) {
+          console.log('✅ Messages: Using character name (immediate):', mappedCharacter);
           setAgentName(mappedCharacter);
         }
+      } else if (therapistName && therapistName !== "Talk Therapist") {
+        console.log('✅ Messages: Using custom therapist name (immediate):', therapistName);
+        setAgentName(therapistName);
       }
       
       try {

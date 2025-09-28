@@ -83,37 +83,48 @@ export default function TrialStartCall({
     const fetchVoiceConfigurations = async () => {
       setIsLoadingVoices(true);
       try {
+        console.log('TrialStartCall: Starting voice configuration fetch...');
+        
         // For trial users, we give them access to all voices (like grounded subscribers)
         const dbPromise = getAvailableVoiceConfigurations('grounded');
         const timeoutPromise = new Promise<VoiceConfigurationGroup[]>((resolve) =>
           setTimeout(() => resolve([]), 3500)
         );
+        
         let groups = await Promise.race([dbPromise, timeoutPromise]);
         const usedFallback = groups.length === 0;
+        
         if (usedFallback) {
+          console.log('TrialStartCall: Database timeout, using fallback voices');
           groups = getFallbackVoiceConfigurations();
+        } else {
+          console.log('TrialStartCall: Loaded voices from database:', groups.length, 'groups');
         }
+        
         setVoiceGroups(groups);
         
         // Set the first available voice as default
         if (groups.length > 0 && groups[0].voice_configurations.length > 0) {
           setSelectedVoice(groups[0].voice_configurations[0]);
+          console.log('TrialStartCall: Set default voice:', groups[0].voice_configurations[0].display_name);
         }
 
         // Also update with real DB groups if they arrive after timeout
         try {
           const dbGroups = await dbPromise;
           if (Array.isArray(dbGroups) && dbGroups.length > 0) {
+            console.log('TrialStartCall: Database response arrived after timeout, updating with real data');
             setVoiceGroups(dbGroups);
             if (usedFallback && dbGroups[0]?.voice_configurations?.length && !selectedVoice) {
               setSelectedVoice(dbGroups[0].voice_configurations[0]);
             }
           }
         } catch (e) {
+          console.warn('TrialStartCall: Error fetching real DB groups after timeout:', e);
           // Ignore; fallback already shown
         }
       } catch (error) {
-        console.error('Error fetching voice configurations for trial:', error);
+        console.error('TrialStartCall: Error fetching voice configurations for trial:', error);
         // Fallback to basic voices if database fails
         const fallbackGroups = getFallbackVoiceConfigurations();
         setVoiceGroups(fallbackGroups);
@@ -122,13 +133,31 @@ export default function TrialStartCall({
         }
       } finally {
         setIsLoadingVoices(false);
+        console.log('TrialStartCall: Voice loading completed');
       }
     };
 
-    if (isOpen) {
-      fetchVoiceConfigurations();
-    }
-  }, [isOpen]);
+    // Load voices immediately when component mounts, not just when dialog opens
+    fetchVoiceConfigurations();
+  }, []); // Remove isOpen dependency to load voices immediately
+
+  // Additional effect to ensure voices are loaded even if the first attempt fails
+  useEffect(() => {
+    // If voices are still loading after 5 seconds, force fallback
+    const timeout = setTimeout(() => {
+      if (isLoadingVoices && voiceGroups.length === 0) {
+        console.log('TrialStartCall: Force loading fallback voices after timeout');
+        const fallbackGroups = getFallbackVoiceConfigurations();
+        setVoiceGroups(fallbackGroups);
+        if (fallbackGroups.length > 0 && fallbackGroups[0].voice_configurations.length > 0) {
+          setSelectedVoice(fallbackGroups[0].voice_configurations[0]);
+        }
+        setIsLoadingVoices(false);
+      }
+    }, 5000);
+
+    return () => clearTimeout(timeout);
+  }, [isLoadingVoices, voiceGroups.length]);
 
   // Handle dialog open/close
   useEffect(() => {
@@ -180,8 +209,8 @@ export default function TrialStartCall({
     
     // If user has chosen to remember disclaimer choice, skip disclaimer step
     if (skipDisclaimer) {
-      // Go directly to the final step (step 4)
-      setModalStep(4);
+      // Go directly to the final step (step 3 when disclaimer is skipped)
+      setModalStep(3);
     } else {
       // Go to disclaimer step (step 3)
       setModalStep(3);
@@ -493,53 +522,53 @@ export default function TrialStartCall({
         );
 
       case 3:
-  return (
-    <>
+        return (
+          <>
             <DialogHeader className="text-center">
-            <DialogTitle className="text-center text-xl font-bold text-red-600">
-              IMPORTANT MEDICAL DISCLAIMER
-            </DialogTitle>
-            <DialogDescription className="text-center text-sm text-muted-foreground dark:text-gray-300">
-              Please read and agree to the following before starting your trial session
-            </DialogDescription>
-          </DialogHeader>
+              <DialogTitle className="text-center text-xl font-bold text-red-600">
+                IMPORTANT MEDICAL DISCLAIMER
+              </DialogTitle>
+              <DialogDescription className="text-center text-sm text-muted-foreground dark:text-gray-300">
+                Please read and agree to the following before starting your trial session
+              </DialogDescription>
+            </DialogHeader>
 
             <div className="space-y-4 py-4">
-            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-              <p className="text-red-800 dark:text-red-200 font-medium text-sm leading-relaxed">
-                TalkAI is NOT a medical device, healthcare provider, or substitute for professional mental health care. 
-                This service is for informational and emotional support purposes only.
-              </p>
-            </div>
+              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+                <p className="text-red-800 dark:text-red-200 font-medium text-sm leading-relaxed">
+                  TalkAI is NOT a medical device, healthcare provider, or substitute for professional mental health care. 
+                  This service is for informational and emotional support purposes only.
+                </p>
+              </div>
 
-            <div className="space-y-3">
-              <h3 className="font-semibold text-sm dark:text-gray-100">By using this service, you understand that:</h3>
-              <ul className="space-y-2 text-xs">
-                <li className="flex items-start gap-2">
-                  <span className="text-red-500 dark:text-red-400 font-bold">•</span>
-                  <span className="dark:text-gray-200">This AI cannot diagnose mental health conditions or provide medical advice</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-red-500 dark:text-red-400 font-bold">•</span>
-                  <span className="dark:text-gray-200">This service is not suitable for mental health emergencies or crisis situations</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-red-500 dark:text-red-400 font-bold">•</span>
-                  <span className="dark:text-gray-200">If you are experiencing thoughts of self-harm, please contact emergency services (911) or the 988 Suicide & Crisis Lifeline immediately</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-red-500 dark:text-red-400 font-bold">•</span>
-                  <span className="dark:text-gray-200">For serious mental health conditions, please consult with licensed mental health professionals</span>
-                </li>
-              </ul>
-            </div>
+              <div className="space-y-3">
+                <h3 className="font-semibold text-sm dark:text-gray-100">By using this service, you understand that:</h3>
+                <ul className="space-y-2 text-xs">
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-500 dark:text-red-400 font-bold">•</span>
+                    <span className="dark:text-gray-200">This AI cannot diagnose mental health conditions or provide medical advice</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-500 dark:text-red-400 font-bold">•</span>
+                    <span className="dark:text-gray-200">This service is not suitable for mental health emergencies or crisis situations</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-500 dark:text-red-400 font-bold">•</span>
+                    <span className="dark:text-gray-200">If you are experiencing thoughts of self-harm, please contact emergency services (911) or the 988 Suicide & Crisis Lifeline immediately</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-500 dark:text-red-400 font-bold">•</span>
+                    <span className="dark:text-gray-200">For serious mental health conditions, please consult with licensed mental health professionals</span>
+                  </li>
+                </ul>
+              </div>
 
-            <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-3">
-              <p className="text-yellow-800 dark:text-yellow-100 text-xs">
-                <strong>Emergency Resources:</strong> If you're in crisis, call 911, contact the 988 Suicide & Crisis Lifeline, 
-                or visit your nearest emergency room. Do not use this service for emergencies.
-              </p>
-            </div>
+              <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-3">
+                <p className="text-yellow-800 dark:text-yellow-100 text-xs">
+                  <strong>Emergency Resources:</strong> If you're in crisis, call 911, contact the 988 Suicide & Crisis Lifeline, 
+                  or visit your nearest emergency room. Do not use this service for emergencies.
+                </p>
+              </div>
 
               {/* Checkboxes */}
               <div className="space-y-4">
@@ -570,37 +599,37 @@ export default function TrialStartCall({
                 </div>
               </div>
 
-            <div className="text-xs text-muted-foreground dark:text-gray-300">
-              <p>
+              <div className="text-xs text-muted-foreground dark:text-gray-300">
+                <p>
                   By clicking "Continue" below, you acknowledge that you have read and understood this disclaimer, 
-                and you agree to our{" "}
-                <a href="/terms" target="_blank" className="text-primary dark:text-blue-400 hover:underline">
-                  Terms of Service
-                </a>{" "}
-                and{" "}
-                <a href="/privacy" target="_blank" className="text-primary dark:text-blue-400 hover:underline">
-                  Privacy Policy
-                </a>.
-              </p>
+                  and you agree to our{" "}
+                  <a href="/terms" target="_blank" className="text-primary dark:text-blue-400 hover:underline">
+                    Terms of Service
+                  </a>{" "}
+                  and{" "}
+                  <a href="/privacy" target="_blank" className="text-primary dark:text-blue-400 hover:underline">
+                    Privacy Policy
+                  </a>.
+                </p>
+              </div>
             </div>
-          </div>
 
             <div className="flex gap-3 pt-4">
-            <Button
-              variant="outline"
+              <Button
+                variant="outline"
                 onClick={() => setModalStep(2)}
-              className="px-6"
-            >
+                className="px-6"
+              >
                 Back
-            </Button>
-            <Button
+              </Button>
+              <Button
                 onClick={handleDisclaimerAgree}
                 disabled={!disclaimerAgreed}
-              className="px-6 bg-primary hover:bg-primary/90"
-            >
+                className="px-6 bg-primary hover:bg-primary/90"
+              >
                 Continue
-            </Button>
-          </div>
+              </Button>
+            </div>
           </>
         );
 

@@ -82,37 +82,48 @@ export default function TrialStartCall({
     const fetchVoiceConfigurations = async () => {
       setIsLoadingVoices(true);
       try {
+        console.log('TrialStartCall: Starting voice configuration fetch...');
+        
         // For trial users, we give them access to all voices (like grounded subscribers)
         const dbPromise = getAvailableVoiceConfigurations('grounded');
         const timeoutPromise = new Promise<VoiceConfigurationGroup[]>((resolve) =>
           setTimeout(() => resolve([]), 3500)
         );
+        
         let groups = await Promise.race([dbPromise, timeoutPromise]);
         const usedFallback = groups.length === 0;
+        
         if (usedFallback) {
+          console.log('TrialStartCall: Database timeout, using fallback voices');
           groups = getFallbackVoiceConfigurations();
+        } else {
+          console.log('TrialStartCall: Loaded voices from database:', groups.length, 'groups');
         }
+        
         setVoiceGroups(groups);
         
         // Set the first available voice as default
         if (groups.length > 0 && groups[0].voice_configurations.length > 0) {
           setSelectedVoice(groups[0].voice_configurations[0]);
+          console.log('TrialStartCall: Set default voice:', groups[0].voice_configurations[0].display_name);
         }
 
         // Update with real DB groups if they arrive after timeout
         try {
           const dbGroups = await dbPromise;
           if (Array.isArray(dbGroups) && dbGroups.length > 0) {
+            console.log('TrialStartCall: Database response arrived after timeout, updating with real data');
             setVoiceGroups(dbGroups);
             if (usedFallback && dbGroups[0]?.voice_configurations?.length && !selectedVoice) {
               setSelectedVoice(dbGroups[0].voice_configurations[0]);
             }
           }
         } catch (e) {
+          console.warn('TrialStartCall: Error fetching real DB groups after timeout:', e);
           // Ignorar; ya mostramos fallback
         }
       } catch (error) {
-        console.error('Error fetching voice configurations for trial:', error);
+        console.error('TrialStartCall: Error fetching voice configurations for trial:', error);
         // Fallback to basic voices if database fails
         const fallbackGroups = getFallbackVoiceConfigurations();
         setVoiceGroups(fallbackGroups);
@@ -121,13 +132,31 @@ export default function TrialStartCall({
         }
       } finally {
         setIsLoadingVoices(false);
+        console.log('TrialStartCall: Voice loading completed');
       }
     };
 
-    if (isOpen) {
-      fetchVoiceConfigurations();
-    }
-  }, [isOpen]);
+    // Load voices immediately when component mounts, not just when dialog opens
+    fetchVoiceConfigurations();
+  }, []); // Remove isOpen dependency to load voices immediately
+
+  // Additional effect to ensure voices are loaded even if the first attempt fails
+  useEffect(() => {
+    // If voices are still loading after 5 seconds, force fallback
+    const timeout = setTimeout(() => {
+      if (isLoadingVoices && voiceGroups.length === 0) {
+        console.log('TrialStartCall: Force loading fallback voices after timeout');
+        const fallbackGroups = getFallbackVoiceConfigurations();
+        setVoiceGroups(fallbackGroups);
+        if (fallbackGroups.length > 0 && fallbackGroups[0].voice_configurations.length > 0) {
+          setSelectedVoice(fallbackGroups[0].voice_configurations[0]);
+        }
+        setIsLoadingVoices(false);
+      }
+    }, 5000);
+
+    return () => clearTimeout(timeout);
+  }, [isLoadingVoices, voiceGroups.length]);
 
   // Handle dialog open/close
   useEffect(() => {
@@ -196,10 +225,14 @@ export default function TrialStartCall({
   const handleConnect = async () => {
     if (isConnecting || trialExpired) return;
     
-    // Show terms agreement popup first
-    setShowTermsAgreement(true);
-    
-    setIsOpen(false); // Close the main modal
+    // If user has chosen to remember disclaimer choice, skip disclaimer step
+    if (skipDisclaimer) {
+      // Go directly to the final step (step 3 when disclaimer is skipped)
+      setModalStep(3);
+    } else {
+      // Go to disclaimer step (step 2)
+      setModalStep(2);
+    }
   };
 
   const handleTermsAgree = async () => {
@@ -711,17 +744,17 @@ export default function TrialStartCall({
           <div className="bg-gray-50 dark:bg-gray-800 px-6 py-4 border-b">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                Paso {modalStep} de 2
+                Paso {modalStep} de {skipDisclaimer ? 2 : 3}
               </span>
               <span className="text-sm text-gray-500 dark:text-gray-400">
-                {Math.round((modalStep / 2) * 100)}% completo
+                {Math.round((modalStep / (skipDisclaimer ? 2 : 3)) * 100)}% completo
               </span>
             </div>
             <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
               <div 
                 className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300"
                 style={{ 
-                  width: `${(modalStep / 2) * 100}%` 
+                  width: `${(modalStep / (skipDisclaimer ? 2 : 3)) * 100}%` 
                 }}
               ></div>
             </div>

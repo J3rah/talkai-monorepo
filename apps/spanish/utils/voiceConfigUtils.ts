@@ -31,6 +31,7 @@ export interface VoiceConfigurationGroup {
 
 export async function getVoiceConfigurationGroups(): Promise<VoiceConfigurationGroup[]> {
   try {
+    console.log('getVoiceConfigurationGroups: Starting database query...');
     const { data, error } = await supabase
       .from('voice_configuration_groups')
       .select(`
@@ -43,18 +44,23 @@ export async function getVoiceConfigurationGroups(): Promise<VoiceConfigurationG
       .order('sort_order', { ascending: true });
 
     if (error) {
-      console.error('Error fetching voice configuration groups:', error);
+      console.error('getVoiceConfigurationGroups: Database error:', error);
       return [];
     }
 
-    return data?.map(group => ({
+    console.log('getVoiceConfigurationGroups: Database query successful, found', data?.length || 0, 'groups');
+    
+    const result = data?.map(group => ({
       ...group,
       voice_configurations: group.voice_configurations
         ?.filter((config: any) => config.is_active)
         ?.sort((a: any, b: any) => a.sort_order - b.sort_order) || []
     })) || [];
+    
+    console.log('getVoiceConfigurationGroups: Processed groups:', result.length);
+    return result;
   } catch (error) {
-    console.error('Error in getVoiceConfigurationGroups:', error);
+    console.error('getVoiceConfigurationGroups: Exception caught:', error);
     return [];
   }
 }
