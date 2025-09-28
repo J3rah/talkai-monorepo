@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useState, useEffect } from "react";
 import { Button } from "./ui/button";
-import { Moon, Sun, LogIn, LogOut, Menu, X, Loader2, Twitter, Instagram, Facebook, Linkedin } from "lucide-react";
+import { Moon, Sun, LogIn, LogOut, Menu, X, Loader2, Twitter, Instagram, Facebook, Linkedin, Globe } from "lucide-react";
 import TalkAILogo from "./logos/TalkAI";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -25,6 +25,7 @@ export const Nav = () => {
   const router = useRouter();
   const { theme, setTheme } = useTheme();
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
 
   // Prevent hydration mismatch by only rendering theme-dependent content after mount
   useEffect(() => {
@@ -200,6 +201,18 @@ export const Nav = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
 
+  const handleLanguageChange = (language: string) => {
+    if (language === 'english') {
+      // Redirect to English version
+      const currentPath = pathname;
+      const englishPath = currentPath.replace('/es', '') || '/';
+      window.location.href = `https://talkai.im${englishPath}`;
+    } else {
+      // Already on Spanish version
+      setLanguageDropdownOpen(false);
+    }
+  };
+
   const handleLogout = async () => {
     console.log('🔄 Starting logout process...');
     setIsLoggingOut(true);
@@ -373,6 +386,43 @@ export const Nav = () => {
         </div>
 
         <div className="ml-auto flex items-center gap-1">
+          {/* Language Selector */}
+          <div
+            className="relative"
+            onMouseEnter={() => setLanguageDropdownOpen(true)}
+            onMouseLeave={() => setLanguageDropdownOpen(false)}
+          >
+            <DropdownMenu open={languageDropdownOpen} onOpenChange={setLanguageDropdownOpen}>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="flex items-center gap-1.5"
+                >
+                  <Globe className="size-4" />
+                  <span className="text-sm">🇪🇸</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-40">
+                <DropdownMenuLabel>Idioma</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem 
+                  onClick={() => handleLanguageChange('spanish')}
+                  className="flex items-center gap-2"
+                >
+                  <span>🇪🇸</span>
+                  <span>Español</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => handleLanguageChange('english')}
+                  className="flex items-center gap-2"
+                >
+                  <span>🇺🇸</span>
+                  <span>English</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
           <Button
             onClick={toggleDark}
             variant="ghost"

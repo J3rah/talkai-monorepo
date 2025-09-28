@@ -470,6 +470,34 @@ export default function AuthPage() {
     }
   };
 
+  const handleTwitterSignIn = async () => {
+    setLoading(true);
+    setMessage('');
+
+    try {
+      console.log('🔐 AuthPage: Starting Twitter OAuth...');
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'twitter',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        }
+      });
+
+      if (error) {
+        console.error('🔐 AuthPage: Twitter OAuth error:', error);
+        setMessage(error.message);
+        setLoading(false);
+      } else {
+        console.log('🔐 AuthPage: Twitter OAuth initiated successfully');
+        // The user will be redirected to Twitter's OAuth page
+      }
+    } catch (err) {
+      console.error('🔐 AuthPage: Unexpected Twitter OAuth error:', err);
+      setMessage('An unexpected error occurred. Please try again.');
+      setLoading(false);
+    }
+  };
+
   if (magicLinkSent) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-background">
@@ -636,6 +664,20 @@ export default function AuthPage() {
               Continue with Google
             </Button>
 
+            {/* Twitter Sign In Button */}
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full"
+              onClick={handleTwitterSignIn}
+              disabled={loading}
+            >
+              <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+              Continue with X (Twitter)
+            </Button>
+
             {message && (
               <p className={`text-sm text-center ${message.includes('error') || message.includes('failed') ? 'text-red-500' : 'text-green-500'}`}>
                 {message}
@@ -765,6 +807,20 @@ export default function AuthPage() {
                 />
               </svg>
               Continue with Google
+            </Button>
+
+            {/* Twitter Sign In Button */}
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full"
+              onClick={handleTwitterSignIn}
+              disabled={loading}
+            >
+              <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+              Continue with X (Twitter)
             </Button>
 
             {message && (

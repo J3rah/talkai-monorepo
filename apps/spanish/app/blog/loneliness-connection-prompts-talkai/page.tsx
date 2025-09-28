@@ -88,7 +88,7 @@ export default function LonelinessConnectionPromptsTalkAIPost() {
                 <li><a href="#script-help" className="text-blue-600 hover:underline">Script Help</a></li>
                 <li><a href="#community" className="text-blue-600 hover:underline">Community</a></li>
                 <li><a href="#reframe" className="text-blue-600 hover:underline">Reframe</a></li>
-                <li><a href="#cta" className="text-blue-600 hover:underline">Get Started</a></li>
+                <li><a href="#cta" className="text-blue-600 hover:underline">Comenzar</a></li>
               </ul>
             </CardContent>
           </Card>
@@ -182,7 +182,7 @@ export default function LonelinessConnectionPromptsTalkAIPost() {
             </section>
 
             <section id="cta" className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">Get Started</h2>
+              <h2 className="text-3xl font-bold mb-6">Comenzar</h2>
               <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-8">
                 <CardContent className="pt-6">
                   <h3 className="text-xl font-semibold mb-4">Turn on TalkAI's “One Connection a Day” Reminder</h3>
@@ -197,9 +197,9 @@ export default function LonelinessConnectionPromptsTalkAIPost() {
 
           
 
-          {/* Related Articles */}
+          {/* Artículos Relacionados */}
           <section className="mt-16">
-            <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
+            <h2 className="text-2xl font-bold mb-8">Artículos Relacionados</h2>
             <div className="grid md:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>

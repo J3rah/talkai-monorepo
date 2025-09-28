@@ -89,7 +89,7 @@ export default function CouplesCheckInsPost() {
                 <li><a href="#repair" className="text-blue-600 hover:underline">Repair Scripts</a></li>
                 <li><a href="#ritual" className="text-blue-600 hover:underline">Weekly Ritual</a></li>
                 <li><a href="#track" className="text-blue-600 hover:underline">Track progreso</a></li>
-                <li><a href="#cta" className="text-blue-600 hover:underline">Get Started</a></li>
+                <li><a href="#cta" className="text-blue-600 hover:underline">Comenzar</a></li>
               </ul>
             </CardContent>
           </Card>
@@ -190,7 +190,7 @@ export default function CouplesCheckInsPost() {
             </section>
 
             <section id="cta" className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">Get Started</h2>
+              <h2 className="text-3xl font-bold mb-6">Comenzar</h2>
               <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-8">
                 <CardContent className="pt-6">
                   <h3 className="text-xl font-semibold mb-4">Load the Couples Check-In Template</h3>
@@ -205,9 +205,9 @@ export default function CouplesCheckInsPost() {
 
           
 
-          {/* Related Articles */}
+          {/* Artículos Relacionados */}
           <section className="mt-16">
-            <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
+            <h2 className="text-2xl font-bold mb-8">Artículos Relacionados</h2>
             <div className="grid md:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>

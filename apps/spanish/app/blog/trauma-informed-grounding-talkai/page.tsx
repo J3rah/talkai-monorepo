@@ -88,7 +88,7 @@ export default function TraumaInformedGroundingTalkAIPost() {
                 <li><a href="#pacing" className="text-blue-600 hover:underline">Pacing</a></li>
                 <li><a href="#anchors" className="text-blue-600 hover:underline">Safe Anchors</a></li>
                 <li><a href="#safety" className="text-blue-600 hover:underline">Safety Plan</a></li>
-                <li><a href="#cta" className="text-blue-600 hover:underline">Get Started</a></li>
+                <li><a href="#cta" className="text-blue-600 hover:underline">Comenzar</a></li>
               </ul>
             </CardContent>
           </Card>
@@ -185,7 +185,7 @@ export default function TraumaInformedGroundingTalkAIPost() {
             </section>
 
             <section id="cta" className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">Get Started</h2>
+              <h2 className="text-3xl font-bold mb-6">Comenzar</h2>
               <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-8">
                 <CardContent className="pt-6">
                   <h3 className="text-xl font-semibold mb-4">Customize Your trauma-Safe Menu</h3>
@@ -200,9 +200,9 @@ export default function TraumaInformedGroundingTalkAIPost() {
 
           
 
-          {/* Related Articles */}
+          {/* Artículos Relacionados */}
           <section className="mt-16">
-            <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
+            <h2 className="text-2xl font-bold mb-8">Artículos Relacionados</h2>
             <div className="grid md:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>

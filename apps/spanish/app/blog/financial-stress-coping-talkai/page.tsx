@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { CalendarDays, Clock, User, ArrowLeft, DollarSign, meta, CheckCircle, TrendingUp, Brain } from 'lucide-react';
+import { CalendarDays, Clock, User, ArrowLeft, DollarSign, CheckCircle, TrendingUp, Brain, Zap } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'When Money Is Tight: afrontamiento with Financial estrés via TalkAI',
@@ -88,7 +88,7 @@ export default function FinancialStressCopingTalkAIPost() {
                 <li><a href="#triage" className="text-blue-600 hover:underline">Triage Tasks</a></li>
                 <li><a href="#action" className="text-blue-600 hover:underline">Take Action</a></li>
                 <li><a href="#debrief" className="text-blue-600 hover:underline">Debrief & Learn</a></li>
-                <li><a href="#cta" className="text-blue-600 hover:underline">Get Started</a></li>
+                <li><a href="#cta" className="text-blue-600 hover:underline">Comenzar</a></li>
               </ul>
             </CardContent>
           </Card>
@@ -128,7 +128,7 @@ export default function FinancialStressCopingTalkAIPost() {
 
             <section id="triage" className="mb-12">
               <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                <meta className="w-8 h-8 text-blue-600" />
+                <Zap className="w-8 h-8 text-blue-600" />
                 Triage Tasks
               </h2>
               <Card>
@@ -185,7 +185,7 @@ export default function FinancialStressCopingTalkAIPost() {
             </section>
 
             <section id="cta" className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">Get Started</h2>
+              <h2 className="text-3xl font-bold mb-6">Comenzar</h2>
               <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-8">
                 <CardContent className="pt-6">
                   <h3 className="text-xl font-semibold mb-4">Use TalkAI's "Money Triage" Script</h3>
@@ -200,9 +200,9 @@ export default function FinancialStressCopingTalkAIPost() {
 
           
 
-          {/* Related Articles */}
+          {/* Artículos Relacionados */}
           <section className="mt-16">
-            <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
+            <h2 className="text-2xl font-bold mb-8">Artículos Relacionados</h2>
             <div className="grid md:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>

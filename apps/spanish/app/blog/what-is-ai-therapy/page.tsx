@@ -432,7 +432,7 @@ export default function WhatIsAITherapyPost() {
 
           </div>
 
-          {/* Related Articles */}
+          {/* Artículos Relacionados */}
           <section className="mt-16">
             <h2 className="text-2xl font-bold mb-8">Artículos Relacionados</h2>
             <div className="grid md:grid-cols-2 gap-6">

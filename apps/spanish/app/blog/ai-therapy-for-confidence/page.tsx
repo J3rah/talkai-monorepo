@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { CalendarDays, Clock, User, ArrowLeft, CheckCircle, Brain, Heart, Shield, Star, Zap, meta } from 'lucide-react';
+import { CalendarDays, Clock, User, ArrowLeft, CheckCircle, Brain, Heart, Shield, Star, Zap } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'terapia IA for Confidence: Building autoestima and Personal Power',

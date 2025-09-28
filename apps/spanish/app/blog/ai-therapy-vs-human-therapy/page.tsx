@@ -174,7 +174,7 @@ export default function AIvsHumanTherapyPost() {
                     <CardHeader>
                       <CardTitle className="text-lg flex items-center gap-2">
                         <Users className="w-5 h-5 text-green-600" />
-                        Human Therapy
+                        Terapia Humana
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -242,7 +242,7 @@ export default function AIvsHumanTherapyPost() {
                     <CardHeader>
                       <CardTitle className="text-lg flex items-center gap-2">
                         <Users className="w-5 h-5 text-green-600" />
-                        Human Therapy
+                        Terapia Humana
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -310,7 +310,7 @@ export default function AIvsHumanTherapyPost() {
                     <CardHeader>
                       <CardTitle className="text-lg flex items-center gap-2">
                         <Users className="w-5 h-5 text-green-600" />
-                        Human Therapy
+                        Terapia Humana
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -378,7 +378,7 @@ export default function AIvsHumanTherapyPost() {
                     <CardHeader>
                       <CardTitle className="text-lg flex items-center gap-2">
                         <Users className="w-5 h-5 text-green-600" />
-                        Human Therapy
+                        Terapia Humana
                       </CardTitle>
                     </CardHeader>
                     <CardContent>

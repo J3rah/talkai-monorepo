@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { CalendarDays, Clock, User, ArrowLeft, CheckCircle, Brain, Heart, Shield, Zap, meta, Users } from 'lucide-react';
+import { CalendarDays, Clock, User, ArrowLeft, CheckCircle, Brain, Heart, Shield, Zap, Users } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Cómo Gestionar el Estrés con Terapia IA: Guía Completa para 2024',

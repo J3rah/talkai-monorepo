@@ -92,7 +92,7 @@ export default function TalkAIJournalingPost() {
                 <li><a href="#weekly-review" className="text-blue-600 hover:underline">Weekly Review & perspectivas</a></li>
                 <li><a href="#nudges-tags" className="text-blue-600 hover:underline">Nudges, Tags, and Routines</a></li>
                 <li><a href="#when-to-escalate" className="text-blue-600 hover:underline">When to Escalate</a></li>
-                <li><a href="#get-started" className="text-blue-600 hover:underline">Get Started</a></li>
+                <li><a href="#get-started" className="text-blue-600 hover:underline">Comenzar</a></li>
               </ul>
             </CardContent>
           </Card>
@@ -275,7 +275,7 @@ export default function TalkAIJournalingPost() {
             </section>
 
             <section id="get-started" className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">Get Started</h2>
+              <h2 className="text-3xl font-bold mb-6">Comenzar</h2>
               <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-8">
                 <CardContent className="pt-6">
                   <h3 className="text-xl font-semibold mb-4">Try a 7‑Day TalkAI Journaling desafío</h3>
@@ -293,9 +293,9 @@ export default function TalkAIJournalingPost() {
 
           
 
-          {/* Related Articles */}
+          {/* Artículos Relacionados */}
           <section className="mt-16">
-            <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
+            <h2 className="text-2xl font-bold mb-8">Artículos Relacionados</h2>
             <div className="grid md:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>

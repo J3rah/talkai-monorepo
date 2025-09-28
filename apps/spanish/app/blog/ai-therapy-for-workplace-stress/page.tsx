@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { CalendarDays, Clock, User, ArrowLeft, CheckCircle, Brain, Heart, Shield, Briefcase, meta, Users } from 'lucide-react';
+import { CalendarDays, Clock, User, ArrowLeft, CheckCircle, Brain, Heart, Shield, Briefcase, Users } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'terapia IA for Workplace estrés: Managing Work-Related salud mental',

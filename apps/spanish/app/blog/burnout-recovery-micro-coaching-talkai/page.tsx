@@ -89,7 +89,7 @@ export default function BurnoutRecoveryMicroCoachingPost() {
                 <li><a href="#boundaries" className="text-blue-600 hover:underline">Boundaries Script</a></li>
                 <li><a href="#restore" className="text-blue-600 hover:underline">Daily Restore</a></li>
                 <li><a href="#weekly-trend" className="text-blue-600 hover:underline">Weekly Trend Review</a></li>
-                <li><a href="#cta" className="text-blue-600 hover:underline">Get Started</a></li>
+                <li><a href="#cta" className="text-blue-600 hover:underline">Comenzar</a></li>
               </ul>
             </CardContent>
           </Card>
@@ -193,7 +193,7 @@ export default function BurnoutRecoveryMicroCoachingPost() {
             </section>
 
             <section id="cta" className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">Get Started</h2>
+              <h2 className="text-3xl font-bold mb-6">Comenzar</h2>
               <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-8">
                 <CardContent className="pt-6">
                   <h3 className="text-xl font-semibold mb-4">Enable TalkAI’s Daily Capacity Check</h3>
@@ -208,9 +208,9 @@ export default function BurnoutRecoveryMicroCoachingPost() {
 
           
 
-          {/* Related Articles */}
+          {/* Artículos Relacionados */}
           <section className="mt-16">
-            <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
+            <h2 className="text-2xl font-bold mb-8">Artículos Relacionados</h2>
             <div className="grid md:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>

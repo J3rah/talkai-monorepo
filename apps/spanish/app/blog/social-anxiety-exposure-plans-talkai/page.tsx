@@ -88,7 +88,7 @@ export default function SocialAnxietyExposurePlansPost() {
                 <li><a href="#during" className="text-blue-600 hover:underline">During: Anchor & Proceed</a></li>
                 <li><a href="#after" className="text-blue-600 hover:underline">After: Debrief & Learn</a></li>
                 <li><a href="#pace" className="text-blue-600 hover:underline">Pacing & Repeats</a></li>
-                <li><a href="#cta" className="text-blue-600 hover:underline">Get Started</a></li>
+                <li><a href="#cta" className="text-blue-600 hover:underline">Comenzar</a></li>
               </ul>
             </CardContent>
           </Card>
@@ -177,7 +177,7 @@ export default function SocialAnxietyExposurePlansPost() {
             </section>
 
             <section id="cta" className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">Get Started</h2>
+              <h2 className="text-3xl font-bold mb-6">Comenzar</h2>
               <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-8">
                 <CardContent className="pt-6">
                   <h3 className="text-xl font-semibold mb-4">Build Your First Exposure Ladder</h3>
@@ -192,9 +192,9 @@ export default function SocialAnxietyExposurePlansPost() {
 
           
 
-          {/* Related Articles */}
+          {/* Artículos Relacionados */}
           <section className="mt-16">
-            <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
+            <h2 className="text-2xl font-bold mb-8">Artículos Relacionados</h2>
             <div className="grid md:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>

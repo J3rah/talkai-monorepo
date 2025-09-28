@@ -88,7 +88,7 @@ export default function TeenMentalHealthTalkAISafetyPost() {
                 <li><a href="#habilidades" className="text-blue-600 hover:underline">habilidades Menu</a></li>
                 <li><a href="#strengths" className="text-blue-600 hover:underline">Strengths enfoque</a></li>
                 <li><a href="#escalation" className="text-blue-600 hover:underline">When to Escalate</a></li>
-                <li><a href="#cta" className="text-blue-600 hover:underline">Get Started</a></li>
+                <li><a href="#cta" className="text-blue-600 hover:underline">Comenzar</a></li>
               </ul>
             </CardContent>
           </Card>
@@ -186,7 +186,7 @@ export default function TeenMentalHealthTalkAISafetyPost() {
             </section>
 
             <section id="cta" className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">Get Started</h2>
+              <h2 className="text-3xl font-bold mb-6">Comenzar</h2>
               <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-8">
                 <CardContent className="pt-6">
                   <h3 className="text-xl font-semibold mb-4">Enable Teen-Friendly TalkAI Prompts</h3>
@@ -201,9 +201,9 @@ export default function TeenMentalHealthTalkAISafetyPost() {
 
           
 
-          {/* Related Articles */}
+          {/* Artículos Relacionados */}
           <section className="mt-16">
-            <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
+            <h2 className="text-2xl font-bold mb-8">Artículos Relacionados</h2>
             <div className="grid md:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>

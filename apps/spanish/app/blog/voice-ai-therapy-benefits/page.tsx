@@ -496,7 +496,7 @@ export default function VoiceAITherapyBenefitsPost() {
                 <CardContent className="pt-6">
                   <div className="text-center">
                     <Mic className="w-12 h-12 mx-auto mb-4 text-green-200" />
-                    <h3 className="text-2xl font-semibold mb-4">Ready to Find Your Voice?</h3>
+                    <h3 className="text-2xl font-semibold mb-4">¿Listo para Encontrar tu Voz?</h3>
                     <p className="mb-6 text-lg">
                       Experience the power of voice-based terapia IA with TalkAI. Speak your truth, be heard, 
                       and discover the sanación that comes from authentic expression.
@@ -512,7 +512,7 @@ export default function VoiceAITherapyBenefitsPost() {
                         href="/blog/what-is-ai-therapy" 
                         className="inline-block border border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors text-center"
                       >
-                        Learn More About terapia IA
+                        Aprende Más Sobre Terapia IA
                       </Link>
                     </div>
                   </div>
