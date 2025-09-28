@@ -225,7 +225,7 @@ export const Nav = () => {
     if (language === 'spanish') {
       // Redirect to Spanish version
       const currentPath = pathname;
-      const spanishPath = currentPath === '/' ? '/es' : `/es${currentPath}`;
+      const spanishPath = currentPath === '/' ? '' : currentPath;
       window.location.href = `https://es.talkai.im${spanishPath}`;
     } else {
       // Already on English version
