@@ -267,6 +267,9 @@ export default function TrialStartCall({
       console.log('Final voice status:', status.value);
       console.log('Trial session connected');
       onTrialStart();
+      
+      // Close the modal after starting the trial session
+      setIsOpen(false);
     } catch (error) {
       console.error('Failed to start trial session:', error);
       // Show error to user and allow retry
@@ -503,7 +506,7 @@ export default function TrialStartCall({
                 </div>
               </div>
 
-              {/* Checkboxes */}
+              {/* Checkbox */}
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
                   <input
@@ -515,19 +518,6 @@ export default function TrialStartCall({
                   />
                   <label htmlFor="disclaimer-agree" className="text-sm text-gray-700 dark:text-gray-300">
                     He leído y acepto el descargo médico anterior
-                  </label>
-                </div>
-                
-                <div className="flex items-start gap-3">
-                  <input
-                    type="checkbox"
-                    id="remember-choice"
-                    checked={rememberDisclaimerChoice}
-                    onChange={(e) => setRememberDisclaimerChoice(e.target.checked)}
-                    className="mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label htmlFor="remember-choice" className="text-sm text-gray-700 dark:text-gray-300">
-                    Recordar mi elección (no veré este descargo nuevamente)
                   </label>
                 </div>
               </div>
@@ -744,17 +734,17 @@ export default function TrialStartCall({
           <div className="bg-gray-50 dark:bg-gray-800 px-6 py-4 border-b">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                Paso {modalStep} de {skipDisclaimer ? 2 : 3}
+                Paso {modalStep} de 4
               </span>
               <span className="text-sm text-gray-500 dark:text-gray-400">
-                {Math.round((modalStep / (skipDisclaimer ? 2 : 3)) * 100)}% completo
+                {Math.round((modalStep / 4) * 100)}% completo
               </span>
             </div>
             <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
               <div 
                 className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300"
                 style={{ 
-                  width: `${(modalStep / (skipDisclaimer ? 2 : 3)) * 100}%` 
+                  width: `${(modalStep / 4) * 100}%` 
                 }}
               ></div>
             </div>

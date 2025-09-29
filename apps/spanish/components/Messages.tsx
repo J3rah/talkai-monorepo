@@ -146,20 +146,20 @@ const Messages = forwardRef<
       // Get mapped display name for fallback
       const mappedDisplay = CONFIG_ID_TO_DISPLAY[configId];
       
-      // Immediate best-effort fallback based on known config IDs (prevents flashing "Talk Therapist")
-      // Prioritize character name from voice configuration over custom therapist name
-      if (characterNameFromStorage) {
+      // Immediate best-effort fallback based on known config IDs (prevents flashing default)
+      // Prioritize custom therapist name over character mapping
+      if (therapistName && therapistName !== "Terapeuta IA") {
+        console.log('✅ Messages: Using custom therapist name (inmediato):', therapistName);
+        setAgentName(therapistName);
+      } else if (characterNameFromStorage) {
         console.log('✅ Messages: Using character name from sessionStorage:', characterNameFromStorage);
         setAgentName(characterNameFromStorage);
       } else if (mappedDisplay) {
         const mappedCharacter = getCharacterName(mappedDisplay, mappedDisplay);
         if (mappedCharacter && mappedCharacter !== agentName) {
-          console.log('✅ Messages: Using character name (immediate):', mappedCharacter);
+          console.log('✅ Messages: Using character name (inmediato):', mappedCharacter);
           setAgentName(mappedCharacter);
         }
-      } else if (therapistName && therapistName !== "Talk Therapist") {
-        console.log('✅ Messages: Using custom therapist name (immediate):', therapistName);
-        setAgentName(therapistName);
       }
       
       try {
@@ -176,7 +176,14 @@ const Messages = forwardRef<
           });
         }
         
-        // Prioritize character name from voice configuration over custom therapist name
+        // Si hay un nombre de terapeuta personalizado, priorízalo y evita sobrescribir
+        if (therapistName && therapistName !== "Terapeuta IA") {
+          console.log('✅ Messages: Using custom therapist name (post-fetch):', therapistName);
+          setAgentName(therapistName);
+          return; // No sobrescribir con mapeos de voz
+        }
+
+        // En caso contrario, usa el nombre del personaje de la voz o el mapeo
         if (voiceConfig?.character_name) {
           console.log('✅ Messages: Using character name from database:', voiceConfig.character_name, 'for voice config:', voiceConfig.display_name);
           setAgentName(voiceConfig.character_name);
@@ -184,9 +191,6 @@ const Messages = forwardRef<
           const characterName = getCharacterName(voiceConfig.display_name, voiceConfig.internal_name);
           console.log('✅ Messages: Using character name from mapping:', characterName, 'from voice config:', voiceConfig.display_name);
           setAgentName(characterName);
-        } else if (therapistName && therapistName !== "Terapeuta IA") {
-          console.log('✅ Messages: Using custom therapist name:', therapistName);
-          setAgentName(therapistName);
         } else {
           console.log('⚠️ Messages: Voice config not found, using fallback mapping or therapist name');
           if (mappedDisplay) {
@@ -281,9 +285,19 @@ const Messages = forwardRef<
   // Initialize data saving permission when component mounts
   useEffect(() => {
     const initializeDataSaving = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        await checkDataSavingPermission(user.id);
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          await checkDataSavingPermission(user.id);
+        } else {
+          console.log('No hay sesión de autenticación - omitiendo verificación de guardado de datos');
+        }
+      } catch (authError: any) {
+        if (authError?.message === 'Auth session missing!') {
+          console.log('No hay sesión de autenticación - omitiendo verificación de guardado de datos');
+          return;
+        }
+        console.error('Error de autenticación al iniciar la verificación de guardado de datos:', authError);
       }
     };
     
@@ -332,8 +346,12 @@ const Messages = forwardRef<
         if (profile?.therapist_name) {
           therapistName = profile.therapist_name;
         }
-      } catch (error) {
-        console.error('Error fetching therapist name:', error);
+      } catch (authError: any) {
+        if (authError?.message === 'Auth session missing!') {
+          console.log('No hay sesión de autenticación - omitiendo obtener nombre del terapeuta');
+          return;
+        }
+        console.error('Error al obtener el nombre del terapeuta:', authError);
       }
     };
 

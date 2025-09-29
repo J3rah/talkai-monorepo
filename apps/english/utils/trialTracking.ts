@@ -82,6 +82,21 @@ export class TrialTracker {
     try {
       console.log('TrialTracker: Checking if trial has been used...');
       
+      // Dev-only bypass: allow resetting/ignoring the trial gate when enabled via env flag
+      // Usage: add ?trial_bypass=true (or ?trial_reset=true) to the URL when
+      // NEXT_PUBLIC_ENABLE_TRIAL_BYPASS === 'true'. This clears the local flag and
+      // returns false early to skip both localStorage and DB fingerprint checks.
+      const enableBypass = typeof window !== 'undefined' && process.env.NEXT_PUBLIC_ENABLE_TRIAL_BYPASS === 'true';
+      if (enableBypass) {
+        const params = new URLSearchParams(window.location.search);
+        const bypassRequested = params.get('trial_bypass') === 'true' || params.get('trial_reset') === 'true';
+        if (bypassRequested) {
+          try { localStorage.removeItem('trial_used'); } catch {}
+          console.warn('TrialTracker: Dev bypass active – skipping trial gate');
+          return false;
+        }
+      }
+      
       // Check localStorage first
       const localTrialUsed = localStorage.getItem('trial_used');
       if (localTrialUsed) {

@@ -117,8 +117,11 @@ const Messages = forwardRef<
       const mappedDisplay = CONFIG_ID_TO_DISPLAY[configId];
       
       // Immediate best-effort fallback based on known config IDs (prevents flashing "Talk Therapist")
-      // Prioritize character name from voice configuration over custom therapist name
-      if (characterNameFromStorage) {
+      // Prioritize custom therapist name over character mapping
+      if (therapistName && therapistName !== "Talk Therapist") {
+        console.log('✅ Messages: Using custom therapist name (immediate):', therapistName);
+        setAgentName(therapistName);
+      } else if (characterNameFromStorage) {
         console.log('✅ Messages: Using character name from sessionStorage:', characterNameFromStorage);
         setAgentName(characterNameFromStorage);
       } else if (mappedDisplay) {
@@ -127,9 +130,6 @@ const Messages = forwardRef<
           console.log('✅ Messages: Using character name (immediate):', mappedCharacter);
           setAgentName(mappedCharacter);
         }
-      } else if (therapistName && therapistName !== "Talk Therapist") {
-        console.log('✅ Messages: Using custom therapist name (immediate):', therapistName);
-        setAgentName(therapistName);
       }
       
       try {
@@ -146,7 +146,14 @@ const Messages = forwardRef<
           });
         }
         
-        // Prioritize voice configuration character name over custom therapist name
+        // If a custom therapist name is provided, prefer it and do not override with mappings
+        if (therapistName && therapistName !== "Talk Therapist") {
+          console.log('✅ Messages: Using custom therapist name (post-fetch):', therapistName);
+          setAgentName(therapistName);
+          return; // Avoid overriding with voice character mapping
+        }
+
+        // Otherwise, use voice configuration character name or mapped name
         if (voiceConfig?.character_name) {
           console.log('✅ Messages: Using character name from database:', voiceConfig.character_name, 'for voice config:', voiceConfig.display_name);
           setAgentName(voiceConfig.character_name);
@@ -154,9 +161,6 @@ const Messages = forwardRef<
           const characterName = getCharacterName(voiceConfig.display_name, voiceConfig.internal_name);
           console.log('✅ Messages: Using character name from mapping:', characterName, 'from voice config:', voiceConfig.display_name);
           setAgentName(characterName);
-        } else if (therapistName && therapistName !== "Talk Therapist") {
-          console.log('✅ Messages: Using custom therapist name:', therapistName);
-          setAgentName(therapistName);
         } else {
           console.log('⚠️ Messages: Voice config not found, using fallback mapping or therapist name');
           if (mappedDisplay) {
@@ -250,9 +254,19 @@ const Messages = forwardRef<
   // Initialize data saving permission when component mounts
   useEffect(() => {
     const initializeDataSaving = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        await checkDataSavingPermission(user.id);
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          await checkDataSavingPermission(user.id);
+        } else {
+          console.log('No auth session - skipping data saving check');
+        }
+      } catch (authError: any) {
+        if (authError?.message === 'Auth session missing!') {
+          console.log('No auth session - skipping data saving check');
+          return;
+        }
+        console.error('Auth error during data saving init:', authError);
       }
     };
     
@@ -275,8 +289,12 @@ const Messages = forwardRef<
         if (profile?.therapist_name) {
           therapistName = profile.therapist_name;
         }
-      } catch (error) {
-        console.error('Error fetching therapist name:', error);
+      } catch (authError: any) {
+        if (authError?.message === 'Auth session missing!') {
+          console.log('No auth session - skipping therapist name fetch');
+          return;
+        }
+        console.error('Error fetching therapist name:', authError);
       }
     };
 

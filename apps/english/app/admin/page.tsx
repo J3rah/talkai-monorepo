@@ -764,8 +764,15 @@ export default function AdminDashboard() {
     <div className="container mx-auto p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-        <div className="text-sm text-muted-foreground">
-          Logged in as: {user?.email}
+        <div className="flex items-center gap-3">
+          <div className="text-sm text-muted-foreground">
+            Logged in as: {user?.email}
+          </div>
+          {process.env.NEXT_PUBLIC_ENABLE_TRIAL_BYPASS === 'true' && (
+            <Link href="?trial_bypass=true">
+              <Button variant="outline" size="sm">Reset trial (dev)</Button>
+            </Link>
+          )}
         </div>
       </div>
 

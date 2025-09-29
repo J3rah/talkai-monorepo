@@ -445,7 +445,7 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
     }
     // Move to next step based on disclaimer skip preference
     if (skipDisclaimer) {
-      setModalStep(4); // Skip disclaimer, go to ready to begin
+      setModalStep(3); // Skip disclaimer, go to ready to begin (step 3 of 3)
     } else {
       setModalStep(3); // Go to disclaimer step
     }
@@ -1690,17 +1690,17 @@ export default function StartCall({ onVoiceSelect, onTherapistNameChange, hideFi
           <div className="bg-gray-50 dark:bg-gray-800 px-6 py-4 border-b">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                Step {modalStep} of {skipDisclaimer ? 3 : (userSubscriptionStatus === 'calm' || isTrialMode ? 3 : 4)}
+                Paso {modalStep} de {userSubscriptionStatus === 'calm' || isTrialMode ? 3 : 4}
               </span>
               <span className="text-sm text-gray-500 dark:text-gray-400">
-                {Math.round((modalStep / (skipDisclaimer ? 3 : (userSubscriptionStatus === 'calm' || isTrialMode ? 3 : 4))) * 100)}% complete
+                {Math.round((modalStep / (userSubscriptionStatus === 'calm' || isTrialMode ? 3 : 4)) * 100)}% completo
               </span>
             </div>
             <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
               <div 
                 className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300"
                 style={{ 
-                  width: `${(modalStep / (skipDisclaimer ? 3 : (userSubscriptionStatus === 'calm' || isTrialMode ? 3 : 4))) * 100}%` 
+                  width: `${(modalStep / (userSubscriptionStatus === 'calm' || isTrialMode ? 3 : 4)) * 100}%` 
                 }}
               ></div>
             </div>
