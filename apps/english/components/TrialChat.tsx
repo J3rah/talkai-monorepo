@@ -11,6 +11,7 @@ import { getClientAccessToken } from "@/utils/getClientAccessToken";
 import { TrialTracker, trackConversionStep } from "@/utils/trialTracking";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import TallyPopup from "./TallyPopup";
 
 // Creative taglines for the therapy session
 const taglines = [
@@ -69,6 +70,7 @@ export default function TrialChat({
   const [trialStarted, setTrialStarted] = useState(false);
   const [trialTimeLeft, setTrialTimeLeft] = useState(300); // 5 minutes in seconds
   const [trialExpired, setTrialExpired] = useState(false);
+  const [trialEnded, setTrialEnded] = useState(false);
   const [trialAlreadyUsed, setTrialAlreadyUsed] = useState(false);
   const [checkingTrialUsage, setCheckingTrialUsage] = useState(true);
   const ref = useRef<ComponentRef<typeof Messages> | null>(null);
@@ -244,6 +246,9 @@ export default function TrialChat({
     }
   }, [trialStarted, trialTimeLeft, trialExpired, trialTracker]);
 
+  // State for tracking manual call end
+  const [wasConnected, setWasConnected] = useState(false);
+
   // Debug current state
   console.log('TrialChat: Current state:', {
     checkingTrialUsage,
@@ -315,10 +320,11 @@ export default function TrialChat({
     );
   }
 
-  if (trialExpired) {
-    console.log('TrialChat: Trial expired, showing conversion screen...');
+  if (trialExpired || trialEnded) {
+    console.log('TrialChat: Trial ended, showing conversion screen...');
     return (
       <div className="flex items-center justify-center h-full">
+        <TallyPopup />
         <div className="text-center max-w-md mx-auto p-6">
           <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg className="w-8 h-8 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -341,6 +347,16 @@ export default function TrialChat({
     );
   }
 
+  // Handle manual call end detection
+  const handleManualCallEnd = () => {
+    if (trialStarted && !trialExpired && !trialEnded) {
+      console.log('TrialChat: Manual call end detected, showing conversion screen');
+      setTrialEnded(true);
+      trialTracker.trackTrialComplete();
+      trackConversionStep('trial_manually_ended');
+    }
+  };
+
   console.log('TrialChat: Rendering main trial interface');
   return (
     <div
@@ -352,6 +368,14 @@ export default function TrialChat({
         auth={{ type: "accessToken", value: accessToken }}
         configId={selectedConfigId || defaultConfigId}
       >
+        {/* Voice Status Monitor - detects manual call end */}
+        <VoiceStatusMonitor 
+          onManualCallEnd={handleManualCallEnd}
+          trialStarted={trialStarted}
+          trialExpired={trialExpired}
+          trialEnded={trialEnded}
+        />
+        
         {/* Header - hidden when session is connected */}
         <HeaderSection onStartSession={() => setTriggerStartCall(true)} />
         
@@ -472,4 +496,30 @@ function HeaderSection({ onStartSession }: { onStartSession: () => void }) {
       </div>
     </>
   );
+}
+
+// Component to monitor voice status inside VoiceProvider
+function VoiceStatusMonitor({ 
+  onManualCallEnd, 
+  trialStarted, 
+  trialExpired, 
+  trialEnded 
+}: { 
+  onManualCallEnd: () => void;
+  trialStarted: boolean;
+  trialExpired: boolean;
+  trialEnded: boolean;
+}) {
+  const { status: voiceStatus } = useVoice();
+  const [wasConnected, setWasConnected] = useState(false);
+
+  useEffect(() => {
+    if (voiceStatus.value === "connected") {
+      setWasConnected(true);
+    } else if (voiceStatus.value === "disconnected" && wasConnected && trialStarted && !trialExpired && !trialEnded) {
+      onManualCallEnd();
+    }
+  }, [voiceStatus.value, wasConnected, trialStarted, trialExpired, trialEnded, onManualCallEnd]);
+
+  return null; // This component doesn't render anything
 } 
