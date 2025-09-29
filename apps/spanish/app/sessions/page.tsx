@@ -11,9 +11,9 @@ const SessionsContent = dynamic(() => import("@/components/SessionsContent"), {
 export default async function SessionsPage({
   searchParams,
 }: {
-  searchParams: { trial?: string };
+  searchParams: { trial?: string; trial_bypass?: string };
 }) {
-  const isTrialMode = searchParams.trial === 'true';
+  const isTrialMode = searchParams.trial === 'true' || searchParams.trial_bypass === 'true';
   
   // Always try to get access token
   let accessToken: string | null = null;

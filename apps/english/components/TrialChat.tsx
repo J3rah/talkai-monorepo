@@ -247,8 +247,9 @@ export default function TrialChat({
   }, [trialStarted, trialTimeLeft, trialExpired, trialTracker]);
 
   // State for tracking manual call end
-  const [wasConnected, setWasConnected] = useState(false);
-
+  // Track if the user attempted to connect at least once (modal opened)
+  const [connectionAttempted, setConnectionAttempted] = useState(false);
+   
   // Debug current state
   console.log('TrialChat: Current state:', {
     checkingTrialUsage,
@@ -511,15 +512,29 @@ function VoiceStatusMonitor({
   trialEnded: boolean;
 }) {
   const { status: voiceStatus } = useVoice();
-  const [wasConnected, setWasConnected] = useState(false);
+  const [everActive, setEverActive] = useState(false);
+  const [devBypass, setDevBypass] = useState(false);
+
+  // Detect trial_bypass mode (client-only)
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      setDevBypass(params.get('trial_bypass') === 'true');
+    } catch {}
+  }, []);
 
   useEffect(() => {
-    if (voiceStatus.value === "connected") {
-      setWasConnected(true);
-    } else if (voiceStatus.value === "disconnected" && wasConnected && trialStarted && !trialExpired && !trialEnded) {
-      onManualCallEnd();
+    // Mark that some connection state other than initial 'disconnected' was reached
+    if (voiceStatus.value !== 'disconnected') {
+      setEverActive(true);
     }
-  }, [voiceStatus.value, wasConnected, trialStarted, trialExpired, trialEnded, onManualCallEnd]);
+
+    if (voiceStatus.value === "disconnected" && !trialExpired && !trialEnded) {
+      if (everActive || devBypass) {
+        onManualCallEnd();
+      }
+    }
+  }, [voiceStatus.value, everActive, devBypass, trialExpired, trialEnded, onManualCallEnd]);
 
   return null; // This component doesn't render anything
 } 

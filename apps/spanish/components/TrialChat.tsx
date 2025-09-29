@@ -512,14 +512,28 @@ function VoiceStatusMonitor({
 }) {
   const { status: voiceStatus } = useVoice();
   const [wasConnected, setWasConnected] = useState(false);
+  const [devBypass, setDevBypass] = useState(false);
+
+  // Detect trial_bypass mode (client-only)
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      setDevBypass(params.get('trial_bypass') === 'true');
+    } catch {}
+  }, []);
 
   useEffect(() => {
     if (voiceStatus.value === "connected") {
       setWasConnected(true);
-    } else if (voiceStatus.value === "disconnected" && wasConnected && trialStarted && !trialExpired && !trialEnded) {
-      onManualCallEnd();
     }
-  }, [voiceStatus.value, wasConnected, trialStarted, trialExpired, trialEnded, onManualCallEnd]);
+
+    if (voiceStatus.value === "disconnected" && trialStarted && !trialExpired && !trialEnded) {
+      // In normal mode require a successful connection first; in dev bypass allow any disconnect
+      if (wasConnected || devBypass) {
+        onManualCallEnd();
+      }
+    }
+  }, [voiceStatus.value, wasConnected, devBypass, trialStarted, trialExpired, trialEnded, onManualCallEnd]);
 
   return null; // This component doesn't render anything
 } 

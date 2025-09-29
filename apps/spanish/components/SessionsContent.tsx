@@ -6,10 +6,6 @@ import dynamic from "next/dynamic";
 import { ErrorBoundary } from "react-error-boundary";
 import { t } from "@/lib/i18n";
 
-const Chat = dynamic(() => import("@/components/Chat"), {
-  ssr: false,
-});
-
 const TrialChat = dynamic(() => import("@/components/TrialChat"), {
   ssr: false,
   loading: () => (
@@ -137,6 +133,10 @@ export default function SessionsContent({ isTrialMode, accessToken }: SessionsCo
   }
 
   // Authenticated user with access token - show Chat component
+  const Chat = dynamic(() => import("@/components/Chat"), {
+    ssr: false,
+  });
+
   return (
     <div className={"grow flex flex-col"}>
       <Chat accessToken={accessToken} />

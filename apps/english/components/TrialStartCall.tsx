@@ -81,10 +81,10 @@ export default function TrialStartCall({
   // Fetch voice configurations for trial (treat as grounded for full access)
   useEffect(() => {
     const fetchVoiceConfigurations = async () => {
+      console.log('TrialStartCall: Starting voice configuration fetch...');
       setIsLoadingVoices(true);
+      
       try {
-        console.log('TrialStartCall: Starting voice configuration fetch...');
-        
         // For trial users, we give them access to all voices (like grounded subscribers)
         const dbPromise = getAvailableVoiceConfigurations('grounded');
         const timeoutPromise = new Promise<VoiceConfigurationGroup[]>((resolve) =>
@@ -101,6 +101,7 @@ export default function TrialStartCall({
           console.log('TrialStartCall: Loaded voices from database:', groups.length, 'groups');
         }
         
+        console.log('TrialStartCall: Setting voice groups:', groups.length, 'groups');
         setVoiceGroups(groups);
         
         // Set the first available voice as default
@@ -109,29 +110,36 @@ export default function TrialStartCall({
           console.log('TrialStartCall: Set default voice:', groups[0].voice_configurations[0].display_name);
         }
 
-        // Also update with real DB groups if they arrive after timeout
-        try {
-          const dbGroups = await dbPromise;
-          if (Array.isArray(dbGroups) && dbGroups.length > 0) {
-            console.log('TrialStartCall: Database response arrived after timeout, updating with real data');
-            setVoiceGroups(dbGroups);
-            if (usedFallback && dbGroups[0]?.voice_configurations?.length && !selectedVoice) {
-              setSelectedVoice(dbGroups[0].voice_configurations[0]);
+        // We have enough data to render step 1 immediately
+        setIsLoadingVoices(false);
+
+        // Update with real DB groups if they arrive after timeout (non-blocking)
+        void (async () => {
+          try {
+            const dbGroups = await dbPromise;
+            if (Array.isArray(dbGroups) && dbGroups.length > 0) {
+              console.log('TrialStartCall: Database response arrived after timeout, updating with real data');
+              setVoiceGroups(dbGroups);
+              if (usedFallback && dbGroups[0]?.voice_configurations?.length && !selectedVoice) {
+                setSelectedVoice(dbGroups[0].voice_configurations[0]);
+              }
             }
+          } catch (e) {
+            console.warn('TrialStartCall: Error fetching real DB groups after timeout:', e);
+            // Ignore; fallback already shown
           }
-        } catch (e) {
-          console.warn('TrialStartCall: Error fetching real DB groups after timeout:', e);
-          // Ignore; fallback already shown
-        }
+        })();
       } catch (error) {
         console.error('TrialStartCall: Error fetching voice configurations for trial:', error);
         // Fallback to basic voices if database fails
         const fallbackGroups = getFallbackVoiceConfigurations();
+        console.log('TrialStartCall: Using fallback groups due to error:', fallbackGroups.length, 'groups');
         setVoiceGroups(fallbackGroups);
         if (fallbackGroups.length > 0 && fallbackGroups[0].voice_configurations.length > 0) {
           setSelectedVoice(fallbackGroups[0].voice_configurations[0]);
         }
       } finally {
+        console.log('TrialStartCall: Setting isLoadingVoices to false');
         setIsLoadingVoices(false);
         console.log('TrialStartCall: Voice loading completed');
       }
@@ -157,6 +165,11 @@ export default function TrialStartCall({
     }, 5000);
 
     return () => clearTimeout(timeout);
+  }, [isLoadingVoices, voiceGroups.length]);
+
+  // Debug effect to log loading state changes
+  useEffect(() => {
+    console.log('TrialStartCall: Loading state changed - isLoadingVoices:', isLoadingVoices, 'voiceGroups.length:', voiceGroups.length);
   }, [isLoadingVoices, voiceGroups.length]);
 
   // Handle dialog open/close
