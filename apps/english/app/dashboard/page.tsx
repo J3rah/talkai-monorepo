@@ -172,8 +172,14 @@ export default function TestDashboardPage() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [chatSessions, setChatSessions] = useState<ChatSession[]>([]);
+  const [displayedChatSessions, setDisplayedChatSessions] = useState<ChatSession[]>([]);
+  const [chatPageStart, setChatPageStart] = useState<number>(0);
+  const [isLoadingMoreChats, setIsLoadingMoreChats] = useState<boolean>(false);
+  const pageSize = 5;
   const [emotionMetrics, setEmotionMetrics] = useState<EmotionMetric[]>([]);
   const [therapySessions, setTherapySessions] = useState<TherapySession[]>([]);
+  const [totalChatSessions, setTotalChatSessions] = useState<number | null>(null);
+  const [totalTherapySessions, setTotalTherapySessions] = useState<number | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [expandedSessionId, setExpandedSessionId] = useState<string | null>(null);
   const [sessionMessages, setSessionMessages] = useState<Record<string, unknown[]>>({});
@@ -764,9 +770,10 @@ export default function TestDashboardPage() {
           .select(`
             *,
             subscription_plans (
+              id,
               name,
-              price_amount,
-              features
+              price_id,
+              stripe_product_id
             )
           `)
           .eq('user_id', userId)
@@ -778,7 +785,7 @@ export default function TestDashboardPage() {
         supabase
           .from('subscription_plans')
           .select('*')
-          .order('price_amount', { ascending: true }),
+          .order('price', { ascending: true }),
         
         // Calculate usage stats for current month
         supabase
@@ -813,13 +820,15 @@ export default function TestDashboardPage() {
         
         // Fetch referrals count
         supabase
-          .from('referrals')
+          .from('profiles')
           .select('id', { count: 'exact', head: true })
           .eq('referrer_id', userId)
       ]);
 
-      // Process subscription data
-      if (subscriptionResult.error && subscriptionResult.error.code !== 'PGRST116') {
+      // Process subscription data (handle empty error objects gracefully)
+      const subErr = subscriptionResult.error as any;
+      const hasRealSubError = subErr && (subErr.code || subErr.message);
+      if (hasRealSubError && subErr.code !== 'PGRST116') {
         console.error('Error fetching subscription:', subscriptionResult.error);
       } else if (subscriptionResult.data) {
         setCurrentSubscription(subscriptionResult.data);
@@ -872,6 +881,39 @@ export default function TestDashboardPage() {
         console.error('Dashboard: Error fetching chat sessions:', chatResult.error);
       }
 
+      // Fetch accurate total counts (independent of limited lists)
+      try {
+        const [chatCountResult, therapyCountResult] = await Promise.all([
+          supabase.from('chat_sessions').select('id', { count: 'exact', head: true }).eq('user_id', userId),
+          supabase.from('therapy_sessions').select('id', { count: 'exact', head: true }).eq('user_id', userId),
+        ]);
+
+        if (!chatCountResult.error && typeof chatCountResult.count === 'number') {
+          setTotalChatSessions(chatCountResult.count);
+        }
+        if (!therapyCountResult.error && typeof therapyCountResult.count === 'number') {
+          setTotalTherapySessions(therapyCountResult.count);
+        }
+      } catch (countErr) {
+        console.warn('Dashboard: Failed to fetch total session counts', countErr);
+      }
+
+      // Initialize paginated chat sessions list (first page)
+      try {
+        const { data, error } = await supabase
+          .from('chat_sessions')
+          .select('*')
+          .eq('user_id', userId)
+          .order('created_at', { ascending: false })
+          .range(0, pageSize - 1);
+        if (!error && Array.isArray(data)) {
+          setDisplayedChatSessions(data);
+          setChatPageStart(data.length);
+        }
+      } catch (e) {
+        console.warn('Dashboard: Failed to initialize paginated chat sessions', e);
+      }
+
       // After processing other datasets
       if (!referralsResult.error && typeof referralsResult.count === 'number') {
         setReferralsCount(referralsResult.count);
@@ -879,6 +921,29 @@ export default function TestDashboardPage() {
 
     } catch (error) {
       console.error('Error fetching basic user data:', error);
+    }
+  };
+
+  const loadMoreChatSessions = async () => {
+    if (isLoadingMoreChats) return;
+    setIsLoadingMoreChats(true);
+    try {
+      const from = chatPageStart;
+      const to = chatPageStart + pageSize - 1;
+      const { data, error } = await supabase
+        .from('chat_sessions')
+        .select('*')
+        .eq('user_id', user?.id)
+        .order('created_at', { ascending: false })
+        .range(from, to);
+      if (!error && Array.isArray(data) && data.length > 0) {
+        setDisplayedChatSessions(prev => [...prev, ...data]);
+        setChatPageStart(prev => prev + data.length);
+      }
+    } catch (e) {
+      console.error('Dashboard: Failed to load more chat sessions', e);
+    } finally {
+      setIsLoadingMoreChats(false);
     }
   };
 
@@ -1466,13 +1531,39 @@ export default function TestDashboardPage() {
     const loadFeedback = async () => {
       try {
         setIsLoadingFeedback(true);
-        const res = await fetch('/api/journal/entries');
-        const json = await res.json();
-        if (json?.success && Array.isArray(json?.entries)) {
-          setFeedbackHistory(json.entries);
-        } else {
+        if (!user?.id) {
           setFeedbackHistory([]);
+          return;
         }
+        const { data: sessions, error: sessErr } = await supabase
+          .from('chat_sessions')
+          .select('id, created_at, journal_entry_id')
+          .eq('user_id', user.id)
+          .not('journal_entry_id', 'is', null)
+          .order('created_at', { ascending: false })
+          .limit(100);
+
+        if (sessErr || !Array.isArray(sessions) || sessions.length === 0) {
+          setFeedbackHistory([]);
+          return;
+        }
+
+        const ids = sessions.map((s: any) => s.journal_entry_id).filter(Boolean);
+        const { data: journals, error: jErr } = await supabase
+          .from('public_journals')
+          .select('id, content, reflection, created_at')
+          .in('id', ids as any);
+
+        if (jErr || !Array.isArray(journals)) {
+          setFeedbackHistory([]);
+          return;
+        }
+
+        const byId: Record<string, any> = Object.fromEntries(journals.map((j: any) => [j.id, j]));
+        const merged = sessions
+          .map((s: any) => byId[s.journal_entry_id])
+          .filter(Boolean);
+        setFeedbackHistory(merged);
       } catch (e) {
         console.warn('Failed to load feedback history:', e);
         setFeedbackHistory([]);
@@ -1482,7 +1573,7 @@ export default function TestDashboardPage() {
     };
     // Load when arriving to dashboard
     loadFeedback();
-  }, []);
+  }, [user?.id]);
 
   useEffect(() => {
     // Poll audio reconstruction status every 30 seconds
@@ -1729,7 +1820,7 @@ export default function TestDashboardPage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm font-medium text-muted-foreground">Total Sessions</p>
-                      <p className="text-2xl font-bold text-foreground">{chatSessions.length}</p>
+                      <p className="text-2xl font-bold text-foreground">{totalChatSessions ?? chatSessions.length}</p>
                     </div>
                     <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                       <MessageSquare className="w-6 h-6 text-primary" />
@@ -1780,7 +1871,7 @@ export default function TestDashboardPage() {
                 <div className="bg-card p-4 sm:p-6 rounded-xl border border-border flex flex-col">
                   <h2 className="text-lg sm:text-xl font-semibold mb-4 text-foreground">Session Stats</h2>
                   <div className="space-y-2 flex-1">
-                    <p className="text-sm sm:text-base text-foreground">Total Sessions: {therapySessions.length}</p>
+                    <p className="text-sm sm:text-base text-foreground">Total Sessions: {totalTherapySessions ?? therapySessions.length}</p>
                     <p className="text-sm sm:text-base text-foreground">Last Session: {therapySessions[0] ? new Date(therapySessions[0].created_at).toLocaleDateString() : 'Never'}</p>
                     <p className="text-sm sm:text-base text-foreground">Total Duration: {formatDuration(therapySessions.reduce((acc, s) => acc + (s.duration || 0), 0))}</p>
                     {therapySessions[0]?.chat_sessions && (
@@ -1794,7 +1885,7 @@ export default function TestDashboardPage() {
 
                 {/* Therapist Information */}
                 <div className="bg-card p-4 sm:p-6 rounded-xl border border-border flex flex-col">
-                  <h2 className="text-lg sm:text-xl font-semibold mb-4 text-foreground">Therapist</h2>
+                  <h2 className="text-lg sm:text-xl font-semibold mb-4 text-foreground">Therapist Info</h2>
                   <div className="space-y-2 flex-1">
                     <p className="text-sm sm:text-base text-foreground">
                       Default Therapist: {defaultAgentName}
@@ -1816,7 +1907,18 @@ export default function TestDashboardPage() {
                 {/* Emotional Insights */}
                 <div className="bg-card p-4 sm:p-6 rounded-xl border border-border">
                   <h2 className="text-lg sm:text-xl font-semibold mb-4 text-foreground">Emotional Insights</h2>
-                  <p className="text-sm sm:text-base mb-2 text-foreground">Total Emotions Tracked: {emotionMetrics.length}</p>
+                  <p
+                    className="text-sm sm:text-base mb-2 text-foreground underline cursor-pointer hover:text-primary"
+                    onClick={() => {
+                      setActiveSection('analytics');
+                      setTimeout(() => {
+                        const el = document.getElementById('top-emotions');
+                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }, 50);
+                    }}
+                  >
+                    Total Emotions Tracked: {emotionMetrics.length}
+                  </p>
                   <p className="text-sm sm:text-base text-foreground">Average Intensity: {(emotionMetrics.reduce((acc, m) => acc + m.intensity, 0) / Math.max(emotionMetrics.length, 1)).toFixed(2)}</p>
                 </div>
               </div>
@@ -1920,7 +2022,7 @@ export default function TestDashboardPage() {
                         <h3 className="text-lg font-semibold text-foreground">Your Sessions</h3>
                       </AccordionTrigger>
                       <div className="flex items-center gap-2 ml-4">
-                        <span className="text-sm text-muted-foreground">{chatSessions.length} total</span>
+                        <span className="text-sm text-muted-foreground">{totalChatSessions ?? chatSessions.length} total</span>
                         {userSubscriptionStatus === 'grounded' && (
                           <>
                             <Button size="sm" variant="outline" onClick={() => downloadAllSessionsData('json')}>Download JSON</Button>
@@ -1931,7 +2033,7 @@ export default function TestDashboardPage() {
                     </div>
                   </div>
                   <AccordionContent className="px-6 pb-6">
-                {chatSessions.length === 0 ? (
+                {(totalChatSessions ?? chatSessions.length) === 0 ? (
                   <div className="text-center py-12">
                     <MessageSquare className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
                     <h4 className="text-lg font-medium text-foreground mb-2">No sessions yet</h4>
@@ -1942,7 +2044,7 @@ export default function TestDashboardPage() {
                   </div>
                 ) : (
                   <div className="space-y-3">
-                    {chatSessions.map((session) => (
+                    {displayedChatSessions.map((session) => (
                       <div key={session.id} className="border border-border rounded-lg p-4">
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
@@ -1984,6 +2086,13 @@ export default function TestDashboardPage() {
                         </div>
                       </div>
                     ))}
+                    {(totalChatSessions ?? 0) > displayedChatSessions.length && (
+                      <div className="pt-2">
+                        <Button onClick={loadMoreChatSessions} disabled={isLoadingMoreChats} variant="outline" size="sm">
+                          {isLoadingMoreChats ? 'Loading…' : 'Show More'}
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 )}
                   </AccordionContent>
@@ -2000,11 +2109,39 @@ export default function TestDashboardPage() {
                         onClick={async () => {
                           try {
                             setIsLoadingFeedback(true);
-                            const res = await fetch('/api/journal/entries');
-                            const json = await res.json();
-                            if (json?.success && Array.isArray(json?.entries)) setFeedbackHistory(json.entries);
+                            if (!user?.id) { setFeedbackHistory([]); return; }
+                            const { data: sessions, error: sessErr } = await supabase
+                              .from('chat_sessions')
+                              .select('id, created_at, journal_entry_id')
+                              .eq('user_id', user.id)
+                              .not('journal_entry_id', 'is', null)
+                              .order('created_at', { ascending: false })
+                              .limit(100);
+
+                            if (sessErr || !Array.isArray(sessions) || sessions.length === 0) {
+                              setFeedbackHistory([]);
+                              return;
+                            }
+
+                            const ids = sessions.map((s: any) => s.journal_entry_id).filter(Boolean);
+                            const { data: journals, error: jErr } = await supabase
+                              .from('public_journals')
+                              .select('id, content, reflection, created_at')
+                              .in('id', ids as any);
+
+                            if (jErr || !Array.isArray(journals)) {
+                              setFeedbackHistory([]);
+                              return;
+                            }
+
+                            const byId: Record<string, any> = Object.fromEntries(journals.map((j: any) => [j.id, j]));
+                            const merged = sessions
+                              .map((s: any) => byId[s.journal_entry_id])
+                              .filter(Boolean);
+                            setFeedbackHistory(merged);
                           } catch (e) {
                             console.warn('Failed to refresh feedback history:', e);
+                            setFeedbackHistory([]);
                           } finally {
                             setIsLoadingFeedback(false);
                           }
@@ -2094,7 +2231,7 @@ export default function TestDashboardPage() {
           )}
 
               {/* Top Emotions Chart */}
-              <div className="bg-card rounded-xl border border-border p-6">
+              <div id="top-emotions" className="bg-card rounded-xl border border-border p-6">
                 <h3 className="text-lg font-semibold text-foreground mb-4">Top Emotions</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Bar Chart */}
