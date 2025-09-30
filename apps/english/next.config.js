@@ -55,8 +55,7 @@ const nextConfig = {
       '@': require('path').resolve(__dirname),
     };
 
-
-
+    // Simple webpack configuration without complex splitChunks
     return config;
   },
   // Add headers to prevent caching issues during development
