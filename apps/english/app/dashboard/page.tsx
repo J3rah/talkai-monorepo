@@ -769,11 +769,10 @@ export default function TestDashboardPage() {
           .from('subscriptions')
           .select(`
             *,
-            subscription_plans (
+            subscription_plans(
               id,
               name,
-              price_id,
-              stripe_product_id
+              price_id
             )
           `)
           .eq('user_id', userId)
@@ -1341,12 +1340,8 @@ export default function TestDashboardPage() {
       sessionStorage.setItem('resumptionTriggered', 'true');
       // Preserve session ID for Hot Refresh recovery
       sessionStorage.setItem('hotRefreshSessionId', sessionId);
-      router.push('/chat');
-      
-      // Reset the state after navigation setup is complete
-      setTimeout(() => {
-        setResumingSessionId(null);
-      }, 1000);
+      // Use hard navigation to prevent dashboard cleanup from running before /chat loads
+      window.location.href = '/chat';
     } catch (error) {
       console.error('❌ Error resuming session:', error);
       setResumingSessionId(null);

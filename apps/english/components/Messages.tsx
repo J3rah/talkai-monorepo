@@ -404,9 +404,8 @@ const Messages = forwardRef<
 
             console.log('💾 Creating chat session in database...');
             
-            // Clear any old session ID from localStorage to prevent confusion
-            localStorage.removeItem('currentChatSessionId');
-            console.log('🧹 Cleared old currentChatSessionId from localStorage');
+            // Don't clear currentChatSessionId here - it interferes with pending Hume ID application
+            // The new session ID will overwrite it anyway at line 462
             
             // Create session and link with therapy session in parallel
             const sessionPayloadBase: any = {

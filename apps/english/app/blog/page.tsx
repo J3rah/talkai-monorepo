@@ -528,6 +528,17 @@ const blogPosts = [
     author: 'TalkAI Research Team',
     featured: true,
     tags: ['Hybrid Care', 'Future', 'Clinicians', 'AI Integration']
+  },
+  {
+    slug: 'why-you-can-trust-talkai-security-privacy',
+    title: 'Why You Can Trust talkAI: Security, Privacy, and Mental Health Protection',
+    description: 'Learn about talkAI\'s comprehensive security framework protecting your mental health conversations. Enterprise-grade encryption, HIPAA-ready architecture, and privacy-first design.',
+    category: 'Security',
+    readTime: '4 min read',
+    publishDate: '2025-01-15',
+    author: 'TalkAI Security Team',
+    featured: true,
+    tags: ['Security', 'Privacy', 'Trust', 'Data Protection']
   }
 ];
 
@@ -663,6 +674,7 @@ export default async function BlogPage({
                   case 'Postpartum Support': return 'bg-rose-100 text-rose-800';
                   case 'Teen Support': return 'bg-cyan-100 text-cyan-800';
                   case 'Safety': return 'bg-red-100 text-red-800';
+                  case 'Security': return 'bg-indigo-100 text-indigo-800';
                   default: return 'bg-slate-100 text-slate-800';
                 }
               };

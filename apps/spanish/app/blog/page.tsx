@@ -418,6 +418,17 @@ const blogPosts = [
     author: 'Equipo de Investigación TalkAI',
     featured: false,
     tags: ['Parejas', 'Revisiones', 'Comunicación', 'Salud Relacional']
+  },
+  {
+    slug: 'por-que-puedes-confiar-en-talkai-seguridad-privacidad',
+    title: 'Por Qué Puedes Confiar en talkAI: Seguridad, Privacidad y Protección de Salud Mental',
+    description: 'Conoce el marco de seguridad integral de talkAI que protege tus conversaciones de salud mental. Cifrado de nivel empresarial, arquitectura compatible con HIPAA y diseño centrado en la privacidad.',
+    category: 'Seguridad',
+    readTime: '4 min lectura',
+    publishDate: '2025-01-15',
+    author: 'Equipo de Seguridad TalkAI',
+    featured: true,
+    tags: ['Seguridad', 'Privacidad', 'Confianza', 'Protección de Datos']
   }
 ];
 
@@ -551,6 +562,7 @@ export default function BlogPage({
                   case 'Apoyo TDAH': return 'bg-indigo-100 text-indigo-800';
                   case 'Apoyo Postparto': return 'bg-rose-100 text-rose-800';
                   case 'Apoyo Adolescente': return 'bg-cyan-100 text-cyan-800';
+                  case 'Seguridad': return 'bg-indigo-100 text-indigo-800';
                   default: return 'bg-slate-100 text-slate-800';
                 }
               };

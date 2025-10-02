@@ -12,9 +12,10 @@ interface RechatProps {
   onVoiceSelect: (configId: string) => void;
   previousSessionId: string;
   isResuming?: boolean;
+  onConnected?: () => void;
 }
 
-export default function Rechat({ onVoiceSelect, previousSessionId, isResuming = false }: RechatProps) {
+export default function Rechat({ onVoiceSelect, previousSessionId, isResuming = false, onConnected }: RechatProps) {
   const router = useRouter();
   const { connect, disconnect, status, unmute, resumeAssistant } = useVoice();
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
@@ -22,6 +23,7 @@ export default function Rechat({ onVoiceSelect, previousSessionId, isResuming = 
   const [isConnecting, setIsConnecting] = useState(false);
   const [connectionError, setConnectionError] = useState<string | null>(null);
   const [retryCount, setRetryCount] = useState(0);
+  const [hasCalledOnConnected, setHasCalledOnConnected] = useState(false);
   const MAX_RETRIES = 3;
   // Guard to prevent duplicate setup calls in React StrictMode (dev)
   const hasInitializedRef = useRef(false);
@@ -175,9 +177,17 @@ export default function Rechat({ onVoiceSelect, previousSessionId, isResuming = 
         await new Promise(resolve => setTimeout(resolve, 500));
       }
       
-      await (connect as any)();
+      // Hume SDK v2 requires an options object even if empty
+      await (connect as any)({});
       const successMessage = isResuming ? 'Session resumed successfully' : 'Session started successfully';
       console.log(successMessage);
+      // Notify parent immediately to close overlay/show chat
+      try { 
+        if (onConnected) {
+          setHasCalledOnConnected(true);
+          onConnected(); 
+        }
+      } catch {}
       
       // Let the Controls component or user interaction unmute / resume to avoid premature socket usage
       
@@ -199,7 +209,7 @@ export default function Rechat({ onVoiceSelect, previousSessionId, isResuming = 
         localStorage.removeItem('previousSessionIdToResume');
         // Reload the page to start fresh
         setTimeout(() => {
-          window.location.reload();
+          window.location.replace('/sessions');
         }, 2000);
       } else {
         setConnectionError('Failed to start session. Please try again.');
@@ -244,6 +254,11 @@ export default function Rechat({ onVoiceSelect, previousSessionId, isResuming = 
 
     updateSession();
   }, [status.value, currentSessionId, startTime]);
+
+  // Don't render if we've successfully called onConnected - parent will handle the UI
+  if (hasCalledOnConnected) {
+    return null;
+  }
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm">

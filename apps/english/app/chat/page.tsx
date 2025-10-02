@@ -17,13 +17,15 @@ function ChatContent({
   previousSessionId, 
   onVoiceSelect, 
   shouldShowChat,
-  isResuming
+  isResuming,
+  onConnected
 }: { 
   showRechatModal: boolean;
   previousSessionId: string | null;
   onVoiceSelect: (configId: string) => void;
   shouldShowChat: boolean;
   isResuming: boolean;
+  onConnected: () => void;
 }) {
   const [resumptionFailed, setResumptionFailed] = React.useState(false);
   
@@ -86,6 +88,7 @@ function ChatContent({
           onVoiceSelect={onVoiceSelect} 
           previousSessionId={previousSessionId || ''} 
           isResuming={isResuming}
+          onConnected={onConnected}
         />
       )}
     </div>
@@ -116,6 +119,9 @@ function VoiceConnection({
   onResumptionFallback: () => void;
 }) {
   const { status } = useVoice();
+  
+  // Track if onConnected was called successfully
+  const connectionSucceededRef = React.useRef(false);
 
   React.useEffect(() => {
     console.log('🔗 Connection status changed:', status.value);
@@ -128,10 +134,21 @@ function VoiceConnection({
       timestamp: new Date().toISOString()
     });
     
+    // Fallback: if connect() resolved but SDK status hasn't updated yet
+    try {
+      if (sessionStorage.getItem('resumptionConnected') === 'true') {
+        console.log('✅ resumptionConnected flag detected - closing modal and showing chat');
+        setShowRechatModal(false);
+        setShouldShowChat(true);
+        sessionStorage.removeItem('resumptionConnected');
+      }
+    } catch {}
+
     if (status.value === 'connected') {
       console.log('🎊🎊🎊 STATUS SHOWS CONNECTED! 🎊🎊🎊');
       console.log('✅ Connection established, closing Rechat modal');
       setShowRechatModal(false);
+      connectionSucceededRef.current = true;
       console.log('🧹 Clearing resumption state');
       
       // Set wasRecentlyResumed BEFORE clearing isResuming for resumption scenarios
@@ -150,21 +167,14 @@ function VoiceConnection({
         }, 30000); // 30 second grace period for audio stabilization
       }
       
-      // Restore session ID to localStorage if it's missing
-      if (previousSessionId) {
-        const currentSessionId = localStorage.getItem('currentChatSessionId');
-        if (!currentSessionId) {
-          console.log('🔧 Restored session ID:', previousSessionId);
-          localStorage.setItem('currentChatSessionId', previousSessionId);
-        }
-
-        // If VoiceProvider stored Hume IDs temporarily before we restored sessionId,
-        // apply them now so the database stays in sync
+      // Ensure any pending Hume IDs are flushed once we have a valid session ID
+      const activeSessionId = previousSessionId || localStorage.getItem('currentChatSessionId');
+      if (activeSessionId) {
         const pendingChatId = sessionStorage.getItem('pendingHumeChatId');
         const pendingChatGroupId = sessionStorage.getItem('pendingHumeChatGroupId');
         if (pendingChatId && pendingChatGroupId && typeof window !== 'undefined' && (window as any).applyPendingHumeIds) {
-          console.log('🔄 Applying pending Hume IDs after session restoration');
-          (window as any).applyPendingHumeIds(previousSessionId)
+          console.log('🔄 Flushing pending Hume IDs to session:', activeSessionId);
+          (window as any).applyPendingHumeIds(activeSessionId)
             .catch((err: any) => console.error('❌ Failed to apply pending Hume IDs:', err));
         }
       }
@@ -192,10 +202,13 @@ function VoiceConnection({
         setShowRechatModal(true);
       }
     } else if (status.value === 'disconnected' || status.value === 'connecting') {
-      console.log('⏳ Connection state:', status.value, '- ensuring chat is visible');
+      console.log('⏳ Connection state:', status.value, '- checking if connection already succeeded');
       
-      // Don't show chat as visible during resumption attempts that are failing
-      if (isResuming && status.value === 'disconnected') {
+      // If onConnected was already called, don't hide chat
+      if (connectionSucceededRef.current) {
+        console.log('✅ Connection already succeeded via onConnected, keeping chat visible');
+        setShouldShowChat(true);
+      } else if (isResuming && status.value === 'disconnected') {
         console.log('🔄 Resumption in progress, keeping modal visible');
         setShouldShowChat(false);
       } else {
@@ -211,6 +224,12 @@ function VoiceConnection({
       onVoiceSelect={onVoiceSelect}
       shouldShowChat={!showRechatModal}
       isResuming={isResuming}
+      onConnected={() => {
+        console.log('✅ Connection succeeded, marking in ref');
+        connectionSucceededRef.current = true;
+        setShowRechatModal(false);
+        setShouldShowChat(true);
+      }}
     />
   );
 }
@@ -368,6 +387,7 @@ function ChatPage() {
     console.log('🔧 DEBUG: Usage: debugSessionResumption("your-session-id")');
     console.log('🔧 DEBUG: Added window.debugSocketDisconnection() function for socket issues');
     console.log('🔧 DEBUG: Added window.emergencyDisconnect() function to force stop voice sessions');
+    console.log('🔧 DEBUG: Added window.fixSessionMissingHumeIds() function to fix sessions missing Hume metadata');
     
     (window as any).debugSessionResumption = (sessionId: string) => {
       console.log('🔍 Debug resumption for session:', sessionId);
@@ -419,6 +439,55 @@ function ChatPage() {
       
       console.log('✅ Emergency disconnect complete');
       console.log('📍 Navigate away from /chat page to complete cleanup');
+    };
+
+    // FIX SESSION MISSING HUME IDS: Manually apply pending Hume IDs to a session
+    (window as any).fixSessionMissingHumeIds = async (sessionId: string) => {
+      console.log('🔧 FIX SESSION: Attempting to fix session missing Hume IDs:', sessionId);
+      
+      try {
+        // Check if there are pending Hume IDs in sessionStorage
+        const pendingChatId = sessionStorage.getItem('pendingHumeChatId');
+        const pendingChatGroupId = sessionStorage.getItem('pendingHumeChatGroupId');
+        
+        if (pendingChatId && pendingChatGroupId) {
+          console.log('🔧 FIX SESSION: Found pending Hume IDs, applying to session:', {
+            sessionId,
+            pendingChatId,
+            pendingChatGroupId
+          });
+          
+          const { error } = await supabase
+            .from('chat_sessions')
+            .update({
+              hume_chat_id: pendingChatId,
+              hume_chat_group_id: pendingChatGroupId,
+              updated_at: new Date().toISOString()
+            })
+            .eq('id', sessionId);
+          
+          if (error) {
+            console.error('❌ FIX SESSION: Failed to update session:', error);
+            throw error;
+          }
+          
+          console.log('✅ FIX SESSION: Successfully applied pending Hume IDs to session:', sessionId);
+          
+          // Clean up temporary storage
+          sessionStorage.removeItem('pendingHumeChatId');
+          sessionStorage.removeItem('pendingHumeChatGroupId');
+          console.log('🧹 FIX SESSION: Cleaned up temporary Hume IDs');
+          
+          return true;
+        } else {
+          console.log('⚠️ FIX SESSION: No pending Hume IDs found in sessionStorage');
+          console.log('🔍 FIX SESSION: Available sessionStorage keys:', Object.keys(sessionStorage));
+          return false;
+        }
+      } catch (error) {
+        console.error('❌ FIX SESSION: Error fixing session:', error);
+        throw error;
+      }
     };
     
     // Hot Refresh detection and session preservation
@@ -526,19 +595,21 @@ function ChatPage() {
           
           // Implement timeout for the entire resumption data fetch operation
           const fetchTimeout = setTimeout(() => {
-            console.log('⏰ Resumption data fetch taking too long, proceeding with fresh session');
-            localStorage.removeItem('previousSessionIdToResume');
+            console.log('⏰ Resumption data fetch taking too long, showing resumption UI instead of redirect');
+            setIsResuming(false);
+            setShowRechatModal(true);
             setIsLoading(false);
-            setShowRechatModal(false);
-          }, 180000); // 180 second timeout - longer than 120s countdown
+            setError('Resumption timed out. You can try again.');
+          }, 180000);
           
           // Create a reasonable timeout to prevent infinite loading
           const safetyTimeout = setTimeout(() => {
-            console.log('🚨 Safety timeout triggered - falling back to new session');
-            localStorage.removeItem('previousSessionIdToResume');
+            console.log('🚨 Safety timeout triggered - keeping user on /chat with resumption UI');
+            setIsResuming(false);
+            setShowRechatModal(true);
             setIsLoading(false);
-            setShowRechatModal(false);
-          }, 30000); // 30 second timeout
+            setError('Resumption took too long. You can try again.');
+          }, 30000);
           
           try {
             console.log('📡 Fetching session data for resumption...');
@@ -581,11 +652,11 @@ function ChatPage() {
             // Handle case where session doesn't exist at all
             if (!sessionData) {
               console.log('❌ Session not found in database - likely stale localStorage data');
-              console.log('🧹 Clearing stale resumption data and starting fresh session');
-              localStorage.removeItem('previousSessionIdToResume');
-              localStorage.removeItem('currentChatSessionId');
-              setShowRechatModal(false);
+              console.log('🧹 Keeping user on /chat and showing resumption UI (no redirect)');
+              setIsResuming(false);
+              setShowRechatModal(true);
               setIsLoading(false);
+              setError('Session not found. You can start a new one from here.');
               return;
             }
             
@@ -597,15 +668,11 @@ function ChatPage() {
                 created: sessionData.created_at,
                 title: sessionData.title
               });
-              console.log('💡 This session was likely created but never got Hume metadata');
-              console.log('🔧 Possible causes:');
-              console.log('   - Session ended before VoiceProvider could store Hume IDs');
-              console.log('   - Database error during Hume ID storage');
-              console.log('   - VoiceProvider crash or Hot Refresh during initialization');
-              console.log('🧹 Clearing resumption data - this session cannot be resumed');
-              localStorage.removeItem('previousSessionIdToResume');
-              setShowRechatModal(false);
+              console.log('🧹 Keeping user on /chat and showing resumption UI - cannot resume');
+              setIsResuming(false);
+              setShowRechatModal(true);
               setIsLoading(false);
+              setError('This session cannot be resumed. Missing Hume metadata.');
               return;
             }
             
@@ -734,20 +801,14 @@ function ChatPage() {
             setIsLoading(false);
           } catch (error) {
             console.error('❌ Error fetching resumption data:', error);
-            
-            if (error instanceof Error && error.message === 'Database query timeout') {
-              console.log('⏰ Database query timed out, clearing resumption data');
-              setError('Database connection timeout. Please try again.');
-            } else {
-              console.log('💥 Unexpected error during resumption data fetch');
-            }
-            
-            localStorage.removeItem('previousSessionIdToResume');
-            setShowRechatModal(false);
+            console.log('💥 Keeping user on /chat with resumption UI (no redirect)');
+            setIsResuming(false);
+            setShowRechatModal(true);
+            setIsLoading(false);
+            setError('Failed to fetch resumption data. You can try again.');
           }
         } else {
-          console.log('🆕 No resumption data found, starting new session');
-          
+          console.log('🆕 No resumption data found, keeping user on /chat');
           // Check if there's a preserved voice config from fallback
           const fallbackVoiceConfig = sessionStorage.getItem('fallbackVoiceConfig');
           if (fallbackVoiceConfig) {
@@ -756,7 +817,11 @@ function ChatPage() {
             sessionStorage.removeItem('fallbackVoiceConfig'); // Clean up after use
           }
           
-          setShowRechatModal(false);
+          // Show modal instead of redirect
+          setIsResuming(false);
+          setShowRechatModal(true);
+          setIsLoading(false);
+          setError('No session selected to resume.');
         }
       } catch (error) {
         console.error('❌ Critical error in fetchResumptionData:', error);
@@ -802,9 +867,11 @@ function ChatPage() {
     setResumedChatGroupId(null);
     setPreviousSessionId(null);
     
-    // Force a clean restart
-    console.log('🔄 Forcing page reload for clean session start with preserved voice config');
-    window.location.replace('/chat');
+    // Keep user on /chat with modal for a clean manual start
+    console.log('🔄 Staying on /chat with StartCall modal open (no redirect)');
+    setShowRechatModal(true);
+    setIsLoading(false);
+    setError('Starting a fresh session.');
   };
 
   return (
