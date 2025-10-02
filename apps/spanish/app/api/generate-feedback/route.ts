@@ -10,7 +10,7 @@ function parseTherapistFeedback(content: string): string[] {
   for (const section of sections) {
     const trimmedSection = section.trim();
     
-    // Check if this is a section header (like "Key Themes:", "Emotional Patterns:", etc.)
+    // Check if this is a section header (like "Temas Clave:", "Patrones Emocionales:", etc.)
     if (trimmedSection.match(/^[A-Za-z\s]+:$/)) {
       // This is a section header, add it as a heading
       feedback.push(trimmedSection);
@@ -43,10 +43,10 @@ export async function POST(req: NextRequest) {
 
     // Build transcript (role: content)
     const transcript = messages
-      .map((m: any) => `${m.role === 'user' ? 'Client' : 'Therapist'}: ${m.content}`)
+      .map((m: any) => `${m.role === 'user' ? 'Cliente' : 'Terapeuta'}: ${m.content}`)
       .join('\n');
 
-    const prompt = `You are an experienced therapist reviewing your private session notes. Read the following conversation transcript with a client. Summarize key themes you observed, note any emotional patterns, and provide 3-5 supportive, actionable pieces of feedback the client can reflect on before their next session.\n\nTranscript:\n${transcript}\n\nTherapist Notes:`;
+    const prompt = `Eres un terapeuta experimentado revisando tus notas de sesión privadas. Lee la siguiente transcripción de conversación con un cliente. Resume los temas clave que observaste, anota cualquier patrón emocional, y proporciona 3-5 piezas de retroalimentación de apoyo y acción que el cliente puede reflexionar antes de su próxima sesión.\n\nTranscripción:\n${transcript}\n\nNotas del Terapeuta:`;
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o',

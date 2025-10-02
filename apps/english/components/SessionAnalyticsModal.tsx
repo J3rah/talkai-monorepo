@@ -653,11 +653,22 @@ export default function SessionAnalyticsModal({
             {!feedbackLoading && feedbackNotes.length > 0 && (
               <Card className="p-6">
                 <h3 className="text-lg font-semibold mb-4 text-center">Therapist Feedback</h3>
-                <ul className="list-disc list-inside space-y-2">
-                  {feedbackNotes.map((note, idx) => (
-                    <li key={idx}>{note}</li>
-                  ))}
-                </ul>
+                <div className="space-y-4">
+                  {feedbackNotes.map((note, idx) => {
+                    // Check if this is a section header (ends with colon)
+                    const isHeader = note.endsWith(':');
+                    return isHeader ? (
+                      <h4 key={idx} className="font-semibold text-base mt-4 mb-2 first:mt-0">
+                        {note}
+                      </h4>
+                    ) : (
+                      <div key={idx} className="flex items-start">
+                        <span className="text-muted-foreground mr-2 mt-1">•</span>
+                        <span className="text-sm leading-relaxed">{note}</span>
+                      </div>
+                    );
+                  })}
+                </div>
                 <div className="mt-4 flex gap-3 justify-center items-center">
                   <Button onClick={handleSaveFeedback} disabled={savingFeedback || !!saveSuccessId}>
                     {saveSuccessId ? 'Saved' : (savingFeedback ? 'Saving…' : 'Save to Journal')}

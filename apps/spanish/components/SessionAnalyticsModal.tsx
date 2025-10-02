@@ -324,7 +324,12 @@ export default function SessionAnalyticsModal({
             body: JSON.stringify({ messages: transcriptPayload })
           });
           const json = await res.json();
-          if (Array.isArray(json)) setFeedbackNotes(json);
+          if (json?.feedback && Array.isArray(json.feedback)) {
+            setFeedbackNotes(json.feedback);
+          } else {
+            console.warn('Invalid API response format:', json);
+            setFeedbackNotes(["Excelente trabajo tomando tiempo para ti hoy. Reflexiona sobre lo que destacó y continúa practicando la autocompasión."]);
+          }
         }
       } catch (e) {
         console.warn('Feedback generation failed:', e);
@@ -575,11 +580,22 @@ export default function SessionAnalyticsModal({
             ) : feedbackNotes.length > 0 && (
               <Card className="p-6">
                 <h3 className="text-lg font-semibold mb-4 text-center">Retroalimentación del Terapeuta</h3>
-                <ul className="list-disc list-inside space-y-2">
-                  {feedbackNotes.map((note, idx) => (
-                    <li key={idx}>{note}</li>
-                  ))}
-                </ul>
+                <div className="space-y-4">
+                  {feedbackNotes.map((note, idx) => {
+                    // Check if this is a section header (ends with colon)
+                    const isHeader = note.endsWith(':');
+                    return isHeader ? (
+                      <h4 key={idx} className="font-semibold text-base mt-4 mb-2 first:mt-0">
+                        {note}
+                      </h4>
+                    ) : (
+                      <div key={idx} className="flex items-start">
+                        <span className="text-muted-foreground mr-2 mt-1">•</span>
+                        <span className="text-sm leading-relaxed">{note}</span>
+                      </div>
+                    );
+                  })}
+                </div>
                 <div className="mt-4 flex gap-3 justify-center items-center">
                   <Button onClick={handleSaveFeedback} disabled={savingFeedback || !!saveSuccessId}>
                     {saveSuccessId ? 'Guardado' : (savingFeedback ? 'Guardando…' : 'Guardar en Diario')}
