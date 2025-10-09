@@ -167,6 +167,111 @@ interface DetailedEmotionData {
   session_id: string;
 }
 
+// Component for individual feedback entry with expand/collapse functionality
+function FeedbackEntry({ entry, sessionNumber }: { entry: any; sessionNumber?: number }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const isLongContent = entry.content && entry.content.length > 200;
+  
+  // Replace session ID with session number in the content
+  let processedContent = entry.content || '';
+  
+  if (entry.session_number) {
+    // Handle multiple formats: "Therapist Feedback (Session [UUID]):", "Therapist Feedback (Session):", "Session [UUID]"
+    // More robust regex patterns
+    processedContent = processedContent
+      .replace(/Therapist Feedback\s*\(\s*Session\s+[a-f0-9-]+\s*\):/gi, `Therapist Feedback (Session #${entry.session_number}):`)
+      .replace(/Therapist Feedback\s*\(\s*Session\s*\):/gi, `Therapist Feedback (Session #${entry.session_number}):`)
+      .replace(/Session\s+[a-f0-9-]+/gi, `Session #${entry.session_number}`)
+      .replace(/Session\s*\):/gi, `Session #${entry.session_number}):`)
+      .replace(/\(Session\s+[a-f0-9-]+\):/gi, `(Session #${entry.session_number}):`);
+  }
+  
+  // Format the content nicely
+  const formatContent = (text: string) => {
+    const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0);
+    return lines.map((line, idx) => {
+      const trimmed = line.trim();
+      const isHeader = trimmed.endsWith(':');
+      const isNumbered = /^[•\-\s]*\d+\./.test(trimmed);
+      
+      if (isHeader) {
+        return (
+          <h4 key={idx} className="font-semibold text-base mt-4 first:mt-0">
+            {trimmed}
+          </h4>
+        );
+      }
+      
+      if (isNumbered) {
+        const cleanNumbered = trimmed.replace(/^[•\-\s]*/, '');
+        return (
+          <div key={idx} className="pl-1 mb-2">
+            <span className="text-sm leading-relaxed">{cleanNumbered}</span>
+          </div>
+        );
+      }
+      
+      // Regular bullet point
+      return (
+        <div key={idx} className="flex items-start mb-2">
+          <span className="text-muted-foreground mr-2 mt-1">•</span>
+          <span className="text-sm leading-relaxed">{trimmed.replace(/^[-\s]*/, '')}</span>
+        </div>
+      );
+    });
+  };
+
+  const displayContent = isLongContent && !isExpanded 
+    ? (
+        <div className="space-y-2">
+          {formatContent(processedContent.slice(0, 200))}
+          <div className="text-sm text-muted-foreground">...</div>
+        </div>
+      )
+    : (
+        <div className="space-y-2">
+          {formatContent(processedContent)}
+        </div>
+      );
+  
+  return (
+    <div className="border border-border rounded-lg p-4">
+      <div className="flex items-start justify-between gap-3">
+            <div className="flex-1">
+              <p className="text-xs text-muted-foreground mb-1">{new Date(entry.created_at).toLocaleString()}</p>
+              <div className="text-sm text-foreground">{displayContent}</div>
+          {isLongContent && (
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="text-xs text-blue-500 hover:text-blue-400 mt-2 transition-colors"
+            >
+              {isExpanded ? 'Show Less' : 'Show More'}
+            </button>
+          )}
+        </div>
+        <div className="flex flex-col gap-2 ml-2">
+              <button
+                onClick={() => {
+                  const blob = new Blob([entry.content || ''], { type: 'text/plain' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `therapist_feedback_session_${entry.session_number || entry.id}.txt`;
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                  URL.revokeObjectURL(url);
+                }}
+                className="px-2 py-1 text-xs bg-primary/10 text-primary rounded-md hover:bg-primary/20"
+              >
+                Download
+              </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function TestDashboardPage() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
@@ -210,7 +315,7 @@ export default function TestDashboardPage() {
   const [toast, setToast] = useState<{ message: string; type?: 'success' | 'error' | 'info' } | null>(null);
   const showToastMessage = (message: string, type: 'success' | 'error' | 'info' = 'success') => setToast({ message, type });
   // Feedback history
-  const [feedbackHistory, setFeedbackHistory] = useState<Array<{ id: string; content: string; reflection: string; created_at: string }>>([]);
+  const [feedbackHistory, setFeedbackHistory] = useState<Array<{ id: string; content: string; reflection: string; created_at: string; session_number?: number | undefined }>>([]);
   const [isLoadingFeedback, setIsLoadingFeedback] = useState(false);
   // Per-session UI states
   const [downloadInProgress, setDownloadInProgress] = useState<Record<string, boolean>>({});
@@ -829,7 +934,7 @@ export default function TestDashboardPage() {
       const subErr = subscriptionResult.error as any;
       const hasRealSubError = subErr && (subErr.code || subErr.message);
       if (hasRealSubError && subErr.code !== 'PGRST116') {
-        console.error('Error fetching subscription:', subscriptionResult.error);
+        console.error('Error fetching subscription:', subErr);
       } else if (subscriptionResult.data) {
         setCurrentSubscription(subscriptionResult.data);
       } else {
@@ -1524,54 +1629,67 @@ export default function TestDashboardPage() {
   };
   // === End helper functions ===
 
-  // Load Therapist Feedback history (journal entries)
-  useEffect(() => {
-    const loadFeedback = async () => {
-      try {
-        setIsLoadingFeedback(true);
-        if (!user?.id) {
-          setFeedbackHistory([]);
-          return;
-        }
-        const { data: sessions, error: sessErr } = await supabase
-          .from('chat_sessions')
-          .select('id, created_at, journal_entry_id')
-          .eq('user_id', user.id)
-          .not('journal_entry_id', 'is', null)
-          .order('created_at', { ascending: false })
-          .limit(100);
-
-        if (sessErr || !Array.isArray(sessions) || sessions.length === 0) {
-          setFeedbackHistory([]);
-          return;
-        }
-
-        const ids = sessions.map((s: any) => s.journal_entry_id).filter(Boolean);
-        const { data: journals, error: jErr } = await supabase
-          .from('public_journals')
-          .select('id, content, reflection, created_at')
-          .in('id', ids as any);
-
-        if (jErr || !Array.isArray(journals)) {
-          setFeedbackHistory([]);
-          return;
-        }
-
-        const byId: Record<string, any> = Object.fromEntries(journals.map((j: any) => [j.id, j]));
-        const merged = sessions
-          .map((s: any) => byId[s.journal_entry_id])
-          .filter(Boolean);
-        setFeedbackHistory(merged);
-      } catch (e) {
-        console.warn('Failed to load feedback history:', e);
+  // Load Therapist Feedback history (private feedback)
+  const loadFeedback = async () => {
+    try {
+      console.log('🔄 Loading therapist feedback for user:', user?.id);
+      setIsLoadingFeedback(true);
+      if (!user?.id) {
         setFeedbackHistory([]);
-      } finally {
-        setIsLoadingFeedback(false);
+        return;
       }
-    };
+
+      // 1. Fetch latest private feedback entries
+      const { data: feedback, error: fbErr } = await supabase
+        .from('therapist_feedback')
+        .select('id, feedback_content, created_at, session_id')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(100);
+
+      if (fbErr || !Array.isArray(feedback) || feedback.length === 0) {
+        setFeedbackHistory([]);
+        return;
+      }
+
+      // 2. Fetch the chat_sessions that correspond to THOSE feedback entries so we can derive a session number.
+      //    We purposely fetch all sessions for the user once (cheap – only ids & created_at) so numbering is always correct.
+      const { data: sessions, error: sessErr } = await supabase
+        .from('chat_sessions')
+        .select('id, created_at')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: true }); // oldest → newest so index+1 gives Session #
+
+      if (sessErr || !Array.isArray(sessions)) {
+        console.warn('⚠️ Failed to fetch chat sessions for numbering', sessErr);
+      }
+
+      const idToNumber = new Map<string, number>();
+      sessions?.forEach((s, idx) => idToNumber.set(s.id, idx + 1));
+
+      // 3. Transform feedback with session_number if available
+      const transformed = feedback.map((f) => ({
+        id: f.id,
+        content: f.feedback_content,
+        reflection: '',
+        created_at: f.created_at,
+        session_id: f.session_id,
+        session_number: idToNumber.get(f.session_id) ?? undefined,
+      }));
+
+      setFeedbackHistory(transformed);
+    } catch (e) {
+      console.error('❌ Failed to load therapist feedback', e);
+      setFeedbackHistory([]);
+    } finally {
+      setIsLoadingFeedback(false);
+    }
+  };
+
+  useEffect(() => {
     // Load when arriving to dashboard
     loadFeedback();
-  }, [user?.id]);
+  }, [user?.id, chatSessions]);
 
   useEffect(() => {
     // Poll audio reconstruction status every 30 seconds
@@ -2104,46 +2222,7 @@ export default function TestDashboardPage() {
                         <h3 className="text-lg font-semibold text-foreground">Therapist Feedback History</h3>
                       </AccordionTrigger>
                       <button
-                        onClick={async () => {
-                          try {
-                            setIsLoadingFeedback(true);
-                            if (!user?.id) { setFeedbackHistory([]); return; }
-                            const { data: sessions, error: sessErr } = await supabase
-                              .from('chat_sessions')
-                              .select('id, created_at, journal_entry_id')
-                              .eq('user_id', user.id)
-                              .not('journal_entry_id', 'is', null)
-                              .order('created_at', { ascending: false })
-                              .limit(100);
-
-                            if (sessErr || !Array.isArray(sessions) || sessions.length === 0) {
-                              setFeedbackHistory([]);
-                              return;
-                            }
-
-                            const ids = sessions.map((s: any) => s.journal_entry_id).filter(Boolean);
-                            const { data: journals, error: jErr } = await supabase
-                              .from('public_journals')
-                              .select('id, content, reflection, created_at')
-                              .in('id', ids as any);
-
-                            if (jErr || !Array.isArray(journals)) {
-                              setFeedbackHistory([]);
-                              return;
-                            }
-
-                            const byId: Record<string, any> = Object.fromEntries(journals.map((j: any) => [j.id, j]));
-                            const merged = sessions
-                              .map((s: any) => byId[s.journal_entry_id])
-                              .filter(Boolean);
-                            setFeedbackHistory(merged);
-                          } catch (e) {
-                            console.warn('Failed to refresh feedback history:', e);
-                            setFeedbackHistory([]);
-                          } finally {
-                            setIsLoadingFeedback(false);
-                          }
-                        }}
+                        onClick={() => loadFeedback()}
                         className="text-sm text-primary hover:text-primary/80 ml-4"
                       >
                         Refresh
@@ -2158,32 +2237,7 @@ export default function TestDashboardPage() {
                     ) : (
                       <div className="space-y-3">
                         {feedbackHistory.map((entry) => (
-                          <div key={entry.id} className="border border-border rounded-lg p-4">
-                            <div className="flex items-start justify-between gap-3">
-                              <div className="flex-1">
-                                <p className="text-xs text-muted-foreground mb-1">{new Date(entry.created_at).toLocaleString()}</p>
-                                <p className="text-sm text-foreground whitespace-pre-line">{entry.reflection || entry.content?.slice(0, 200) + (entry.content?.length > 200 ? '…' : '')}</p>
-                              </div>
-                              <div className="flex flex-col gap-2 ml-2">
-                                <button
-                                  onClick={() => {
-                                    const blob = new Blob([JSON.stringify(entry, null, 2)], { type: 'application/json' });
-                                    const url = URL.createObjectURL(blob);
-                                    const a = document.createElement('a');
-                                    a.href = url;
-                                    a.download = `therapist_feedback_${entry.id}.json`;
-                                    document.body.appendChild(a);
-                                    a.click();
-                                    document.body.removeChild(a);
-                                    URL.revokeObjectURL(url);
-                                  }}
-                                  className="px-2 py-1 text-xs bg-primary/10 text-primary rounded-md hover:bg-primary/20"
-                                >
-                                  Download
-                                </button>
-                              </div>
-                            </div>
-                          </div>
+                          <FeedbackEntry key={entry.id} entry={entry} />
                         ))}
                       </div>
                     )}

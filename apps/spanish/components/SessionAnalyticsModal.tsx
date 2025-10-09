@@ -390,28 +390,25 @@ export default function SessionAnalyticsModal({
     setSaveError(null);
     try {
       const content = `Retroalimentación del Terapeuta${sessionId ? ` (Sesión ${sessionId})` : ''}:\n\n` + feedbackNotes.map(n => `- ${n}`).join('\n');
-      const res = await fetch('/api/journal/entries', {
+      
+      // Get the current session token to include in the request
+      const { data: { session } } = await supabase.auth.getSession();
+      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+      if (session?.access_token) {
+        headers['Authorization'] = `Bearer ${session.access_token}`;
+      }
+      
+      const res = await fetch('/api/therapist-feedback', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content })
+        headers,
+        body: JSON.stringify({ content, sessionId })
       });
       const json = await res.json();
       if (!res.ok || !json?.success || !json?.entry?.id) {
-        throw new Error(json?.error || 'No se pudo guardar la entrada del diario');
+        throw new Error(json?.error || 'No se pudo guardar la retroalimentación del terapeuta');
       }
       const entryId = json.entry.id as string;
       setSaveSuccessId(entryId);
-      // Intentar vincular la entrada al chat_session si existe la columna
-      if (sessionId) {
-        try {
-          await supabase
-            .from('chat_sessions')
-            .update({ journal_entry_id: entryId })
-            .eq('id', sessionId);
-        } catch (_linkErr) {
-          // Ignorar si la columna no existe o falla la actualización
-        }
-      }
     } catch (e: any) {
       setSaveError(e?.message || 'No se pudo guardar la entrada del diario');
     } finally {

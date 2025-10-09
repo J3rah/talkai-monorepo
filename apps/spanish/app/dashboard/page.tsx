@@ -168,6 +168,111 @@ interface DetailedEmotionData {
   session_id: string;
 }
 
+// Component for individual feedback entry with expand/collapse functionality
+function FeedbackEntry({ entry, sessionNumber }: { entry: any; sessionNumber?: number }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const isLongContent = entry.content && entry.content.length > 200;
+  
+  // Replace session ID with session number in the content (Spanish)
+  let processedContent = entry.content || '';
+  
+  if (entry.session_number) {
+    // Handle multiple formats: "Retroalimentación del Terapeuta (Sesión [UUID]):", "Retroalimentación del Terapeuta (Sesión):", "Sesión [UUID]"
+    // More robust regex patterns
+    processedContent = processedContent
+      .replace(/Retroalimentación del Terapeuta\s*\(\s*Sesión\s+[a-f0-9-]+\s*\):/gi, `Retroalimentación del Terapeuta (Sesión #${entry.session_number}):`)
+      .replace(/Retroalimentación del Terapeuta\s*\(\s*Sesión\s*\):/gi, `Retroalimentación del Terapeuta (Sesión #${entry.session_number}):`)
+      .replace(/Sesión\s+[a-f0-9-]+/gi, `Sesión #${entry.session_number}`)
+      .replace(/Sesión\s*\):/gi, `Sesión #${entry.session_number}):`)
+      .replace(/\(Sesión\s+[a-f0-9-]+\):/gi, `(Sesión #${entry.session_number}):`);
+  }
+  
+  // Format the content nicely
+  const formatContent = (text: string) => {
+    const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0);
+    return lines.map((line, idx) => {
+      const trimmed = line.trim();
+      const isHeader = trimmed.endsWith(':');
+      const isNumbered = /^[•\-\s]*\d+\./.test(trimmed);
+      
+      if (isHeader) {
+        return (
+          <h4 key={idx} className="font-semibold text-base mt-4 first:mt-0">
+            {trimmed}
+          </h4>
+        );
+      }
+      
+      if (isNumbered) {
+        const cleanNumbered = trimmed.replace(/^[•\-\s]*/, '');
+        return (
+          <div key={idx} className="pl-1 mb-2">
+            <span className="text-sm leading-relaxed">{cleanNumbered}</span>
+          </div>
+        );
+      }
+      
+      // Regular bullet point
+      return (
+        <div key={idx} className="flex items-start mb-2">
+          <span className="text-muted-foreground mr-2 mt-1">•</span>
+          <span className="text-sm leading-relaxed">{trimmed.replace(/^[-\s]*/, '')}</span>
+        </div>
+      );
+    });
+  };
+
+  const displayContent = isLongContent && !isExpanded 
+    ? (
+        <div className="space-y-2">
+          {formatContent(processedContent.slice(0, 200))}
+          <div className="text-sm text-muted-foreground">...</div>
+        </div>
+      )
+    : (
+        <div className="space-y-2">
+          {formatContent(processedContent)}
+        </div>
+      );
+  
+  return (
+    <div className="border border-border rounded-lg p-4">
+      <div className="flex items-start justify-between gap-3">
+            <div className="flex-1">
+              <p className="text-xs text-muted-foreground mb-1">{new Date(entry.created_at).toLocaleString()}</p>
+              <div className="text-sm text-foreground">{displayContent}</div>
+          {isLongContent && (
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="text-xs text-blue-500 hover:text-blue-400 mt-2 transition-colors"
+            >
+              {isExpanded ? 'Mostrar Menos' : 'Mostrar Más'}
+            </button>
+          )}
+        </div>
+        <div className="flex flex-col gap-2 ml-2">
+              <button
+                onClick={() => {
+                  const blob = new Blob([entry.content || ''], { type: 'text/plain' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `retroalimentacion_terapeuta_sesion_${entry.session_number || entry.id}.txt`;
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                  URL.revokeObjectURL(url);
+                }}
+                className="px-2 py-1 text-xs bg-primary/10 text-primary rounded-md hover:bg-primary/20"
+              >
+                Descargar
+              </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function TestDashboardPage() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
@@ -826,9 +931,11 @@ export default function TestDashboardPage() {
           .eq('referrer_id', userId)
       ]);
 
-      // Process subscription data
-      if (subscriptionResult.error && subscriptionResult.error.code !== 'PGRST116') {
-        console.error('Error fetching subscription:', subscriptionResult.error);
+      // Process subscription data (handle empty error objects gracefully)
+      const subErr = subscriptionResult.error as any;
+      const hasRealSubError = subErr && (subErr.code || subErr.message);
+      if (hasRealSubError && subErr.code !== 'PGRST116') {
+        console.error('Error fetching subscription:', subErr);
       } else if (subscriptionResult.data) {
         setCurrentSubscription(subscriptionResult.data);
       } else {
@@ -913,54 +1020,62 @@ export default function TestDashboardPage() {
     }
   };
 
-  // Load Therapist Feedback history (user-specific linked feedback)
-  useEffect(() => {
-    const loadFeedback = async () => {
-      try {
-        setIsLoadingFeedback(true);
-        if (!user?.id) {
-          setFeedbackHistory([]);
-          return;
-        }
-        const { data: sessions, error: sessErr } = await supabase
-          .from('chat_sessions')
-          .select('id, created_at, journal_entry_id')
-          .eq('user_id', user.id)
-          .not('journal_entry_id', 'is', null)
-          .order('created_at', { ascending: false })
-          .limit(100);
-
-        if (sessErr || !Array.isArray(sessions) || sessions.length === 0) {
-          setFeedbackHistory([]);
-          return;
-        }
-
-        const ids = sessions.map((s: any) => s.journal_entry_id).filter(Boolean);
-        const { data: journals, error: jErr } = await supabase
-          .from('public_journals')
-          .select('id, content, reflection, created_at')
-          .in('id', ids as any);
-
-        if (jErr || !Array.isArray(journals)) {
-          setFeedbackHistory([]);
-          return;
-        }
-
-        const byId: Record<string, any> = Object.fromEntries(journals.map((j: any) => [j.id, j]));
-        const merged = sessions
-          .map((s: any) => byId[s.journal_entry_id])
-          .filter(Boolean);
-        setFeedbackHistory(merged);
-      } catch (e) {
-        console.warn('Failed to load feedback history:', e);
+  // Load Therapist Feedback history (private feedback)
+  const loadFeedback = async () => {
+    try {
+      console.log('🔄 Loading therapist feedback for user:', user?.id);
+      setIsLoadingFeedback(true);
+      if (!user?.id) {
+        console.log('❌ No user ID, setting empty feedback history');
         setFeedbackHistory([]);
-      } finally {
-        setIsLoadingFeedback(false);
+        return;
       }
-    };
+      
+      const { data: feedback, error } = await supabase
+        .from('therapist_feedback')
+        .select('id, feedback_content, created_at, session_id')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(100);
+
+      console.log('📊 Therapist feedback entries:', feedback?.length || 0, error);
+
+      if (error) {
+        console.log('❌ Failed to fetch therapist feedback:', error);
+        setFeedbackHistory([]);
+        return;
+      }
+
+      // Create a mapping of session IDs to session numbers based on chat sessions order
+      const sessionIdToNumberMap = new Map<string, number>();
+      chatSessions.forEach((session, index) => {
+        sessionIdToNumberMap.set(session.id, chatSessions.length - index);
+      });
+
+      // Transform the data to match the expected format
+      const transformedFeedback = feedback?.map(f => ({
+        id: f.id,
+        content: f.feedback_content,
+        reflection: '', // We don't have reflection in the new format
+        created_at: f.created_at,
+        session_id: f.session_id,
+        session_number: sessionIdToNumberMap.get(f.session_id) || null
+      })) || [];
+
+      console.log('✅ Loaded therapist feedback entries:', transformedFeedback.length);
+      setFeedbackHistory(transformedFeedback);
+    } catch (e) {
+      console.warn('❌ Failed to load feedback history:', e);
+      setFeedbackHistory([]);
+    } finally {
+      setIsLoadingFeedback(false);
+    }
+  };
+
+  useEffect(() => {
     // Load when arriving to dashboard
     loadFeedback();
-  }, [user?.id]);
+  }, [user?.id, chatSessions]);
 
   const fetchAnalyticsData = async (userId: string) => {
     try {
@@ -2021,37 +2136,7 @@ export default function TestDashboardPage() {
                         <h3 className="text-lg font-semibold text-foreground">Historial de Retroalimentación del Terapeuta</h3>
                       </AccordionTrigger>
                       <button
-                        onClick={async () => {
-                          try {
-                            setIsLoadingFeedback(true);
-                            if (!user?.id) { setFeedbackHistory([]); return; }
-                            const { data: sessions, error: sessErr } = await supabase
-                              .from('chat_sessions')
-                              .select('id, created_at, journal_entry_id')
-                              .eq('user_id', user.id)
-                              .not('journal_entry_id', 'is', null)
-                              .order('created_at', { ascending: false })
-                              .limit(100);
-                            if (!sessErr && Array.isArray(sessions) && sessions.length > 0) {
-                              const ids = sessions.map((s: any) => s.journal_entry_id).filter(Boolean);
-                              const { data: journals } = await supabase
-                                .from('public_journals')
-                                .select('id, content, reflection, created_at')
-                                .in('id', ids as any);
-                              const byId: Record<string, any> = Object.fromEntries((journals || []).map((j: any) => [j.id, j]));
-                              const merged = sessions
-                                .map((s: any) => byId[s.journal_entry_id])
-                                .filter(Boolean);
-                              setFeedbackHistory(merged);
-                            } else {
-                              setFeedbackHistory([]);
-                            }
-                          } catch (e) {
-                            console.warn('Failed to refresh feedback history:', e);
-                          } finally {
-                            setIsLoadingFeedback(false);
-                          }
-                        }}
+                        onClick={() => loadFeedback()}
                         className="text-sm text-primary hover:text-primary/80 ml-4"
                       >
                         Actualizar
@@ -2066,32 +2151,7 @@ export default function TestDashboardPage() {
                     ) : (
                       <div className="space-y-3">
                         {feedbackHistory.map((entry) => (
-                          <div key={entry.id} className="border border-border rounded-lg p-4">
-                            <div className="flex items-start justify-between gap-3">
-                              <div className="flex-1">
-                                <p className="text-xs text-muted-foreground mb-1">{new Date(entry.created_at).toLocaleString()}</p>
-                                <p className="text-sm text-foreground whitespace-pre-line">{entry.reflection || entry.content?.slice(0, 200) + (entry.content?.length > 200 ? '…' : '')}</p>
-                              </div>
-                              <div className="flex flex-col gap-2 ml-2">
-                                <button
-                                  onClick={() => {
-                                    const blob = new Blob([JSON.stringify(entry, null, 2)], { type: 'application/json' });
-                                    const url = URL.createObjectURL(blob);
-                                    const a = document.createElement('a');
-                                    a.href = url;
-                                    a.download = `retroalimentacion_terapeuta_${entry.id}.json`;
-                                    document.body.appendChild(a);
-                                    a.click();
-                                    document.body.removeChild(a);
-                                    URL.revokeObjectURL(url);
-                                  }}
-                                  className="px-2 py-1 text-xs bg-primary/10 text-primary rounded-md hover:bg-primary/20"
-                                >
-                                  Descargar
-                                </button>
-                              </div>
-                            </div>
-                          </div>
+                          <FeedbackEntry key={entry.id} entry={entry} />
                         ))}
                       </div>
                     )}

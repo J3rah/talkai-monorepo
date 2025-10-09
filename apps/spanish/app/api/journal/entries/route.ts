@@ -68,7 +68,21 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, error: 'Content required' }, { status: 400 });
     }
 
-    console.log('[Journal API] Creating reflection via OpenAI');
+    const supabase = getSupabaseAdmin();
+
+    // Get authenticated user from request
+    const authHeader = req.headers.get('authorization');
+    let userId: string | null = null;
+    
+    if (authHeader) {
+      const token = authHeader.replace('Bearer ', '');
+      const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+      if (!authError && user) {
+        userId = user.id;
+      }
+    }
+
+    console.log('[Journal API] Creating reflection via OpenAI for user:', userId);
     // Generate AI reflection using OpenAI
     const completion = await openai.chat.completions.create({
       model: process.env.OPENAI_JOURNAL_MODEL || 'gpt-3.5-turbo',
@@ -82,11 +96,9 @@ export async function POST(req: Request) {
 
     const reflection = completion.choices?.[0]?.message?.content?.trim() ?? '';
 
-    const supabase = getSupabaseAdmin();
-
     const { data, error } = await supabase
       .from('public_journals')
-      .insert({ content, reflection, is_published: false })
+      .insert({ content, reflection, is_published: false, user_id: userId })
       .select('id, content, reflection, created_at')
       .single();
 
