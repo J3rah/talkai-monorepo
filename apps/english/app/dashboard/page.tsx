@@ -930,9 +930,12 @@ export default function TestDashboardPage() {
           .eq('referrer_id', userId)
       ]);
 
-      // Process subscription data (handle empty error objects gracefully)
+      // Process subscription data (handle empty or benign error objects gracefully)
       const subErr = subscriptionResult.error as any;
-      const hasRealSubError = subErr && (subErr.code || subErr.message);
+      const hasRealSubError =
+        subErr &&
+        (subErr.code || subErr.message) &&
+        Object.keys(subErr).length > 0;
       if (hasRealSubError && subErr.code !== 'PGRST116') {
         console.error('Error fetching subscription:', subErr);
       } else if (subscriptionResult.data) {
