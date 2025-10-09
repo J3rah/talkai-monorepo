@@ -187,9 +187,6 @@ export function VoiceProvider({ children, auth, resumedChatGroupId, configId }: 
 
   return (
     <HumeVoiceProvider
-      auth={auth}
-      configId={configId}
-      resumedChatGroupId={resumedChatGroupId}
       onMessage={async (message) => {
         try {
           // Log message details for debugging

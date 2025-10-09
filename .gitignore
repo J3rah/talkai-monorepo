@@ -81,6 +81,16 @@ jspm_packages/
 backups/
 backup_*.sql
 
+# Local Backups
+database-backup-csv/
+export-database.sh
+export-database-to-csv.ts
+export-csv.js
+backup_database.ps1
+daily-backup.sh
+README.txt
+BACKUP_INSTRUCTIONS.md
+
 # Output of 'npm pack'
 *.tgz
 

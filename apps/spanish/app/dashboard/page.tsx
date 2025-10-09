@@ -20,7 +20,7 @@ import {
   DialogHeader, 
   DialogTitle 
 } from "@/components/ui/dialog";
-import TherapistSettings from "@/components/TherapistSettings";
+// import TherapistSettings from "@/components/TherapistSettings"; // Removed - using voice configuration instead
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend, LineChart, Line } from 'recharts';
 import { 
   Loader2, 
@@ -1134,9 +1134,7 @@ export default function TestDashboardPage() {
     }
   };
 
-  const handleTherapistNameChange = (name: string) => {
-    setTherapistName(name);
-  };
+  // Removed handleTherapistNameChange - using voice configuration instead
 
   const handleVoiceChange = async (voiceConfig: VoiceConfiguration) => {
     console.log('🎵 Dashboard: Voice changed to:', voiceConfig.display_name);
@@ -1290,8 +1288,12 @@ export default function TestDashboardPage() {
       sessionStorage.setItem('resumptionTriggered', 'true');
       // Preserve session ID for Hot Refresh recovery
       sessionStorage.setItem('hotRefreshSessionId', sessionId);
-      // Use hard navigation to prevent dashboard cleanup from running before /chat loads
-      window.location.href = '/chat';
+      router.push('/chat');
+      
+      // Reset the state after navigation setup is complete
+      setTimeout(() => {
+        setResumingSessionId(null);
+      }, 1000);
     } catch (error) {
       console.error('❌ Error resuming session:', error);
       setResumingSessionId(null);
@@ -1806,9 +1808,9 @@ export default function TestDashboardPage() {
                 <div className="bg-card p-4 sm:p-6 rounded-xl border border-border flex flex-col">
                   <h2 className="text-lg sm:text-xl font-semibold mb-4 text-foreground">Información del Terapeuta</h2>
                   <div className="space-y-2 flex-1">
-                    <p className="text-sm sm:text-base text-foreground">
-                      Terapeuta Predeterminado: {defaultAgentName}
-                    </p>
+                      <p className="text-sm sm:text-base text-foreground">
+                        Último Terapeuta Usado: {defaultAgentName}
+                      </p>
                     <p className="text-sm sm:text-base text-foreground">
                       Más Usado: {agentAnalytics?.mostUsedAgent?.characterName || 'No Disponible'}
                     </p>
@@ -2382,13 +2384,8 @@ export default function TestDashboardPage() {
                 )}
               </div>
 
-              {/* Therapist Settings */}
-              <div className="bg-card rounded-xl border border-border p-6">
-                <h3 className="text-lg font-semibold text-foreground mb-4">Therapist Settings</h3>
-                <TherapistSettings 
-                  onNameChange={handleTherapistNameChange}
-                />
-              </div>
+                {/* Therapist Settings */}
+                {/* Therapist Settings removed - using voice configuration instead */}
 
               {/* Data & Privacy */}
               <div className="bg-card rounded-xl border border-border p-6">

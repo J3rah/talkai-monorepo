@@ -46,14 +46,16 @@ function toErrorString(err: unknown): string {
 
 /**
  * Calculates the most used agent/therapist for a specific user based on their session history
+ * Now tracks actual voice configuration usage from session data
  */
 export async function calculateMostUsedAgent(userId: string): Promise<UserAgentAnalytics> {
   try {
-    // Fetch all sessions for the user
+    // Fetch all sessions for the user that have voice configuration data
     const { data: sessions, error } = await supabase
       .from('chat_sessions')
-      .select('id, created_at')
+      .select('character_name, agent_name, voice_config_id, created_at')
       .eq('user_id', userId)
+      .not('character_name', 'is', null)
       .order('created_at', { ascending: false });
 
     if (error) {
@@ -66,6 +68,7 @@ export async function calculateMostUsedAgent(userId: string): Promise<UserAgentA
     }
 
     if (!sessions || sessions.length === 0) {
+      console.log('No sessions with character data found for user');
       return {
         mostUsedAgent: null,
         totalSessions: 0,
@@ -73,19 +76,44 @@ export async function calculateMostUsedAgent(userId: string): Promise<UserAgentA
       };
     }
 
-    // Since we don't have voice_config_id in chat_sessions, 
-    // return basic analytics with a default agent
-    const totalSessions = sessions.length;
-    const defaultAgent: AgentUsageStats = {
-      characterName: 'Talk Therapist',
-      displayName: 'Talk Therapist',
-      configId: 'default',
-      sessionCount: totalSessions,
-      percentage: 100
-    };
+    // Group sessions by character name and count usage
+    const agentCounts: Record<string, {
+      characterName: string;
+      displayName: string;
+      configId: string;
+      count: number;
+    }> = {};
 
-    const agentBreakdown: AgentUsageStats[] = totalSessions > 0 ? [defaultAgent] : [];
-    const mostUsedAgent = totalSessions > 0 ? defaultAgent : null;
+    sessions.forEach(session => {
+      const characterName = session.character_name || 'Unknown';
+      const key = characterName.toLowerCase();
+      
+      if (!agentCounts[key]) {
+        agentCounts[key] = {
+          characterName: session.character_name || 'Unknown',
+          displayName: session.agent_name || session.character_name || 'Unknown',
+          configId: session.voice_config_id || '',
+          count: 0
+        };
+      }
+      agentCounts[key].count++;
+    });
+
+    // Convert to array and calculate percentages
+    const totalSessions = sessions.length;
+    const agentBreakdown: AgentUsageStats[] = Object.values(agentCounts).map(agent => ({
+      characterName: agent.characterName,
+      displayName: agent.displayName,
+      configId: agent.configId,
+      sessionCount: agent.count,
+      percentage: Math.round((agent.count / totalSessions) * 100)
+    }));
+
+    // Sort by session count (most used first)
+    agentBreakdown.sort((a, b) => b.sessionCount - a.sessionCount);
+
+    // Get the most used agent
+    const mostUsedAgent = agentBreakdown.length > 0 ? agentBreakdown[0] : null;
 
     return {
       mostUsedAgent,
@@ -103,24 +131,59 @@ export async function calculateMostUsedAgent(userId: string): Promise<UserAgentA
 }
 
 /**
- * Gets the default agent/therapist for a user based on their current voice configuration
+ * Gets the last used agent/therapist for a user based on their saved voice configuration
  */
 export async function getDefaultAgent(userId: string): Promise<string> {
   try {
-    // Get user's profile to find their therapist name
+    console.log('Getting default agent for user:', userId);
+    
+    // First, try to get the character name from the most recent session
+    const { data: recentSessions, error: sessionError } = await supabase
+      .from('chat_sessions')
+      .select('character_name, agent_name, voice_config_id')
+      .eq('user_id', userId)
+      .not('character_name', 'is', null)
+      .order('created_at', { ascending: false })
+      .limit(1);
+
+    if (!sessionError && recentSessions && recentSessions.length > 0) {
+      const recentSession = recentSessions[0];
+      console.log('Found recent session with character_name:', recentSession.character_name);
+      return recentSession.character_name || 'Talk Therapist';
+    }
+
+    // If no recent sessions with character data, check user's saved voice configuration
     const { data: profile, error } = await supabase
       .from('profiles')
-      .select('therapist_name')
+      .select('voice_config_id')
       .eq('id', userId)
       .single();
 
     if (error) {
       console.error('Error fetching user profile for default agent:', error);
+      console.error('Error details:', JSON.stringify(error, null, 2));
       return 'Talk Therapist';
     }
 
-    // Return custom therapist name if set, otherwise default
-    return profile?.therapist_name || 'Talk Therapist';
+    if (!profile?.voice_config_id) {
+      console.log('No saved voice config found for user');
+      return 'Talk Therapist';
+    }
+
+    // Get the character name from the voice configuration
+    try {
+      console.log('Fetching voice config for ID:', profile.voice_config_id);
+      const voiceConfig = await getVoiceConfigurationById(profile.voice_config_id);
+      if (voiceConfig?.character_name) {
+        console.log('Using character_name from voice config:', voiceConfig.character_name);
+        return voiceConfig.character_name;
+      }
+    } catch (voiceConfigError) {
+      console.error('Error fetching voice config for saved config:', voiceConfigError);
+    }
+
+    // Fallback to default
+    return 'Talk Therapist';
   } catch (error) {
     console.error('Error getting default agent:', error);
     return 'Talk Therapist';
