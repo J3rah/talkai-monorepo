@@ -48,91 +48,50 @@ export default function AuthenticatedLanding() {
     let isMounted = true;
     let overallTimeoutId: NodeJS.Timeout;
 
-    // Set a maximum timeout for the entire operation to prevent infinite loading
+    // Failsafe: stop showing spinner if auth check stalls > 10s
     overallTimeoutId = setTimeout(() => {
       if (isMounted) {
         console.warn('AuthenticatedLanding: Overall timeout reached, stopping loading state');
         setLoading(false);
       }
-    }, 15000); // 15 second maximum timeout
+    }, 10000); // 10 second maximum timeout
 
     const checkAuthAndFetchData = async () => {
       try {
-
         console.log('🔍 AuthenticatedLanding: Starting auth check...');
         
-        // Check authentication with timeout + retry to avoid hard failures on slow restores
-        let session: any = null;
-        let authError: any = null;
-        for (let attempt = 0; attempt < 3 && !session; attempt++) {
-          try {
-            const authTimeoutPromise = new Promise((_, reject) =>
-              setTimeout(() => reject(new Error('Auth check timeout')), 5000)
-            );
-            const { data, error } = await Promise.race([supabase.auth.getSession(), authTimeoutPromise]) as any;
-            authError = error || null;
-            session = data?.session ?? null;
-            if (!session && attempt < 2) {
-              console.warn(`AuthenticatedLanding: Auth check not ready, retrying in 1.5s (attempt ${attempt + 1})`);
-              await new Promise(r => setTimeout(r, 1500));
-            }
-          } catch (e) {
-            if (attempt < 2) {
-              console.warn(`AuthenticatedLanding: Auth check timeout, retrying in 1.5s (attempt ${attempt + 1})`);
-              await new Promise(r => setTimeout(r, 1500));
-            }
-          }
-        }
-        
-        if (authError) {
-          console.error('❌ AuthenticatedLanding: Auth check failed:', authError);
-          if (isMounted) {
-            setLoading(false);
-          }
-          return;
-        }
-        
-        console.log('🔍 AuthenticatedLanding: Auth check result:', { 
-          hasSession: !!session, 
-          hasUser: !!session?.user,
-          userId: session?.user?.id 
-        });
+        // Simple, direct auth check - let Supabase handle session restoration
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
         
         if (!isMounted) return;
         
-        let currentUser = null;
+        if (sessionError) {
+          console.error('❌ AuthenticatedLanding: Session error:', sessionError);
+          setLoading(false);
+          return;
+        }
         
-        if (!session?.user) {
-          console.log('❌ AuthenticatedLanding: No user found in session, trying getUser()...');
+        let currentUser = session?.user || null;
+        
+        // If no session, try getUser() as fallback for OAuth redirects
+        if (!currentUser) {
+          console.log('🔍 AuthenticatedLanding: No session user, trying getUser()...');
+          const { data: { user }, error: userError } = await supabase.auth.getUser();
           
-          // Fallback: try getUser() method
-          try {
-            const { data: { user }, error: userError } = await supabase.auth.getUser();
-            if (userError) {
-              console.error('❌ AuthenticatedLanding: getUser() also failed:', userError);
-              setLoading(false);
-              return;
-            }
-            
-            if (!user) {
-              console.log('❌ AuthenticatedLanding: No user found with getUser() either, showing unauthenticated state');
-              setLoading(false);
-              return;
-            }
-            
-            console.log('✅ AuthenticatedLanding: Found user with getUser():', user.id);
+          if (!userError && user) {
+            console.log('✅ AuthenticatedLanding: Found user via getUser():', user.id);
             currentUser = user;
-            setUser(user);
-          } catch (fallbackError) {
-            console.error('❌ AuthenticatedLanding: Fallback getUser() failed:', fallbackError);
+          } else {
+            console.log('ℹ️ AuthenticatedLanding: No authenticated user found, showing public view');
             setLoading(false);
             return;
           }
         } else {
-          currentUser = session.user;
-          setUser(session.user);
-          console.log('🔍 AuthenticatedLanding: User authenticated:', session.user.id);
+          console.log('✅ AuthenticatedLanding: User authenticated:', currentUser.id);
         }
+        
+        if (!isMounted) return;
+        setUser(currentUser);
 
         // Fetch user data
         const userId = currentUser.id;
@@ -146,13 +105,8 @@ export default function AuthenticatedLanding() {
         let avgEmotionIntensity = 0;
 
         try {
-          // Add timeout protection to prevent infinite loading
-          const timeoutPromise = new Promise((_, reject) =>
-            setTimeout(() => reject(new Error('User data fetch timeout')), 8000) // 8 second timeout
-          );
-
           const monthStartIso = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString();
-          const dataFetchPromise = Promise.all([
+          const [profileResult, sessionsCountResult, lastSessionResult, monthlyTherapyResult, emotionsResult] = await Promise.all([
             supabase.from('profiles').select('full_name').eq('id', userId).single(),
             supabase.from('chat_sessions').select('id', { count: 'exact', head: true }).eq('user_id', userId),
             supabase.from('chat_sessions').select('id, title, created_at').eq('user_id', userId).order('created_at', { ascending: false }).limit(1),
@@ -164,8 +118,6 @@ export default function AuthenticatedLanding() {
               .order('created_at', { ascending: false })
               .limit(100)
           ]);
-
-          const [profileResult, sessionsCountResult, lastSessionResult, monthlyTherapyResult, emotionsResult] = await Promise.race([dataFetchPromise, timeoutPromise]) as any;
 
           if (!profileResult.error && profileResult.data?.full_name) {
             fullName = profileResult.data.full_name;

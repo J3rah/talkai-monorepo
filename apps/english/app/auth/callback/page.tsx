@@ -49,8 +49,12 @@ function CallbackPage() {
 
           if (data.session) {
             console.log("✅ OAuth session established successfully");
-            // Redirect to home page after successful login
-            router.push('/landing');
+            
+            // Small delay to ensure session is fully propagated
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // Use replace to avoid adding to browser history
+            router.replace('/landing');
             return;
           } else {
             throw new Error('No session data received');

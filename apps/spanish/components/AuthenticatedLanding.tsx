@@ -45,32 +45,57 @@ export default function AuthenticatedLanding() {
   };
 
   useEffect(() => {
-    // Failsafe: stop showing spinner if auth check stalls > 8 s
-    const overallTimeout = setTimeout(() => {
-      console.warn('AuthenticatedLanding: overall auth/data timeout – falling back to unauthenticated view');
-      setLoading(false);
-    }, 8000);
-
     let isMounted = true;
+    let overallTimeoutId: NodeJS.Timeout;
+
+    // Failsafe: stop showing spinner if auth check stalls > 10s
+    overallTimeoutId = setTimeout(() => {
+      if (isMounted) {
+        console.warn('AuthenticatedLanding: Overall timeout reached, stopping loading state');
+        setLoading(false);
+      }
+    }, 10000); // 10 second maximum timeout
 
     const checkAuthAndFetchData = async () => {
       try {
-        // Check authentication
-        const { data: { session } } = await supabase.auth.getSession();
+        console.log('🔍 AuthenticatedLanding: Starting auth check...');
+        
+        // Simple, direct auth check - let Supabase handle session restoration
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
         
         if (!isMounted) return;
         
-        if (!session?.user) {
+        if (sessionError) {
+          console.error('❌ AuthenticatedLanding: Session error:', sessionError);
           setLoading(false);
           return;
         }
-
-        setUser(session.user);
-        console.log('🔍 AuthenticatedLanding: User authenticated:', session.user.id);
+        
+        let currentUser = session?.user || null;
+        
+        // If no session, try getUser() as fallback for OAuth redirects
+        if (!currentUser) {
+          console.log('🔍 AuthenticatedLanding: No session user, trying getUser()...');
+          const { data: { user }, error: userError } = await supabase.auth.getUser();
+          
+          if (!userError && user) {
+            console.log('✅ AuthenticatedLanding: Found user via getUser():', user.id);
+            currentUser = user;
+          } else {
+            console.log('ℹ️ AuthenticatedLanding: No authenticated user found, showing public view');
+            setLoading(false);
+            return;
+          }
+        } else {
+          console.log('✅ AuthenticatedLanding: User authenticated:', currentUser.id);
+        }
+        
+        if (!isMounted) return;
+        setUser(currentUser);
 
         // Fetch user data
-        const userId = session.user.id;
-        let fullName = session.user.email?.split('@')[0] || 'there';
+        const userId = currentUser.id;
+        let fullName = currentUser.email?.split('@')[0] || 'there';
         let totalSessions = 0;
         let lastSessionDate: string | null = null;
         let lastSessionTitle: string | null = null;
@@ -141,15 +166,32 @@ export default function AuthenticatedLanding() {
             });
           }
         } catch (e) {
-          console.error('Error fetching user data:', e);
+          console.warn('Error fetching user data, using defaults:', e);
+          // Set default user data if fetch fails
+          if (isMounted) {
+            setUserData({
+              fullName: currentUser.email?.split('@')[0] || 'there',
+              totalSessions: 0,
+              lastSessionDate: null,
+              lastSessionTitle: null,
+              sessionsThisMonth: 0,
+              durationThisMonthSeconds: 0,
+              topEmotion: null,
+              avgEmotionIntensity: 0
+            });
+          }
         }
 
         if (isMounted) {
+          clearTimeout(overallTimeoutId);
           setLoading(false);
         }
       } catch (error) {
-        console.error('Error checking auth:', error);
+        console.error('❌ AuthenticatedLanding: Error in checkAuthAndFetchData:', error);
         if (isMounted) {
+          clearTimeout(overallTimeoutId);
+          setUser(null);
+          setUserData(null);
           setLoading(false);
         }
       }
@@ -168,11 +210,10 @@ export default function AuthenticatedLanding() {
       }
     });
 
-    // cleanup overall timeout
     return () => {
       isMounted = false;
+      clearTimeout(overallTimeoutId);
       subscription.unsubscribe();
-      clearTimeout(overallTimeout);
     };
   }, []);
 
