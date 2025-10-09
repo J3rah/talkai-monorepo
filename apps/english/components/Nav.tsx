@@ -377,10 +377,10 @@ export const Nav = () => {
 
   return (
     <>
-      <div className="px-4 py-6 flex items-center h-20 z-50 border-b border-border bg-background">
+      <div className="px-4 py-6 flex items-center h-20 sm:h-20 md:h-20 lg:h-20 xl:h-20 2xl:h-20 z-50 border-b border-border bg-background">
         <div>
           <Link href="/landing">
-            <TalkAILogo className="h-24 w-auto -mt-8" />
+            <TalkAILogo className="h-20 w-auto sm:h-24 sm:-mt-8 md:h-24 md:-mt-8 lg:h-24 lg:-mt-8 xl:h-24 xl:-mt-8 2xl:h-24 2xl:-mt-8" />
           </Link>
         </div>
         
