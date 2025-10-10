@@ -287,6 +287,15 @@ export const Nav = () => {
 
   const NavLinks = () => (
     <>
+      {user && (
+        <Link
+          href="/dashboard"
+          className={`px-3 py-1.5 rounded transition-colors font-medium ${pathname === '/dashboard' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent text-muted-foreground'}`}
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          Dashboard
+        </Link>
+      )}
       <Link
         href="/"
         className={`px-3 py-1.5 rounded transition-colors font-medium ${pathname === '/' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent text-muted-foreground'}`}
@@ -352,25 +361,14 @@ export const Nav = () => {
         </Link>
       </div>
       <hr className="border-t border-border my-2 mx-3" />
-      {user && (
-        <>
-          <Link
-            href="/dashboard"
-            className={`px-3 py-1.5 rounded transition-colors font-medium ${pathname === '/dashboard' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent text-muted-foreground'}`}
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Dashboard
-          </Link>
-          {isAdmin && (
-            <Link
-              href="/admin"
-              className={`px-3 py-1.5 rounded transition-colors font-medium ${pathname === '/admin' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent text-muted-foreground'}`}
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Admin
-            </Link>
-          )}
-        </>
+      {user && isAdmin && (
+        <Link
+          href="/admin"
+          className={`px-3 py-1.5 rounded transition-colors font-medium ${pathname === '/admin' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent text-muted-foreground'}`}
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          Admin
+        </Link>
       )}
     </>
   );
