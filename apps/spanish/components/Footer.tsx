@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Twitter, Instagram, Facebook, Linkedin } from "lucide-react";
 import { triggerSessionCompleteConfetti } from "@/utils/confetti";
+import Image from "next/image";
 
 export const Footer = () => {
   const handleHeartClick = async () => {
@@ -59,7 +60,7 @@ export const Footer = () => {
           </Link>
         </div>
         
-        {/* Social Media Icons */}
+        {/* Social Media Icons and Logo */}
         <div className="flex items-center justify-center gap-4">
           <Link
             href="https://x.com/talkai_im"
@@ -91,6 +92,38 @@ export const Footer = () => {
           >
             <Linkedin className="h-5 w-5" />
           </Link>
+          <div className="ml-4">
+            <Link
+              href="https://www.uneed.best"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit Uneed"
+            >
+              <Image
+                src="/marketing/uneed_EMBED3_light.png"
+                alt="Uneed logo light"
+                width={80}
+                height={16}
+                className="block dark:hidden"
+                priority
+              />
+            </Link>
+            <Link
+              href="https://www.uneed.best"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit Uneed"
+            >
+              <Image
+                src="/marketing/uneed_EMBED3B_dark.png"
+                alt="Uneed logo dark"
+                width={80}
+                height={16}
+                className="hidden dark:block"
+                priority
+              />
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
