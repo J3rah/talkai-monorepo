@@ -97,7 +97,7 @@ export default function SessionPage() {
           console.log('🔌 Hume disconnected');
           setIsConnected(false);
         },
-        onError: (err) => {
+        onError: (err: Error) => {
           console.error('Hume error:', err);
           setError(err.message);
         },
