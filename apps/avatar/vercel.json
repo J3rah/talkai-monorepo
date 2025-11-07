@@ -3,18 +3,6 @@
   "outputDirectory": ".next",
   "framework": "nextjs",
   "regions": ["iad1"],
-  "env": {
-    "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase_anon_key",
-    "HUME_API_KEY": "@hume_api_key",
-    "HUME_SECRET_KEY": "@hume_secret_key",
-    "NEXT_PUBLIC_HUME_CONFIG_ID": "@hume_config_id",
-    "HEYGEN_API_KEY": "@heygen_api_key",
-    "NEXT_PUBLIC_HEYGEN_AVATAR_ID": "@heygen_avatar_id",
-    "HEYGEN_VOICE_ID": "@heygen_voice_id",
-    "ELEVENLABS_API_KEY": "@elevenlabs_api_key",
-    "ELEVENLABS_VOICE_ID": "@elevenlabs_voice_id"
-  },
   "headers": [
     {
       "source": "/api/(.*)",
