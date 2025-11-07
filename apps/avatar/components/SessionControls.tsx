@@ -116,7 +116,6 @@ export default function SessionControls({
               max="100"
               defaultValue="80"
               className="w-32"
-              orient="horizontal"
             />
           </div>
         )}

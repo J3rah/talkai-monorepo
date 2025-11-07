@@ -119,7 +119,7 @@ export default function SessionPage() {
         onDisconnect: () => {
           console.log('🔌 HeyGen disconnected');
         },
-        onError: (err) => {
+        onError: (err: Error) => {
           console.error('HeyGen error:', err);
           setShowFallback(true);
         },
