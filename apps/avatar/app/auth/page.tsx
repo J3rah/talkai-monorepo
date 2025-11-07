@@ -243,7 +243,7 @@ export default function AuthPage() {
             <Button
               type="submit"
               className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-              disabled={loading || (TURNSTILE_SITE_KEY && !turnstileToken)}
+              disabled={loading || (Boolean(TURNSTILE_SITE_KEY) && !turnstileToken)}
             >
               {loading ? 'Loading...' : mode === 'login' ? 'Sign In' : 'Sign Up'}
             </Button>
