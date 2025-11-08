@@ -6,7 +6,6 @@ import { supabase } from '@/lib/supabaseClient';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { Turnstile } from '@marsidev/react-turnstile';
-import Script from 'next/script';
 
 export default function AuthPage() {
   const router = useRouter();
@@ -133,16 +132,6 @@ export default function AuthPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center p-4">
-      {/* Explicit Turnstile script load as a fallback */}
-      {TURNSTILE_SITE_KEY && (
-        <Script
-          src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-          strategy="afterInteractive"
-          async
-          defer
-        />
-      )}
-
       <div className="max-w-md w-full space-y-8">
         {/* Back button */}
         <Button
