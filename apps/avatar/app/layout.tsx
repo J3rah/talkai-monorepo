@@ -29,8 +29,8 @@ export default function RootLayout({
           httpEquiv="Content-Security-Policy"
           content={[
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://cdn.jsdelivr.net blob:",
-            "script-src-elem 'self' 'unsafe-inline' https://challenges.cloudflare.com https://cdn.jsdelivr.net blob:",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.cloudflare.com https://static.cloudflareinsights.com https://challenges.cloudflare.com https://vercel.live https://cdn.jsdelivr.net blob:",
+            "script-src-elem 'self' 'unsafe-inline' https://*.cloudflare.com https://static.cloudflareinsights.com https://challenges.cloudflare.com https://vercel.live https://cdn.jsdelivr.net blob:",
             "style-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
             "img-src 'self' data: https: blob:",
             "font-src 'self' data:",
