@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { lazySupabase } from '@/lib/supabaseLazy';
 import { NextRequest, NextResponse } from 'next/server';
 
 // Ensure environment variables are available
@@ -18,7 +19,7 @@ if (!supabaseUrl || !supabaseServiceKey) {
   console.error('Admin check API cannot function without required environment variables');
 }
 
-const supabase = createClient(supabaseUrl!, supabaseServiceKey!);
+const supabase = lazySupabase(() => createClient(supabaseUrl!, supabaseServiceKey!));
 
 export async function GET(request: NextRequest) {
   try {

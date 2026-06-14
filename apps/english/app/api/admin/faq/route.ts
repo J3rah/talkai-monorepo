@@ -1,11 +1,12 @@
 import { createClient } from '@supabase/supabase-js';
+import { lazySupabase } from '@/lib/supabaseLazy';
 import { OpenAIEmbeddings } from '@langchain/openai';
 import { NextResponse } from 'next/server';
 
-const supabase = createClient(
+const supabase = lazySupabase(() => createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+));
 
 const embeddings = new OpenAIEmbeddings();
 

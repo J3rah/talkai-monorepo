@@ -1,15 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { lazySupabase } from '@/lib/supabaseLazy';
 
-// Ensure required environment variables exist
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-if (!supabaseUrl || !supabaseServiceKey) {
-  throw new Error('Missing Supabase configuration for email invite route');
-}
-
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+// Lazily create the client so a missing env var fails at request time, not build time
+const supabase = lazySupabase(() => {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !supabaseServiceKey) {
+    throw new Error('Missing Supabase configuration for email invite route');
+  }
+  return createClient(supabaseUrl, supabaseServiceKey);
+});
 
 export const runtime = 'nodejs';
 

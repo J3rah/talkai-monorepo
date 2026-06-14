@@ -11,6 +11,8 @@ import supabase from '@/supabaseClient';
 // Removed unused import getClientAccessToken
 import ResumptionContext from '@/contexts/ResumptionContext';
 import AutoReload from "@/components/AutoReload";
+import { useBridge } from '@/hooks/useBridge';
+import AvatarDisplay from '@/components/AvatarDisplay';
 
 function ChatContent({ 
   showRechatModal, 
@@ -117,6 +119,20 @@ function VoiceConnection({
 }) {
   const { status } = useVoice();
 
+	const sessionId = typeof window !== 'undefined' ? localStorage.getItem('currentChatSessionId') : null;
+	const isConnected = status.value === 'connected';
+
+	const { liveAvatarSessionToken, livekitToken, isReady, attachToAudioElement } = useBridge(sessionId, isConnected);
+
+	// Tap into Hume's audio element once the bridge is ready
+	React.useEffect(() => {
+  	    if (!isReady) return;
+               const audioEl = document.querySelector('audio');
+            if (audioEl) {
+               attachToAudioElement(audioEl);
+              }
+       }, [isReady, attachToAudioElement]);
+
   React.useEffect(() => {
     console.log('🔗 Connection status changed:', status.value);
     console.log('🎭 Current modal state:', { showRechatModal, isResuming, wasRecentlyResumed });
@@ -204,7 +220,17 @@ function VoiceConnection({
     }
   }, [status.value, isResuming, wasRecentlyResumed, setShowRechatModal, setIsResuming, setShouldShowChat, previousSessionId, setWasRecentlyResumed, onResumptionFallback]);
 
-  return (
+return (
+  <div className="relative h-full w-full">
+    {isReady && liveAvatarSessionToken && livekitToken && (
+      <div className="absolute top-4 right-4 z-10">
+        <AvatarDisplay
+          liveAvatarSessionToken={liveAvatarSessionToken}
+          livekitToken={livekitToken}
+          className="w-48 h-48 shadow-lg"
+        />
+      </div>
+    )}
     <ChatContent
       showRechatModal={showRechatModal}
       previousSessionId={previousSessionId}
@@ -212,7 +238,8 @@ function VoiceConnection({
       shouldShowChat={!showRechatModal}
       isResuming={isResuming}
     />
-  );
+  </div>
+);
 }
 
 function ChatPage() {
@@ -620,28 +647,14 @@ function ChatPage() {
             console.log('🎤 Fetching original voice configuration for resumption...');
             
             // Get user's voice configuration
-            let user = null;
-            try {
-              const { data: { user: userData } } = await supabase.auth.getUser();
-              user = userData;
-            } catch (authError: any) {
-              if (authError?.message === 'Auth session missing!') {
-                console.log('No auth session - skipping voice config fetch');
-                // Continue without user data
-              } else {
-                console.error('Auth error:', authError);
-                throw authError; // Re-throw other auth errors
-              }
-            }
+            const { data: { user } } = await supabase.auth.getUser();
+            const { data: profile } = await supabase
+              .from('profiles')
+              .select('voice_config_id')
+              .eq('id', user?.id)
+              .single();
             
-            if (user) {
-              const { data: profile } = await supabase
-                .from('profiles')
-                .select('voice_config_id')
-                .eq('id', user.id)
-                .single();
-            
-              console.log('✅ Found voice config in profile:', profile?.voice_config_id);
+            console.log('✅ Found voice config in profile:', profile?.voice_config_id);
             
             if (profile?.voice_config_id) {
               // Check if the voice config exists in our environment
@@ -689,7 +702,6 @@ function ChatPage() {
               // No voice config in profile, preserve default for fallback
               console.log('💾 No voice config in profile, preserving default for fallback');
               sessionStorage.setItem('fallbackVoiceConfig', '0ea8bb7d-ef50-4174-ae64-be7a621db425');
-            }
             }
             
             // Check if session is completed and fix it

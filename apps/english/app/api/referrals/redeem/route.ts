@@ -1,14 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { lazySupabase } from '@/lib/supabaseLazy';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
-const supabase = createClient(supabaseUrl, supabaseKey, {
+const supabase = lazySupabase(() => createClient(supabaseUrl, supabaseKey, {
   auth: {
     persistSession: false,
   },
-});
+}));
 
 const REFERRAL_MINUTES = parseInt(process.env.NEXT_PUBLIC_REFERRAL_MINUTES || '30', 10);
 

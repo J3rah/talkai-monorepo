@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { lazySupabase } from '@/lib/supabaseLazy';
 
 // Create a Supabase client with service role key for admin operations
-const supabaseAdmin = createClient(
+const supabaseAdmin = lazySupabase(() => createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!,
   {
@@ -11,7 +12,7 @@ const supabaseAdmin = createClient(
       persistSession: false
     }
   }
-);
+));
 
 export async function GET(request: NextRequest) {
   try {

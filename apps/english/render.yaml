@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: talkai-bridge-server
+    runtime: node
+    rootDir: bridge-server
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: FRONTEND_URL
+        value: https://www.talkai.im
+      - key: LIVEKIT_API_KEY
+        sync: false
+      - key: LIVEKIT_API_SECRET
+        sync: false
+      - key: LIVEKIT_URL
+        sync: false
+      - key: LIVEAVATAR_API_KEY
+        sync: false

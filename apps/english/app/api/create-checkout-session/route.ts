@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
+import { lazySupabase } from '@/lib/supabaseLazy';
 
 function getStripe() {
   const secretKey = process.env.STRIPE_SECRET_KEY;
@@ -15,7 +16,7 @@ function getStripe() {
 }
 
 // Initialize Supabase with service role
-const supabase = createClient(
+const supabase = lazySupabase(() => createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!,
   {
@@ -24,7 +25,7 @@ const supabase = createClient(
       persistSession: false
     }
   }
-);
+));
 
 export async function POST(request: NextRequest) {
   try {
