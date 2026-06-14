@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 
 function getSupabaseAdmin() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL as string | undefined;
-  const key = (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY) as string | undefined;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY as string | undefined;
   if (!url || !key) throw new Error('Faltan variables de entorno de Supabase');
   return createClient(url, key);
 }
