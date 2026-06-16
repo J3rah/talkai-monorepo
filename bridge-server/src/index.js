@@ -40,8 +40,8 @@ app.post('/session/start', async (req, res) => {
     const { sessionId } = req.body;
     if (!sessionId) return res.status(400).json({ error: 'sessionId required' });
 
-    const { roomName, liveAvatarSessionToken } = await createBridgeSession(sessionId);
-    res.json({ roomName, liveAvatarSessionToken });
+    const { roomName, liveAvatarSessionId } = await createBridgeSession(sessionId);
+    res.json({ roomName, liveAvatarSessionId });
   } catch (err) {
     console.error('❌ Failed to start bridge session:', err);
     res.status(500).json({ error: 'Failed to start session' });

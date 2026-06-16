@@ -4,15 +4,28 @@ const { generateLiveKitToken } = require('./livekit');
 // Active sessions map: sessionId → { room, audioSource, liveAvatarSessionToken }
 const sessions = new Map();
 
-// ─── LiveAvatar session token ─────────────────────────────────────────────────
+// ─── LiveAvatar session token (LITE mode + LiveKit) ─────────────────────────────
+// Creates a LiveAvatar session that joins OUR LiveKit room: the avatar subscribes
+// to the audio we publish there (Hume) and publishes its video back into the room.
 
-async function getLiveAvatarSessionToken() {
+async function getLiveAvatarSessionToken(roomName, avatarLivekitToken) {
   const apiKey = process.env.LIVEAVATAR_API_KEY;
-  if (!apiKey) throw new Error('LIVEAVATAR_API_KEY must be set in .env');
+  if (!apiKey) throw new Error('LIVEAVATAR_API_KEY must be set');
+  const avatarId = process.env.LIVEAVATAR_AVATAR_ID;
+  if (!avatarId) throw new Error('LIVEAVATAR_AVATAR_ID must be set (avatar UUID from app.liveavatar.com)');
 
   const response = await fetch('https://api.liveavatar.com/v1/sessions/token', {
     method: 'POST',
-    headers: { 'X-API-KEY': apiKey },
+    headers: { 'X-API-KEY': apiKey, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      mode: 'LITE',
+      avatar_id: avatarId,
+      livekit_config: {
+        livekit_url: process.env.LIVEKIT_URL,
+        livekit_room: roomName,
+        livekit_client_token: avatarLivekitToken,
+      },
+    }),
   });
 
   if (!response.ok) {
@@ -20,8 +33,22 @@ async function getLiveAvatarSessionToken() {
     throw new Error(`LiveAvatar token request failed: ${response.status} ${text}`);
   }
 
-  const { data } = await response.json();
-  return data.session_token;
+  const json = await response.json();
+  const data = json.data || json; // some responses nest under `data`
+  return { sessionToken: data.session_token, liveAvatarSessionId: data.session_id };
+}
+
+// Starts the LiveAvatar session (makes the avatar join the room). Bearer = session token.
+async function startLiveAvatarSession(sessionToken) {
+  const response = await fetch('https://api.liveavatar.com/v1/sessions/start', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${sessionToken}` },
+  });
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`LiveAvatar start failed: ${response.status} ${text}`);
+  }
+  return response.json().catch(() => ({}));
 }
 
 // ─── Session lifecycle ────────────────────────────────────────────────────────
@@ -32,33 +59,35 @@ async function createBridgeSession(sessionId) {
     const existing = sessions.get(sessionId);
     return {
       roomName: existing.roomName,
-      liveAvatarSessionToken: existing.liveAvatarSessionToken,
+      liveAvatarSessionId: existing.liveAvatarSessionId,
     };
   }
 
   const roomName = `talkai-${sessionId}`;
   console.log(`🏗️  Creating bridge session: ${roomName}`);
 
-  // 1. Get a LiveAvatar session token (frontend will use this to init the avatar widget)
-  const liveAvatarSessionToken = await getLiveAvatarSessionToken();
-  console.log(`✅ LiveAvatar session token obtained`);
-
-  // 2. Create a LiveKit room and join as a publisher (the bridge is the audio source)
+  // 1. Create a LiveKit room and join as a publisher (the bridge is the audio source)
   const room = new Room();
   const publisherToken = await generateLiveKitToken(roomName, 'bridge-publisher', true);
-
-  await room.connect(process.env.LIVEKIT_URL, publisherToken, {
-    autoSubscribe: false,
-  });
+  await room.connect(process.env.LIVEKIT_URL, publisherToken, { autoSubscribe: false });
   console.log(`✅ Bridge connected to LiveKit room: ${roomName}`);
 
-  // 3. Create an audio source — we'll push PCM frames into this
-  //    Hume EVI outputs 16kHz mono PCM; we resample to 48kHz stereo for LiveKit
+  // 2. Publish the Hume audio track the avatar will lip-sync to
+  //    Hume EVI outputs 16kHz mono PCM; we upsample to 48kHz for LiveKit.
   const { AudioSource } = require('@livekit/rtc-node');
-  const audioSource = new AudioSource(48000, 1); // 48kHz mono (LiveKit standard)
+  const audioSource = new AudioSource(48000, 1);
   const track = LocalAudioTrack.createAudioTrack('hume-audio', audioSource);
   await room.localParticipant.publishTrack(track);
   console.log(`✅ Audio track published to LiveKit`);
+
+  // 3. Mint a LiveKit token for the avatar to join the SAME room (publish video + subscribe audio)
+  const avatarLivekitToken = await generateLiveKitToken(roomName, 'liveavatar', true);
+
+  // 4. Create the LiveAvatar LITE session pointed at our room, then start it
+  const { sessionToken, liveAvatarSessionId } = await getLiveAvatarSessionToken(roomName, avatarLivekitToken);
+  console.log(`✅ LiveAvatar session token obtained (${liveAvatarSessionId})`);
+  await startLiveAvatarSession(sessionToken);
+  console.log(`✅ LiveAvatar session started — avatar joining room`);
 
   room.on(RoomEvent.Disconnected, () => {
     console.log(`🔌 LiveKit room disconnected for session: ${sessionId}`);
@@ -69,12 +98,13 @@ async function createBridgeSession(sessionId) {
     roomName,
     room,
     audioSource,
-    liveAvatarSessionToken,
+    liveAvatarSessionId,
+    sessionToken,
     // Buffer for accumulating incoming PCM chunks before resampling
     pcmBuffer: Buffer.alloc(0),
   });
 
-  return { roomName, liveAvatarSessionToken };
+  return { roomName, liveAvatarSessionId };
 }
 
 async function endBridgeSession(sessionId) {
