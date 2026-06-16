@@ -1,4 +1,4 @@
-const { Room, RoomEvent, LocalAudioTrack, AudioFrame } = require('@livekit/rtc-node');
+const { Room, RoomEvent, LocalAudioTrack, AudioFrame, TrackPublishOptions, TrackSource } = require('@livekit/rtc-node');
 const { generateLiveKitToken } = require('./livekit');
 
 // Active sessions map: sessionId → { room, audioSource, liveAvatarSessionToken }
@@ -77,7 +77,8 @@ async function createBridgeSession(sessionId) {
   const { AudioSource } = require('@livekit/rtc-node');
   const audioSource = new AudioSource(48000, 1);
   const track = LocalAudioTrack.createAudioTrack('hume-audio', audioSource);
-  await room.localParticipant.publishTrack(track);
+  const publishOptions = new TrackPublishOptions({ source: TrackSource.SOURCE_MICROPHONE });
+  await room.localParticipant.publishTrack(track, publishOptions);
   console.log(`✅ Audio track published to LiveKit`);
 
   // 3. Mint a LiveKit token for the avatar to join the SAME room (publish video + subscribe audio)
