@@ -9,6 +9,8 @@ import { ComponentRef, useRef, useState, useEffect } from "react";
 import supabase from "@/supabaseClient";
 import { useSearchParams } from "next/navigation";
 import { Button } from "./ui/button";
+import { useBridge } from "@/hooks/useBridge";
+import AvatarDisplay from "@/components/AvatarDisplay";
 
 interface Message {
   type: string;
@@ -104,9 +106,13 @@ export default function ClientComponent({
             console.log('🔗 Voice connection detected, disabling auto-trigger');
             setHasStartedSession(true);
             setUserHasInteracted(true);
-          }} 
+          }}
         />
-        
+
+        {/* Live AI avatar (bridge-server → LiveKit → LiveAvatar). Renders nothing
+            unless the bridge is fully connected, so it can't affect the core chat. */}
+        <AvatarBridge />
+
         {/* Header - hidden when session is connected or for authenticated users */}
         <HeaderSection onStartSession={() => {
           console.log('🔥 Chat: Start Session button clicked, setting triggerStartCall to true');
@@ -158,8 +164,65 @@ function VoiceConnectionTracker({ onConnectionStart }: { onConnectionStart: () =
       onConnectionStart();
     }
   }, [status.value, onConnectionStart]);
-  
+
   return null;
+}
+
+// Live avatar bridge. Mounts once Hume is connected and a session id is available.
+// Step 1: renders the avatar only (no audio tap yet) and only when the bridge is
+// fully ready, so any bridge failure is a silent no-op that never touches the chat.
+function AvatarBridge() {
+  const { status } = useVoice();
+  const isConnected = status.value === "connected";
+  const [sessionId, setSessionId] = useState<string | null>(null);
+
+  // Controls writes `currentChatSessionId` to localStorage when the call starts;
+  // poll briefly until it appears, then hand it to the bridge.
+  useEffect(() => {
+    if (!isConnected) {
+      setSessionId(null);
+      return;
+    }
+    const read = () =>
+      typeof window !== "undefined" ? localStorage.getItem("currentChatSessionId") : null;
+    const initial = read();
+    if (initial) {
+      setSessionId(initial);
+      return;
+    }
+    let tries = 0;
+    const iv = setInterval(() => {
+      const next = read();
+      if (next) {
+        setSessionId(next);
+        clearInterval(iv);
+      } else if (++tries > 20) {
+        clearInterval(iv);
+      }
+    }, 500);
+    return () => clearInterval(iv);
+  }, [isConnected]);
+
+  const { isReady, liveAvatarSessionToken, livekitToken, error } = useBridge(
+    sessionId,
+    isConnected,
+  );
+
+  useEffect(() => {
+    if (error) console.warn("🌉 AvatarBridge error:", error);
+  }, [error]);
+
+  if (!isReady || !liveAvatarSessionToken || !livekitToken) return null;
+
+  return (
+    <div className="flex justify-center py-4">
+      <AvatarDisplay
+        liveAvatarSessionToken={liveAvatarSessionToken}
+        livekitToken={livekitToken}
+        className="w-64 h-64"
+      />
+    </div>
+  );
 }
 
 function HeaderSection({ onStartSession, hideForAuthUsers }: { onStartSession: () => void; hideForAuthUsers: boolean }) {
