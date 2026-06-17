@@ -9,7 +9,7 @@
 
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Room, RoomEvent, Track, type RemoteTrack } from 'livekit-client';
 
 interface AvatarDisplayProps {
@@ -25,11 +25,13 @@ export default function AvatarDisplay({
 }: AvatarDisplayProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const roomRef = useRef<Room | null>(null);
+  const [hasVideo, setHasVideo] = useState(false);
 
   useEffect(() => {
     if (!livekitUrl || !livekitToken || !containerRef.current) return;
 
     let cancelled = false;
+    setHasVideo(false);
     const room = new Room();
     roomRef.current = room;
 
@@ -44,6 +46,7 @@ export default function AvatarDisplay({
       el.muted = true;
       containerRef.current.querySelectorAll('video').forEach((v) => v.remove());
       containerRef.current.appendChild(el);
+      setHasVideo(true);
     };
 
     room
@@ -84,12 +87,14 @@ export default function AvatarDisplay({
       style={{ aspectRatio: '1 / 1' }}
     >
       {/* Fallback shown until the avatar video track arrives */}
-      <div className="absolute inset-0 flex items-center justify-center text-white text-sm opacity-50 pointer-events-none">
-        <div className="text-center">
-          <div className="animate-pulse text-4xl mb-2">👤</div>
-          <p>Connecting avatar...</p>
+      {!hasVideo && (
+        <div className="absolute inset-0 flex items-center justify-center text-white text-sm opacity-50 pointer-events-none">
+          <div className="text-center">
+            <div className="animate-pulse text-4xl mb-2">👤</div>
+            <p>Connecting avatar...</p>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
