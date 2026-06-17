@@ -203,7 +203,7 @@ function AvatarBridge() {
     return () => clearInterval(iv);
   }, [isConnected]);
 
-  const { isReady, liveAvatarSessionToken, livekitToken, error } = useBridge(
+  const { isReady, livekitToken, livekitUrl, error } = useBridge(
     sessionId,
     isConnected,
   );
@@ -212,12 +212,12 @@ function AvatarBridge() {
     if (error) console.warn("🌉 AvatarBridge error:", error);
   }, [error]);
 
-  if (!isReady || !liveAvatarSessionToken || !livekitToken) return null;
+  if (!isReady || !livekitToken || !livekitUrl) return null;
 
   return (
     <div className="flex justify-center py-4">
       <AvatarDisplay
-        liveAvatarSessionToken={liveAvatarSessionToken}
+        livekitUrl={livekitUrl}
         livekitToken={livekitToken}
         className="w-64 h-64"
       />

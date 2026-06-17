@@ -22,8 +22,8 @@ const BRIDGE_WS_URL = BRIDGE_URL.replace(/^http/, 'ws');
 
 interface BridgeState {
   roomName: string | null;
-  liveAvatarSessionToken: string | null;
   livekitToken: string | null;
+  livekitUrl: string | null;
   isReady: boolean;
   error: string | null;
 }
@@ -31,8 +31,8 @@ interface BridgeState {
 export function useBridge(sessionId: string | null, isConnected: boolean) {
   const [state, setState] = useState<BridgeState>({
     roomName: null,
-    liveAvatarSessionToken: null,
     livekitToken: null,
+    livekitUrl: null,
     isReady: false,
     error: null,
   });
@@ -60,7 +60,7 @@ export function useBridge(sessionId: string | null, isConnected: boolean) {
         });
 
         if (!res.ok) throw new Error(`Bridge session start failed: ${res.status}`);
-        const { roomName, liveAvatarSessionToken } = await res.json();
+        const { roomName } = await res.json();
         console.log('✅ Bridge session started, room:', roomName);
 
         // 2. Get a LiveKit token for the frontend (subscriber only — to receive avatar video)
@@ -88,16 +88,11 @@ export function useBridge(sessionId: string | null, isConnected: boolean) {
 
         setState({
           roomName,
-          liveAvatarSessionToken,
           livekitToken,
+          livekitUrl,
           isReady: true,
           error: null,
         });
-
-        // Store livekitUrl for use in the avatar component
-        if (typeof window !== 'undefined') {
-          (window as any).__livekitUrl = livekitUrl;
-        }
       } catch (err: any) {
         console.error('❌ Bridge setup failed:', err);
         setState((s) => ({ ...s, error: err.message, isReady: false }));
@@ -181,8 +176,8 @@ export function useBridge(sessionId: string | null, isConnected: boolean) {
         sessionStartedRef.current = false;
         setState({
           roomName: null,
-          liveAvatarSessionToken: null,
           livekitToken: null,
+          livekitUrl: null,
           isReady: false,
           error: null,
         });

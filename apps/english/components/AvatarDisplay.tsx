@@ -1,68 +1,81 @@
 /**
  * AvatarDisplay.tsx
- * 
- * Drop this into your talkAI frontend at: components/AvatarDisplay.tsx
+ *
+ * Subscribes to the bridge's LiveKit room and renders the LiveAvatar video track.
+ * The avatar (LiveAvatar LITE) joins the same room as a participant, lip-syncs to
+ * the Hume audio the bridge publishes there, and publishes its video back — which
+ * we attach here.
  */
 
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { Room, RoomEvent, Track, type RemoteTrack } from 'livekit-client';
 
 interface AvatarDisplayProps {
-  liveAvatarSessionToken: string;
+  livekitUrl: string;
   livekitToken: string;
   className?: string;
 }
 
 export default function AvatarDisplay({
-  liveAvatarSessionToken,
+  livekitUrl,
   livekitToken,
   className = '',
 }: AvatarDisplayProps) {
-  const sdkRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const initializedRef = useRef(false);
+  const roomRef = useRef<Room | null>(null);
 
   useEffect(() => {
-    if (!liveAvatarSessionToken || !livekitToken || initializedRef.current) return;
-    if (!containerRef.current) return;
+    if (!livekitUrl || !livekitToken || !containerRef.current) return;
 
-    initializedRef.current = true;
+    let cancelled = false;
+    const room = new Room();
+    roomRef.current = room;
 
-    const initAvatar = async () => {
-      try {
-        console.log('🎭 Initializing LiveAvatar...');
-
-        // Dynamically import the LiveAvatar Web SDK
-        const { LiveAvatarSession } = await import('@heygen/liveavatar-web-sdk');
-
-        // LiveAvatarSession takes (sessionToken, userConfig) as per SDK docs
-        const userConfig = {
-          voiceChat: false, // Hume handles all voice — avatar is display layer only
-          container: containerRef.current!,
-        };
-
-        const session = new LiveAvatarSession(liveAvatarSessionToken, userConfig);
-
-        await session.start();
-        sdkRef.current = session;
-        console.log('✅ LiveAvatar connected and rendering');
-      } catch (err) {
-        console.error('❌ LiveAvatar initialization failed:', err);
-      }
+    const attach = (track: RemoteTrack) => {
+      if (track.kind !== Track.Kind.Video || !containerRef.current) return;
+      // Don't play the avatar's audio (the user already hears Hume via the chat).
+      console.log('🎭 Attaching avatar video track');
+      const el = track.attach() as HTMLVideoElement;
+      el.style.width = '100%';
+      el.style.height = '100%';
+      el.style.objectFit = 'cover';
+      el.muted = true;
+      containerRef.current.querySelectorAll('video').forEach((v) => v.remove());
+      containerRef.current.appendChild(el);
     };
 
-    initAvatar();
+    room
+      .on(RoomEvent.TrackSubscribed, (track) => attach(track))
+      .on(RoomEvent.Disconnected, () => console.log('🎭 Avatar room disconnected'));
+
+    (async () => {
+      try {
+        console.log('🎭 Connecting to LiveKit room for avatar video...');
+        await room.connect(livekitUrl, livekitToken);
+        if (cancelled) {
+          await room.disconnect();
+          return;
+        }
+        console.log('✅ Avatar room connected');
+        // Attach any video tracks already published before we subscribed.
+        room.remoteParticipants.forEach((p) => {
+          p.trackPublications.forEach((pub) => {
+            if (pub.track && pub.kind === Track.Kind.Video) attach(pub.track as RemoteTrack);
+          });
+        });
+      } catch (err) {
+        console.error('❌ AvatarDisplay LiveKit connect failed:', err);
+      }
+    })();
 
     return () => {
-      if (sdkRef.current) {
-        console.log('🧹 Stopping LiveAvatar');
-        sdkRef.current.stop?.();
-        sdkRef.current = null;
-        initializedRef.current = false;
-      }
+      cancelled = true;
+      roomRef.current?.disconnect();
+      roomRef.current = null;
     };
-  }, [liveAvatarSessionToken, livekitToken]);
+  }, [livekitUrl, livekitToken]);
 
   return (
     <div
@@ -70,7 +83,7 @@ export default function AvatarDisplay({
       className={`relative overflow-hidden rounded-2xl bg-black ${className}`}
       style={{ aspectRatio: '1 / 1' }}
     >
-      {/* Fallback shown while avatar stream loads */}
+      {/* Fallback shown until the avatar video track arrives */}
       <div className="absolute inset-0 flex items-center justify-center text-white text-sm opacity-50 pointer-events-none">
         <div className="text-center">
           <div className="animate-pulse text-4xl mb-2">👤</div>

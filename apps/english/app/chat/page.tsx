@@ -122,7 +122,7 @@ function VoiceConnection({
 	const sessionId = typeof window !== 'undefined' ? localStorage.getItem('currentChatSessionId') : null;
 	const isConnected = status.value === 'connected';
 
-	const { liveAvatarSessionToken, livekitToken, isReady, attachToAudioElement } = useBridge(sessionId, isConnected);
+	const { livekitUrl, livekitToken, isReady, attachToAudioElement } = useBridge(sessionId, isConnected);
 
 	// Tap into Hume's audio element once the bridge is ready
 	React.useEffect(() => {
@@ -222,10 +222,10 @@ function VoiceConnection({
 
 return (
   <div className="relative h-full w-full">
-    {isReady && liveAvatarSessionToken && livekitToken && (
+    {isReady && livekitUrl && livekitToken && (
       <div className="absolute top-4 right-4 z-10">
         <AvatarDisplay
-          liveAvatarSessionToken={liveAvatarSessionToken}
+          livekitUrl={livekitUrl}
           livekitToken={livekitToken}
           className="w-48 h-48 shadow-lg"
         />
