@@ -35,6 +35,8 @@ export default function ClientComponent({
     console.log('🔥 Chat: triggerStartCall state changed to:', triggerStartCall);
   }, [triggerStartCall]);
   const ref = useRef<ComponentRef<typeof Messages> | null>(null);
+  // Sink for Hume audio chunks: AvatarBridge fills it; VoiceProvider.onAudioReceived calls it.
+  const audioSinkRef = useRef<((msg: { data?: string }) => void) | null>(null);
   const defaultConfigId = process.env.NEXT_PUBLIC_HUME_CONFIG_ID || '0ea8bb7d-ef50-4174-ae64-be7a621db425';
 
   // Auto-trigger the StartCall modal for authenticated users (only once and when not connected)
@@ -99,6 +101,7 @@ export default function ClientComponent({
       <VoiceProvider
         auth={{ type: "accessToken", value: accessToken }}
         configId={selectedConfigId || defaultConfigId}
+        onAudioReceived={(msg) => audioSinkRef.current?.(msg)}
       >
         {/* Voice status tracker to prevent re-triggering */}
         <VoiceConnectionTracker 
@@ -111,7 +114,7 @@ export default function ClientComponent({
 
         {/* Live AI avatar (bridge-server → LiveKit → LiveAvatar). Renders nothing
             unless the bridge is fully connected, so it can't affect the core chat. */}
-        <AvatarBridge />
+        <AvatarBridge audioSinkRef={audioSinkRef} />
 
         {/* Header - hidden when session is connected or for authenticated users */}
         <HeaderSection onStartSession={() => {
@@ -171,7 +174,11 @@ function VoiceConnectionTracker({ onConnectionStart }: { onConnectionStart: () =
 // Live avatar bridge. Mounts once Hume is connected and a session id is available.
 // Step 1: renders the avatar only (no audio tap yet) and only when the bridge is
 // fully ready, so any bridge failure is a silent no-op that never touches the chat.
-function AvatarBridge() {
+function AvatarBridge({
+  audioSinkRef,
+}: {
+  audioSinkRef: { current: ((msg: { data?: string }) => void) | null };
+}) {
   const { status } = useVoice();
   const isConnected = status.value === "connected";
   const [sessionId, setSessionId] = useState<string | null>(null);
@@ -203,7 +210,7 @@ function AvatarBridge() {
     return () => clearInterval(iv);
   }, [isConnected]);
 
-  const { isReady, livekitToken, livekitUrl, error, attachToAudioElement } = useBridge(
+  const { isReady, livekitToken, livekitUrl, error, sendAudioMessage } = useBridge(
     sessionId,
     isConnected,
   );
@@ -212,31 +219,14 @@ function AvatarBridge() {
     if (error) console.warn("🌉 AvatarBridge error:", error);
   }, [error]);
 
-  // Tap Hume's <audio> element → bridge → avatar, so the avatar lip-syncs to the
-  // therapist's voice. Defensive: failures are silent no-ops, and attachToAudioElement
-  // re-routes the audio through to the speakers, so the user still hears it normally.
+  // Register the bridge's audio sink so VoiceProvider.onAudioReceived can forward
+  // Hume's audio_output chunks to the bridge → avatar lip-sync. Doesn't touch playback.
   useEffect(() => {
-    if (!isReady) return;
-    let tries = 0;
-    const tryAttach = () => {
-      const audioEl =
-        typeof document !== "undefined" ? document.querySelector("audio") : null;
-      if (audioEl) {
-        try {
-          attachToAudioElement(audioEl as HTMLAudioElement);
-        } catch (e) {
-          console.warn("🌉 audio tap failed:", e);
-        }
-        return true;
-      }
-      return false;
+    audioSinkRef.current = sendAudioMessage;
+    return () => {
+      audioSinkRef.current = null;
     };
-    if (tryAttach()) return;
-    const iv = setInterval(() => {
-      if (tryAttach() || ++tries > 20) clearInterval(iv);
-    }, 500);
-    return () => clearInterval(iv);
-  }, [isReady, attachToAudioElement]);
+  }, [sendAudioMessage, audioSinkRef]);
 
   if (!isReady || !livekitToken || !livekitUrl) return null;
 

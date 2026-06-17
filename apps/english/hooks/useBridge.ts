@@ -39,8 +39,7 @@ export function useBridge(sessionId: string | null, isConnected: boolean) {
 
   const wsRef = useRef<WebSocket | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
-  const sourceNodeRef = useRef<MediaElementAudioSourceNode | null>(null);
-  const processorRef = useRef<ScriptProcessorNode | null>(null);
+  const decodeQueueRef = useRef<Promise<void>>(Promise.resolve());
   const sessionStartedRef = useRef(false);
 
   // ── Start bridge session when Hume connects ──────────────────────────────
@@ -103,47 +102,46 @@ export function useBridge(sessionId: string | null, isConnected: boolean) {
     startSession();
   }, [sessionId, isConnected]);
 
-  // ── Tap into Hume's audio output via Web Audio API ───────────────────────
-  // Call this once you have a reference to Hume's <audio> element.
-  const attachToAudioElement = useCallback((audioEl: HTMLAudioElement) => {
-    if (!wsRef.current || audioContextRef.current) return;
+  // ── Stream Hume's audio output to the bridge (for avatar lip-sync) ─────────
+  // Hume plays audio via the Web Audio API (no <audio> element), so we capture
+  // each audio_output chunk from the SDK's onAudioReceived callback. Each chunk's
+  // `data` is base64-encoded WAV; we decode to 16kHz mono PCM and stream int16 to
+  // the bridge (which upsamples to 48kHz for LiveKit). Decodes are queued to preserve
+  // chunk order. This does NOT touch playback — the user still hears Hume normally.
+  const sendAudioMessage = useCallback((audioOutputMessage: { data?: string }) => {
+    const data = audioOutputMessage?.data;
+    if (!data) return;
 
-    console.log('🎵 Attaching Web Audio tap to Hume audio element');
+    decodeQueueRef.current = decodeQueueRef.current
+      .then(async () => {
+        const ws = wsRef.current;
+        if (!ws || ws.readyState !== WebSocket.OPEN) return;
 
-    try {
-      const ctx = new AudioContext({ sampleRate: 16000 }); // Match Hume's output rate
-      audioContextRef.current = ctx;
+        if (!audioContextRef.current) {
+          // 16kHz so decodeAudioData resamples to the rate the bridge expects
+          audioContextRef.current = new AudioContext({ sampleRate: 16000 });
+        }
+        const ctx = audioContextRef.current;
 
-      const source = ctx.createMediaElementSource(audioEl);
-      sourceNodeRef.current = source;
+        // base64 → ArrayBuffer
+        const binary = atob(data);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
 
-      // ScriptProcessor: buffer size 2048 gives ~128ms chunks at 16kHz
-      // Deprecated but universally supported; fine for this use case
-      const processor = ctx.createScriptProcessor(2048, 1, 1);
-      processorRef.current = processor;
+        const audioBuffer = await ctx.decodeAudioData(bytes.buffer);
+        const float32 = audioBuffer.getChannelData(0);
 
-      processor.onaudioprocess = (e) => {
-        if (wsRef.current?.readyState !== WebSocket.OPEN) return;
-
-        const float32 = e.inputBuffer.getChannelData(0);
-
-        // Convert Float32 [-1, 1] → Int16 for the bridge
         const int16 = new Int16Array(float32.length);
         for (let i = 0; i < float32.length; i++) {
           const s = Math.max(-1, Math.min(1, float32[i]));
           int16[i] = s < 0 ? s * 0x8000 : s * 0x7fff;
         }
 
-        wsRef.current.send(int16.buffer);
-      };
-
-      // Route: source → processor → destination (so audio still plays normally)
-      source.connect(processor);
-      processor.connect(ctx.destination);
-      console.log('✅ Web Audio tap active — streaming Hume audio to bridge');
-    } catch (err) {
-      console.error('❌ Failed to attach Web Audio tap:', err);
-    }
+        if (wsRef.current?.readyState === WebSocket.OPEN) {
+          wsRef.current.send(int16.buffer);
+        }
+      })
+      .catch((err) => console.warn('🌉 audio decode/send failed:', err));
   }, []);
 
   // ── Cleanup ───────────────────────────────────────────────────────────────
@@ -156,12 +154,8 @@ export function useBridge(sessionId: string | null, isConnected: boolean) {
         wsRef.current?.close();
         wsRef.current = null;
 
-        // Disconnect Web Audio nodes
-        processorRef.current?.disconnect();
-        sourceNodeRef.current?.disconnect();
+        // Close the decode AudioContext
         audioContextRef.current?.close();
-        processorRef.current = null;
-        sourceNodeRef.current = null;
         audioContextRef.current = null;
 
         // Tell the bridge to clean up the LiveKit room
@@ -185,5 +179,5 @@ export function useBridge(sessionId: string | null, isConnected: boolean) {
     };
   }, [isConnected, sessionId]);
 
-  return { ...state, attachToAudioElement };
+  return { ...state, sendAudioMessage };
 }
