@@ -203,7 +203,7 @@ function AvatarBridge() {
     return () => clearInterval(iv);
   }, [isConnected]);
 
-  const { isReady, livekitToken, livekitUrl, error } = useBridge(
+  const { isReady, livekitToken, livekitUrl, error, attachToAudioElement } = useBridge(
     sessionId,
     isConnected,
   );
@@ -211,6 +211,32 @@ function AvatarBridge() {
   useEffect(() => {
     if (error) console.warn("🌉 AvatarBridge error:", error);
   }, [error]);
+
+  // Tap Hume's <audio> element → bridge → avatar, so the avatar lip-syncs to the
+  // therapist's voice. Defensive: failures are silent no-ops, and attachToAudioElement
+  // re-routes the audio through to the speakers, so the user still hears it normally.
+  useEffect(() => {
+    if (!isReady) return;
+    let tries = 0;
+    const tryAttach = () => {
+      const audioEl =
+        typeof document !== "undefined" ? document.querySelector("audio") : null;
+      if (audioEl) {
+        try {
+          attachToAudioElement(audioEl as HTMLAudioElement);
+        } catch (e) {
+          console.warn("🌉 audio tap failed:", e);
+        }
+        return true;
+      }
+      return false;
+    };
+    if (tryAttach()) return;
+    const iv = setInterval(() => {
+      if (tryAttach() || ++tries > 20) clearInterval(iv);
+    }, 500);
+    return () => clearInterval(iv);
+  }, [isReady, attachToAudioElement]);
 
   if (!isReady || !livekitToken || !livekitUrl) return null;
 
