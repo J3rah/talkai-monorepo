@@ -122,16 +122,7 @@ function VoiceConnection({
 	const sessionId = typeof window !== 'undefined' ? localStorage.getItem('currentChatSessionId') : null;
 	const isConnected = status.value === 'connected';
 
-	const { livekitUrl, livekitToken, isReady, attachToAudioElement } = useBridge(sessionId, isConnected);
-
-	// Tap into Hume's audio element once the bridge is ready
-	React.useEffect(() => {
-  	    if (!isReady) return;
-               const audioEl = document.querySelector('audio');
-            if (audioEl) {
-               attachToAudioElement(audioEl);
-              }
-       }, [isReady, attachToAudioElement]);
+	const { livekitUrl, livekitToken, isReady } = useBridge(sessionId, isConnected);
 
   React.useEffect(() => {
     console.log('🔗 Connection status changed:', status.value);

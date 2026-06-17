@@ -12,9 +12,11 @@ interface VoiceProviderProps {
   };
   resumedChatGroupId?: string;
   configId?: string;
+  /** Forwarded to Hume — fires with each audio output chunk (used to feed the avatar). */
+  onAudioReceived?: (audioOutputMessage: { data?: string }) => void;
 }
 
-export function VoiceProvider({ children, auth, resumedChatGroupId, configId }: VoiceProviderProps) {
+export function VoiceProvider({ children, auth, resumedChatGroupId, configId, onAudioReceived }: VoiceProviderProps) {
   const [isReady, setIsReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -187,6 +189,7 @@ export function VoiceProvider({ children, auth, resumedChatGroupId, configId }: 
 
   return (
     <HumeVoiceProvider
+      onAudioReceived={onAudioReceived}
       onMessage={async (message) => {
         try {
           // Log message details for debugging
